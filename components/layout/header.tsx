@@ -17,17 +17,17 @@ import { cn } from '@/lib/utils';
 
 type NavKey =
   | 'products'
+  | 'services'
   | 'machineFinder'
   | 'financing'
-  | 'caseStudies'
   | 'yearReview'
   | 'about';
 
 const NAV: { key: NavKey; href: string }[] = [
   { key: 'products', href: '/products' },
+  { key: 'services', href: '/services' },
   { key: 'machineFinder', href: '/machine-finder' },
   { key: 'financing', href: '/financing' },
-  { key: 'caseStudies', href: '/case-studies' },
   { key: 'yearReview', href: '/2026' },
   { key: 'about', href: '/about' },
 ];
@@ -147,10 +147,13 @@ export function Header() {
               {(
                 [
                   ['products', '/products'],
+                  ['services', '/services'],
                   ['machineFinder', '/machine-finder'],
                   ['financing', '/financing'],
                   ['caseStudies', '/case-studies'],
+                  ['news', '/news'],
                   ['yearReview', '/2026'],
+                  ['careers', '/careers'],
                   ['about', '/about'],
                   ['contact', '/contact'],
                 ] as const

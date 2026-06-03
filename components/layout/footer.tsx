@@ -90,7 +90,16 @@ export function Footer() {
               <FooterLink href="/about">{t('nav.about')}</FooterLink>
             </li>
             <li>
+              <FooterLink href="/services">{t('nav.services')}</FooterLink>
+            </li>
+            <li>
               <FooterLink href="/case-studies">{t('nav.caseStudies')}</FooterLink>
+            </li>
+            <li>
+              <FooterLink href="/news">{t('nav.news')}</FooterLink>
+            </li>
+            <li>
+              <FooterLink href="/careers">{t('nav.careers')}</FooterLink>
             </li>
             <li>
               <FooterLink href="/financing">{t('nav.financing')}</FooterLink>
@@ -113,7 +122,23 @@ export function Footer() {
         transition={{ duration: 0.6, delay: 0.4 }}
         className="mx-auto max-w-[1600px] px-6 lg:px-12 flex justify-between flex-wrap gap-4 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)] pt-6 border-t border-[color:var(--color-neutral-800)]"
       >
-        <span>{t('footer.rights')}</span>
+        <span className="flex items-center gap-6 flex-wrap">
+          <span>{t('footer.rights')}</span>
+          <span className="flex items-center gap-4">
+            <Link
+              href="/privacy"
+              className="hover:text-[color:var(--color-paper)] transition"
+            >
+              Privacy
+            </Link>
+            <Link
+              href="/terms"
+              className="hover:text-[color:var(--color-paper)] transition"
+            >
+              Terms
+            </Link>
+          </span>
+        </span>
         <span className="flex items-center gap-2.5">
           <span className="relative inline-flex h-1.5 w-1.5">
             <span className="absolute inset-0 rounded-full bg-[color:var(--color-signal)] animate-ping opacity-60" />
