@@ -1,0 +1,199 @@
+@import 'tailwindcss';
+@import './fonts.css';
+
+/* ──────────────────────────────────────────────────────────────────────────
+ * Auraplex — design tokens
+ *
+ * Three coordinated ramps:
+ *   1. Signal     — cerulean brand accent (5 stops, wash → deep)
+ *   2. Concrete   — warm neutral ramp     (10 stops, paper → ink)
+ *   3. Semantic   — success / warning / danger / info
+ *
+ * Legacy var names (`--color-steel`, `--color-ink-soft`, `--color-alert`,
+ * `--color-data`, `--color-signal-hi`, `--color-paper-soft`) are kept as
+ * aliases so existing markup keeps working — they resolve into the new ramps.
+ * ────────────────────────────────────────────────────────────────────────── */
+@theme {
+  /* ── Signal — cerulean brand ramp ── */
+  --color-signal-wash:    #e7f3fc;
+  --color-signal-bright:  #4eaae9;
+  --color-signal:         #2796df;  /* brand cerulean (the single accent) */
+  --color-signal-strong:  #1b7bc4;
+  --color-signal-deep:    #145e97;
+
+  /* ── Concrete — warm neutral ramp, paper → ink ── */
+  --color-paper:          #f4f6f8;
+  --color-neutral-100:    #e7eaee;
+  --color-neutral-200:    #d2d6db;
+  --color-neutral-300:    #b2b8bf;
+  --color-neutral-400:    #8d949d;
+  --color-neutral-500:    #6e757f;
+  --color-neutral-600:    #545b65;
+  --color-neutral-700:    #3e444d;
+  --color-neutral-800:    #2c3138;
+  --color-ink:            #181b20;
+
+  /* ── Semantic status (rationed — never decorative) ── */
+  --color-success:        #4f7d52;  /* approved / online */
+  --color-warning:        #e8943c;  /* lead time / caution */
+  --color-danger:         #c8432f;  /* error / fault */
+  --color-info:           #2796df;  /* = signal — note / highlight */
+
+  /* ── Legacy aliases (kept for component compatibility) ── */
+  --color-signal-hi:      var(--color-signal-bright);
+  --color-paper-soft:     var(--color-neutral-100);
+  --color-steel-soft:     var(--color-neutral-300);
+  --color-steel:          var(--color-neutral-400);
+  --color-ink-soft:       var(--color-neutral-800);
+  --color-alert:          var(--color-danger);
+  --color-data:           var(--color-success);
+
+  /* ── Typography ── */
+  --font-display: var(--font-fraunces), 'PP Editorial New', Georgia, serif;
+  --font-body:    var(--font-inter), system-ui, sans-serif;
+  --font-mono:    var(--font-jetbrains-mono), 'Berkeley Mono', 'IBM Plex Mono', ui-monospace, monospace;
+
+  --text-display: clamp(3rem, 8vw, 7.5rem);
+  --text-h2:      clamp(2rem, 5vw, 4.5rem);
+  --text-h3:      clamp(1.5rem, 3vw, 2.5rem);
+  --text-body:    clamp(1rem, 1.1vw, 1.125rem);
+  --text-small:   clamp(0.875rem, 0.9vw, 1rem);
+  --text-mono:    clamp(0.75rem, 0.85vw, 0.875rem);
+
+  /* ── Motion easing ── */
+  --ease-out:    cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in:     cubic-bezier(0.4, 0, 1, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+html {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-body);
+  font-feature-settings: 'ss01', 'cv11';
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100dvh;
+  font-size: var(--text-body);
+  line-height: 1.6;
+}
+
+/* Selection: brand wash on ink. Visible without being garish. */
+::selection {
+  background: var(--color-signal);
+  color: var(--color-paper);
+}
+
+/* ────────── View Transitions API ────────── */
+@view-transition { navigation: auto; }
+
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: 400ms;
+  animation-timing-function: var(--ease-out);
+}
+
+::view-transition-old(root) { animation-name: vt-fade-out; }
+::view-transition-new(root) { animation-name: vt-fade-in; }
+
+@keyframes vt-fade-out { to { opacity: 0; } }
+@keyframes vt-fade-in  { from { opacity: 0; } }
+
+/* ────────── Scroll-driven reveals ────────── */
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(80px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes reveal-scale {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.reveal {
+  animation: reveal linear both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 60%;
+}
+
+.reveal-up {
+  animation: reveal-up linear both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 50%;
+}
+
+.reveal-scale {
+  animation: reveal-scale linear both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 50%;
+}
+
+/* ────────── Focus rings ────────── */
+:focus-visible {
+  outline: 2px solid var(--color-signal-bright);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ────────── Custom cursor — currently unwired ──────────
+ * The signature caliper cursor was hiding the native cursor site-wide
+ * via `body.cursor-caliper { cursor: none }`, which left users with no
+ * cursor at all when the custom overlay underperformed (touch devices,
+ * reduced-motion, faint dot on light backgrounds). Rules retained here
+ * for the day we ship a proper caliper graphic; until then we leave the
+ * native cursor alone.
+ *
+ * .cursor-caliper { cursor: none; }
+ * .caliper-cursor {
+ *   position: fixed;
+ *   width: 32px;
+ *   height: 32px;
+ *   pointer-events: none;
+ *   z-index: 9999;
+ *   mix-blend-mode: difference;
+ *   transform: translate(-50%, -50%);
+ *   transition: transform 200ms var(--ease-out);
+ * }
+ */
+
+/* ────────── Marquee (industry strip on /2026) ────────── */
+@keyframes scroll-x {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-33.3333%); }
+}
+
+/* ────────── Live ticker split-flap ────────── */
+.split-flap {
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono);
+  display: inline-block;
+}
+
+/* ────────── Editorial layout helpers ────────── */
+.editorial-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(1rem, 2vw, 2rem);
+}
+
+.prose-editorial { max-width: 65ch; line-height: 1.7; }
+.prose-editorial p + p { margin-top: 1.25em; }
+
+/* ────────── Reduced motion ────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal, .reveal-up, .reveal-scale { opacity: 1; transform: none; }
+}

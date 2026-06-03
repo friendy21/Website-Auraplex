@@ -1,0 +1,103 @@
+{
+  "meta": {
+    "siteName": "Auraplex",
+    "tagline": "Precision labelling and packaging machines, engineered in Malaysia."
+  },
+  "nav": {
+    "products": "Products",
+    "machineFinder": "Machine Finder",
+    "financing": "Financing",
+    "caseStudies": "Case Studies",
+    "yearReview": "2026 Review",
+    "about": "About",
+    "contact": "Contact",
+    "quote": "Get a quote",
+    "whatsapp": "WhatsApp us"
+  },
+  "home": {
+    "heroH1": "Engineered in Malaysia. Built to outlast the line.",
+    "heroSub": "Precision labelling and packaging machines for ASEAN manufacturers. Local support, OPEX financing from RM 1,800/month, custom automation engineered for your floor.",
+    "heroCallout": "120 units/min · Wrap-around · From RM 1,800/month",
+    "ctaPrimary": "See the machines",
+    "ctaSecondary": "Talk on WhatsApp",
+    "ticker": {
+      "machines": "Machines running globally",
+      "labels": "Labels applied today",
+      "uptime": "Avg uptime",
+      "factories": "Factories served"
+    },
+    "valueProps": {
+      "title": "Three reasons buyers choose Auraplex",
+      "items": [
+        { "num": "01", "title": "Built here.", "body": "Local manufacturing, local engineers, local support. 4-week delivery instead of 6 months from China." },
+        { "num": "02", "title": "OPEX, not CAPEX.", "body": "Financing from RM 1,800/month with MIDA-approved partners. ROI in 14 months." },
+        { "num": "03", "title": "Custom by default.", "body": "Every floor is different. We engineer to your container, your throughput, your existing line." }
+      ]
+    },
+    "categories": {
+      "labelling": "Labelling Machines",
+      "packaging": "Packaging Machines",
+      "automation": "3D Printers & Custom Automation"
+    },
+    "machineFinderCta": {
+      "title": "Not sure which machine?",
+      "body": "Describe your product and your line. We'll recommend the right machine, financing tier, and timeline.",
+      "cta": "Start Machine Finder"
+    },
+    "faq": {
+      "title": "Frequently asked",
+      "items": [
+        { "q": "How long is lead time?", "a": "Standard machines ship in 4 weeks from order confirmation. Custom builds are typically 8–12 weeks." },
+        { "q": "Do you provide installation?", "a": "Yes. Every machine includes on-site installation, line integration, and operator training across Peninsular Malaysia, Sabah, and Sarawak." },
+        { "q": "What's the warranty?", "a": "Two years parts and labour, with optional extended-coverage plans up to five years." },
+        { "q": "Can I finance the purchase?", "a": "Yes — we partner with MIDA-approved financiers offering monthly payments from RM 1,800. Typical payback is 14 months." },
+        { "q": "Do you handle export documentation?", "a": "Yes — we ship across ASEAN with full CE, SIRIM, and origin documentation." },
+        { "q": "What containers do your labellers support?", "a": "Round, oval, square, conical, and custom shapes from 30mm to 250mm diameter. Wrap-around, front-and-back, top, and bottom labelling supported." }
+      ]
+    },
+    "ctaFooter": {
+      "title": "Ready to talk?",
+      "quote": "Get a quote",
+      "tour": "Schedule a factory tour",
+      "whatsapp": "WhatsApp us"
+    }
+  },
+  "products": {
+    "title": "Machines",
+    "subtitle": "Engineered for ASEAN manufacturing realities.",
+    "filters": { "category": "Category", "speed": "Speed", "label": "Label type", "price": "Price range" },
+    "viewMachine": "View",
+    "from": "From"
+  },
+  "configurator": {
+    "title": "Configure your machine",
+    "save": "Save configuration",
+    "share": "Share link",
+    "requestQuote": "Request quote with this config"
+  },
+  "financing": {
+    "title": "OPEX, not CAPEX.",
+    "subtitle": "Spread the cost. Bank the ROI.",
+    "calculator": {
+      "speed": "Current units/min",
+      "labour": "Labour cost RM/hr",
+      "target": "Target units/min",
+      "payback": "Payback period",
+      "savings": "Annual savings",
+      "roi": "5-year ROI"
+    }
+  },
+  "forms": {
+    "name": "Name",
+    "company": "Company",
+    "phone": "Phone",
+    "email": "Email",
+    "message": "Message",
+    "submit": "Submit",
+    "thanks": "Thanks — we'll be in touch within one business day."
+  },
+  "footer": {
+    "rights": "© 2026 Auraplex SDN BHD. All rights reserved.",
+    "made": "Made in Malaysia."
+  }
+}

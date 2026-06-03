@@ -1,0 +1,103 @@
+{
+  "meta": {
+    "siteName": "Auraplex",
+    "tagline": "Mesin pelabel dan pembungkus presisi, direka di Malaysia."
+  },
+  "nav": {
+    "products": "Mesin",
+    "machineFinder": "Pencari Mesin",
+    "financing": "Pembiayaan",
+    "caseStudies": "Kajian Kes",
+    "yearReview": "Ulasan 2026",
+    "about": "Tentang Kami",
+    "contact": "Hubungi",
+    "quote": "Dapatkan sebut harga",
+    "whatsapp": "WhatsApp kami"
+  },
+  "home": {
+    "heroH1": "Direka di Malaysia. Dibina untuk tahan lama.",
+    "heroSub": "Mesin pelabel dan pembungkus presisi untuk pengeluar ASEAN. Sokongan tempatan, pembiayaan OPEX dari RM 1,800/bulan, automasi khusus untuk lantai kilang anda.",
+    "heroCallout": "120 unit/min · Balut sekeliling · Dari RM 1,800/bulan",
+    "ctaPrimary": "Lihat mesin",
+    "ctaSecondary": "Bual di WhatsApp",
+    "ticker": {
+      "machines": "Mesin beroperasi global",
+      "labels": "Label dilekat hari ini",
+      "uptime": "Purata uptime",
+      "factories": "Kilang dilayani"
+    },
+    "valueProps": {
+      "title": "Tiga sebab pembeli pilih Auraplex",
+      "items": [
+        { "num": "01", "title": "Dibuat di sini.", "body": "Pembuatan tempatan, jurutera tempatan, sokongan tempatan. Penghantaran 4 minggu, bukan 6 bulan dari China." },
+        { "num": "02", "title": "OPEX, bukan CAPEX.", "body": "Pembiayaan dari RM 1,800/bulan dengan rakan MIDA. ROI dalam 14 bulan." },
+        { "num": "03", "title": "Khusus secara lalai.", "body": "Setiap lantai berbeza. Kami rekabentuk untuk bekas, throughput dan barisan sedia ada anda." }
+      ]
+    },
+    "categories": {
+      "labelling": "Mesin Pelabel",
+      "packaging": "Mesin Pembungkus",
+      "automation": "Pencetak 3D & Automasi Khusus"
+    },
+    "machineFinderCta": {
+      "title": "Tidak pasti mesin mana?",
+      "body": "Terangkan produk dan barisan anda. Kami akan cadangkan mesin, tahap pembiayaan, dan jadual yang tepat.",
+      "cta": "Mula Pencari Mesin"
+    },
+    "faq": {
+      "title": "Soalan lazim",
+      "items": [
+        { "q": "Berapa lama masa penghantaran?", "a": "Mesin standard dihantar dalam 4 minggu. Binaan khusus biasanya 8–12 minggu." },
+        { "q": "Adakah anda sediakan pemasangan?", "a": "Ya. Setiap mesin termasuk pemasangan di tapak, integrasi barisan, dan latihan operator." },
+        { "q": "Apakah jaminannya?", "a": "Dua tahun alat ganti dan buruh, dengan pilihan lanjutan hingga lima tahun." },
+        { "q": "Bolehkah saya biayai pembelian?", "a": "Ya — kami berkerjasama dengan pembiaya yang diluluskan MIDA dari RM 1,800/bulan." },
+        { "q": "Adakah anda kendalikan dokumentasi eksport?", "a": "Ya — kami menghantar ke seluruh ASEAN dengan dokumentasi CE, SIRIM, dan asal-usul lengkap." },
+        { "q": "Bekas apa yang mesin pelabel anda sokong?", "a": "Bulat, bujur, segiempat, kon, dan bentuk khusus dari 30mm hingga 250mm diameter." }
+      ]
+    },
+    "ctaFooter": {
+      "title": "Sedia untuk berbual?",
+      "quote": "Dapatkan sebut harga",
+      "tour": "Jadualkan lawatan kilang",
+      "whatsapp": "WhatsApp kami"
+    }
+  },
+  "products": {
+    "title": "Mesin",
+    "subtitle": "Direka untuk realiti pembuatan ASEAN.",
+    "filters": { "category": "Kategori", "speed": "Kelajuan", "label": "Jenis label", "price": "Julat harga" },
+    "viewMachine": "Lihat",
+    "from": "Dari"
+  },
+  "configurator": {
+    "title": "Konfigurasi mesin anda",
+    "save": "Simpan konfigurasi",
+    "share": "Kongsi pautan",
+    "requestQuote": "Mohon sebut harga"
+  },
+  "financing": {
+    "title": "OPEX, bukan CAPEX.",
+    "subtitle": "Sebarkan kos. Banking ROI.",
+    "calculator": {
+      "speed": "Unit/min semasa",
+      "labour": "Kos buruh RM/jam",
+      "target": "Sasaran unit/min",
+      "payback": "Tempoh bayar balik",
+      "savings": "Penjimatan tahunan",
+      "roi": "ROI 5 tahun"
+    }
+  },
+  "forms": {
+    "name": "Nama",
+    "company": "Syarikat",
+    "phone": "Telefon",
+    "email": "Emel",
+    "message": "Mesej",
+    "submit": "Hantar",
+    "thanks": "Terima kasih — kami akan hubungi dalam satu hari bekerja."
+  },
+  "footer": {
+    "rights": "© 2026 Auraplex SDN BHD. Hak cipta terpelihara.",
+    "made": "Buatan Malaysia."
+  }
+}

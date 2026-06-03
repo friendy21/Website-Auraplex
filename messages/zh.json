@@ -1,0 +1,103 @@
+{
+  "meta": {
+    "siteName": "Auraplex",
+    "tagline": "马来西亚设计的精密贴标和包装机械。"
+  },
+  "nav": {
+    "products": "机器",
+    "machineFinder": "机型推荐",
+    "financing": "融资",
+    "caseStudies": "客户案例",
+    "yearReview": "2026 年回顾",
+    "about": "关于我们",
+    "contact": "联系",
+    "quote": "获取报价",
+    "whatsapp": "WhatsApp"
+  },
+  "home": {
+    "heroH1": "马来西亚制造,经久耐用。",
+    "heroSub": "为东盟制造商提供的精密贴标和包装机械。本地支持,每月 RM 1,800 起的 OPEX 融资,为您的生产线量身定制。",
+    "heroCallout": "120 件/分钟 · 围绕贴标 · 每月 RM 1,800 起",
+    "ctaPrimary": "查看机器",
+    "ctaSecondary": "WhatsApp 咨询",
+    "ticker": {
+      "machines": "全球运行机器",
+      "labels": "今日贴标量",
+      "uptime": "平均运行时间",
+      "factories": "服务工厂"
+    },
+    "valueProps": {
+      "title": "客户选择 Auraplex 的三大理由",
+      "items": [
+        { "num": "01", "title": "本地制造。", "body": "本地生产、本地工程师、本地支持。4 周交付,而非中国进口的 6 个月。" },
+        { "num": "02", "title": "OPEX,而非 CAPEX。", "body": "每月 RM 1,800 起,MIDA 认证融资伙伴。14 个月回本。" },
+        { "num": "03", "title": "默认定制。" , "body": "每条生产线都不同。我们根据您的容器、产能、现有产线进行设计。" }
+      ]
+    },
+    "categories": {
+      "labelling": "贴标机",
+      "packaging": "包装机",
+      "automation": "3D 打印机和定制自动化"
+    },
+    "machineFinderCta": {
+      "title": "不确定需要哪款机器?",
+      "body": "描述您的产品和产线。我们将推荐合适的机器、融资方案和交付时间。",
+      "cta": "开始机型推荐"
+    },
+    "faq": {
+      "title": "常见问题",
+      "items": [
+        { "q": "交货周期多久?", "a": "标准机器订单确认后 4 周发货。定制机型通常 8–12 周。" },
+        { "q": "提供安装服务吗?", "a": "提供。每台机器包括现场安装、产线集成和操作员培训。" },
+        { "q": "保修期多长?", "a": "两年零件和人工保修,可延长至五年。" },
+        { "q": "可以融资购买吗?", "a": "可以 — 我们与 MIDA 认证融资方合作,每月 RM 1,800 起。" },
+        { "q": "处理出口文件吗?", "a": "可以 — 我们出口东盟全境,提供 CE、SIRIM 和原产地完整文件。" },
+        { "q": "贴标机支持哪些容器?", "a": "圆形、椭圆、方形、锥形和定制形状,直径 30mm 到 250mm。" }
+      ]
+    },
+    "ctaFooter": {
+      "title": "准备好沟通了?",
+      "quote": "获取报价",
+      "tour": "预约参观工厂",
+      "whatsapp": "WhatsApp 咨询"
+    }
+  },
+  "products": {
+    "title": "机器",
+    "subtitle": "为东盟制造业现实而设计。",
+    "filters": { "category": "类别", "speed": "速度", "label": "标签类型", "price": "价格区间" },
+    "viewMachine": "查看",
+    "from": "起价"
+  },
+  "configurator": {
+    "title": "配置您的机器",
+    "save": "保存配置",
+    "share": "分享链接",
+    "requestQuote": "用此配置申请报价"
+  },
+  "financing": {
+    "title": "OPEX,而非 CAPEX。",
+    "subtitle": "分摊成本。锁定 ROI。",
+    "calculator": {
+      "speed": "当前件/分钟",
+      "labour": "人工 RM/小时",
+      "target": "目标件/分钟",
+      "payback": "回本周期",
+      "savings": "年度节省",
+      "roi": "5 年 ROI"
+    }
+  },
+  "forms": {
+    "name": "姓名",
+    "company": "公司",
+    "phone": "电话",
+    "email": "邮箱",
+    "message": "留言",
+    "submit": "提交",
+    "thanks": "感谢 — 我们将在一个工作日内联系您。"
+  },
+  "footer": {
+    "rights": "© 2026 Auraplex SDN BHD 版权所有。",
+    "made": "马来西亚制造。"
+  }
+}
