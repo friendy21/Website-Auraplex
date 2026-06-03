@@ -1,9 +1,9 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
 import { TiltCard } from '@/components/motion/tilt-card';
 import { SortTabs } from '@/components/sections/sort-tabs';
+import { ParallaxProductImage } from '@/components/sections/parallax-product-image';
 import { buildMetadata, breadcrumbSchema } from '@/lib/seo';
 import {
   MACHINES,
@@ -213,17 +213,10 @@ export default async function ProductsPage({
                     <div className="absolute inset-0 z-[5] bg-gradient-to-t from-[color:var(--color-ink)]/70 via-[color:var(--color-ink)]/15 to-transparent pointer-events-none transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:-translate-y-full" />
 
                     {p.image ? (
-                      <Image
+                      <ParallaxProductImage
                         src={p.image}
                         alt={p.name}
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-contain p-4 transition-all duration-700 group-hover:scale-[1.08] [filter:brightness(0.85)] group-hover:[filter:brightness(1)]"
-                        style={
-                          {
-                            viewTransitionName: `product-${p.id}`,
-                          } as React.CSSProperties
-                        }
+                        productId={p.id}
                       />
                     ) : (
                       <div className="absolute inset-0 flex items-center justify-center">

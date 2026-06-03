@@ -9,7 +9,14 @@ import { Field } from '@/components/primitives/field';
 
 const initial: ActionState = { ok: false };
 
-export function ContactForm({ locale }: { locale: string }) {
+export function ContactForm({
+  locale,
+  department,
+}: {
+  locale: string;
+  /** Pre-filled department routing — passed via ?dept= URL param on /contact. */
+  department?: string;
+}) {
   const t = useTranslations('forms');
   const [state, action, pending] = useActionState(submitContact, initial);
 
@@ -33,6 +40,9 @@ export function ContactForm({ locale }: { locale: string }) {
   return (
     <form action={action} className="space-y-2">
       <input type="hidden" name="locale" value={locale} />
+      {department && (
+        <input type="hidden" name="department" value={department} />
+      )}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
         <Field label={t('name')} name="name" required />
         <Field label={t('company')} name="company" />
