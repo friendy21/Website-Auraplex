@@ -126,13 +126,15 @@ function buildOne(
 function main(): void {
   console.log('▶ build-catalog: reading sources');
 
-  if (!fs.existsSync(MAPPING_PATH)) {
-    console.error(`MACHINE_MAPPING.json not found at ${MAPPING_PATH}`);
-    process.exit(1);
-  }
-  if (!fs.existsSync(MANIFEST_PATH)) {
-    console.error(`manifest.json not found at ${MANIFEST_PATH}`);
-    process.exit(1);
+  // Source files live OUTSIDE the repo root (one level up). They're only
+  // present on the maintainer's local machine where photography is staged.
+  // In CI/CD (Vercel, GitHub Actions, etc.) just trust the committed
+  // lib/catalog.generated.ts — exit 0 cleanly instead of failing the build.
+  if (!fs.existsSync(MAPPING_PATH) || !fs.existsSync(MANIFEST_PATH)) {
+    console.log(
+      '  · source manifests not present (expected in CI) — using committed lib/catalog.generated.ts',
+    );
+    return;
   }
 
   const mapping = JSON.parse(fs.readFileSync(MAPPING_PATH, 'utf-8')) as MappingFile;
