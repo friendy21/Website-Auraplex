@@ -20,8 +20,13 @@ type Props = {
 
 /**
  * Number that counts up from 0 to `value` when it enters the viewport.
- * Uses a Motion spring under the hood for natural deceleration.
- * Respects prefers-reduced-motion (renders the final value instantly).
+ *
+ * Hydration-safe: server and first client paint both render "0". The spring
+ * (or instant jump for reduced-motion) only fires AFTER hydration, in
+ * useEffect. Previously this component read `window.matchMedia` in a lazy
+ * `useState` initializer, which returned `false` on the server (no window)
+ * but `true` on a client with reduced-motion enabled — branching the DOM and
+ * causing a hydration mismatch.
  */
 export function AnimatedNumber({
   value,
@@ -39,27 +44,31 @@ export function AnimatedNumber({
     damping: 18,
     duration: duration / 1000,
   });
-  // Lazy init reads prefers-reduced-motion once at first render; if the user
-  // wants reduced motion, we render the final value and skip the spring.
-  const [reduce] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  });
-  const [display, setDisplay] = useState(() =>
-    reduce ? formatNumber(value, locale) : '0',
-  );
+  // Always starts at '0' — identical on SSR and first CSR paint.
+  const [display, setDisplay] = useState('0');
+
+  // Drive the animation only AFTER hydration. The reduce-motion check is now
+  // inside the effect, so it can never affect the rendered HTML diff.
+  useEffect(() => {
+    if (!inView) return;
+    const reduce =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) {
+      // Snap both the underlying value and the spring to the target — the
+      // `on('change')` subscription below will fire once and update display.
+      mv.jump(value);
+      spring.jump(value);
+    } else {
+      mv.set(value);
+    }
+  }, [inView, value, mv, spring]);
 
   useEffect(() => {
-    if (reduce) return;
-    if (inView) mv.set(value);
-  }, [inView, value, mv, reduce]);
-
-  useEffect(() => {
-    if (reduce) return;
     return spring.on('change', (latest) => {
       setDisplay(formatNumber(latest, locale));
     });
-  }, [spring, locale, reduce]);
+  }, [spring, locale]);
 
   return (
     <span ref={ref} className={className}>

@@ -1,7 +1,6 @@
 'use client';
 
-import { useState } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 type Props = {
   value: number | string;
@@ -19,11 +18,14 @@ type Props = {
  * underlying value changes. A separate per-position stagger (default 30ms)
  * gives the airport-board cascade.
  *
- * Compared to NumberCounter (which springs a single integer), this is for
- * live values that update over time — the live data ticker, the ROI outputs
- * when sliders move.
+ * Hydration-safe: always renders the same DOM structure (motion span wrapper
+ * + per-char slots) on server and client. Reduced-motion is respected via
+ * `useReducedMotion` inside each FlipSlot — when active, the transition
+ * duration drops to 0 (the flip happens instantly), so the structure stays
+ * the same but the animation is suppressed.
  *
- * Respects prefers-reduced-motion by collapsing to a static render.
+ * Previously branched the DOM via a lazy `useState` reading window.matchMedia
+ * which produced different trees on SSR vs CSR for users with reduced motion.
  */
 export function FlipDigits({
   value,
@@ -31,18 +33,8 @@ export function FlipDigits({
   flipMs = 320,
   staggerMs = 30,
 }: Props) {
-  const [reduce] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  });
-
-  // Split into characters so each can flip independently.
   const str = String(value);
   const chars = str.split('');
-
-  if (reduce) {
-    return <span className={className}>{str}</span>;
-  }
 
   return (
     <span
@@ -70,8 +62,14 @@ function FlipSlot({
   delayMs: number;
   flipMs: number;
 }) {
-  // Each render of a different ch creates a new motion key, triggering the
-  // rotateX flip. AnimatePresence swaps the inner span.
+  // `useReducedMotion` is hydration-safe — returns null on SSR and the first
+  // client paint, then resolves to true|false after mount. We use it to
+  // collapse the flip duration to 0 when the user prefers reduced motion,
+  // without ever changing the rendered DOM structure.
+  const shouldReduce = useReducedMotion();
+  const duration = shouldReduce ? 0 : flipMs / 1000;
+  const delay = shouldReduce ? 0 : delayMs / 1000;
+
   return (
     <span className="relative inline-block" style={{ minWidth: '0.55em' }}>
       <AnimatePresence mode="popLayout" initial={false}>
@@ -81,8 +79,8 @@ function FlipSlot({
           animate={{ rotateX: 0, opacity: 1 }}
           exit={{ rotateX: 90, opacity: 0 }}
           transition={{
-            duration: flipMs / 1000,
-            delay: delayMs / 1000,
+            duration,
+            delay,
             ease: [0.65, 0, 0.35, 1],
           }}
           style={{ display: 'inline-block', transformOrigin: 'center' }}

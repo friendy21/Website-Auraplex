@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 import { motion, useMotionValue, useSpring } from 'motion/react';
 
 type Mode = 'default' | 'link' | 'caliper' | 'button' | 'text';
@@ -10,38 +10,32 @@ type Mode = 'default' | 'link' | 'caliper' | 'button' | 'text';
  * cursor with spring physics. Native cursor stays visible underneath; this
  * is purely additive.
  *
+ * Hydration: renders nothing on the server and on the first client paint
+ * (matches), then mounts the cursor only if the platform supports it
+ * (non-touch, motion allowed). Uses `useSyncExternalStore` so React handles
+ * the SSR/CSR snapshot reconciliation cleanly — no setState in effect, no
+ * hydration warnings.
+ *
  * States detected by traversing the DOM at pointermove:
  *   default → 6px signal dot
  *   link    → 28px ring with center dot
  *   caliper → full crosshair SVG (over data-cursor="caliper")
  *   button  → filled signal disc (over button[type], .btn, [role=button])
  *   text    → narrow I-beam (over text inputs / contenteditable)
- *
- * Skips on touch + reduced-motion. Renders nothing in either case.
- *
- * NOTE: The brief asks for `body { cursor: none }` to fully replace the native
- * cursor. We intentionally do NOT hide the native cursor — when this overlay
- * fails (long task, hydration mismatch, JS error), users would otherwise lose
- * the pointer entirely. To enable full-replacement mode, uncomment the rule
- * in styles/globals.css under "Custom cursor — currently unwired".
  */
 export function CustomCursor() {
+  // All three flags read via useSyncExternalStore — SSR-safe, hydration-safe.
+  const isClient = useIsClient();
+  const prefersReduced = useMediaQuery('(prefers-reduced-motion: reduce)');
+  const isCoarse = useMediaQuery('(pointer: coarse)');
+  const supported = isClient && !prefersReduced && !isCoarse;
+
   const x = useMotionValue(-100);
   const y = useMotionValue(-100);
   const sx = useSpring(x, { stiffness: 500, damping: 32, mass: 0.5 });
   const sy = useSpring(y, { stiffness: 500, damping: 32, mass: 0.5 });
   const [mode, setMode] = useState<Mode>('default');
   const [pressed, setPressed] = useState(false);
-
-  // Lazy init reads platform/preferences once at first render. Avoids the
-  // React 19 set-state-in-effect rule and lets us early-return cleanly.
-  const [supported] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-      return false;
-    if (window.matchMedia('(pointer: coarse)').matches) return false;
-    return true;
-  });
 
   useEffect(() => {
     if (!supported) return;
@@ -50,7 +44,11 @@ export function CustomCursor() {
       if (!el) return 'default';
       if (el.closest('[data-cursor="caliper"]')) return 'caliper';
       const tag = el.tagName.toLowerCase();
-      if (tag === 'input' || tag === 'textarea' || (el as HTMLElement).isContentEditable)
+      if (
+        tag === 'input' ||
+        tag === 'textarea' ||
+        (el as HTMLElement).isContentEditable
+      )
         return 'text';
       const role = el.getAttribute('role');
       if (
@@ -84,9 +82,11 @@ export function CustomCursor() {
     };
   }, [supported, x, y]);
 
+  // Render nothing on the server AND on the first client paint — both are
+  // false-side reads of the external stores. Once those resolve post-mount,
+  // we either render the cursor (supported) or stay null (touch / reduce).
   if (!supported) return null;
 
-  // Per-mode visual specs — single source of truth.
   const cfg: Record<
     Mode,
     {
@@ -178,4 +178,41 @@ export function CustomCursor() {
       </motion.div>
     </motion.div>
   );
+}
+
+// ────────────────────────────────────────────────────────────────────────
+// Hydration-safe client/media-query hooks via useSyncExternalStore
+// ────────────────────────────────────────────────────────────────────────
+
+/**
+ * Returns false on the server and the first client paint, then true after
+ * hydration completes. No setState-in-effect, no hydration warning.
+ */
+function useIsClient(): boolean {
+  return useSyncExternalStore(
+    noopSubscribe,
+    () => true,
+    () => false,
+  );
+}
+
+/**
+ * Subscribes to a CSS media query. SSR/CSR-initial both return false so the
+ * tree is identical; after hydration the real value is read and React swaps
+ * it in cleanly.
+ */
+function useMediaQuery(query: string): boolean {
+  return useSyncExternalStore(
+    (callback) => {
+      const mq = window.matchMedia(query);
+      mq.addEventListener('change', callback);
+      return () => mq.removeEventListener('change', callback);
+    },
+    () => window.matchMedia(query).matches,
+    () => false,
+  );
+}
+
+function noopSubscribe(): () => void {
+  return () => {};
 }
