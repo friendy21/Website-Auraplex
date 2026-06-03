@@ -191,10 +191,15 @@ body {
 :root { --scroll-blur: 0px; }
 .scroll-blur { filter: blur(var(--scroll-blur, 0px)); transition: filter 0.1s linear; }
 
-/* ────────── Marquee (industry strip on /2026) ────────── */
+/* ────────── Marquee (industry strip on /2026, testimonials) ────────── */
 @keyframes scroll-x {
   from { transform: translateX(0); }
-  to   { transform: translateX(-33.3333%); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes scroll-x-reverse {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
 }
 
 /* ────────── Live ticker split-flap ────────── */

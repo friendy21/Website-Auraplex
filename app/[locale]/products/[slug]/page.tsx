@@ -3,10 +3,10 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { setRequestLocale } from 'next-intl/server';
 import { Button } from '@/components/primitives/button';
-import { Reveal } from '@/components/motion/reveal';
 import { QuoteForm } from '@/components/forms/quote-form';
 import { SpecSheetGate } from '@/components/forms/spec-sheet-gate';
 import { RoiCalculator } from '@/components/sections/roi-calculator';
+import { ProductHeroImage } from '@/components/sections/product-hero-image';
 import {
   buildMetadata,
   productSchema,
@@ -75,28 +75,22 @@ export default async function ProductPage({
         }}
       />
 
-      <section className="mx-auto max-w-[1600px] px-6 lg:px-12 pt-40 pb-24 grid grid-cols-12 gap-8">
-        <Reveal variant="scale" className="col-span-12 lg:col-span-7">
-          <div
-            className="relative aspect-[4/3] overflow-hidden border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)]"
-            data-cursor="caliper"
-          >
-            {p.image ? (
-              <Image
-                src={p.image}
-                alt={p.name}
-                fill
-                sizes="(max-width: 1024px) 100vw, 60vw"
-                priority
-                className="object-contain p-12"
-                style={{ viewTransitionName: `product-${p.id}` } as React.CSSProperties}
-              />
-            ) : (
-              <div className="absolute inset-0 flex items-center justify-center font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-neutral-500)]">
+      <section className="mx-auto max-w-[1600px] px-6 lg:px-12 pt-40 pb-24 grid grid-cols-12 gap-8 items-start">
+        {/* Image column is sticky on desktop so it stays anchored while the
+            info column scrolls past it. lg:top accounts for the header. */}
+        <div className="col-span-12 lg:col-span-7 lg:sticky lg:top-24 self-start">
+          {p.image ? (
+            <ProductHeroImage src={p.image} alt={p.name} productId={p.id} />
+          ) : (
+            <div
+              className="relative aspect-[4/3] overflow-hidden border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)] flex items-center justify-center"
+              data-cursor="caliper"
+            >
+              <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-neutral-500)]">
                 Photography pending
               </div>
-            )}
-          </div>
+            </div>
+          )}
 
           {p.gallery.length > 1 && (
             <div className="mt-3 space-y-3">
@@ -121,7 +115,7 @@ export default async function ProductPage({
               </div>
             </div>
           )}
-        </Reveal>
+        </div>
 
         <div className="col-span-12 lg:col-span-5 lg:pl-4 flex flex-col">
           <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-4">

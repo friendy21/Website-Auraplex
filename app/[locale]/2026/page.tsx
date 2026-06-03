@@ -13,6 +13,7 @@ import { whatsappLink } from '@/lib/utils';
 import { AnimatedNumber } from '@/components/motion/animated-number';
 import { Magnetic } from '@/components/motion/magnetic';
 import { ImageReveal } from '@/components/motion/image-reveal';
+import { ScanLine } from '@/components/motion/scan-line';
 
 export async function generateMetadata({
   params,
@@ -344,24 +345,30 @@ export default async function YearInReviewPage({
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[color:var(--color-neutral-200)] border border-[color:var(--color-neutral-200)]">
           {STATS.map((s, i) => (
-            <Reveal
+            // Each stat cell gets a scan-line sweep that fires before the
+            // count-up. The line top→bottom over 600ms; AnimatedNumber begins
+            // counting once it enters view (independent timing).
+            <ScanLine
               key={i}
-              variant="up"
-              delay={i * 50}
-              className="bg-[color:var(--color-paper)] p-8 md:p-12 flex flex-col justify-between min-h-[260px] group hover:bg-[color:var(--color-neutral-100)] transition-colors"
+              direction="down"
+              duration={650}
+              delay={i * 80}
+              className="bg-[color:var(--color-paper)] p-8 md:p-12 min-h-[260px] group hover:bg-[color:var(--color-neutral-100)] transition-colors"
             >
-              <div className="text-[color:var(--color-signal)] text-2xl group-hover:rotate-45 transition-transform duration-500">
-                {s.icon}
-              </div>
-              <div>
-                <div className="font-display text-5xl md:text-7xl tracking-[-0.03em] leading-none mb-3">
-                  <AnimatedNumber value={s.value} suffix={s.suffix} />
+              <div className="flex flex-col justify-between h-full">
+                <div className="text-[color:var(--color-signal)] text-2xl group-hover:rotate-45 transition-transform duration-500">
+                  {s.icon}
                 </div>
-                <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-neutral-500)] leading-relaxed">
-                  {s.label}
+                <div>
+                  <div className="font-display text-5xl md:text-7xl tracking-[-0.03em] leading-none mb-3">
+                    <AnimatedNumber value={s.value} suffix={s.suffix} />
+                  </div>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-neutral-500)] leading-relaxed">
+                    {s.label}
+                  </div>
                 </div>
               </div>
-            </Reveal>
+            </ScanLine>
           ))}
         </div>
       </section>
