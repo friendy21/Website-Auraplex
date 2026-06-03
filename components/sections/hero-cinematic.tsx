@@ -9,8 +9,13 @@ import { Button } from '@/components/primitives/button';
 import { Magnetic } from '@/components/motion/magnetic';
 import { CursorSpotlight } from '@/components/motion/cursor-spotlight';
 import { ShaderGrid } from '@/components/three/shader-grid';
+import { YoutubeHeroBg } from '@/components/sections/youtube-hero-bg';
 import { getFeaturedMachines } from '@/lib/catalog';
 import { whatsappLink } from '@/lib/utils';
+
+// Hero background YouTube video — Auraplex factory floor.
+// Swap this ID to change the hero video; nothing else in the file needs editing.
+const HERO_VIDEO_ID = 'eWdoGP3RS2o';
 
 /**
  * Hero — orchestrated 3.2s entrance timeline:
@@ -44,7 +49,11 @@ export function HeroCinematic() {
   const h1Scale = useTransform(scrollYProgress, [0, 1], [1, 0.85]);
   const h1Y = useTransform(scrollYProgress, [0, 1], [0, -60]);
   const collageY = useTransform(scrollYProgress, [0, 1], [0, -120]);
-  const shaderOpacity = useTransform(scrollYProgress, [0, 0.6], [0.6, 0]);
+  // Shader is now a decorative overlay above the video — lower base opacity
+  // so the video reads through; still fades out as the user scrolls down.
+  const shaderOpacity = useTransform(scrollYProgress, [0, 0.6], [0.3, 0]);
+  // Video also fades as the user scrolls so the next section reads on ink.
+  const videoOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
   const inkOverlayOpacity = useTransform(scrollYProgress, [0, 0.8], [0, 0.7]);
   const signalLineScaleX = useTransform(scrollYProgress, [0, 0.5], [0.1, 1]);
 
@@ -57,29 +66,49 @@ export function HeroCinematic() {
       ref={sectionRef}
       className="relative h-[100dvh] w-full overflow-hidden bg-[color:var(--color-ink)]"
     >
-      {/* Cursor spotlight halo */}
-      <CursorSpotlight size={460} intensity={0.22} />
-
-      {/* WebGL shader background — ramps to 60% over 1.2s, fades on scroll */}
+      {/* ── Layer 0: YouTube factory video — deepest background, fades in
+              over 1.2s after mount (YouTube itself needs ~600ms to start
+              playing, so the fade hides the black-frame flash). ── */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.6 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.2, delay: 0.3, ease: 'easeOut' }}
+        style={{ opacity: videoOpacity }}
+        className="absolute inset-0"
+      >
+        <YoutubeHeroBg id={HERO_VIDEO_ID} title="Auraplex factory floor" />
+      </motion.div>
+
+      {/* ── Layer 1: video darkening + brand wash — ensures legibility of
+              the white headline against any frame of the moving video. ── */}
+      <div className="absolute inset-0 bg-[color:var(--color-ink)]/45 pointer-events-none" />
+
+      {/* Cursor spotlight halo (kept — sits above the darkening layer) */}
+      <CursorSpotlight size={460} intensity={0.22} />
+
+      {/* ── Layer 2: shader grid overlay — now decorative, lower opacity so
+              video reads through. Fades on scroll. ── */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.3 }}
         transition={{ duration: 1.2, ease: 'easeOut' }}
         style={{ opacity: shaderOpacity }}
-        className="absolute inset-0"
+        className="absolute inset-0 pointer-events-none"
       >
         <ShaderGrid />
       </motion.div>
 
-      {/* Ink overlay that floods in as user scrolls */}
+      {/* Ink overlay that floods in as user scrolls past the hero */}
       <motion.div
         style={{ opacity: inkOverlayOpacity }}
         className="absolute inset-0 bg-[color:var(--color-ink)] pointer-events-none"
       />
 
-      {/* Diagonal sweep + edge fades for editorial weight */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[color:var(--color-ink)] via-transparent to-[color:var(--color-ink)] pointer-events-none" />
-      <div className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-[color:var(--color-ink)] via-[color:var(--color-ink)]/70 to-transparent pointer-events-none" />
+      {/* Diagonal sweep + left-edge fade — stronger now because the video is
+          underneath and needs the text-side area heavily darkened. */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[color:var(--color-ink)] via-[color:var(--color-ink)]/30 to-[color:var(--color-ink)] pointer-events-none" />
+      <div className="absolute inset-y-0 left-0 w-2/3 bg-gradient-to-r from-[color:var(--color-ink)] via-[color:var(--color-ink)]/85 to-transparent pointer-events-none" />
+      <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[color:var(--color-ink)] to-transparent pointer-events-none" />
 
       {/* Machine collage — parallaxes on scroll, springs in on load */}
       <motion.div
