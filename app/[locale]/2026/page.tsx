@@ -14,6 +14,7 @@ import { AnimatedNumber } from '@/components/motion/animated-number';
 import { Magnetic } from '@/components/motion/magnetic';
 import { ImageReveal } from '@/components/motion/image-reveal';
 import { ScanLine } from '@/components/motion/scan-line';
+import { WordCloud } from '@/components/sections/word-cloud';
 
 export async function generateMetadata({
   params,
@@ -300,25 +301,7 @@ export default async function YearInReviewPage({
             </h2>
           </Reveal>
 
-          <Reveal variant="fade" delay={150}>
-            <div className="mt-20 flex flex-wrap items-center justify-center gap-x-10 gap-y-8 max-w-5xl mx-auto">
-              {WORD_CLOUD.map((w, i) => (
-                <span
-                  key={i}
-                  className={`font-display tracking-[-0.02em] leading-none ${
-                    w.size === 'lg'
-                      ? 'text-5xl md:text-7xl'
-                      : w.size === 'md'
-                        ? 'text-3xl md:text-5xl'
-                        : 'text-xl md:text-3xl text-[color:var(--color-neutral-500)]'
-                  } ${i % 4 === 0 ? 'text-[color:var(--color-signal)]' : ''}`}
-                  style={{ transform: `rotate(${w.rotate}deg)` }}
-                >
-                  {w.word}
-                </span>
-              ))}
-            </div>
-          </Reveal>
+          <WordCloud words={WORD_CLOUD} />
         </div>
       </section>
 

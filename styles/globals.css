@@ -209,6 +209,30 @@ body {
   display: inline-block;
 }
 
+/* ────────── SVG silhouette stroke draw-in (value-prop 03) ────────── */
+@keyframes draw-stroke {
+  to { stroke-dashoffset: 0; }
+}
+.silhouette [stroke] {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw-stroke 2.2s var(--ease-out) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 80%;
+}
+
+/* ────────── Accordion (Radix) ────────── */
+@keyframes accordion-down {
+  from { height: 0; opacity: 0; }
+  to   { height: var(--radix-accordion-content-height); opacity: 1; }
+}
+@keyframes accordion-up {
+  from { height: var(--radix-accordion-content-height); opacity: 1; }
+  to   { height: 0; opacity: 0; }
+}
+.animate-accordion-down { animation: accordion-down 0.4s var(--ease-out); }
+.animate-accordion-up   { animation: accordion-up 0.3s var(--ease-in); }
+
 /* ────────── Editorial layout helpers ────────── */
 .editorial-grid {
   display: grid;
