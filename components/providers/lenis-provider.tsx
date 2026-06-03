@@ -21,6 +21,17 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
 
     lenis.on('scroll', ScrollTrigger.update);
 
+    // Scroll velocity → CSS var. Elements with class `scroll-blur` will
+    // pick this up via filter: blur(var(--scroll-blur)) (see globals.css).
+    // Clamped to 6px so it never destroys legibility.
+    let last = 0;
+    lenis.on('scroll', ({ scroll }: { scroll: number }) => {
+      const v = Math.abs(scroll - last);
+      last = scroll;
+      const blur = Math.min(v * 0.08, 6);
+      document.documentElement.style.setProperty('--scroll-blur', `${blur}px`);
+    });
+
     const raf = (time: number) => {
       lenis.raf(time * 1000);
     };

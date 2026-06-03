@@ -204,17 +204,21 @@ export default async function ProductsPage({
                 <TiltCard intensity={4}>
                 <Link
                   href={`/products/${p.slug}`}
-                  className="block relative overflow-hidden border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)] transition-all duration-300 hover:border-[color:var(--color-signal)] hover:-translate-y-1 hover:shadow-2xl hover:shadow-[color:var(--color-signal)]/10"
+                  data-cursor="caliper"
+                  className="block relative overflow-hidden border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)] transition-all duration-500 hover:border-[color:var(--color-signal)] hover:-translate-y-1.5 hover:shadow-[0_20px_60px_-15px_color-mix(in_oklab,var(--color-signal)_30%,transparent)]"
                 >
-                  {/* Image area — tighter padding for bigger product */}
+                  {/* Image area — tighter padding so the product fills the frame */}
                   <div className="relative aspect-[4/3] bg-[color:var(--color-neutral-800)] overflow-hidden">
+                    {/* Inky veil — slides UP off the image on hover, revealing the product */}
+                    <div className="absolute inset-0 z-[5] bg-gradient-to-t from-[color:var(--color-ink)]/70 via-[color:var(--color-ink)]/15 to-transparent pointer-events-none transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:-translate-y-full" />
+
                     {p.image ? (
                       <Image
                         src={p.image}
                         alt={p.name}
                         fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-contain p-4 transition-transform duration-700 group-hover:scale-[1.08]"
+                        className="object-contain p-4 transition-all duration-700 group-hover:scale-[1.08] [filter:brightness(0.85)] group-hover:[filter:brightness(1)]"
                         style={
                           {
                             viewTransitionName: `product-${p.id}`,
@@ -231,33 +235,33 @@ export default async function ProductsPage({
                       </div>
                     )}
 
-                    {/* Top-left meta row */}
+                    {/* Top meta row — category morphs to filled signal on hover */}
                     <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2 z-10">
-                      <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-[color:var(--color-signal)] bg-[color:var(--color-ink)]/70 backdrop-blur-sm px-2 py-1">
+                      <div className="font-mono text-[9px] uppercase tracking-[0.25em] bg-[color:var(--color-ink)]/70 backdrop-blur-sm px-2 py-1 text-[color:var(--color-signal)] group-hover:text-[color:var(--color-ink)] group-hover:bg-[color:var(--color-signal)] transition-colors duration-500">
                         {categoryLabel(p.category)}
                       </div>
                       {p.featured && (
-                        <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-[color:var(--color-ink)] bg-[color:var(--color-signal)] px-2 py-1">
+                        <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-[color:var(--color-ink)] bg-[color:var(--color-signal)] px-2 py-1 animate-pulse">
                           ★ Featured
                         </div>
                       )}
                     </div>
 
-                    {/* Bottom-right gallery indicator */}
+                    {/* Bottom-right gallery indicator (fades out on hover so the overlay can take over) */}
                     {p.image && p.gallery.length > 1 && (
                       <div className="absolute bottom-3 right-3 font-mono text-[9px] uppercase tracking-[0.25em] text-[color:var(--color-steel-soft)] bg-[color:var(--color-ink)]/70 backdrop-blur-sm px-2 py-1 z-10 transition-opacity duration-300 group-hover:opacity-0">
                         ◇ {p.gallery.length} shots
                       </div>
                     )}
 
-                    {/* Hover overlay — slides up from bottom with "View →" */}
-                    <div className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] bg-gradient-to-t from-[color:var(--color-ink)] via-[color:var(--color-ink)]/90 to-[color:var(--color-ink)]/0 pt-16 pb-5 px-5 z-10">
+                    {/* "View machine →" overlay — slides up from bottom edge on hover */}
+                    <div className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] bg-gradient-to-t from-[color:var(--color-ink)] via-[color:var(--color-ink)]/90 to-transparent pt-16 pb-5 px-5 z-10">
                       <div className="flex items-center justify-between gap-3">
                         <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[color:var(--color-signal)]">
                           View machine
                         </span>
-                        <span className="font-mono text-sm text-[color:var(--color-signal)] translate-x-0 group-hover:translate-x-1 transition-transform duration-500 delay-100">
-                          →
+                        <span className="font-mono text-sm text-[color:var(--color-signal)] -translate-x-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-500 delay-150">
+                          ⟶
                         </span>
                       </div>
                     </div>

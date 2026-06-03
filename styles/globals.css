@@ -87,20 +87,40 @@ body {
   color: var(--color-paper);
 }
 
-/* ────────── View Transitions API ────────── */
+/* ────────── View Transitions API ──────────
+ * Page navigations: outgoing slides slightly left + blurs, incoming slides
+ * in from right + blurs in. Tight 400ms so users feel responsiveness, not
+ * delay. Shared product image morphs at 600ms with a stronger ease.
+ */
 @view-transition { navigation: auto; }
 
-::view-transition-old(*),
-::view-transition-new(*) {
-  animation-duration: 400ms;
-  animation-timing-function: var(--ease-out);
+::view-transition-old(root) {
+  animation: page-out 400ms var(--ease-in) both;
+}
+::view-transition-new(root) {
+  animation: page-in 400ms var(--ease-out) both;
 }
 
-::view-transition-old(root) { animation-name: vt-fade-out; }
-::view-transition-new(root) { animation-name: vt-fade-in; }
+@keyframes page-out {
+  to {
+    transform: translateX(-3%);
+    opacity: 0;
+    filter: blur(4px);
+  }
+}
+@keyframes page-in {
+  from {
+    transform: translateX(3%);
+    opacity: 0;
+    filter: blur(4px);
+  }
+}
 
-@keyframes vt-fade-out { to { opacity: 0; } }
-@keyframes vt-fade-in  { from { opacity: 0; } }
+/* Shared element morph: product image flying from listing card → detail hero */
+::view-transition-group(*) {
+  animation-duration: 600ms;
+  animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+}
 
 /* ────────── Scroll-driven reveals ────────── */
 @keyframes reveal {
@@ -163,6 +183,13 @@ body {
  *   transition: transform 200ms var(--ease-out);
  * }
  */
+
+/* ────────── Scroll-velocity blur (driven by Lenis) ──────────
+ * LenisProvider writes --scroll-blur on the document root proportional to
+ * scroll velocity. Opt elements in by reading the variable in their filter.
+ */
+:root { --scroll-blur: 0px; }
+.scroll-blur { filter: blur(var(--scroll-blur, 0px)); transition: filter 0.1s linear; }
 
 /* ────────── Marquee (industry strip on /2026) ────────── */
 @keyframes scroll-x {

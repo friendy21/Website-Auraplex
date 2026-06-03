@@ -13,10 +13,10 @@ import { buildMetadata, organizationSchema } from '@/lib/seo';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { WhatsAppButton } from '@/components/layout/whatsapp-button';
-// CustomCursor intentionally unwired — see commit note. Native cursor stays
-// visible everywhere. Re-import + remount inside <body> when a polished
-// caliper-cursor design is ready.
-// import { CustomCursor } from '@/components/motion/custom-cursor';
+// CustomCursor is wired as a VISUAL OVERLAY only — native cursor stays
+// visible underneath. To switch to full-replacement mode, uncomment the
+// `body { cursor: none }` rule in styles/globals.css.
+import { CustomCursor } from '@/components/motion/custom-cursor';
 import { LenisProvider } from '@/components/providers/lenis-provider';
 import { ScrollProgress } from '@/components/layout/scroll-progress';
 import { PageLoader } from '@/components/layout/page-loader';
@@ -134,6 +134,7 @@ export default async function LocaleLayout({
             <Suspense fallback={null}>
               <StickyCta />
             </Suspense>
+            <CustomCursor />
           </LenisProvider>
         </NextIntlClientProvider>
         <SpeedInsights />
