@@ -104,11 +104,12 @@ export default async function AboutPage({
         </Reveal>
         <Reveal variant="up" delay={160}>
           <p>
-            We also build to OPEX. ASEAN factories run tight cash cycles, and a
-            six-figure capital purchase is a meaningful no even when the
-            payback maths is good. So we partnered with MIDA-approved financiers
-            and structured monthly terms that match the unit&apos;s own cash
-            production.
+            The catalogue covers labelling machines, packaging machinery, 3D
+            printers, MES &amp; SCADA solutions, and bespoke automation rigs.
+            What ties them together isn&apos;t a product family — it&apos;s
+            that they&apos;re engineered by people who&apos;ll be on your
+            floor on installation day, and on a WhatsApp call when something
+            needs servicing.
           </p>
         </Reveal>
       </section>

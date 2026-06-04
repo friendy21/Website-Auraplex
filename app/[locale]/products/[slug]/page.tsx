@@ -5,7 +5,11 @@ import { setRequestLocale } from 'next-intl/server';
 import { Button } from '@/components/primitives/button';
 import { QuoteForm } from '@/components/forms/quote-form';
 import { SpecSheetGate } from '@/components/forms/spec-sheet-gate';
-import { RoiCalculator } from '@/components/sections/roi-calculator';
+// RoiCalculator is intentionally unwired — it was built on the fabricated
+// "RM 1,800/month MIDA financing" framing that doesn't reflect Auraplex's
+// real pricing model. When the sales team provides real per-machine pricing
+// tiers, restore the import + JSX block below and update the i18n keys.
+// import { RoiCalculator } from '@/components/sections/roi-calculator';
 import { ProductHeroImage } from '@/components/sections/product-hero-image';
 import {
   buildMetadata,
@@ -218,10 +222,6 @@ export default async function ProductPage({
           </p>
         </section>
       )}
-
-      <section className="mx-auto max-w-[1600px] px-6 lg:px-12 py-24">
-        <RoiCalculator />
-      </section>
 
       <section
         id="quote"

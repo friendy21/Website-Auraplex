@@ -71,9 +71,9 @@ export async function generateMetadata({
     zh: 'Auraplex — 马来西亚精密贴标机',
   };
   const descriptions: Record<Locale, string> = {
-    en: 'Labelling and packaging machines built for ASEAN manufacturers. Local support, OPEX financing, custom automation.',
-    ms: 'Mesin pelabel dan pembungkus untuk pengeluar ASEAN. Sokongan tempatan, pembiayaan OPEX, automasi khusus.',
-    zh: '为东盟制造商提供的贴标和包装机械。本地支持、OPEX 融资、定制自动化。',
+    en: 'Self-adhesive labelling machines, packaging machinery, 3D printing and custom automation — engineered in Shah Alam, Selangor.',
+    ms: 'Mesin pelabel pelekat sendiri, mesin pembungkusan, cetakan 3D dan automasi khusus — direka di Shah Alam, Selangor.',
+    zh: '自粘标签机、包装机械、3D 打印与定制自动化 — 马来西亚雪兰莪莎阿南设计制造。',
   };
   return buildMetadata({
     title: titles[locale],

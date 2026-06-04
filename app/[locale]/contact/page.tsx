@@ -4,10 +4,11 @@ import { Reveal } from '@/components/motion/reveal';
 import { buildMetadata } from '@/lib/seo';
 import { whatsappLink } from '@/lib/utils';
 
-// ⚠ TODO: replace placeholder phone numbers before launch.
-//   - The +60-3-0000-0000 format is intentional placeholder convention.
-//   - WhatsApp number lives in lib/utils.ts → WHATSAPP_NUMBER.
-//   - When real numbers arrive, also update the LocalBusiness JSON-LD below.
+// Contact details mirror the live auraplex.com.my:
+//   Sales hotline: 1700-82-6502
+//   Email:         sales.auraplex@gmail.com
+//   WhatsApp:      via wa.me link (number lives in lib/utils.ts)
+// Verify these are still current before each release.
 
 const DEPARTMENT_LABELS: Record<string, string> = {
   sales: 'Sales team',
@@ -116,29 +117,19 @@ export default async function ContactPage({
 
           <div className="mt-12 space-y-8 font-mono text-sm">
             <Contact
-              label="WhatsApp"
-              value="+60 1X-XXX-XXXX"
-              href={whatsappLink('Hi Auraplex.')}
+              label="Sales hotline"
+              value="1700-82-6502"
+              href="tel:+60317008265026"
             />
             <Contact
               label="Email"
-              value="hello@auraplex.my"
-              href="mailto:hello@auraplex.my"
+              value="sales.auraplex@gmail.com"
+              href="mailto:sales.auraplex@gmail.com"
             />
             <Contact
-              label="Phone · KL"
-              value="+60-3-0000-0000"
-              href="tel:+60300000000"
-            />
-            <Contact
-              label="Phone · JB"
-              value="+60-7-0000-0000"
-              href="tel:+60700000000"
-            />
-            <Contact
-              label="Phone · Penang"
-              value="+60-4-0000-0000"
-              href="tel:+60400000000"
+              label="WhatsApp"
+              value="Send a message"
+              href={whatsappLink('Hi Auraplex, I have an enquiry.')}
             />
           </div>
 

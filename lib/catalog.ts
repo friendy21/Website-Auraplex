@@ -22,7 +22,8 @@ export type Machine = RawMachine & {
   summary: string;
   /** Throughput (units/min). Null until real numbers are supplied. */
   speed: number | null;
-  /** Monthly OPEX price in RM. Null until real numbers are supplied. */
+  /** Monthly quote in RM (where the sales team chooses to publish one).
+   *  Null = "Quote on request" per Auraplex's standard sales process. */
   monthlyPrice: number | null;
   /** Long-form specs. Empty until supplied. */
   specs: { label: string; value: string; unit?: string }[];

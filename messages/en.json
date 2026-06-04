@@ -1,13 +1,12 @@
 {
   "meta": {
     "siteName": "Auraplex",
-    "tagline": "Precision labelling and packaging machines, engineered in Malaysia."
+    "tagline": "Your factory automation solution. Engineered in Selangor."
   },
   "nav": {
     "products": "Products",
     "machineFinder": "Machine Finder",
     "services": "Services",
-    "financing": "Financing",
     "caseStudies": "Case Studies",
     "news": "News",
     "careers": "Careers",
@@ -19,8 +18,8 @@
   },
   "home": {
     "heroH1": "Engineered in Malaysia. Built to outlast the line.",
-    "heroSub": "Precision labelling and packaging machines for ASEAN manufacturers. Local support, OPEX financing from RM 1,800/month, custom automation engineered for your floor.",
-    "heroCallout": "120 units/min · Wrap-around · From RM 1,800/month",
+    "heroSub": "Self-adhesive labelling machines, packaging machinery and custom automation for ASEAN manufacturers. Designed, built, installed and serviced from our floor in Shah Alam.",
+    "heroCallout": "Labelling · Packaging · 3D printing · Custom automation",
     "ctaPrimary": "See the machines",
     "ctaSecondary": "Talk on WhatsApp",
     "ticker": {
@@ -32,8 +31,8 @@
     "valueProps": {
       "title": "Three reasons buyers choose Auraplex",
       "items": [
-        { "num": "01", "title": "Built here.", "body": "Local manufacturing, local engineers, local support. 4-week delivery instead of 6 months from China." },
-        { "num": "02", "title": "OPEX, not CAPEX.", "body": "Financing from RM 1,800/month with MIDA-approved partners. ROI in 14 months." },
+        { "num": "01", "title": "Built here.", "body": "Local manufacturing, local engineers, local support. 4-week delivery instead of months from China." },
+        { "num": "02", "title": "End-to-end automation.", "body": "Labelling, packaging, 3D printing, MES & SCADA — engineered as one solution, not bolted-on pieces." },
         { "num": "03", "title": "Custom by default.", "body": "Every floor is different. We engineer to your container, your throughput, your existing line." }
       ]
     },
@@ -44,7 +43,7 @@
     },
     "machineFinderCta": {
       "title": "Not sure which machine?",
-      "body": "Describe your product and your line. We'll recommend the right machine, financing tier, and timeline.",
+      "body": "Describe your product and your line. We'll recommend the right machine, configuration, and lead time.",
       "cta": "Start Machine Finder"
     },
     "faq": {
@@ -53,7 +52,7 @@
         { "q": "How long is lead time?", "a": "Standard machines ship in 4 weeks from order confirmation. Custom builds are typically 8–12 weeks." },
         { "q": "Do you provide installation?", "a": "Yes. Every machine includes on-site installation, line integration, and operator training across Peninsular Malaysia, Sabah, and Sarawak." },
         { "q": "What's the warranty?", "a": "Two years parts and labour, with optional extended-coverage plans up to five years." },
-        { "q": "Can I finance the purchase?", "a": "Yes — we partner with MIDA-approved financiers offering monthly payments from RM 1,800. Typical payback is 14 months." },
+        { "q": "Do you offer custom configurations?", "a": "Yes — every machine can be tailored to your container shape, throughput target, label material, and existing line topology. Bring a sample to our Shah Alam floor — we'll engineer to your reality." },
         { "q": "Do you handle export documentation?", "a": "Yes — we ship across ASEAN with full CE, SIRIM, and origin documentation." },
         { "q": "What containers do your labellers support?", "a": "Round, oval, square, conical, and custom shapes from 30mm to 250mm diameter. Wrap-around, front-and-back, top, and bottom labelling supported." }
       ]
@@ -77,18 +76,6 @@
     "save": "Save configuration",
     "share": "Share link",
     "requestQuote": "Request quote with this config"
-  },
-  "financing": {
-    "title": "OPEX, not CAPEX.",
-    "subtitle": "Spread the cost. Bank the ROI.",
-    "calculator": {
-      "speed": "Current units/min",
-      "labour": "Labour cost RM/hr",
-      "target": "Target units/min",
-      "payback": "Payback period",
-      "savings": "Annual savings",
-      "roi": "5-year ROI"
-    }
   },
   "forms": {
     "name": "Name",

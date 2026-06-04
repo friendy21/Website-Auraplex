@@ -102,9 +102,6 @@ export function Footer() {
               <FooterLink href="/careers">{t('nav.careers')}</FooterLink>
             </li>
             <li>
-              <FooterLink href="/financing">{t('nav.financing')}</FooterLink>
-            </li>
-            <li>
               <FooterLink href="/2026">{t('nav.yearReview')}</FooterLink>
             </li>
             <li>

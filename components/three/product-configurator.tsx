@@ -115,9 +115,9 @@ export function ProductConfigurator({ modelUrl, productName }: { modelUrl: strin
         </div>
 
         <div className="mt-auto pt-8 border-t border-[color:var(--color-steel)]/30">
-          <div className="font-mono text-xs uppercase tracking-widest text-[color:var(--color-steel)] mb-1">From</div>
+          <div className="font-mono text-xs uppercase tracking-widest text-[color:var(--color-steel)] mb-1">Indicative</div>
           <div className="font-display text-4xl text-[color:var(--color-signal)] mb-1">{formatRM(monthlyPrice)}</div>
-          <div className="font-mono text-xs text-[color:var(--color-steel)] mb-6">/month · 60 mo · MIDA financing</div>
+          <div className="font-mono text-xs text-[color:var(--color-steel)] mb-6">Quote on request · sales.auraplex@gmail.com</div>
 
           <Button className="w-full mb-3">Request quote</Button>
           <Button variant="ghost" className="w-full">Share configuration</Button>

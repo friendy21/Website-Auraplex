@@ -52,28 +52,43 @@ export function ValuePropGrid() {
         </Reveal>
       )}
 
-      {/* ────────── 02 — RIGHT-ALIGNED w/ FLAGSHIP NUMBER ────────── */}
+      {/* ────────── 02 — RIGHT-ALIGNED w/ CAPABILITY STACK ────────── */}
       {two && (
         <div className="grid grid-cols-12 gap-6 items-center">
           <Reveal variant="up" className="col-span-12 md:col-span-5 order-2 md:order-1">
             <div className="border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)]/40 p-8 md:p-10">
               <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)] mb-4">
-                From
+                Under one roof
               </div>
-              <div className="font-display text-[clamp(3.5rem,9vw,7rem)] tracking-[-0.03em] leading-none text-[color:var(--color-signal)]">
-                RM{' '}
-                <AnimatedNumber value={1800} />
-              </div>
-              <div className="font-mono text-xs uppercase tracking-[0.25em] text-[color:var(--color-steel-soft)] mt-2">
-                per month · MIDA-approved financing
-              </div>
+              <ul className="space-y-3 font-display text-2xl md:text-3xl tracking-[-0.01em] leading-tight">
+                <li className="flex items-baseline gap-3">
+                  <span className="text-[color:var(--color-signal)] text-base">◆</span>
+                  Self-adhesive labelling
+                </li>
+                <li className="flex items-baseline gap-3">
+                  <span className="text-[color:var(--color-signal)] text-base">◆</span>
+                  Packaging machinery
+                </li>
+                <li className="flex items-baseline gap-3">
+                  <span className="text-[color:var(--color-signal)] text-base">◆</span>
+                  3D printing & scanning
+                </li>
+                <li className="flex items-baseline gap-3">
+                  <span className="text-[color:var(--color-signal)] text-base">◆</span>
+                  MES &amp; SCADA solutions
+                </li>
+                <li className="flex items-baseline gap-3">
+                  <span className="text-[color:var(--color-signal)] text-base">◆</span>
+                  Custom automation
+                </li>
+              </ul>
 
               <div className="mt-10 pt-8 border-t border-[color:var(--color-neutral-700)]">
                 <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)] mb-3">
-                  Average payback
+                  Typical lead time
                 </div>
                 <div className="font-display text-5xl text-[color:var(--color-paper)]">
-                  <AnimatedNumber value={14} suffix=" months" />
+                  <AnimatedNumber value={4} suffix=" weeks" />
                 </div>
               </div>
             </div>

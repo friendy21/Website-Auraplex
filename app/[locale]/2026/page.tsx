@@ -34,28 +34,28 @@ export async function generateMetadata({
 // Data — drawn from lib/catalog and real Auraplex facts. No fabrication.
 // ────────────────────────────────────────────────────────────────────────
 
+// Industries mirror the actual Auraplex customer base per auraplex.com.my.
 const INDUSTRIES = [
   'Food & Beverage',
   'Pharmaceuticals',
+  'Medical Devices',
   'Cosmetics',
-  'Personal Care',
-  'Beverage',
-  'Agriculture',
-  'Electronics',
-  'Chemicals',
-  'Lubricants',
-  'Confectionery',
-  'Nutraceuticals',
+  'Printing',
+  'Plastic Molding',
+  'Logistics',
+  'Bakery',
+  'Lubricant Oil',
+  'Edible Oil',
 ];
 
 const WORD_CLOUD: { word: string; size: 'sm' | 'md' | 'lg'; rotate: number }[] = [
   { word: 'precise', size: 'lg', rotate: -3 },
   { word: 'local', size: 'md', rotate: 2 },
   { word: 'built here', size: 'lg', rotate: -1 },
-  { word: 'MIDA-approved', size: 'sm', rotate: 4 },
+  { word: 'integrated', size: 'sm', rotate: 4 },
   { word: 'wrap-around', size: 'md', rotate: -2 },
   { word: 'custom', size: 'lg', rotate: 1 },
-  { word: 'OPEX', size: 'sm', rotate: -4 },
+  { word: 'measurable', size: 'sm', rotate: -4 },
   { word: 'fast lead time', size: 'md', rotate: 3 },
   { word: 'reliable', size: 'lg', rotate: -2 },
   { word: 'serviceable', size: 'md', rotate: 1 },
