@@ -11,6 +11,7 @@ import { TestimonialMarquee } from '@/components/sections/testimonial-marquee';
 import { FaqSection } from '@/components/sections/faq-section';
 import { CloserSection } from '@/components/sections/closer-section';
 import { ZoomTransition } from '@/components/motion/zoom-transition';
+import { ScrollDrawLine } from '@/components/motion/scroll-draw-line';
 
 export default async function Home({
   params,
@@ -33,6 +34,7 @@ export default async function Home({
     <>
       <HeroCinematic />
       <ManifestoSection />
+      <ScrollDrawLine label="The line — Shah Alam to your floor" />
       <LiveDataTicker stats={stats} />
       <ValuePropGrid />
       <ProductShowcase />
