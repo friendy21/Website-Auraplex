@@ -102,33 +102,25 @@ body {
  * ────────────────────────────────────────────────────────────────────────── */
 @view-transition { navigation: auto; }
 
+/* "Power-on" choreography — ON.energy / breaker-flip feel.
+   Old page cuts to black with a hard left-wipe; new page powers on as a
+   horizontal clip from the left edge. Hard, mechanical, no softness. */
 ::view-transition-old(root) {
-  animation: page-out 360ms var(--ease-in) both;
+  animation: power-cut 350ms var(--ease-transition) both;
 }
 ::view-transition-new(root) {
-  animation: page-in 500ms var(--ease-transition) both;
+  animation: power-on 500ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-@keyframes page-out {
+@keyframes power-cut {
   to {
-    transform: translateX(-2%) scale(0.985);
-    opacity: 0;
-    filter: blur(4px);
+    clip-path: inset(0 100% 0 0);
+    opacity: 0.4;
   }
 }
-@keyframes page-in {
-  from {
-    transform: translateY(40px);
-    opacity: 0;
-    filter: blur(4px);
-    clip-path: polygon(0 8%, 0 0, 8% 0, 100% 100%, 92% 100%, 0 100%);
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-    filter: blur(0);
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 100% 100%, 0 100%, 0 100%);
-  }
+@keyframes power-on {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0% 0 0); }
 }
 
 /* Shared element morph: product image flying from listing card → detail hero */
@@ -155,6 +147,56 @@ body {
 .reveal       { animation: reveal       linear both; animation-timeline: view(); animation-range: entry 0% entry 60%; }
 .reveal-up    { animation: reveal-up    linear both; animation-timeline: view(); animation-range: entry 0% entry 50%; }
 .reveal-scale { animation: reveal-scale linear both; animation-timeline: view(); animation-range: entry 0% entry 50%; }
+
+/* ── v3 reveal classes — clip / weight / blur / slam ──
+   Each rides animation-timeline: view() so the timing is scroll-position
+   not wall-clock. Browsers without scroll-driven animations support
+   (Safari <17.4) fall back to the static end state because of "both". */
+
+/* Clip wipe — content reveals from the left edge */
+.reveal-clip {
+  animation: reveal-clip linear both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 55%;
+}
+@keyframes reveal-clip {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0% 0 0); }
+}
+
+/* Variable-font weight sweep — pairs with Fraunces wght axis */
+.reveal-weight {
+  animation: reveal-weight linear both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 60%;
+}
+@keyframes reveal-weight {
+  from { font-variation-settings: 'wght' 100; opacity: 0.3; }
+  to   { font-variation-settings: 'wght' 700; opacity: 1; }
+}
+
+/* Focus pull — sharp from soft, with subtle scale */
+.reveal-blur {
+  animation: reveal-blur linear both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 50%;
+}
+@keyframes reveal-blur {
+  from { filter: blur(8px); opacity: 0; transform: scale(1.04); }
+  to   { filter: blur(0px); opacity: 1; transform: scale(1); }
+}
+
+/* Number slam — overshoot landing, like a stamp hitting metal */
+.reveal-slam {
+  animation: reveal-slam linear both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 45%;
+}
+@keyframes reveal-slam {
+  from { transform: scale(1.25); opacity: 0; }
+  60%  { transform: scale(0.97); opacity: 1; }
+  to   { transform: scale(1); opacity: 1; }
+}
 
 /* ──────────────────────────────────────────────────────────────────────────
  * Focus rings — signal-coloured, generous offset

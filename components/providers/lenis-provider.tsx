@@ -7,6 +7,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
+/**
+ * Module-level scroll-velocity ref. Lenis writes to this on every scroll
+ * tick (cheap, no React re-renders). Anyone who needs scroll velocity
+ * (ParticleMesh, etc.) reads it from here every frame. Velocity is in
+ * pixels-per-frame at 60fps — typical range 0–80 during fast scroll.
+ */
+export const lenisScrollVel: { current: number } = { current: 0 };
+
 export function LenisProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -28,6 +36,7 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
     lenis.on('scroll', ({ scroll }: { scroll: number }) => {
       const v = Math.abs(scroll - last);
       last = scroll;
+      lenisScrollVel.current = v;
       const blur = Math.min(v * 0.08, 6);
       document.documentElement.style.setProperty('--scroll-blur', `${blur}px`);
     });

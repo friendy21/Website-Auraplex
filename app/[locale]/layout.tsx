@@ -17,6 +17,7 @@ import { WhatsAppButton } from '@/components/layout/whatsapp-button';
 // visible underneath. To switch to full-replacement mode, uncomment the
 // `body { cursor: none }` rule in styles/globals.css.
 import { CustomCursor } from '@/components/motion/custom-cursor';
+import { TransitionWipe } from '@/components/layout/transition-wipe';
 import { LenisProvider } from '@/components/providers/lenis-provider';
 import { AtmosphereProvider } from '@/components/providers/atmosphere-provider';
 import { ScrollProgress } from '@/components/layout/scroll-progress';
@@ -137,6 +138,7 @@ export default async function LocaleLayout({
                 <StickyCta />
               </Suspense>
               <CustomCursor />
+              <TransitionWipe />
             </AtmosphereProvider>
           </LenisProvider>
         </NextIntlClientProvider>

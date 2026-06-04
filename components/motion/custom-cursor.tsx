@@ -10,21 +10,25 @@ type Mode = 'default' | 'link' | 'caliper' | 'button' | 'text';
  * cursor with spring physics. Native cursor stays visible underneath; this
  * is purely additive.
  *
+ * v3 visual language:
+ *   - default: 12px cerulean ring (precision feel, not a dot)
+ *   - link:    48px ring filled at 10% with a 6px centre dot
+ *   - caliper: 56px crosshair SVG with tick marks (mix-blend difference
+ *     so it reads on any image)
+ *   - button:  44px filled signal disc with an inner plus glyph
+ *   - text:    20px I-beam (thin vertical bar with serifs)
+ *
+ * Cursor trail (adelt.io / flightstory feel): four ghost dots follow the
+ * main cursor with progressively softer springs. Opacity decays from 0.30
+ * to 0.05. Disabled in caliper/button modes to keep the cursor clean when
+ * over interactive elements.
+ *
  * Hydration: renders nothing on the server and on the first client paint
  * (matches), then mounts the cursor only if the platform supports it
  * (non-touch, motion allowed). Uses `useSyncExternalStore` so React handles
- * the SSR/CSR snapshot reconciliation cleanly — no setState in effect, no
- * hydration warnings.
- *
- * States detected by traversing the DOM at pointermove:
- *   default → 6px signal dot
- *   link    → 28px ring with center dot
- *   caliper → full crosshair SVG (over data-cursor="caliper")
- *   button  → filled signal disc (over button[type], .btn, [role=button])
- *   text    → narrow I-beam (over text inputs / contenteditable)
+ * the SSR/CSR snapshot reconciliation cleanly.
  */
 export function CustomCursor() {
-  // All three flags read via useSyncExternalStore — SSR-safe, hydration-safe.
   const isClient = useIsClient();
   const prefersReduced = useMediaQuery('(prefers-reduced-motion: reduce)');
   const isCoarse = useMediaQuery('(pointer: coarse)');
@@ -34,6 +38,17 @@ export function CustomCursor() {
   const y = useMotionValue(-100);
   const sx = useSpring(x, { stiffness: 500, damping: 32, mass: 0.5 });
   const sy = useSpring(y, { stiffness: 500, damping: 32, mass: 0.5 });
+
+  // Four trail dots — each progressively softer, creating a comet tail.
+  const tx1 = useSpring(x, { stiffness: 400, damping: 40 });
+  const ty1 = useSpring(y, { stiffness: 400, damping: 40 });
+  const tx2 = useSpring(x, { stiffness: 200, damping: 30 });
+  const ty2 = useSpring(y, { stiffness: 200, damping: 30 });
+  const tx3 = useSpring(x, { stiffness: 100, damping: 25 });
+  const ty3 = useSpring(y, { stiffness: 100, damping: 25 });
+  const tx4 = useSpring(x, { stiffness: 50, damping: 20 });
+  const ty4 = useSpring(y, { stiffness: 50, damping: 20 });
+
   const [mode, setMode] = useState<Mode>('default');
   const [pressed, setPressed] = useState(false);
 
@@ -82,11 +97,6 @@ export function CustomCursor() {
     };
   }, [supported, x, y]);
 
-  // Render nothing on the server AND on the first client paint — both are
-  // false-side reads of the external stores. Once those resolve post-mount,
-  // we either render the cursor (supported) or stay null (touch / reduce).
-  // We also toggle a class on <html> so globals.css can hide the native
-  // cursor only when the overlay is actually active.
   useEffect(() => {
     if (!supported) return;
     document.documentElement.classList.add('cursor-custom');
@@ -104,55 +114,71 @@ export function CustomCursor() {
     }
   > = {
     default: {
-      size: 8,
+      size: 12,
       content: (
-        <div className="h-full w-full rounded-full bg-[color:var(--color-signal)]" />
+        <div className="h-full w-full rounded-full border border-[color:var(--color-signal)] opacity-80" />
       ),
     },
     link: {
-      size: 28,
+      size: 48,
       content: (
-        <div className="h-full w-full rounded-full border border-[color:var(--color-signal)] flex items-center justify-center">
-          <div className="h-1 w-1 rounded-full bg-[color:var(--color-signal)]" />
-        </div>
-      ),
-    },
-    button: {
-      size: 36,
-      content: (
-        <div className="h-full w-full rounded-full bg-[color:var(--color-signal)] flex items-center justify-center">
-          <span className="font-mono text-[8px] uppercase tracking-widest text-[color:var(--color-ink)]">
-            ●
-          </span>
+        <div className="h-full w-full rounded-full border border-[color:var(--color-signal)] bg-[color:var(--color-signal)]/10 flex items-center justify-center">
+          <div className="h-1.5 w-1.5 rounded-full bg-[color:var(--color-signal)]" />
         </div>
       ),
     },
     caliper: {
-      size: 36,
+      size: 56,
       mixBlend: 'difference',
       content: (
         <svg
-          viewBox="0 0 36 36"
-          width="36"
-          height="36"
+          viewBox="0 0 56 56"
+          width="56"
+          height="56"
           fill="none"
           stroke="currentColor"
-          strokeWidth="1.25"
-          className="text-[color:var(--color-paper)]"
+          strokeWidth="1"
+          className="text-white"
         >
-          <circle cx="18" cy="18" r="16" />
-          <path d="M18 2v10M18 24v10M2 18h10M24 18h10" />
-          <circle cx="18" cy="18" r="1.25" fill="currentColor" />
+          <circle cx="28" cy="28" r="26" strokeOpacity="0.6" />
+          <line x1="28" y1="2" x2="28" y2="14" />
+          <line x1="28" y1="42" x2="28" y2="54" />
+          <line x1="2" y1="28" x2="14" y2="28" />
+          <line x1="42" y1="28" x2="54" y2="28" />
+          <circle cx="28" cy="28" r="1.5" fill="currentColor" stroke="none" />
+          <line x1="28" y1="16" x2="28" y2="20" strokeOpacity="0.4" />
+          <line x1="28" y1="36" x2="28" y2="40" strokeOpacity="0.4" />
+          <line x1="16" y1="28" x2="20" y2="28" strokeOpacity="0.4" />
+          <line x1="36" y1="28" x2="40" y2="28" strokeOpacity="0.4" />
         </svg>
       ),
     },
+    button: {
+      size: 44,
+      content: (
+        <div className="h-full w-full rounded-full bg-[color:var(--color-signal)] flex items-center justify-center">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            stroke="white"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          >
+            <line x1="7" y1="1" x2="7" y2="13" />
+            <line x1="1" y1="7" x2="13" y2="7" />
+          </svg>
+        </div>
+      ),
+    },
     text: {
-      size: 24,
+      size: 20,
       content: (
         <div className="relative h-full w-full flex items-center justify-center">
           <div className="w-px h-full bg-[color:var(--color-signal)]" />
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-px bg-[color:var(--color-signal)]" />
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-px bg-[color:var(--color-signal)]" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2.5 h-px bg-[color:var(--color-signal)]" />
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2.5 h-px bg-[color:var(--color-signal)]" />
         </div>
       ),
     },
@@ -161,30 +187,67 @@ export function CustomCursor() {
   const c = cfg[mode];
   const scale = pressed ? 0.78 : mode === 'button' ? 1.05 : 1;
 
+  // Trail is only visible in default + link + text modes — when the cursor
+  // is small or precision-oriented. Over buttons or caliper-tagged images
+  // a comet tail would be visually noisy.
+  const showTrail = mode === 'default' || mode === 'text';
+
+  const trail = [
+    { x: tx1, y: ty1, size: 6, opacity: 0.3 },
+    { x: tx2, y: ty2, size: 5, opacity: 0.2 },
+    { x: tx3, y: ty3, size: 4, opacity: 0.12 },
+    { x: tx4, y: ty4, size: 4, opacity: 0.05 },
+  ];
+
   return (
-    <motion.div
-      aria-hidden
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        x: sx,
-        y: sy,
-        translateX: '-50%',
-        translateY: '-50%',
-        pointerEvents: 'none',
-        zIndex: 9999,
-        mixBlendMode: c.mixBlend,
-      }}
-    >
+    <>
+      {showTrail &&
+        trail.map((t, i) => (
+          <motion.div
+            key={i}
+            aria-hidden
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              x: t.x,
+              y: t.y,
+              translateX: '-50%',
+              translateY: '-50%',
+              width: t.size,
+              height: t.size,
+              borderRadius: '50%',
+              backgroundColor: 'var(--color-signal)',
+              opacity: t.opacity,
+              pointerEvents: 'none',
+              zIndex: 9998,
+            }}
+          />
+        ))}
       <motion.div
-        animate={{ scale, width: c.size, height: c.size }}
-        transition={{ type: 'spring', stiffness: 380, damping: 26 }}
-        style={{ width: c.size, height: c.size }}
+        aria-hidden
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          x: sx,
+          y: sy,
+          translateX: '-50%',
+          translateY: '-50%',
+          pointerEvents: 'none',
+          zIndex: 9999,
+          mixBlendMode: c.mixBlend,
+        }}
       >
-        {c.content}
+        <motion.div
+          animate={{ scale, width: c.size, height: c.size }}
+          transition={{ type: 'spring', stiffness: 380, damping: 26 }}
+          style={{ width: c.size, height: c.size }}
+        >
+          {c.content}
+        </motion.div>
       </motion.div>
-    </motion.div>
+    </>
   );
 }
 
@@ -192,10 +255,6 @@ export function CustomCursor() {
 // Hydration-safe client/media-query hooks via useSyncExternalStore
 // ────────────────────────────────────────────────────────────────────────
 
-/**
- * Returns false on the server and the first client paint, then true after
- * hydration completes. No setState-in-effect, no hydration warning.
- */
 function useIsClient(): boolean {
   return useSyncExternalStore(
     noopSubscribe,
@@ -204,11 +263,6 @@ function useIsClient(): boolean {
   );
 }
 
-/**
- * Subscribes to a CSS media query. SSR/CSR-initial both return false so the
- * tree is identical; after hydration the real value is read and React swaps
- * it in cleanly.
- */
 function useMediaQuery(query: string): boolean {
   return useSyncExternalStore(
     (callback) => {

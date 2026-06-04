@@ -8,8 +8,15 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@/components/primitives/button';
 import { Magnetic } from '@/components/motion/magnetic';
 import { CursorSpotlight } from '@/components/motion/cursor-spotlight';
-import { ShaderGrid } from '@/components/three/shader-grid';
+import dynamic from 'next/dynamic';
 import { HeroParticles } from '@/components/sections/hero-particles';
+
+// ParticleMesh ships Three.js — keep it out of the server bundle and the
+// initial JS payload. Lazy-loaded after first paint.
+const ParticleMesh = dynamic(
+  () => import('@/components/three/particle-mesh').then((m) => m.ParticleMesh),
+  { ssr: false },
+);
 import { YoutubeHeroBg } from '@/components/sections/youtube-hero-bg';
 import { getFeaturedMachines } from '@/lib/catalog';
 import { whatsappLink } from '@/lib/utils';
@@ -92,15 +99,17 @@ export function HeroCinematic() {
       {/* Cursor spotlight halo */}
       <CursorSpotlight size={420} intensity={0.2} />
 
-      {/* ── Layer 2: shader grid overlay ── */}
+      {/* ── Layer 2: ParticleMesh — replaces ShaderGrid (v3). 4000-point
+              R3F field with cursor repulsion + scroll-velocity ripple.
+              Hidden below sm to protect mobile perf. ── */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.45 }}
+        animate={{ opacity: 0.6 }}
         transition={{ duration: 1.6, ease: 'easeOut' }}
         style={{ opacity: shaderOpacity }}
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 hidden sm:block"
       >
-        <ShaderGrid />
+        <ParticleMesh opacity={1} />
       </motion.div>
 
       {/* Ink overlay that floods in as user scrolls past the hero */}
