@@ -9,7 +9,7 @@ import {
   useScroll,
   useMotionValueEvent,
 } from 'motion/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/primitives/button';
 import { LanguageSwitcher } from './language-switcher';
@@ -53,6 +53,22 @@ export function Header() {
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, 'change', (y) => setScrolled(y > 40));
+
+  // Lock body scroll while the mobile menu is open so touch events don't
+  // bleed through to the page underneath. Also closes the menu on Escape.
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
 
   return (
     <motion.header
@@ -108,27 +124,38 @@ export function Header() {
           </Button>
         </div>
 
-        {/* Mobile toggle */}
-        <button
-          className="lg:hidden text-[color:var(--color-paper)] relative h-6 w-6 z-[60]"
-          onClick={() => setOpen(!open)}
-          aria-label={tCommon('menuToggle')}
-          aria-expanded={open}
-        >
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.span
-              key={open ? 'x' : 'menu'}
-              initial={{ rotate: -90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: 90, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="absolute inset-0 flex items-center justify-center"
-            >
-              {open ? <X /> : <Menu />}
-            </motion.span>
-          </AnimatePresence>
-        </button>
+        {/* Spacer to balance flexbox where the toggle button used to live.
+            The actual toggle is rendered outside the toolbar (see below) so
+            that it can sit above the mobile-menu z-stacking context. */}
+        <div className="lg:hidden h-10 w-10" aria-hidden="true" />
       </motion.div>
+
+      {/* Mobile toggle — rendered AS A SIBLING of the menu (not inside the
+          toolbar) so its z-index actually applies above the menu panel.
+          Previously the button was nested inside the toolbar motion.div,
+          which created a sub-stacking context that buried it behind the
+          menu's z-[55] when open. Position fixed keeps it at the same
+          screen location whether the header has collapsed or not, and the
+          h-10 w-10 hit area gives it a proper 40×40 tap target. */}
+      <button
+        className="lg:hidden fixed top-5 right-5 h-10 w-10 z-[70] flex items-center justify-center text-[color:var(--color-paper)]"
+        onClick={() => setOpen(!open)}
+        aria-label={tCommon('menuToggle')}
+        aria-expanded={open}
+      >
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.span
+            key={open ? 'x' : 'menu'}
+            initial={{ rotate: -90, opacity: 0 }}
+            animate={{ rotate: 0, opacity: 1 }}
+            exit={{ rotate: 90, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="absolute inset-0 flex items-center justify-center"
+          >
+            {open ? <X /> : <Menu />}
+          </motion.span>
+        </AnimatePresence>
+      </button>
 
       {/* Mobile menu — full-bleed slide from right with massive type */}
       <AnimatePresence>
