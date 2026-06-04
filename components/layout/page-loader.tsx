@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { AnimatePresence, motion } from 'motion/react';
 
 /**
@@ -77,17 +78,26 @@ export function PageLoader() {
               />
             </motion.svg>
 
-            {/* Pulsing dot */}
+            {/* Pulsing brandmark — sits inside the traced ring, scales
+                with a spring breath so the loader reads as "alive" */}
             <motion.div
-              className="h-3 w-3 bg-[color:var(--color-signal)]"
-              initial={{ scale: 1 }}
-              animate={{ scale: [1, 1.25, 1] }}
+              className="relative h-10 w-9"
+              initial={{ scale: 0.92, opacity: 0 }}
+              animate={{ scale: [1, 1.08, 1], opacity: 1 }}
               transition={{
-                duration: 0.6,
-                repeat: Infinity,
-                ease: 'easeInOut',
+                scale: { duration: 1.2, repeat: Infinity, ease: 'easeInOut' },
+                opacity: { duration: 0.4, ease: 'easeOut' },
               }}
-            />
+            >
+              <Image
+                src="/brand/auraplex-logo.png"
+                alt=""
+                fill
+                sizes="40px"
+                priority
+                className="object-contain"
+              />
+            </motion.div>
 
             {/* Wordmark */}
             <motion.span

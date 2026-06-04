@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import {
   AnimatePresence,
@@ -71,12 +72,21 @@ export function Header() {
         className="mx-auto flex max-w-[1600px] items-center justify-between px-6 lg:px-12"
       >
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
+        <Link href="/" className="flex items-center gap-3 group" aria-label="Auraplex — home">
           <motion.div
-            className="h-2 w-2 bg-[color:var(--color-signal)]"
-            whileHover={{ scale: 1.5, rotate: 45 }}
+            whileHover={{ rotate: -8 }}
             transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-          />
+            className="relative h-8 w-7 shrink-0"
+          >
+            <Image
+              src="/brand/auraplex-logo.png"
+              alt=""
+              fill
+              sizes="32px"
+              priority
+              className="object-contain object-left"
+            />
+          </motion.div>
           <span className="font-mono uppercase tracking-[0.2em] text-sm relative">
             Auraplex
             <span className="absolute -bottom-0.5 left-0 right-0 h-px bg-[color:var(--color-signal)] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)]" />
