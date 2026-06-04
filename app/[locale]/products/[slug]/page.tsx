@@ -11,6 +11,7 @@ import { SpecSheetGate } from '@/components/forms/spec-sheet-gate';
 // reconnect a rewritten version here.
 // import { RoiCalculator } from '@/components/sections/roi-calculator';
 import { ProductHeroImage } from '@/components/sections/product-hero-image';
+import { SpecTable } from '@/components/sections/spec-table';
 import {
   buildMetadata,
   productSchema,
@@ -136,19 +137,9 @@ export default async function ProductPage({
           </p>
 
           {p.specs.length > 0 && (
-            <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-4 font-mono text-sm border-y border-[color:var(--color-neutral-700)] py-6">
-              {p.specs.slice(0, 6).map((s, i) => (
-                <div key={i}>
-                  <dt className="text-[10px] uppercase tracking-widest text-[color:var(--color-steel)]">
-                    {s.label}
-                  </dt>
-                  <dd className="text-[color:var(--color-paper)]">
-                    {s.value}
-                    {s.unit && ` ${s.unit}`}
-                  </dd>
-                </div>
-              ))}
-            </dl>
+            <div className="mt-10 border-y border-[color:var(--color-neutral-700)] py-2">
+              <SpecTable specs={p.specs.slice(0, 6)} />
+            </div>
           )}
 
           <div className="mt-8">
@@ -193,21 +184,7 @@ export default async function ProductPage({
           <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6">
             — Specifications
           </div>
-          <table className="w-full font-mono text-sm">
-            <tbody>
-              {p.specs.map((s, i) => (
-                <tr key={i} className={i % 2 ? 'bg-[color:var(--color-neutral-800)]' : ''}>
-                  <td className="py-3 px-4 text-[color:var(--color-steel)] uppercase text-[10px] tracking-widest w-1/3">
-                    {s.label}
-                  </td>
-                  <td className="py-3 px-4">
-                    {s.value}
-                    {s.unit && ` ${s.unit}`}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <SpecTable specs={p.specs} />
         </section>
       ) : (
         <section className="mx-auto max-w-[1600px] px-6 lg:px-12 py-24 border-t border-[color:var(--color-neutral-700)]">

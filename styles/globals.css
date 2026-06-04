@@ -166,10 +166,13 @@ body {
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
- * Custom cursor — wired via <CustomCursor/> in layout.tsx. The overlay
- * draws its own caliper/circle/dot and we keep the native cursor visible
- * underneath so users never lose pointer feedback. No cursor:none rules.
+ * Custom cursor — wired via <CustomCursor/> in layout.tsx.
+ * When the component mounts successfully (non-touch, motion allowed) it
+ * adds the .cursor-custom class to <html>. That class hides the native
+ * cursor so the custom overlay reads clearly. Touch / reduced-motion
+ * users keep the native cursor — no risk of a "missing pointer" bug.
  * ────────────────────────────────────────────────────────────────────────── */
+html.cursor-custom body { cursor: none; }
 
 /* ──────────────────────────────────────────────────────────────────────────
  * Scroll-velocity blur (driven by Lenis)
@@ -360,6 +363,47 @@ body {
 }
 .ping-signal {
   animation: ping-signal 2s var(--ease-out) infinite;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+ * Atmospheric layers — consumed by <AtmosphereProvider/>. Three fixed,
+ * pointer-events:none overlays that give the ink background depth.
+ * AtmosphereProvider skips rendering them when prefers-reduced-motion is
+ * set, so the keyframes here only ever animate when the user opted in.
+ * ────────────────────────────────────────────────────────────────────────── */
+.atmosphere-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+}
+.atmosphere-vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 80% 70% at 50% 50%,
+    transparent 38%,
+    color-mix(in oklab, var(--color-ink) 70%, transparent) 100%
+  );
+  animation: vignette-breathe 8s var(--ease-out) infinite;
+}
+.atmosphere-fog {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  height: 40vh;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    color-mix(in oklab, var(--color-signal-deep) 18%, transparent) 0%,
+    transparent 100%
+  );
+  opacity: 0.45;
 }
 
 /* ── .breathing-vignette ──────────────────────────────────────────────────

@@ -1,17 +1,8 @@
-import Link from 'next/link';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
-import { TiltCard } from '@/components/motion/tilt-card';
-import { SortTabs } from '@/components/sections/sort-tabs';
-import { ParallaxProductImage } from '@/components/sections/parallax-product-image';
+import { ProductsGrid } from '@/components/sections/products-grid';
 import { buildMetadata, breadcrumbSchema } from '@/lib/seo';
-import {
-  MACHINES,
-  categoryCounts,
-  machineTags,
-  type Category,
-  type Machine,
-} from '@/lib/catalog';
+import { MACHINES, categoryCounts, type Category } from '@/lib/catalog';
 
 export async function generateMetadata({
   params,
@@ -28,26 +19,6 @@ export async function generateMetadata({
 }
 
 type SortKey = 'featured' | 'photographed' | 'az';
-const SORT_KEYS: SortKey[] = ['featured', 'photographed', 'az'];
-
-function sortMachines(machines: Machine[], sort: SortKey): Machine[] {
-  const arr = [...machines];
-  if (sort === 'az') {
-    return arr.sort((a, b) => a.name.localeCompare(b.name));
-  }
-  if (sort === 'photographed') {
-    return arr.sort((a, b) => {
-      if (!!a.image !== !!b.image) return a.image ? -1 : 1;
-      return a.name.localeCompare(b.name);
-    });
-  }
-  // Featured default — featured first, then photographed, then name
-  return arr.sort((a, b) => {
-    if (a.featured !== b.featured) return a.featured ? -1 : 1;
-    if (!!a.image !== !!b.image) return a.image ? -1 : 1;
-    return a.name.localeCompare(b.name);
-  });
-}
 
 export default async function ProductsPage({
   params,
@@ -62,32 +33,41 @@ export default async function ProductsPage({
   const t = await getTranslations('products');
 
   const counts = categoryCounts();
-  const filtered = category
-    ? MACHINES.filter((m) => m.category === category)
-    : MACHINES;
-  const machines = sortMachines(filtered, sort);
-  const photographedCount = machines.filter((m) => m.image !== null).length;
-  const pendingCount = machines.length - photographedCount;
+  const photographed = MACHINES.filter((m) => m.image !== null).length;
+  const _pending = MACHINES.length - photographed;
 
-  const categories: { key?: Category; label: string; count: number }[] = [
-    { key: undefined, label: t('categories.all'), count: counts.all },
-    { key: 'labelling', label: t('categories.labelling'), count: counts.labelling },
-    { key: 'packaging', label: t('categories.packaging'), count: counts.packaging },
-    { key: 'automation', label: t('categories.automation'), count: counts.automation },
+  const categories = [
+    { key: undefined as Category | undefined, label: t('categories.all'), count: counts.all },
+    { key: 'labelling' as Category, label: t('categories.labelling'), count: counts.labelling },
+    { key: 'packaging' as Category, label: t('categories.packaging'), count: counts.packaging },
+    { key: 'automation' as Category, label: t('categories.automation'), count: counts.automation },
   ];
 
-  const sortItems = SORT_KEYS.map((key) => ({
-    key,
-    label: t(`sort.${key}`),
-    href: '',
-  }));
+  const sortItems: { key: SortKey; label: string }[] = [
+    { key: 'featured', label: t('sort.featured') },
+    { key: 'photographed', label: t('sort.photographed') },
+    { key: 'az', label: t('sort.az') },
+  ];
 
-  const buildHref = (cat?: Category, srt: SortKey = sort) => {
-    const params = new URLSearchParams();
-    if (cat) params.set('category', cat);
-    if (srt !== 'featured') params.set('sort', srt);
-    const q = params.toString();
-    return q ? `/products?${q}` : '/products';
+  // Build a flat translation dictionary for the client component
+  const tDict: Record<string, string> = {
+    sortLabel: t('sortLabel'),
+    showing: t('showing'),
+    ofTotal: t('ofTotal'),
+    photographedSummary: t('photographedSummary'),
+    photographyPending: t('photographyPending'),
+    viewMachineLong: t('viewMachineLong'),
+    featuredBadge: t('featuredBadge'),
+    shotsLabel: t('shotsLabel'),
+    from: t('from'),
+    perMonth: t('perMonth'),
+    priceOnRequest: t('priceOnRequest'),
+    viewMachine: t('viewMachine'),
+    noMatch: t('noMatch'),
+    seeAll: t('seeAll'),
+    cat_labelling: t('categories.labelling'),
+    cat_packaging: t('categories.packaging'),
+    cat_automation: t('categories.automation'),
   };
 
   return (
@@ -124,207 +104,16 @@ export default async function ProductsPage({
         </Reveal>
       </section>
 
-      {/* ────── CONTROLS BAR ──────
-          Pins flush against the scrolled-state header bottom. The header
-          collapses to ~56px (py-1 outer + paddingY 10 inner + ~32px content)
-          when scrolled past 40px — sticky-bar top must match or content
-          scrolls into the gap between them. */}
-      <section className="sticky top-14 z-30 bg-[color:var(--color-ink)]/90 backdrop-blur-xl border-b border-[color:var(--color-neutral-700)]">
-        <div className="mx-auto max-w-[1600px] px-6 lg:px-12 py-4 flex items-center justify-between gap-6 flex-wrap">
-          {/* Category filter chips with counts */}
-          <div className="flex flex-wrap gap-2 font-mono text-[11px] uppercase tracking-[0.15em]">
-            {categories.map((c) => {
-              const active = category === c.key || (!category && !c.key);
-              return (
-                <Link
-                  key={c.label}
-                  href={buildHref(c.key)}
-                  className={
-                    active
-                      ? 'px-3 py-1.5 border border-[color:var(--color-signal)] text-[color:var(--color-signal)] bg-[color:var(--color-signal)]/10 flex items-center gap-2'
-                      : 'px-3 py-1.5 border border-[color:var(--color-neutral-700)] hover:border-[color:var(--color-neutral-400)] text-[color:var(--color-steel-soft)] hover:text-[color:var(--color-paper)] transition flex items-center gap-2'
-                  }
-                >
-                  <span>{c.label}</span>
-                  <span
-                    className={
-                      active
-                        ? 'text-[color:var(--color-signal-bright)] text-[10px]'
-                        : 'text-[color:var(--color-neutral-500)] text-[10px]'
-                    }
-                  >
-                    {c.count}
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
-
-          {/* Sort — sliding pill indicator. Hrefs are precomputed here in the
-              server component so we never hand a function to the client. */}
-          <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.15em]">
-            <span className="text-[color:var(--color-neutral-500)]">{t('sortLabel')}</span>
-            <SortTabs
-              items={sortItems.map((s) => ({
-                key: s.key,
-                label: s.label,
-                href: buildHref(category, s.key),
-              }))}
-              activeKey={sort}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* ────── RESULT COUNTER ────── */}
-      <section className="mx-auto max-w-[1600px] px-6 lg:px-12 pt-8 pb-4 flex items-end justify-between flex-wrap gap-3">
-        <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)]">
-          {t('showing', { n: machines.length })}
-          {category && t('ofTotal', { total: counts.all })}
-          {category && (
-            <>
-              {' '}
-              · <span className="text-[color:var(--color-signal)]">{t(`categories.${category}`)}</span>
-            </>
-          )}
-        </div>
-        <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-500)]">
-          {t('photographedSummary', { photo: photographedCount, pending: pendingCount })}
-        </div>
-      </section>
-
-      {/* ────── DENSE GRID ────── */}
-      <section className="mx-auto max-w-[1600px] px-6 lg:px-12 pb-32">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {machines.map((p, i) => {
-            const tags = machineTags(p);
-            return (
-              <Reveal
-                key={p.id}
-                variant="up"
-                delay={Math.min(i * 40, 320)}
-                className="group"
-              >
-                <TiltCard intensity={4}>
-                <Link
-                  href={`/products/${p.slug}`}
-                  data-cursor="caliper"
-                  className="block relative overflow-hidden border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)] transition-all duration-500 hover:border-[color:var(--color-signal)] hover:-translate-y-1.5 hover:shadow-[0_20px_60px_-15px_color-mix(in_oklab,var(--color-signal)_30%,transparent)]"
-                >
-                  {/* Image area — tighter padding so the product fills the frame */}
-                  <div className="relative aspect-[4/3] bg-[color:var(--color-neutral-800)] overflow-hidden">
-                    {/* Inky veil — slides UP off the image on hover, revealing the product */}
-                    <div className="absolute inset-0 z-[5] bg-gradient-to-t from-[color:var(--color-ink)]/70 via-[color:var(--color-ink)]/15 to-transparent pointer-events-none transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:-translate-y-full" />
-
-                    {p.image ? (
-                      <ParallaxProductImage
-                        src={p.image}
-                        alt={p.name}
-                        productId={p.id}
-                      />
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-500)] text-center leading-relaxed">
-                          {t('photographyPending')}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Top meta row — category morphs to filled signal on hover */}
-                    <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2 z-10">
-                      <div className="font-mono text-[9px] uppercase tracking-[0.25em] bg-[color:var(--color-ink)]/70 backdrop-blur-sm px-2 py-1 text-[color:var(--color-signal)] group-hover:text-[color:var(--color-ink)] group-hover:bg-[color:var(--color-signal)] transition-colors duration-500">
-                        {t(`categories.${p.category}`)}
-                      </div>
-                      {p.featured && (
-                        <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-[color:var(--color-ink)] bg-[color:var(--color-signal)] px-2 py-1 animate-pulse">
-                          {t('featuredBadge')}
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Bottom-right gallery indicator (fades out on hover so the overlay can take over) */}
-                    {p.image && p.gallery.length > 1 && (
-                      <div className="absolute bottom-3 right-3 font-mono text-[9px] uppercase tracking-[0.25em] text-[color:var(--color-steel-soft)] bg-[color:var(--color-ink)]/70 backdrop-blur-sm px-2 py-1 z-10 transition-opacity duration-300 group-hover:opacity-0">
-                        ◇ {t('shotsLabel', { n: p.gallery.length })}
-                      </div>
-                    )}
-
-                    {/* "View machine →" overlay — slides up from bottom edge on hover */}
-                    <div className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] bg-gradient-to-t from-[color:var(--color-ink)] via-[color:var(--color-ink)]/90 to-transparent pt-16 pb-5 px-5 z-10">
-                      <div className="flex items-center justify-between gap-3">
-                        <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[color:var(--color-signal)]">
-                          {t('viewMachineLong')}
-                        </span>
-                        <span className="font-mono text-sm text-[color:var(--color-signal)] -translate-x-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-500 delay-150">
-                          ⟶
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Info pane — name + tags + meta */}
-                  <div className="p-5 border-t border-[color:var(--color-neutral-700)] bg-[color:var(--color-ink)]">
-                    <h3 className="font-display text-xl tracking-[-0.01em] leading-[1.15] mb-3 min-h-[3.5rem]">
-                      {p.name}
-                    </h3>
-
-                    {tags.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5 mb-4">
-                        {tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="font-mono text-[9px] uppercase tracking-[0.15em] text-[color:var(--color-steel-soft)] border border-[color:var(--color-neutral-700)] px-2 py-1"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-
-                    <div className="flex items-end justify-between gap-2 pt-3 border-t border-[color:var(--color-neutral-700)]">
-                      <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-neutral-500)] leading-relaxed">
-                        {p.monthlyPrice != null ? (
-                          <>
-                            {t('from')}
-                            <br />
-                            <span className="text-[color:var(--color-signal)] text-sm tracking-normal normal-case">
-                              RM {p.monthlyPrice.toLocaleString()}
-                              {t('perMonth')}
-                            </span>
-                          </>
-                        ) : (
-                          <span className="text-[color:var(--color-paper)] text-sm tracking-normal normal-case">
-                            {t('priceOnRequest')}
-                          </span>
-                        )}
-                      </div>
-                      <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-steel)] group-hover:text-[color:var(--color-signal)] group-hover:translate-x-1 transition-all duration-300">
-                        {t('viewMachine')} →
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-                </TiltCard>
-              </Reveal>
-            );
-          })}
-        </div>
-
-        {/* Empty state — shouldn't trigger with current data, defensive */}
-        {machines.length === 0 && (
-          <div className="text-center py-32">
-            <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)] mb-4">
-              — {t('noMatch')}
-            </div>
-            <Link
-              href="/products"
-              className="font-mono text-sm uppercase tracking-wider text-[color:var(--color-signal)] hover:text-[color:var(--color-signal-bright)] transition"
-            >
-              {t('seeAll')} →
-            </Link>
-          </div>
-        )}
-      </section>
+      {/* ────── ANIMATED GRID ────── */}
+      <ProductsGrid
+        machines={MACHINES}
+        categories={categories}
+        sortItems={sortItems}
+        initialCategory={category}
+        initialSort={sort}
+        _locale={locale}
+        t={tDict}
+      />
     </>
   );
 }

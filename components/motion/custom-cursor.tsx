@@ -85,6 +85,14 @@ export function CustomCursor() {
   // Render nothing on the server AND on the first client paint — both are
   // false-side reads of the external stores. Once those resolve post-mount,
   // we either render the cursor (supported) or stay null (touch / reduce).
+  // We also toggle a class on <html> so globals.css can hide the native
+  // cursor only when the overlay is actually active.
+  useEffect(() => {
+    if (!supported) return;
+    document.documentElement.classList.add('cursor-custom');
+    return () => document.documentElement.classList.remove('cursor-custom');
+  }, [supported]);
+
   if (!supported) return null;
 
   const cfg: Record<

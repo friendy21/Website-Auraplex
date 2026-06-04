@@ -1,6 +1,7 @@
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { ContactForm } from '@/components/forms/contact-form';
 import { Reveal } from '@/components/motion/reveal';
+import { KineticReveal } from '@/components/motion/kinetic-reveal';
 import { buildMetadata } from '@/lib/seo';
 import { whatsappLink } from '@/lib/utils';
 
@@ -96,9 +97,12 @@ export default async function ContactPage({
             <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6">
               — {t('eyebrow')}
             </div>
-            <h1 className="font-display text-[clamp(2.5rem,6vw,5rem)] tracking-[-0.02em] leading-[0.95]">
+            <KineticReveal
+              as="h1"
+              className="font-display text-[clamp(2.5rem,6vw,5rem)] tracking-[-0.02em] leading-[0.95]"
+            >
               {t('h1')}
-            </h1>
+            </KineticReveal>
             <p className="mt-8 prose-editorial text-[color:var(--color-steel-soft)]">
               {t('subtitle')}
             </p>

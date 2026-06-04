@@ -1,6 +1,7 @@
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { getTickerStats } from '@/lib/kv';
 import { HeroCinematic } from '@/components/sections/hero-cinematic';
+import { ManifestoSection } from '@/components/sections/manifesto-section';
 import { LiveDataTicker } from '@/components/sections/live-data-ticker';
 import { ValuePropGrid } from '@/components/sections/value-prop-grid';
 import { ProductShowcase } from '@/components/sections/product-showcase';
@@ -8,6 +9,7 @@ import { ScrollNarrative } from '@/components/sections/scroll-narrative';
 import { FeaturedMachines } from '@/components/sections/featured-machines';
 import { TestimonialMarquee } from '@/components/sections/testimonial-marquee';
 import { FaqSection } from '@/components/sections/faq-section';
+import { CloserSection } from '@/components/sections/closer-section';
 import { CtaFooter } from '@/components/sections/cta-footer';
 import { ZoomTransition } from '@/components/motion/zoom-transition';
 
@@ -31,6 +33,7 @@ export default async function Home({
   return (
     <>
       <HeroCinematic />
+      <ManifestoSection />
       <LiveDataTicker stats={stats} />
       <ValuePropGrid />
       <ProductShowcase />
@@ -92,6 +95,7 @@ export default async function Home({
       <ScrollNarrative />
       <TestimonialMarquee />
       <FaqSection />
+      <CloserSection />
       <CtaFooter />
     </>
   );

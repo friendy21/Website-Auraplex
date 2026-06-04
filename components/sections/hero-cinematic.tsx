@@ -9,36 +9,25 @@ import { Button } from '@/components/primitives/button';
 import { Magnetic } from '@/components/motion/magnetic';
 import { CursorSpotlight } from '@/components/motion/cursor-spotlight';
 import { ShaderGrid } from '@/components/three/shader-grid';
-import { YoutubeHeroBg } from '@/components/sections/youtube-hero-bg';
+import { HeroParticles } from '@/components/sections/hero-particles';
 import { getFeaturedMachines } from '@/lib/catalog';
 import { whatsappLink } from '@/lib/utils';
 
-// Hero background YouTube video — Auraplex factory floor.
-// Swap this ID to change the hero video; nothing else in the file needs editing.
-// If YouTube blocks the embed (Shorts restriction, bot wall, region lock),
-// YoutubeHeroBg detects the failure and fades itself out — the shader grid +
-// machine collage underneath carry the hero seamlessly.
-const HERO_VIDEO_ID = 'vqv4IKY30BU';
-// All visible strings flow through t('home.*') so the language switcher
-// changes hero copy along with the rest of the site.
-
 /**
- * Hero — orchestrated 3.2s entrance timeline:
+ * Hero — orchestrated 3.2s entrance timeline, generative background.
  *
- *   0ms     Shader grid begins ramping in (0 → 60% over 1.2s)
- *   200ms   Signal line draws in left-to-right
- *   400ms   Eyebrow ("Auraplex · MY · 2026") tracks in
- *   600ms   H1 splits into words, each word: clip wipe + weight axis 200→700
- *           stagger 80ms, duration 0.9s per word
- *   1400ms  Subtitle: line-mask reveal
- *   1700ms  CTAs: scale 0.8 → 1 + opacity
- *   2000ms  Machine collage: each card spring-floats into position
- *   2400ms  Scroll indicator starts pulsing
+ * Background layers (deepest → nearest):
+ *   1. HeroParticles — 120 drifting signal-coloured nodes with proximity
+ *      connections. Reacts to cursor. Pure Canvas2D, no video asset.
+ *   2. ShaderGrid — existing WebGL ripple overlay (now more prominent).
+ *   3. Ink darkening + vignette — ensures legibility.
+ *   4. CursorSpotlight — reactive halo following pointer.
  *
  * Scroll-driven (0 → 100vh):
  *   - H1 scales 1 → 0.85, translateY 0 → -60px
- *   - Machine collage parallaxes at 0.4× scroll
- *   - Shader fades out as ink overlay fades in
+ *   - Machine collage parallaxes at 0.4× scroll with per-card lag
+ *   - Particles fade out as ink overlay floods in
+ *   - Shader fades out
  */
 export function HeroCinematic() {
   const t = useTranslations('home');
@@ -54,49 +43,38 @@ export function HeroCinematic() {
   const h1Scale = useTransform(scrollYProgress, [0, 1], [1, 0.85]);
   const h1Y = useTransform(scrollYProgress, [0, 1], [0, -60]);
   const collageY = useTransform(scrollYProgress, [0, 1], [0, -120]);
-  // Shader is now a decorative overlay above the video — lower base opacity
-  // so the video reads through; still fades out as the user scrolls down.
-  const shaderOpacity = useTransform(scrollYProgress, [0, 0.6], [0.3, 0]);
-  // Video also fades as the user scrolls so the next section reads on ink.
-  const videoOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-  const inkOverlayOpacity = useTransform(scrollYProgress, [0, 0.8], [0, 0.7]);
+  const shaderOpacity = useTransform(scrollYProgress, [0, 0.6], [0.45, 0]);
+  const particleOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const inkOverlayOpacity = useTransform(scrollYProgress, [0, 0.8], [0, 0.75]);
   const signalLineScaleX = useTransform(scrollYProgress, [0, 0.5], [0.1, 1]);
 
-  // Split the headline into words for staggered reveal
   const headline = t('heroH1');
-  const words = headline.split(/(\s+)/); // keeps whitespace tokens
+  const words = headline.split(/(\s+)/);
 
   return (
     <section
       ref={sectionRef}
       className="relative h-[100dvh] w-full overflow-hidden bg-[color:var(--color-ink)]"
     >
-      {/* ── Layer 0: YouTube factory video — deepest background, fades in
-              over 1.2s after mount (YouTube itself needs ~600ms to start
-              playing, so the fade hides the black-frame flash). ── */}
+      {/* ── Layer 0: Particle constellation ── */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.2, delay: 0.3, ease: 'easeOut' }}
-        style={{ opacity: videoOpacity }}
+        style={{ opacity: particleOpacity }}
         className="absolute inset-0"
       >
-        <YoutubeHeroBg id={HERO_VIDEO_ID} title={t('heroVideoTitle')} />
+        <HeroParticles />
       </motion.div>
 
-      {/* ── Layer 1: video darkening + brand wash — ensures legibility of
-              the white headline against any frame of the moving video. ── */}
-      <div className="absolute inset-0 bg-[color:var(--color-ink)]/45 pointer-events-none" />
+      {/* ── Layer 1: video darkening + brand wash ── */}
+      <div className="absolute inset-0 bg-[color:var(--color-ink)]/50 pointer-events-none" />
 
-      {/* Cursor spotlight halo (kept — sits above the darkening layer) */}
-      <CursorSpotlight size={460} intensity={0.22} />
+      {/* Cursor spotlight halo */}
+      <CursorSpotlight size={420} intensity={0.2} />
 
-      {/* ── Layer 2: shader grid overlay — now decorative, lower opacity so
-              video reads through. Fades on scroll. ── */}
+      {/* ── Layer 2: shader grid overlay ── */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.3 }}
-        transition={{ duration: 1.2, ease: 'easeOut' }}
+        animate={{ opacity: 0.45 }}
+        transition={{ duration: 1.6, ease: 'easeOut' }}
         style={{ opacity: shaderOpacity }}
         className="absolute inset-0 pointer-events-none"
       >
@@ -109,10 +87,9 @@ export function HeroCinematic() {
         className="absolute inset-0 bg-[color:var(--color-ink)] pointer-events-none"
       />
 
-      {/* Diagonal sweep + left-edge fade — stronger now because the video is
-          underneath and needs the text-side area heavily darkened. */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[color:var(--color-ink)] via-[color:var(--color-ink)]/30 to-[color:var(--color-ink)] pointer-events-none" />
-      <div className="absolute inset-y-0 left-0 w-2/3 bg-gradient-to-r from-[color:var(--color-ink)] via-[color:var(--color-ink)]/85 to-transparent pointer-events-none" />
+      {/* Diagonal sweep + left-edge fade */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[color:var(--color-ink)] via-[color:var(--color-ink)]/25 to-[color:var(--color-ink)] pointer-events-none" />
+      <div className="absolute inset-y-0 left-0 w-2/3 bg-gradient-to-r from-[color:var(--color-ink)] via-[color:var(--color-ink)]/80 to-transparent pointer-events-none" />
       <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[color:var(--color-ink)] to-transparent pointer-events-none" />
 
       {/* Machine collage — parallaxes on scroll, springs in on load */}
@@ -132,24 +109,30 @@ export function HeroCinematic() {
           return (
             <motion.div
               key={m.id}
-              initial={{ opacity: 0, y: 80, rotate: p.rotate * 2, scale: 0.9 }}
+              initial={{ opacity: 0, y: 100, rotate: p.rotate * 2.5, scale: 0.85 }}
               animate={{ opacity: 1, y: 0, rotate: p.rotate, scale: 1 }}
               transition={{
                 type: 'spring',
-                stiffness: 80,
-                damping: 12,
+                stiffness: 70,
+                damping: 14,
                 delay: p.delay,
-                opacity: { duration: 0.6, delay: p.delay },
+                opacity: { duration: 0.7, delay: p.delay },
               }}
-              style={{ right: p.right, bottom: p.bottom, width: p.size, height: p.size, position: 'absolute' }}
+              style={{
+                right: p.right,
+                bottom: p.bottom,
+                width: p.size,
+                height: p.size,
+                position: 'absolute',
+              }}
             >
               <motion.div
-                animate={{ y: [0, -12, 0] }}
+                animate={{ y: [0, -14, 0] }}
                 transition={{
-                  duration: 7 + i,
+                  duration: 6 + i * 1.2,
                   repeat: Infinity,
                   ease: 'easeInOut',
-                  delay: 3 + i * 0.7,
+                  delay: 3 + i * 0.6,
                 }}
                 className="relative w-full h-full"
               >
@@ -170,7 +153,7 @@ export function HeroCinematic() {
         })}
       </motion.div>
 
-      {/* Right-edge ink fade so text never collides with imagery */}
+      {/* Right-edge ink fade */}
       <div className="absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-[color:var(--color-ink)] via-[color:var(--color-ink)]/40 to-transparent hidden lg:block pointer-events-none" />
 
       <motion.div
@@ -179,7 +162,7 @@ export function HeroCinematic() {
       >
         <div className="grid grid-cols-12 gap-6 items-end">
           <div className="col-span-12 lg:col-span-7">
-            {/* Eyebrow: signal line + ID — line draws @200ms, text tracks @400ms */}
+            {/* Eyebrow: signal line + ID */}
             <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6 flex items-center gap-3">
               <motion.span
                 initial={{ scaleX: 0 }}
@@ -287,10 +270,6 @@ export function HeroCinematic() {
   );
 }
 
-/**
- * Single hero word — clip-path wipe + variable font weight axis sweep.
- * Stagger handled via per-word delay (600ms + i * 80ms).
- */
 function HeroWord({ word, index }: { word: string; index: number }) {
   return (
     <motion.span

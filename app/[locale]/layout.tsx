@@ -18,6 +18,7 @@ import { WhatsAppButton } from '@/components/layout/whatsapp-button';
 // `body { cursor: none }` rule in styles/globals.css.
 import { CustomCursor } from '@/components/motion/custom-cursor';
 import { LenisProvider } from '@/components/providers/lenis-provider';
+import { AtmosphereProvider } from '@/components/providers/atmosphere-provider';
 import { ScrollProgress } from '@/components/layout/scroll-progress';
 import { PageLoader } from '@/components/layout/page-loader';
 import { StickyCta } from '@/components/layout/sticky-cta';
@@ -114,27 +115,29 @@ export default async function LocaleLayout({
           <PageLoader />
           <ScrollProgress />
           <LenisProvider>
-            <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-[color:var(--color-signal)] focus:text-[color:var(--color-ink)] focus:p-3">
-              Skip to content
-            </a>
-            {/* cacheComponents: request-scoped client components (locale hooks,
-                translations) must be wrapped in Suspense so the static shell
-                can stream before they resolve.
-                https://nextjs.org/docs/app/getting-started/cache-components */}
-            <Suspense fallback={null}>
-              <Header />
-            </Suspense>
-            <main id="main">{children}</main>
-            <Suspense fallback={null}>
-              <Footer />
-            </Suspense>
-            <Suspense fallback={null}>
-              <WhatsAppButton />
-            </Suspense>
-            <Suspense fallback={null}>
-              <StickyCta />
-            </Suspense>
-            <CustomCursor />
+            <AtmosphereProvider>
+              <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-[color:var(--color-signal)] focus:text-[color:var(--color-ink)] focus:p-3">
+                Skip to content
+              </a>
+              {/* cacheComponents: request-scoped client components (locale hooks,
+                  translations) must be wrapped in Suspense so the static shell
+                  can stream before they resolve.
+                  https://nextjs.org/docs/app/getting-started/cache-components */}
+              <Suspense fallback={null}>
+                <Header />
+              </Suspense>
+              <main id="main">{children}</main>
+              <Suspense fallback={null}>
+                <Footer />
+              </Suspense>
+              <Suspense fallback={null}>
+                <WhatsAppButton />
+              </Suspense>
+              <Suspense fallback={null}>
+                <StickyCta />
+              </Suspense>
+              <CustomCursor />
+            </AtmosphereProvider>
           </LenisProvider>
         </NextIntlClientProvider>
         <SpeedInsights />

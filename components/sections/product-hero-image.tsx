@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { motion } from 'motion/react';
 import { CursorSpotlight } from '@/components/motion/cursor-spotlight';
+import { TiltCard } from '@/components/motion/tilt-card';
 
 type Props = {
   src: string;
@@ -24,25 +25,27 @@ type Props = {
  */
 export function ProductHeroImage({ src, alt, productId }: Props) {
   return (
-    <motion.div
-      initial={{ filter: 'blur(8px)', scale: 1.05, opacity: 0 }}
-      animate={{ filter: 'blur(0px)', scale: 1, opacity: 1 }}
-      transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-      className="relative aspect-[4/3] overflow-hidden border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)]"
-      data-cursor="caliper"
-    >
-      <CursorSpotlight size={420} intensity={0.18} />
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        sizes="(max-width: 1024px) 100vw, 60vw"
-        priority
-        className="object-contain p-12"
-        style={
-          { viewTransitionName: `product-${productId}` } as React.CSSProperties
-        }
-      />
-    </motion.div>
+    <TiltCard intensity={3}>
+      <motion.div
+        initial={{ filter: 'blur(8px)', scale: 1.05, opacity: 0 }}
+        animate={{ filter: 'blur(0px)', scale: 1, opacity: 1 }}
+        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+        className="relative aspect-[4/3] overflow-hidden border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)]"
+        data-cursor="caliper"
+      >
+        <CursorSpotlight size={420} intensity={0.18} />
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes="(max-width: 1024px) 100vw, 60vw"
+          priority
+          className="object-contain p-12"
+          style={
+            { viewTransitionName: `product-${productId}` } as React.CSSProperties
+          }
+        />
+      </motion.div>
+    </TiltCard>
   );
 }

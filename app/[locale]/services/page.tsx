@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
+import { KineticReveal } from '@/components/motion/kinetic-reveal';
 import { Button } from '@/components/primitives/button';
 import { Magnetic } from '@/components/motion/magnetic';
 import { buildMetadata, breadcrumbSchema } from '@/lib/seo';
@@ -66,15 +67,12 @@ export default async function ServicesPage({
             {t('eyebrow')}
           </div>
         </Reveal>
-        <Reveal variant="up" delay={100}>
-          <h1 className="font-display text-[clamp(3rem,9vw,8rem)] tracking-[-0.03em] leading-[0.92] max-w-5xl">
-            {t('h1Line1')}
-            <br />
-            <span className="text-[color:var(--color-signal)]">
-              {t('h1Line2')}
-            </span>
-          </h1>
-        </Reveal>
+        <KineticReveal
+          as="h1"
+          className="font-display text-[clamp(3rem,9vw,8rem)] tracking-[-0.03em] leading-[0.92] max-w-5xl"
+        >
+          {t('h1Line1')} {t('h1Line2')}
+        </KineticReveal>
         <Reveal variant="up" delay={200}>
           <p className="mt-12 max-w-2xl prose-editorial text-[color:var(--color-steel-soft)] text-xl">
             {t('subtitle')}

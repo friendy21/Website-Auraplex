@@ -67,7 +67,14 @@
       "title": "准备好聊聊了吗?",
       "quote": "获取报价",
       "tour": "预约工厂参观",
-      "whatsapp": "WhatsApp 联系"
+      "whatsapp": "WhatsApp 联系",
+      "whatsappMsg": "您好 Auraplex。"
+    },
+    "manifesto": {
+      "eyebrow": "Auraplex · Shah Alam",
+      "title": "精密不是附加功能。",
+      "body": "它是离开我们车间的每一台机器的根基。本地制造。本地维护。设计寿命超越生产线本身。",
+      "region": "雪兰莪 · 马来西亚 · 东盟"
     },
     "showcase": {
       "eyebrow": "02 / 产品目录",

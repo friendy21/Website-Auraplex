@@ -14,6 +14,7 @@ import { AnimatedNumber } from '@/components/motion/animated-number';
 import { Magnetic } from '@/components/motion/magnetic';
 import { ImageReveal } from '@/components/motion/image-reveal';
 import { ScanLine } from '@/components/motion/scan-line';
+import { HorizontalScrollSection } from '@/components/motion/horizontal-scroll';
 import { WordCloud } from '@/components/sections/word-cloud';
 
 export async function generateMetadata({
@@ -375,10 +376,10 @@ export default async function YearInReviewPage({
         </div>
       </section>
 
-      {/* ────── QUARTERLY TIMELINE ────── */}
-      <section className="bg-[color:var(--color-ink)] text-[color:var(--color-paper)] py-32 lg:py-48">
-        <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-          <div className="grid grid-cols-12 gap-6 mb-20">
+      {/* ────── QUARTERLY TIMELINE — horizontal scroll ────── */}
+      <section className="bg-[color:var(--color-ink)] text-[color:var(--color-paper)] py-24 lg:py-32">
+        <div className="mx-auto max-w-[1600px] px-6 lg:px-12 mb-16">
+          <div className="grid grid-cols-12 gap-6">
             <Reveal variant="up" className="col-span-12 md:col-span-3">
               <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal-bright)] mb-4">
                 {t('timeline.eyebrow')}
@@ -394,29 +395,57 @@ export default async function YearInReviewPage({
               </h2>
             </Reveal>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-0">
-            {timeline.map((q, i) => (
-              <Reveal
-                key={i}
-                variant="up"
-                delay={i * 120}
-                className="border-l border-[color:var(--color-neutral-700)] pl-8 py-8 md:py-0"
-              >
-                <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal-bright)] mb-6">
-                  {q.q} · 2026
-                </div>
-                <h3 className="font-display text-2xl md:text-3xl tracking-[-0.01em] leading-[1.1] mb-4">
-                  {q.h}
-                </h3>
-                <p className="text-sm text-[color:var(--color-neutral-400)] leading-relaxed">
-                  {q.note}
-                </p>
-              </Reveal>
-            ))}
-          </div>
         </div>
       </section>
+
+      <HorizontalScrollSection overscroll={1.4}>
+        {timeline.map((q, i) => (
+          <div
+            key={i}
+            className="relative w-screen h-[100dvh] flex-shrink-0 flex flex-col justify-center px-6 lg:px-24"
+          >
+            {/* Background watermark quarter number */}
+            <div
+              className="absolute inset-0 flex items-center justify-end pr-12 lg:pr-24 pointer-events-none select-none"
+              aria-hidden="true"
+            >
+              <span className="font-display text-[35vw] leading-none tracking-[-0.04em] text-[color:var(--color-neutral-800)] opacity-30">
+                {q.q.replace('Q', '')}
+              </span>
+            </div>
+
+            <div className="relative z-10 max-w-3xl">
+              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal-bright)] mb-8">
+                {q.q} · 2026
+              </div>
+              <h3 className="font-display text-[clamp(2rem,5vw,4.5rem)] tracking-[-0.02em] leading-[1.05] mb-8">
+                {q.h}
+              </h3>
+              <p className="text-lg md:text-xl text-[color:var(--color-neutral-400)] leading-relaxed max-w-xl">
+                {q.note}
+              </p>
+
+              {/* Signal dots + divider */}
+              <div className="mt-16 flex items-center gap-6">
+                <div className="flex items-center gap-3">
+                  {[0, 1, 2].map((j) => (
+                    <span
+                      key={j}
+                      className={`inline-block h-2 w-2 ${
+                        j <= i ? 'bg-[color:var(--color-signal)]' : 'bg-[color:var(--color-neutral-700)]'
+                      }`}
+                    />
+                  ))}
+                </div>
+                <div className="h-px flex-1 bg-gradient-to-r from-[color:var(--color-neutral-700)] to-transparent" />
+                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-500)]">
+                  0{i + 1} / 04
+                </span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </HorizontalScrollSection>
 
       {/* ────── FOUNDER'S NOTE ────── */}
       <section className="mx-auto max-w-[1100px] px-6 lg:px-12 py-32 lg:py-48">

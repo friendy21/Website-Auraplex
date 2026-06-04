@@ -67,7 +67,14 @@
       "title": "Ready to talk?",
       "quote": "Get a quote",
       "tour": "Schedule a factory tour",
-      "whatsapp": "WhatsApp us"
+      "whatsapp": "WhatsApp us",
+      "whatsappMsg": "Hi Auraplex."
+    },
+    "manifesto": {
+      "eyebrow": "Auraplex · Shah Alam",
+      "title": "Precision is not a feature.",
+      "body": "It is the foundation of every machine that leaves our floor. Built here. Serviced here. Engineered to outlast the line.",
+      "region": "Selangor · Malaysia · ASEAN"
     },
     "showcase": {
       "eyebrow": "02 / Catalogue",

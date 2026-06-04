@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
+import { KineticReveal } from '@/components/motion/kinetic-reveal';
 import { Button } from '@/components/primitives/button';
 import { buildMetadata } from '@/lib/seo';
 import { MACHINES, getFeaturedMachines } from '@/lib/catalog';
@@ -76,11 +77,12 @@ export default async function AboutPage({
             <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6">
               — {t('eyebrow')}
             </div>
-            <h1 className="font-display text-[clamp(3rem,9vw,8rem)] tracking-[-0.03em] leading-[0.92] max-w-5xl">
-              {t('h1Line1')}
-              <br />
-              {t('h1Line2')}
-            </h1>
+            <KineticReveal
+              as="h1"
+              className="font-display text-[clamp(3rem,9vw,8rem)] tracking-[-0.03em] leading-[0.92] max-w-5xl"
+            >
+              {t('h1Line1')} {t('h1Line2')}
+            </KineticReveal>
           </Reveal>
         </div>
       </section>
