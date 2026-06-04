@@ -34,10 +34,10 @@
   --color-ink:            #181b20;
 
   /* ── Semantic status (rationed — never decorative) ── */
-  --color-success:        #4f7d52;  /* approved / online */
-  --color-warning:        #e8943c;  /* lead time / caution */
-  --color-danger:         #c8432f;  /* error / fault */
-  --color-info:           #2796df;  /* = signal — note / highlight */
+  --color-success:        #4f7d52;
+  --color-warning:        #e8943c;
+  --color-danger:         #c8432f;
+  --color-info:           #2796df;
 
   /* ── Legacy aliases (kept for component compatibility) ── */
   --color-signal-hi:      var(--color-signal-bright);
@@ -61,9 +61,11 @@
   --text-mono:    clamp(0.75rem, 0.85vw, 0.875rem);
 
   /* ── Motion easing ── */
-  --ease-out:    cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-in:     cubic-bezier(0.4, 0, 1, 1);
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out:        cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in:         cubic-bezier(0.4, 0, 1, 1);
+  --ease-spring:     cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-entrance:   cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-transition: cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 html {
@@ -81,135 +83,124 @@ body {
   line-height: 1.6;
 }
 
-/* Selection: brand wash on ink. Visible without being garish. */
 ::selection {
   background: var(--color-signal);
   color: var(--color-paper);
 }
 
-/* ────────── View Transitions API ──────────
- * Page navigations: outgoing slides slightly left + blurs, incoming slides
- * in from right + blurs in. Tight 400ms so users feel responsiveness, not
- * delay. Shared product image morphs at 600ms with a stronger ease.
- */
+/* ──────────────────────────────────────────────────────────────────────────
+ * View Transitions API — "Signal Sweep" page choreography
+ *
+ * Old page: slides slightly left, fades out, blurs out (4px).
+ * New page: enters from bottom (translateY 40px), unblurs (4px → 0), fades
+ *           in. Duration 500ms, transition ease.
+ *
+ * The literal 45° cerulean gradient overlay called for in the spec needs
+ * arbitrary DOM in the transition layer, which the VT pseudo-elements do
+ * not expose. We approximate with a clip-path angle on the new page so
+ * the entrance still reads as a diagonal reveal.
+ * ────────────────────────────────────────────────────────────────────────── */
 @view-transition { navigation: auto; }
 
 ::view-transition-old(root) {
-  animation: page-out 400ms var(--ease-in) both;
+  animation: page-out 360ms var(--ease-in) both;
 }
 ::view-transition-new(root) {
-  animation: page-in 400ms var(--ease-out) both;
+  animation: page-in 500ms var(--ease-transition) both;
 }
 
 @keyframes page-out {
   to {
-    transform: translateX(-3%);
+    transform: translateX(-2%) scale(0.985);
     opacity: 0;
     filter: blur(4px);
   }
 }
 @keyframes page-in {
   from {
-    transform: translateX(3%);
+    transform: translateY(40px);
     opacity: 0;
     filter: blur(4px);
+    clip-path: polygon(0 8%, 0 0, 8% 0, 100% 100%, 92% 100%, 0 100%);
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+    filter: blur(0);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 100% 100%, 0 100%, 0 100%);
   }
 }
 
 /* Shared element morph: product image flying from listing card → detail hero */
 ::view-transition-group(*) {
   animation-duration: 600ms;
-  animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+  animation-timing-function: var(--ease-transition);
 }
 
-/* ────────── Scroll-driven reveals ────────── */
+/* ──────────────────────────────────────────────────────────────────────────
+ * Scroll-driven reveals (legacy — Motion's <Reveal/> is preferred now)
+ * ────────────────────────────────────────────────────────────────────────── */
 @keyframes reveal {
   from { opacity: 0; transform: translateY(40px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
 @keyframes reveal-up {
   from { opacity: 0; transform: translateY(80px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
 @keyframes reveal-scale {
   from { opacity: 0; transform: scale(0.96); }
   to   { opacity: 1; transform: scale(1); }
 }
+.reveal       { animation: reveal       linear both; animation-timeline: view(); animation-range: entry 0% entry 60%; }
+.reveal-up    { animation: reveal-up    linear both; animation-timeline: view(); animation-range: entry 0% entry 50%; }
+.reveal-scale { animation: reveal-scale linear both; animation-timeline: view(); animation-range: entry 0% entry 50%; }
 
-.reveal {
-  animation: reveal linear both;
-  animation-timeline: view();
-  animation-range: entry 0% entry 60%;
-}
-
-.reveal-up {
-  animation: reveal-up linear both;
-  animation-timeline: view();
-  animation-range: entry 0% entry 50%;
-}
-
-.reveal-scale {
-  animation: reveal-scale linear both;
-  animation-timeline: view();
-  animation-range: entry 0% entry 50%;
-}
-
-/* ────────── Focus rings ────────── */
+/* ──────────────────────────────────────────────────────────────────────────
+ * Focus rings — signal-coloured, generous offset
+ * ────────────────────────────────────────────────────────────────────────── */
 :focus-visible {
   outline: 2px solid var(--color-signal-bright);
   outline-offset: 2px;
   border-radius: 2px;
 }
 
-/* ────────── Custom cursor — currently unwired ──────────
- * The signature caliper cursor was hiding the native cursor site-wide
- * via `body.cursor-caliper { cursor: none }`, which left users with no
- * cursor at all when the custom overlay underperformed (touch devices,
- * reduced-motion, faint dot on light backgrounds). Rules retained here
- * for the day we ship a proper caliper graphic; until then we leave the
- * native cursor alone.
- *
- * .cursor-caliper { cursor: none; }
- * .caliper-cursor {
- *   position: fixed;
- *   width: 32px;
- *   height: 32px;
- *   pointer-events: none;
- *   z-index: 9999;
- *   mix-blend-mode: difference;
- *   transform: translate(-50%, -50%);
- *   transition: transform 200ms var(--ease-out);
- * }
- */
+/* ──────────────────────────────────────────────────────────────────────────
+ * Custom cursor — wired via <CustomCursor/> in layout.tsx. The overlay
+ * draws its own caliper/circle/dot and we keep the native cursor visible
+ * underneath so users never lose pointer feedback. No cursor:none rules.
+ * ────────────────────────────────────────────────────────────────────────── */
 
-/* ────────── Scroll-velocity blur (driven by Lenis) ──────────
- * LenisProvider writes --scroll-blur on the document root proportional to
- * scroll velocity. Opt elements in by reading the variable in their filter.
- */
+/* ──────────────────────────────────────────────────────────────────────────
+ * Scroll-velocity blur (driven by Lenis)
+ * ────────────────────────────────────────────────────────────────────────── */
 :root { --scroll-blur: 0px; }
 .scroll-blur { filter: blur(var(--scroll-blur, 0px)); transition: filter 0.1s linear; }
 
-/* ────────── Marquee (industry strip on /2026, testimonials) ────────── */
+/* ──────────────────────────────────────────────────────────────────────────
+ * Marquee (industry strip on /2026, testimonials)
+ * ────────────────────────────────────────────────────────────────────────── */
 @keyframes scroll-x {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
-
 @keyframes scroll-x-reverse {
   from { transform: translateX(-50%); }
   to   { transform: translateX(0); }
 }
 
-/* ────────── Live ticker split-flap ────────── */
+/* ──────────────────────────────────────────────────────────────────────────
+ * Live ticker split-flap
+ * ────────────────────────────────────────────────────────────────────────── */
 .split-flap {
   font-variant-numeric: tabular-nums;
   font-family: var(--font-mono);
   display: inline-block;
 }
 
-/* ────────── SVG silhouette stroke draw-in (value-prop 03) ────────── */
+/* ──────────────────────────────────────────────────────────────────────────
+ * SVG silhouette stroke draw-in
+ * ────────────────────────────────────────────────────────────────────────── */
 @keyframes draw-stroke {
   to { stroke-dashoffset: 0; }
 }
@@ -221,7 +212,9 @@ body {
   animation-range: entry 0% entry 80%;
 }
 
-/* ────────── Accordion (Radix) ────────── */
+/* ──────────────────────────────────────────────────────────────────────────
+ * Accordion (Radix)
+ * ────────────────────────────────────────────────────────────────────────── */
 @keyframes accordion-down {
   from { height: 0; opacity: 0; }
   to   { height: var(--radix-accordion-content-height); opacity: 1; }
@@ -231,19 +224,220 @@ body {
   to   { height: 0; opacity: 0; }
 }
 .animate-accordion-down { animation: accordion-down 0.4s var(--ease-out); }
-.animate-accordion-up   { animation: accordion-up 0.3s var(--ease-in); }
+.animate-accordion-up   { animation: accordion-up   0.3s var(--ease-in); }
 
-/* ────────── Editorial layout helpers ────────── */
+/* ──────────────────────────────────────────────────────────────────────────
+ * Editorial layout helpers
+ * ────────────────────────────────────────────────────────────────────────── */
 .editorial-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: clamp(1rem, 2vw, 2rem);
 }
-
 .prose-editorial { max-width: 65ch; line-height: 1.7; }
 .prose-editorial p + p { margin-top: 1.25em; }
 
-/* ────────── Reduced motion ────────── */
+/* ──────────────────────────────────────────────────────────────────────────
+ *   WOW LAYER — sitewide micro-interaction utilities
+ *
+ * Each utility below is a single class you opt elements into. They all
+ * respect prefers-reduced-motion (see block at end of file). The rules
+ * cost ~1KB gzipped and never touch the cascade outside their selector.
+ * ────────────────────────────────────────────────────────────────────────── */
+
+/* ── .btn-underline ───────────────────────────────────────────────────────
+ * Signal line draws under text on hover/focus. Apply to ghost-style and
+ * outlined buttons. (The filled primary variant has its own colour
+ * treatment and skips this.)
+ */
+.btn-underline {
+  position: relative;
+}
+.btn-underline::after {
+  content: '';
+  position: absolute;
+  left: 1.5rem;
+  right: 1.5rem;
+  bottom: 0.5rem;
+  height: 1px;
+  background: var(--color-signal);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 500ms var(--ease-entrance);
+  pointer-events: none;
+}
+.btn-underline:hover::after,
+.btn-underline:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* ── .card-bloom ──────────────────────────────────────────────────────────
+ * A subtle 1px signal ring + soft cerulean halo on hover. Tasteful
+ * substitute for a heavy box-shadow; uses color-mix so the halo
+ * inherits the brand cerulean exactly.
+ */
+.card-bloom {
+  transition: box-shadow 400ms var(--ease-out), border-color 400ms var(--ease-out);
+}
+.card-bloom:hover {
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--color-signal) 35%, transparent),
+    0 12px 40px color-mix(in oklab, var(--color-signal) 18%, transparent);
+}
+
+/* ── .img-scan ────────────────────────────────────────────────────────────
+ * One-shot vertical signal scan line that sweeps down once on hover.
+ * Apply to a wrapping element of <Image>; the line is rendered via
+ * ::after so it doesn't need a child component.
+ */
+.img-scan {
+  position: relative;
+  overflow: hidden;
+}
+.img-scan::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  top: -2px;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in oklab, var(--color-signal) 80%, transparent) 50%,
+    transparent 100%
+  );
+  box-shadow: 0 0 12px color-mix(in oklab, var(--color-signal) 60%, transparent);
+  transform: translateY(0);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms linear;
+}
+.img-scan:hover::after {
+  opacity: 1;
+  animation: scan-line-pass 1100ms var(--ease-out) forwards;
+}
+@keyframes scan-line-pass {
+  0%   { transform: translateY(0);     opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(calc(100% + 4px)); opacity: 0; }
+}
+
+/* ── .link-track ──────────────────────────────────────────────────────────
+ * Letter-spacing expansion on hover (0.15em → 0.3em). Intended for mono
+ * uppercase labels and inline editorial links. Pairs nicely with the
+ * existing underline-draw pattern already on FooterLink/NavLink.
+ */
+.link-track {
+  transition: letter-spacing 300ms var(--ease-out), color 300ms var(--ease-out);
+  letter-spacing: 0.15em;
+}
+.link-track:hover {
+  letter-spacing: 0.3em;
+}
+
+/* Editorial body links — same expansion + cerulean accent on hover. */
+.prose-editorial a {
+  color: var(--color-signal-bright);
+  border-bottom: 1px solid color-mix(in oklab, var(--color-signal) 40%, transparent);
+  transition: border-color 300ms var(--ease-out), color 300ms var(--ease-out);
+}
+.prose-editorial a:hover {
+  color: var(--color-paper);
+  border-bottom-color: var(--color-signal);
+}
+
+/* ── .ping-signal ─────────────────────────────────────────────────────────
+ * Custom-decay ping for the "Made in Malaysia" indicator dot — scales
+ * 1 → 2.5 over 2s with opacity decay 0.8 → 0. Tailwind's default
+ * animate-ping is faster + clips at 1.5; this reads slower and more
+ * deliberate. Apply to a child span that overlays the dot.
+ */
+@keyframes ping-signal {
+  0%   { transform: scale(1);   opacity: 0.8; }
+  80%  { opacity: 0; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+.ping-signal {
+  animation: ping-signal 2s var(--ease-out) infinite;
+}
+
+/* ── .breathing-vignette ──────────────────────────────────────────────────
+ * Radial gradient that gently breathes — 8s cycle. Apply to a full-bleed
+ * absolute overlay (pointer-events:none) inside a hero section to make
+ * a background video feel alive instead of static.
+ */
+@keyframes vignette-breathe {
+  0%, 100% {
+    background: radial-gradient(
+      ellipse 80% 70% at 50% 50%,
+      transparent 38%,
+      color-mix(in oklab, var(--color-ink) 70%, transparent) 100%
+    );
+  }
+  50% {
+    background: radial-gradient(
+      ellipse 85% 75% at 50% 50%,
+      transparent 42%,
+      color-mix(in oklab, var(--color-ink) 76%, transparent) 100%
+    );
+  }
+}
+.breathing-vignette {
+  animation: vignette-breathe 8s var(--ease-out) infinite;
+}
+
+/* ── .moire-counter ───────────────────────────────────────────────────────
+ * Slow counter-clockwise rotation utility for layering on top of the
+ * existing shader grid to produce a moiré interference pattern.
+ * Apply to a full-bleed overlay with the same grid pattern.
+ */
+@keyframes rotate-counter {
+  from { transform: rotate(0deg);    }
+  to   { transform: rotate(-360deg); }
+}
+.moire-counter {
+  animation: rotate-counter 90s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+/* ── .footer-col-rule ─────────────────────────────────────────────────────
+ * Blueprint-style top border that draws from the center out as the
+ * footer scrolls into view. The animation is driven by view() so it
+ * triggers exactly when the column enters the viewport.
+ */
+@keyframes draw-rule-center-out {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.footer-col-rule {
+  position: relative;
+}
+.footer-col-rule::before {
+  content: '';
+  position: absolute;
+  top: -0.75rem;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-signal) 50%,
+    transparent 100%
+  );
+  transform: scaleX(0);
+  transform-origin: center;
+  animation: draw-rule-center-out 900ms var(--ease-entrance) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 60%;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+ * Reduced motion — collapse every animation/transition to instant. The
+ * page-in/out keyframes also lose their blur/clip so VT navigations
+ * resolve to a plain crossfade.
+ * ────────────────────────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -252,4 +446,8 @@ body {
     scroll-behavior: auto !important;
   }
   .reveal, .reveal-up, .reveal-scale { opacity: 1; transform: none; }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
 }

@@ -138,7 +138,7 @@ export function Footer() {
         </span>
         <span className="flex items-center gap-2.5">
           <span className="relative inline-flex h-1.5 w-1.5">
-            <span className="absolute inset-0 rounded-full bg-[color:var(--color-signal)] animate-ping opacity-60" />
+            <span className="absolute inset-0 rounded-full bg-[color:var(--color-signal)] ping-signal" />
             <span className="relative inline-block h-1.5 w-1.5 rounded-full bg-[color:var(--color-signal)]" />
           </span>
           {t('footer.made')}
@@ -165,7 +165,7 @@ function FooterCol({
           transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] },
         },
       }}
-      className={className}
+      className={`footer-col-rule ${className ?? ''}`.trim()}
     >
       {children}
     </motion.div>
