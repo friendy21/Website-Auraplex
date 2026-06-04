@@ -15,7 +15,10 @@ import { whatsappLink } from '@/lib/utils';
 
 // Hero background YouTube video — Auraplex factory floor.
 // Swap this ID to change the hero video; nothing else in the file needs editing.
-const HERO_VIDEO_ID = 'eWdoGP3RS2o';
+// If YouTube blocks the embed (Shorts restriction, bot wall, region lock),
+// YoutubeHeroBg detects the failure and fades itself out — the shader grid +
+// machine collage underneath carry the hero seamlessly.
+const HERO_VIDEO_ID = 'vqv4IKY30BU';
 // All visible strings flow through t('home.*') so the language switcher
 // changes hero copy along with the rest of the site.
 
