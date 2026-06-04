@@ -10,7 +10,6 @@ import { FeaturedMachines } from '@/components/sections/featured-machines';
 import { TestimonialMarquee } from '@/components/sections/testimonial-marquee';
 import { FaqSection } from '@/components/sections/faq-section';
 import { CloserSection } from '@/components/sections/closer-section';
-import { CtaFooter } from '@/components/sections/cta-footer';
 import { ZoomTransition } from '@/components/motion/zoom-transition';
 
 export default async function Home({
@@ -96,7 +95,6 @@ export default async function Home({
       <TestimonialMarquee />
       <FaqSection />
       <CloserSection />
-      <CtaFooter />
     </>
   );
 }
