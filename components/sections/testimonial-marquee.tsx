@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 // ⚠ Placeholder testimonials — to be replaced with verified customer
 // quotes (with on-file permission) before launch. All entries below are
@@ -46,6 +47,7 @@ const TESTIMONIALS = [
  * :has() may not yet apply (then both rows just keep scrolling — still fine).
  */
 export function TestimonialMarquee() {
+  const t = useTranslations('home.testimonials');
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const doubled = [...TESTIMONIALS, ...TESTIMONIALS];
 
@@ -53,7 +55,7 @@ export function TestimonialMarquee() {
     <section className="py-28 lg:py-36 overflow-hidden border-y border-[color:var(--color-neutral-700)] bg-[color:var(--color-ink)]">
       <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-16 mx-auto max-w-[1600px] px-6 lg:px-12 flex items-center gap-3">
         <span className="h-px w-12 bg-[color:var(--color-signal)]" />
-        Voices from the floor
+        {t('eyebrow')}
       </div>
 
       {/* Edge-faded marquee container. Both rows live inside so a single hover

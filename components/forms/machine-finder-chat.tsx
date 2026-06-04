@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { readStreamableValue } from 'ai/rsc';
 import { Send } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { machineFinderStream } from '@/actions/machine-finder';
 import { Button } from '@/components/primitives/button';
 
@@ -20,11 +21,11 @@ type Msg = { role: 'user' | 'assistant'; content: string };
  *   - Enter to send · Shift+Enter for newline
  */
 export function MachineFinderChat() {
+  const t = useTranslations('forms');
   const [messages, setMessages] = useState<Msg[]>([
     {
       role: 'assistant',
-      content:
-        'Tell me about what you make and how fast your line runs. I’ll match you to the right machine.',
+      content: t('machineFinderWelcome'),
     },
   ]);
   const [input, setInput] = useState('');
@@ -58,8 +59,7 @@ export function MachineFinderChat() {
         ...history,
         {
           role: 'assistant',
-          content:
-            '— I lost the connection mid-thought. Try again, or WhatsApp us if it persists.',
+          content: t('machineFinderError'),
         },
       ]);
     } finally {
@@ -111,7 +111,7 @@ export function MachineFinderChat() {
           onClick={send}
           disabled={streaming || !input.trim()}
           size="sm"
-          aria-label="Send"
+          aria-label={t('send')}
         >
           <Send className="h-4 w-4" />
         </Button>
@@ -157,19 +157,7 @@ function MessageBubble({
       }
       className={isUser ? 'text-right' : ''}
     >
-      <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)] mb-2 flex items-center gap-2 justify-start">
-        {isUser ? (
-          <span className="ml-auto flex items-center gap-2">
-            — You
-            <span className="h-1 w-1 bg-[color:var(--color-signal)] rounded-full" />
-          </span>
-        ) : (
-          <span className="flex items-center gap-2">
-            <span className="h-1 w-1 bg-[color:var(--color-signal)] rounded-full" />
-            Auraplex AI
-          </span>
-        )}
-      </div>
+      <RoleLabel isUser={isUser} />
 
       <div
         className={`inline-block max-w-[85%] p-4 border ${
@@ -190,6 +178,25 @@ function MessageBubble({
         )}
       </div>
     </motion.div>
+  );
+}
+
+function RoleLabel({ isUser }: { isUser: boolean }) {
+  const t = useTranslations('forms');
+  return (
+    <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)] mb-2 flex items-center gap-2 justify-start">
+      {isUser ? (
+        <span className="ml-auto flex items-center gap-2">
+          — {t('machineFinderUserLabel')}
+          <span className="h-1 w-1 bg-[color:var(--color-signal)] rounded-full" />
+        </span>
+      ) : (
+        <span className="flex items-center gap-2">
+          <span className="h-1 w-1 bg-[color:var(--color-signal)] rounded-full" />
+          {t('machineFinderAiLabel')}
+        </span>
+      )}
+    </div>
   );
 }
 
@@ -230,6 +237,7 @@ function ComposerInput({
   disabled: boolean;
   inputRef: React.RefObject<HTMLTextAreaElement | null>;
 }) {
+  const t = useTranslations('forms');
   const [focused, setFocused] = useState(false);
 
   function onKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
@@ -249,7 +257,7 @@ function ComposerInput({
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         rows={1}
-        placeholder="Describe your product and line…"
+        placeholder={t('machineFinderPlaceholder')}
         disabled={disabled}
         className="w-full bg-transparent outline-none py-2 pr-2 font-body text-[color:var(--color-paper)] resize-none placeholder:text-[color:var(--color-neutral-500)] disabled:opacity-50"
       />

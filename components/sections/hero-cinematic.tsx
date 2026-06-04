@@ -16,6 +16,8 @@ import { whatsappLink } from '@/lib/utils';
 // Hero background YouTube video — Auraplex factory floor.
 // Swap this ID to change the hero video; nothing else in the file needs editing.
 const HERO_VIDEO_ID = 'eWdoGP3RS2o';
+// All visible strings flow through t('home.*') so the language switcher
+// changes hero copy along with the rest of the site.
 
 /**
  * Hero — orchestrated 3.2s entrance timeline:
@@ -76,7 +78,7 @@ export function HeroCinematic() {
         style={{ opacity: videoOpacity }}
         className="absolute inset-0"
       >
-        <YoutubeHeroBg id={HERO_VIDEO_ID} title="Auraplex factory floor" />
+        <YoutubeHeroBg id={HERO_VIDEO_ID} title={t('heroVideoTitle')} />
       </motion.div>
 
       {/* ── Layer 1: video darkening + brand wash — ensures legibility of
@@ -188,7 +190,7 @@ export function HeroCinematic() {
                 animate={{ opacity: 1, letterSpacing: '0.3em' }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                Auraplex · MY · 2026
+                {t('heroEyebrow')}
               </motion.span>
             </div>
 
@@ -230,7 +232,7 @@ export function HeroCinematic() {
               <Magnetic>
                 <Button asChild variant="ghost" size="lg">
                   <a
-                    href={whatsappLink('Hi Auraplex, I saw your site and want to talk.')}
+                    href={whatsappLink(t('heroWhatsappMsg'))}
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -249,7 +251,7 @@ export function HeroCinematic() {
             className="col-span-12 lg:col-span-4 lg:col-start-9 border-l border-[color:var(--color-signal)] pl-6 py-2"
           >
             <div className="font-mono text-xs uppercase tracking-[0.25em] text-[color:var(--color-steel)] mb-2">
-              Live spec
+              {t('heroLiveSpecLabel')}
             </div>
             <div className="font-mono text-lg text-[color:var(--color-paper)] leading-relaxed">
               {t('heroCallout')}
@@ -271,7 +273,7 @@ export function HeroCinematic() {
         transition={{ delay: 2.4, duration: 0.6 }}
         className="absolute bottom-6 left-1/2 -translate-x-1/2 font-mono text-xs uppercase tracking-widest text-[color:var(--color-steel)] flex flex-col items-center gap-2 z-20 pointer-events-none"
       >
-        <span>Scroll</span>
+        <span>{t('heroScrollLabel')}</span>
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}

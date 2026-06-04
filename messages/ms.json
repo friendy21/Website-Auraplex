@@ -17,6 +17,11 @@
     "whatsapp": "WhatsApp kami"
   },
   "home": {
+    "heroEyebrow": "Auraplex · MY · 2026",
+    "heroLiveSpecLabel": "Spec langsung",
+    "heroScrollLabel": "Skrol",
+    "heroVideoTitle": "Lantai kilang Auraplex",
+    "heroWhatsappMsg": "Hi Auraplex, saya lihat laman web anda dan ingin berbual.",
     "heroH1": "Direka di Malaysia. Dibina untuk tahan lama.",
     "heroSub": "Mesin pelabel pelekat sendiri, mesin pembungkusan dan automasi khusus untuk pengeluar ASEAN. Direka, dibina, dipasang dan diselenggara dari lantai kilang kami di Shah Alam.",
     "heroCallout": "Pelabel · Pembungkus · Cetakan 3D · Automasi khusus",
@@ -58,10 +63,77 @@
       ]
     },
     "ctaFooter": {
+      "eyebrow": "Tamat siaran · Hubungi kami",
       "title": "Sedia untuk berbual?",
       "quote": "Dapatkan sebut harga",
       "tour": "Jadualkan lawatan kilang",
       "whatsapp": "WhatsApp kami"
+    },
+    "showcase": {
+      "eyebrow": "02 / Katalog",
+      "h2Line1": "Tiga keluarga.",
+      "h2Line2": "Satu janji: dibina di sini.",
+      "familyLabel": "Keluarga"
+    },
+    "featured": {
+      "eyebrow": "Pilihan · Mesin",
+      "h2": "Dibina sendiri di Selangor. Difoto di lantai kilang.",
+      "body": "Setiap mesin dalam katalog direka di sini di Malaysia, diuji pada barisan pengeluaran sebenar, dan disokong oleh pasukan tempatan dalam bahasa yang difahami lantai anda.",
+      "viewMachine": "Lihat mesin",
+      "totalLabel": "{count} mesin dalam katalog",
+      "browseAll": "Lihat katalog penuh"
+    },
+    "narrative": {
+      "dateline": "Shah Alam · Selangor",
+      "s1Line1": "Satu mesin.",
+      "s1Line2": "Diterangkan dalam pergerakan.",
+      "inMotion": "Dalam pergerakan / {machineName}",
+      "specs": {
+        "container": "Bekas",
+        "containerValue": "30 – 250 mm Ø",
+        "vision": "Penglihatan",
+        "visionValue": "Pengesanan 1 ms",
+        "labelFeed": "Suapan label",
+        "labelFeedValue": "dipacu servo",
+        "throughput": "Kelajuan",
+        "throughputValue": "120 unit/min berterusan",
+        "reject": "Reject",
+        "rejectValue": "kendalian auto-penyelewengan",
+        "output": "Output",
+        "outputValue": "sedia integrasi barisan"
+      },
+      "labelGraphic": "Auraplex · Buatan Malaysia",
+      "counter": "daripada 30 mesin",
+      "closerLine1": "30 mesin.",
+      "closerLine2": "Satu lantai.",
+      "closerCta": "Lihat semua"
+    },
+    "testimonials": {
+      "eyebrow": "Suara dari lantai kilang"
+    },
+    "zoomA": {
+      "eyebrow": "Presisi · 120 unit / min",
+      "h2Line1": "Direka",
+      "h2Line2": "di lantai ini.",
+      "body": "Mekanikal, elektrikal, kawalan, pemasangan — semuanya di bawah satu bumbung di Shah Alam. Tiada rebrand, tiada kejuruteraan luar."
+    },
+    "zoomB": {
+      "eyebrow": "Penglihatan · pengesanan 1 ms",
+      "h2Line1": "Penolakan",
+      "h2Line2": "gred penglihatan.",
+      "body": "Kadar reject 0.2%. Turun dari 1.4%. Barisan sama. Mesin berbeza."
+    },
+    "valueProp02": {
+      "label": "Di bawah satu bumbung",
+      "items": [
+        "Pelabelan pelekat sendiri",
+        "Mesin pembungkusan",
+        "Cetakan & imbasan 3D",
+        "Penyelesaian MES & SCADA",
+        "Automasi khusus"
+      ],
+      "leadTimeLabel": "Tempoh penghantaran biasa",
+      "leadTimeUnit": " minggu"
     }
   },
   "products": {
@@ -69,7 +141,51 @@
     "subtitle": "Direka untuk realiti pengeluaran ASEAN.",
     "filters": { "category": "Kategori", "speed": "Kelajuan", "label": "Jenis label", "price": "Julat harga" },
     "viewMachine": "Lihat",
-    "from": "Dari"
+    "viewMachineLong": "Lihat mesin",
+    "from": "Dari",
+    "catalogueLine": "Katalog / 2026 · {count} mesin",
+    "categories": {
+      "all": "Semua",
+      "labelling": "Pelabel",
+      "packaging": "Pembungkus",
+      "automation": "Automasi"
+    },
+    "sortLabel": "Susun",
+    "sort": {
+      "featured": "Pilihan",
+      "photographed": "Difoto",
+      "az": "A — Z"
+    },
+    "showing": "Memaparkan {n}",
+    "ofTotal": " daripada {total}",
+    "photographedSummary": "{photo} difoto · {pending} menunggu",
+    "featuredBadge": "★ Pilihan",
+    "shotsLabel": "{n} gambar",
+    "photographyPending": "Foto akan datang",
+    "priceOnRequest": "Harga atas permintaan",
+    "perMonth": "/bln",
+    "perMonthLong": "sebulan",
+    "noMatch": "Tiada mesin sepadan dengan penapis ini",
+    "seeAll": "Lihat semua mesin",
+    "detail": {
+      "categoryEyebrowSpeedSuffix": "unit/min",
+      "summaryHeading": "Spesifikasi",
+      "specsFallback": "Spesifikasi penuh untuk mesin ini — lengkung kelajuan, kesesuaian bekas, dimensi, keperluan kuasa dan udara — tersedia atas permintaan. Muat turun helaian spesifikasi di atas atau berbual dengan jurutera untuk pecahan yang disesuaikan.",
+      "fromLabel": "Dari",
+      "quoteOnRequest": "Sebut harga atas permintaan",
+      "getQuote": "Dapatkan sebut harga",
+      "openConfigurator": "Konfigurator 3D",
+      "whatsapp": "WhatsApp",
+      "whatsappMsg": "Berminat dengan {name}",
+      "galleryLabel": "Galeri · {count} gambar",
+      "featuresEyebrow": "Ciri-ciri",
+      "talkToEngineerEyebrow": "Berbual dengan jurutera",
+      "getDetailedQuote": "Dapatkan sebut harga terperinci.",
+      "specSheetTrigger": "Muat turun helaian spesifikasi",
+      "specSheetTitle": "Dapatkan helaian spesifikasi",
+      "specSheetBody": "Kami akan e-mel PDF penuh — dimensi, lengkung kelajuan, carta bekas, keperluan pemasangan.",
+      "specSheetSent": "Dihantar. Semak peti masuk anda."
+    }
   },
   "configurator": {
     "title": "Konfigurasikan mesin anda",
@@ -84,11 +200,32 @@
     "email": "E-mel",
     "message": "Mesej",
     "submit": "Hantar",
-    "thanks": "Terima kasih — kami akan hubungi anda dalam satu hari bekerja."
+    "thanks": "Terima kasih — kami akan hubungi anda dalam satu hari bekerja.",
+    "sending": "Menghantar…",
+    "received": "Diterima",
+    "machineFinderWelcome": "Beritahu saya apa yang anda hasilkan dan kelajuan barisan anda. Saya akan padankan dengan mesin yang sesuai.",
+    "machineFinderPlaceholder": "Terangkan produk dan barisan anda…",
+    "machineFinderError": "— Sambungan terputus. Cuba lagi, atau WhatsApp kami jika berterusan.",
+    "machineFinderAiLabel": "Auraplex AI",
+    "machineFinderUserLabel": "Anda",
+    "specSheetCta": "Hantar PDF kepada saya",
+    "send": "Hantar"
   },
   "footer": {
     "rights": "© 2026 Auraplex SDN BHD. Hak cipta terpelihara.",
-    "made": "Buatan Malaysia."
+    "made": "Buatan Malaysia.",
+    "address": "Auraplex SDN BHD · Shah Alam · Selangor · Malaysia",
+    "allMachines": "Semua mesin",
+    "privacy": "Privasi",
+    "terms": "Terma"
+  },
+  "common": {
+    "stickyCta": "Dapatkan sebut harga",
+    "whatsapp": "WhatsApp",
+    "whatsappAria": "WhatsApp kami",
+    "whatsappDefaultMsg": "Hi Auraplex, saya ingin mengetahui lebih lanjut tentang mesin anda.",
+    "menuToggle": "Togol menu",
+    "search": "Cari"
   },
   "pages": {
     "about": {

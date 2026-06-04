@@ -57,7 +57,7 @@ export function CtaFooter() {
           className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-10 flex items-center gap-3"
         >
           <span className="h-px w-12 bg-[color:var(--color-signal)]" />
-          End transmission · Talk to us
+          {t('eyebrow')}
         </motion.div>
 
         {/* Title — word-by-word weight + lift reveal */}
@@ -118,7 +118,7 @@ export function CtaFooter() {
           <Magnetic>
             <Button asChild variant="ghost" size="lg">
               <a
-                href={whatsappLink('Hi Auraplex.')}
+                href={whatsappLink(t('whatsapp'))}
                 target="_blank"
                 rel="noreferrer"
               >

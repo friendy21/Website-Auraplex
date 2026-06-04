@@ -13,6 +13,7 @@ function pickCover(category: Category): { src: string; alt: string } | null {
 
 export function ProductShowcase() {
   const t = useTranslations('home.categories');
+  const ts = useTranslations('home.showcase');
 
   const labelling = pickCover('labelling');
   const packaging = pickCover('packaging');
@@ -23,10 +24,10 @@ export function ProductShowcase() {
       <div className="grid grid-cols-12 gap-6 mb-12">
         <Reveal variant="up" className="col-span-12 md:col-span-8">
           <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-4">
-            — 02 / Catalogue
+            — {ts('eyebrow')}
           </div>
           <h2 className="font-display text-[clamp(2rem,5vw,4.5rem)] tracking-[-0.02em] leading-[1]">
-            Three families. One promise: built here.
+            {ts('h2Line1')} {ts('h2Line2')}
           </h2>
         </Reveal>
       </div>
@@ -34,7 +35,7 @@ export function ProductShowcase() {
       <div className="grid grid-cols-12 gap-6">
         <CategoryCard
           href="/products?category=labelling"
-          number="01"
+          number={`01 / ${ts('familyLabel')}`}
           title={t('labelling')}
           cover={labelling}
           className="col-span-12 md:col-span-7"
@@ -42,7 +43,7 @@ export function ProductShowcase() {
         />
         <CategoryCard
           href="/products?category=packaging"
-          number="02"
+          number={`02 / ${ts('familyLabel')}`}
           title={t('packaging')}
           cover={packaging}
           className="col-span-12 md:col-span-5"
@@ -50,7 +51,7 @@ export function ProductShowcase() {
         />
         <CategoryCard
           href="/products?category=automation"
-          number="03"
+          number={`03 / ${ts('familyLabel')}`}
           title={t('automation')}
           cover={automation}
           aspect="aspect-[21/9]"
@@ -113,7 +114,7 @@ function CategoryCard({
           }
         >
           <div className="font-mono text-xs uppercase tracking-widest text-[color:var(--color-signal)] mb-2">
-            {number} / Family
+            {number}
           </div>
           <h3 className="font-display text-3xl md:text-5xl">{title}</h3>
         </div>

@@ -1,4 +1,4 @@
-import { setRequestLocale } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { getTickerStats } from '@/lib/kv';
 import { HeroCinematic } from '@/components/sections/hero-cinematic';
 import { LiveDataTicker } from '@/components/sections/live-data-ticker';
@@ -18,6 +18,8 @@ export default async function Home({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const zA = await getTranslations('home.zoomA');
+  const zB = await getTranslations('home.zoomB');
 
   const stats = await getTickerStats().catch(() => ({
     machines: 1247,
@@ -34,29 +36,27 @@ export default async function Home({
       <ProductShowcase />
 
       {/* ── Snowhouse zoom-to-fullbleed signature #1 ──
-          Bridges ProductShowcase → FeaturedMachines. Flexy Applicator shot
-          11 zooms from thumbnail to full bleed, "Engineered on this floor"
-          fades in over the dimmed image. */}
+          Flexy Applicator zooms from thumbnail to full bleed. Copy is
+          locale-aware via home.zoomA.* keys. */}
       <ZoomTransition
         image="/products/Flexy_Applicator_11.png"
-        alt="Flexy Applicator on the Auraplex floor"
+        alt="Flexy Applicator"
         scrollLength={2400}
       >
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
           <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6 flex items-center gap-3">
             <span className="h-px w-12 bg-[color:var(--color-signal)]" />
-            Precision · 120 units / min
+            {zA('eyebrow')}
           </div>
           <h2 className="font-display text-[clamp(3rem,9vw,8rem)] tracking-[-0.04em] leading-[0.88] text-[color:var(--color-paper)] max-w-5xl">
-            Engineered
+            {zA('h2Line1')}
             <br />
             <span className="text-[color:var(--color-signal)]">
-              on this floor.
+              {zA('h2Line2')}
             </span>
           </h2>
           <p className="mt-8 max-w-xl font-mono text-sm text-[color:var(--color-steel-soft)]">
-            Mechanical, electrical, controls, installation — all under one
-            roof in Shah Alam. No re-badge, no outsourced engineering.
+            {zA('body')}
           </p>
         </div>
       </ZoomTransition>
@@ -64,28 +64,27 @@ export default async function Home({
       <FeaturedMachines />
 
       {/* ── Snowhouse zoom-to-fullbleed signature #2 ──
-          Bridges FeaturedMachines → ScrollNarrative. Vision-checking
-          system from the Custom Top Labelling Machine — quantified claim. */}
+          Vision-checking system. Copy via home.zoomB.* keys. */}
       <ZoomTransition
         image="/products/Custom_Top_Labelling_Machine_with_Checking_System_8.png"
-        alt="Vision-checking system on a Custom Top Labelling Machine"
+        alt="Custom Top Labelling Machine with Checking System"
         scrollLength={2000}
         startScale={0.12}
       >
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12 text-right">
           <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6 inline-flex items-center gap-3">
             <span className="h-px w-12 bg-[color:var(--color-signal)]" />
-            Vision · 1 ms detection
+            {zB('eyebrow')}
           </div>
           <h2 className="font-display text-[clamp(3rem,9vw,8rem)] tracking-[-0.04em] leading-[0.88] text-[color:var(--color-paper)]">
-            Vision-grade
+            {zB('h2Line1')}
             <br />
             <span className="text-[color:var(--color-signal)]">
-              rejection.
+              {zB('h2Line2')}
             </span>
           </h2>
           <p className="mt-8 max-w-md ml-auto font-mono text-sm text-[color:var(--color-steel-soft)]">
-            0.2% reject rate. Down from 1.4%. Same line. Different machine.
+            {zB('body')}
           </p>
         </div>
       </ZoomTransition>

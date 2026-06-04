@@ -17,6 +17,11 @@
     "whatsapp": "WhatsApp"
   },
   "home": {
+    "heroEyebrow": "Auraplex · 马来西亚 · 2026",
+    "heroLiveSpecLabel": "实时规格",
+    "heroScrollLabel": "向下滚动",
+    "heroVideoTitle": "Auraplex 工厂车间",
+    "heroWhatsappMsg": "您好 Auraplex,我看到了您的网站想要交流。",
     "heroH1": "马来西亚制造,经久耐用。",
     "heroSub": "为东盟制造商提供自粘标签机、包装机械与定制自动化方案。设计、制造、安装、维护——全部来自我们在莎阿南的工厂。",
     "heroCallout": "贴标 · 包装 · 3D 打印 · 定制自动化",
@@ -58,10 +63,77 @@
       ]
     },
     "ctaFooter": {
+      "eyebrow": "传输结束 · 联系我们",
       "title": "准备好聊聊了吗?",
       "quote": "获取报价",
       "tour": "预约工厂参观",
       "whatsapp": "WhatsApp 联系"
+    },
+    "showcase": {
+      "eyebrow": "02 / 产品目录",
+      "h2Line1": "三大系列。",
+      "h2Line2": "一个承诺:本地制造。",
+      "familyLabel": "系列"
+    },
+    "featured": {
+      "eyebrow": "精选 · 机器",
+      "h2": "雪兰莪手工打造。车间现场拍摄。",
+      "body": "目录中的每一台机器都在马来西亚设计,经真实生产线测试,由本地团队以您工厂的语言提供支持。",
+      "viewMachine": "查看机器",
+      "totalLabel": "目录中有 {count} 台机器",
+      "browseAll": "查看完整目录"
+    },
+    "narrative": {
+      "dateline": "莎阿南 · 雪兰莪",
+      "s1Line1": "一台机器。",
+      "s1Line2": "动态描述。",
+      "inMotion": "动态中 / {machineName}",
+      "specs": {
+        "container": "容器",
+        "containerValue": "30 – 250 mm Ø",
+        "vision": "视觉",
+        "visionValue": "1 毫秒检测",
+        "labelFeed": "标签送料",
+        "labelFeedValue": "伺服驱动",
+        "throughput": "产量",
+        "throughputValue": "120 件/分钟持续",
+        "reject": "拒收",
+        "rejectValue": "自动偏差处理",
+        "output": "输出",
+        "outputValue": "可对接产线集成"
+      },
+      "labelGraphic": "Auraplex · 马来西亚制造",
+      "counter": "共 30 台",
+      "closerLine1": "30 台机器。",
+      "closerLine2": "一个车间。",
+      "closerCta": "查看全部"
+    },
+    "testimonials": {
+      "eyebrow": "来自车间的声音"
+    },
+    "zoomA": {
+      "eyebrow": "精密 · 120 件/分钟",
+      "h2Line1": "在此",
+      "h2Line2": "车间打造。",
+      "body": "机械、电气、控制、安装——全在莎阿南一个屋檐下。无贴牌,无外包工程。"
+    },
+    "zoomB": {
+      "eyebrow": "视觉 · 1 毫秒检测",
+      "h2Line1": "视觉级",
+      "h2Line2": "剔除。",
+      "body": "0.2% 拒收率。从 1.4% 降下来。同一条产线。换了一台机器。"
+    },
+    "valueProp02": {
+      "label": "一个屋檐下",
+      "items": [
+        "自粘标签",
+        "包装机械",
+        "3D 打印与扫描",
+        "MES 与 SCADA 方案",
+        "定制自动化"
+      ],
+      "leadTimeLabel": "典型交付周期",
+      "leadTimeUnit": " 周"
     }
   },
   "products": {
@@ -69,7 +141,51 @@
     "subtitle": "为东盟制造现实而设计。",
     "filters": { "category": "类别", "speed": "速度", "label": "标签类型", "price": "价格区间" },
     "viewMachine": "查看",
-    "from": "起价"
+    "viewMachineLong": "查看机器",
+    "from": "起价",
+    "catalogueLine": "目录 / 2026 · {count} 台机器",
+    "categories": {
+      "all": "全部",
+      "labelling": "贴标",
+      "packaging": "包装",
+      "automation": "自动化"
+    },
+    "sortLabel": "排序",
+    "sort": {
+      "featured": "精选",
+      "photographed": "已拍摄",
+      "az": "A — Z"
+    },
+    "showing": "显示 {n}",
+    "ofTotal": " / 共 {total}",
+    "photographedSummary": "已拍摄 {photo} · 待拍摄 {pending}",
+    "featuredBadge": "★ 精选",
+    "shotsLabel": "{n} 张照片",
+    "photographyPending": "照片待拍摄",
+    "priceOnRequest": "价格按需提供",
+    "perMonth": "/月",
+    "perMonthLong": "每月",
+    "noMatch": "没有机器符合此筛选",
+    "seeAll": "查看所有机器",
+    "detail": {
+      "categoryEyebrowSpeedSuffix": "件/分钟",
+      "summaryHeading": "规格",
+      "specsFallback": "本机完整规格——产量曲线、容器兼容性、尺寸、电力与气源要求——按需提供。下载上方的规格说明书,或与工程师沟通获取定制化分析。",
+      "fromLabel": "起价",
+      "quoteOnRequest": "价格按需提供",
+      "getQuote": "获取报价",
+      "openConfigurator": "3D 配置器",
+      "whatsapp": "WhatsApp",
+      "whatsappMsg": "对 {name} 感兴趣",
+      "galleryLabel": "图库 · {count} 张",
+      "featuresEyebrow": "特点",
+      "talkToEngineerEyebrow": "联系工程师",
+      "getDetailedQuote": "获取详细报价。",
+      "specSheetTrigger": "下载规格说明书",
+      "specSheetTitle": "获取规格说明书",
+      "specSheetBody": "我们会将完整 PDF 发送到您的邮箱——尺寸、产量曲线、容器对照表、安装要求。",
+      "specSheetSent": "已发送。请查收邮箱。"
+    }
   },
   "configurator": {
     "title": "配置您的机器",
@@ -84,11 +200,32 @@
     "email": "邮箱",
     "message": "留言",
     "submit": "提交",
-    "thanks": "谢谢 — 我们将在一个工作日内联系您。"
+    "thanks": "谢谢 — 我们将在一个工作日内联系您。",
+    "sending": "发送中…",
+    "received": "已收到",
+    "machineFinderWelcome": "请告诉我您生产什么产品,产线速度多少。我会为您匹配合适的机器。",
+    "machineFinderPlaceholder": "描述您的产品和产线…",
+    "machineFinderError": "— 连接中断。请重试,或通过 WhatsApp 联系我们。",
+    "machineFinderAiLabel": "Auraplex AI",
+    "machineFinderUserLabel": "您",
+    "specSheetCta": "把 PDF 发给我",
+    "send": "发送"
   },
   "footer": {
     "rights": "© 2026 Auraplex SDN BHD. 版权所有。",
-    "made": "马来西亚制造。"
+    "made": "马来西亚制造。",
+    "address": "Auraplex SDN BHD · 莎阿南 · 雪兰莪 · 马来西亚",
+    "allMachines": "所有机器",
+    "privacy": "隐私",
+    "terms": "条款"
+  },
+  "common": {
+    "stickyCta": "获取报价",
+    "whatsapp": "WhatsApp",
+    "whatsappAria": "WhatsApp 联系",
+    "whatsappDefaultMsg": "您好 Auraplex,我想了解更多关于您们机器的信息。",
+    "menuToggle": "切换菜单",
+    "search": "搜索"
   },
   "pages": {
     "about": {

@@ -18,8 +18,10 @@ import { AnimatedNumber } from '@/components/motion/animated-number';
  */
 export function ValuePropGrid() {
   const t = useTranslations('home.valueProps');
+  const cap = useTranslations('home.valueProp02');
   const items = t.raw('items') as { num: string; title: string; body: string }[];
   const [one, two, three] = items;
+  const capItems = cap.raw('items') as string[];
 
   return (
     <section className="mx-auto max-w-[1600px] px-6 lg:px-12 py-32 lg:py-48 space-y-24 lg:space-y-32">
@@ -59,37 +61,23 @@ export function ValuePropGrid() {
           <Reveal variant="up" className="col-span-12 md:col-span-5 order-2 md:order-1">
             <div className="border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)]/40 p-8 md:p-10">
               <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)] mb-4">
-                Under one roof
+                {cap('label')}
               </div>
               <ul className="space-y-3 font-display text-2xl md:text-3xl tracking-[-0.01em] leading-tight">
-                <li className="flex items-baseline gap-3">
-                  <span className="text-[color:var(--color-signal)] text-base">◆</span>
-                  Self-adhesive labelling
-                </li>
-                <li className="flex items-baseline gap-3">
-                  <span className="text-[color:var(--color-signal)] text-base">◆</span>
-                  Packaging machinery
-                </li>
-                <li className="flex items-baseline gap-3">
-                  <span className="text-[color:var(--color-signal)] text-base">◆</span>
-                  3D printing & scanning
-                </li>
-                <li className="flex items-baseline gap-3">
-                  <span className="text-[color:var(--color-signal)] text-base">◆</span>
-                  MES &amp; SCADA solutions
-                </li>
-                <li className="flex items-baseline gap-3">
-                  <span className="text-[color:var(--color-signal)] text-base">◆</span>
-                  Custom automation
-                </li>
+                {capItems.map((item, i) => (
+                  <li key={i} className="flex items-baseline gap-3">
+                    <span className="text-[color:var(--color-signal)] text-base">◆</span>
+                    {item}
+                  </li>
+                ))}
               </ul>
 
               <div className="mt-10 pt-8 border-t border-[color:var(--color-neutral-700)]">
                 <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)] mb-3">
-                  Typical lead time
+                  {cap('leadTimeLabel')}
                 </div>
                 <div className="font-display text-5xl text-[color:var(--color-paper)]">
-                  <AnimatedNumber value={4} suffix=" weeks" />
+                  <AnimatedNumber value={4} suffix={cap('leadTimeUnit')} />
                 </div>
               </div>
             </div>

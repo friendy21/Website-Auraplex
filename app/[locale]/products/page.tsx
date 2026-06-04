@@ -7,7 +7,6 @@ import { ParallaxProductImage } from '@/components/sections/parallax-product-ima
 import { buildMetadata, breadcrumbSchema } from '@/lib/seo';
 import {
   MACHINES,
-  categoryLabel,
   categoryCounts,
   machineTags,
   type Category,
@@ -29,12 +28,7 @@ export async function generateMetadata({
 }
 
 type SortKey = 'featured' | 'photographed' | 'az';
-
-const SORTS: { key: SortKey; label: string }[] = [
-  { key: 'featured', label: 'Featured' },
-  { key: 'photographed', label: 'Photographed' },
-  { key: 'az', label: 'A — Z' },
-];
+const SORT_KEYS: SortKey[] = ['featured', 'photographed', 'az'];
 
 function sortMachines(machines: Machine[], sort: SortKey): Machine[] {
   const arr = [...machines];
@@ -73,13 +67,20 @@ export default async function ProductsPage({
     : MACHINES;
   const machines = sortMachines(filtered, sort);
   const photographedCount = machines.filter((m) => m.image !== null).length;
+  const pendingCount = machines.length - photographedCount;
 
   const categories: { key?: Category; label: string; count: number }[] = [
-    { key: undefined, label: 'All', count: counts.all },
-    { key: 'labelling', label: 'Labelling', count: counts.labelling },
-    { key: 'packaging', label: 'Packaging', count: counts.packaging },
-    { key: 'automation', label: 'Automation', count: counts.automation },
+    { key: undefined, label: t('categories.all'), count: counts.all },
+    { key: 'labelling', label: t('categories.labelling'), count: counts.labelling },
+    { key: 'packaging', label: t('categories.packaging'), count: counts.packaging },
+    { key: 'automation', label: t('categories.automation'), count: counts.automation },
   ];
+
+  const sortItems = SORT_KEYS.map((key) => ({
+    key,
+    label: t(`sort.${key}`),
+    href: '',
+  }));
 
   const buildHref = (cat?: Category, srt: SortKey = sort) => {
     const params = new URLSearchParams();
@@ -110,7 +111,7 @@ export default async function ProductsPage({
       <section className="mx-auto max-w-[1600px] px-6 lg:px-12 pt-32 pb-12">
         <Reveal variant="up">
           <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-4">
-            — Catalogue / 2026 · {counts.all} machines
+            — {t('catalogueLine', { count: counts.all })}
           </div>
           <div className="flex items-end justify-between flex-wrap gap-6">
             <h1 className="font-display text-[clamp(2.5rem,6vw,5.5rem)] tracking-[-0.03em] leading-[0.95]">
@@ -162,9 +163,9 @@ export default async function ProductsPage({
           {/* Sort — sliding pill indicator. Hrefs are precomputed here in the
               server component so we never hand a function to the client. */}
           <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.15em]">
-            <span className="text-[color:var(--color-neutral-500)]">Sort</span>
+            <span className="text-[color:var(--color-neutral-500)]">{t('sortLabel')}</span>
             <SortTabs
-              items={SORTS.map((s) => ({
+              items={sortItems.map((s) => ({
                 key: s.key,
                 label: s.label,
                 href: buildHref(category, s.key),
@@ -178,18 +179,17 @@ export default async function ProductsPage({
       {/* ────── RESULT COUNTER ────── */}
       <section className="mx-auto max-w-[1600px] px-6 lg:px-12 pt-8 pb-4 flex items-end justify-between flex-wrap gap-3">
         <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)]">
-          Showing {machines.length}
-          {category && ` of ${counts.all}`}
+          {t('showing', { n: machines.length })}
+          {category && t('ofTotal', { total: counts.all })}
           {category && (
             <>
               {' '}
-              · <span className="text-[color:var(--color-signal)]">{categoryLabel(category)}</span>
+              · <span className="text-[color:var(--color-signal)]">{t(`categories.${category}`)}</span>
             </>
           )}
         </div>
         <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-500)]">
-          {photographedCount} photographed ·{' '}
-          {machines.length - photographedCount} pending
+          {t('photographedSummary', { photo: photographedCount, pending: pendingCount })}
         </div>
       </section>
 
@@ -225,9 +225,7 @@ export default async function ProductsPage({
                     ) : (
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-500)] text-center leading-relaxed">
-                          Photography
-                          <br />
-                          pending
+                          {t('photographyPending')}
                         </div>
                       </div>
                     )}
@@ -235,11 +233,11 @@ export default async function ProductsPage({
                     {/* Top meta row — category morphs to filled signal on hover */}
                     <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2 z-10">
                       <div className="font-mono text-[9px] uppercase tracking-[0.25em] bg-[color:var(--color-ink)]/70 backdrop-blur-sm px-2 py-1 text-[color:var(--color-signal)] group-hover:text-[color:var(--color-ink)] group-hover:bg-[color:var(--color-signal)] transition-colors duration-500">
-                        {categoryLabel(p.category)}
+                        {t(`categories.${p.category}`)}
                       </div>
                       {p.featured && (
                         <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-[color:var(--color-ink)] bg-[color:var(--color-signal)] px-2 py-1 animate-pulse">
-                          ★ Featured
+                          {t('featuredBadge')}
                         </div>
                       )}
                     </div>
@@ -247,7 +245,7 @@ export default async function ProductsPage({
                     {/* Bottom-right gallery indicator (fades out on hover so the overlay can take over) */}
                     {p.image && p.gallery.length > 1 && (
                       <div className="absolute bottom-3 right-3 font-mono text-[9px] uppercase tracking-[0.25em] text-[color:var(--color-steel-soft)] bg-[color:var(--color-ink)]/70 backdrop-blur-sm px-2 py-1 z-10 transition-opacity duration-300 group-hover:opacity-0">
-                        ◇ {p.gallery.length} shots
+                        ◇ {t('shotsLabel', { n: p.gallery.length })}
                       </div>
                     )}
 
@@ -255,7 +253,7 @@ export default async function ProductsPage({
                     <div className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] bg-gradient-to-t from-[color:var(--color-ink)] via-[color:var(--color-ink)]/90 to-transparent pt-16 pb-5 px-5 z-10">
                       <div className="flex items-center justify-between gap-3">
                         <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[color:var(--color-signal)]">
-                          View machine
+                          {t('viewMachineLong')}
                         </span>
                         <span className="font-mono text-sm text-[color:var(--color-signal)] -translate-x-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-500 delay-150">
                           ⟶
@@ -287,24 +285,21 @@ export default async function ProductsPage({
                       <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-neutral-500)] leading-relaxed">
                         {p.monthlyPrice != null ? (
                           <>
-                            From
+                            {t('from')}
                             <br />
                             <span className="text-[color:var(--color-signal)] text-sm tracking-normal normal-case">
-                              RM {p.monthlyPrice.toLocaleString()}/mo
+                              RM {p.monthlyPrice.toLocaleString()}
+                              {t('perMonth')}
                             </span>
                           </>
                         ) : (
-                          <>
-                            Price
-                            <br />
-                            <span className="text-[color:var(--color-paper)] text-sm tracking-normal normal-case">
-                              On request
-                            </span>
-                          </>
+                          <span className="text-[color:var(--color-paper)] text-sm tracking-normal normal-case">
+                            {t('priceOnRequest')}
+                          </span>
                         )}
                       </div>
                       <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-steel)] group-hover:text-[color:var(--color-signal)] group-hover:translate-x-1 transition-all duration-300">
-                        View →
+                        {t('viewMachine')} →
                       </div>
                     </div>
                   </div>
@@ -319,13 +314,13 @@ export default async function ProductsPage({
         {machines.length === 0 && (
           <div className="text-center py-32">
             <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)] mb-4">
-              — No machines match this filter
+              — {t('noMatch')}
             </div>
             <Link
               href="/products"
               className="font-mono text-sm uppercase tracking-wider text-[color:var(--color-signal)] hover:text-[color:var(--color-signal-bright)] transition"
             >
-              See all machines →
+              {t('seeAll')} →
             </Link>
           </div>
         )}

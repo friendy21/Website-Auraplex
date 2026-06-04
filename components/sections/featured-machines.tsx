@@ -4,10 +4,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
+import { useTranslations } from 'next-intl';
 import { Reveal } from '@/components/motion/reveal';
 import { TiltCard } from '@/components/motion/tilt-card';
 import { ImageReveal } from '@/components/motion/image-reveal';
-import { getFeaturedMachines, categoryLabel } from '@/lib/catalog';
+import { getFeaturedMachines, categoryLabel, MACHINES } from '@/lib/catalog';
 
 /**
  * Editorial "featured machines" spread for the homepage.
@@ -18,10 +19,12 @@ import { getFeaturedMachines, categoryLabel } from '@/lib/catalog';
  *   - All cards carry data-cursor="caliper" so the custom cursor switches.
  */
 export function FeaturedMachines() {
+  const t = useTranslations('home.featured');
   const featured = getFeaturedMachines().slice(0, 3);
   if (featured.length === 0) return null;
 
   const [hero, ...rest] = featured;
+  const totalCount = MACHINES.length;
 
   return (
     <section className="mx-auto max-w-[1600px] px-6 lg:px-12 py-24 lg:py-40">
@@ -29,10 +32,10 @@ export function FeaturedMachines() {
         <Reveal variant="up" className="col-span-12 lg:col-span-8">
           <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6 flex items-center gap-3">
             <span className="h-px w-12 bg-[color:var(--color-signal)]" />
-            Featured · Machines
+            {t('eyebrow')}
           </div>
           <h2 className="font-display text-[clamp(2rem,5vw,4.5rem)] tracking-[-0.02em] leading-[1]">
-            Hand-built in Selangor. Photographed on the floor.
+            {t('h2')}
           </h2>
         </Reveal>
         <Reveal
@@ -41,9 +44,7 @@ export function FeaturedMachines() {
           className="col-span-12 lg:col-span-4 lg:pl-8 flex items-end"
         >
           <p className="prose-editorial text-[color:var(--color-steel-soft)] max-w-md">
-            Every machine in the catalogue is engineered here in Malaysia,
-            tested on real production lines, and supported by a local team in
-            the language your floor speaks.
+            {t('body')}
           </p>
         </Reveal>
       </div>
@@ -90,7 +91,7 @@ export function FeaturedMachines() {
                 />
 
                 <p className="font-mono text-xs uppercase tracking-wider text-[color:var(--color-paper)] group-hover:text-[color:var(--color-signal)] transition-colors flex items-center gap-2">
-                  View machine
+                  {t('viewMachine')}
                   <span className="inline-block transition-transform duration-500 group-hover:translate-x-2">
                     ⟶
                   </span>
@@ -147,13 +148,13 @@ export function FeaturedMachines() {
         className="mt-12 flex items-center justify-between border-t border-[color:var(--color-neutral-700)] pt-8 gap-6 flex-wrap"
       >
         <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-steel)]">
-          30 machines in the catalogue
+          {t('totalLabel', { count: totalCount })}
         </div>
         <Link
           href="/products"
           className="group/cta font-mono text-sm uppercase tracking-wider text-[color:var(--color-paper)] hover:text-[color:var(--color-signal)] transition flex items-center gap-2"
         >
-          See the full catalogue
+          {t('browseAll')}
           <span className="inline-block transition-transform duration-500 group-hover/cta:translate-x-2">
             ⟶
           </span>

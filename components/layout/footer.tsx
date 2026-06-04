@@ -48,9 +48,9 @@ export function Footer() {
             {t('meta.tagline')}
           </p>
           <div className="mt-8 font-mono text-xs uppercase tracking-wider text-[color:var(--color-steel)] space-y-1">
-            <div>Auraplex SDN BHD · Shah Alam · Selangor · Malaysia</div>
+            <div>{t('footer.address')}</div>
             <div className="text-[color:var(--color-steel-soft)]">
-              hello@auraplex.my
+              sales.auraplex@gmail.com
             </div>
           </div>
         </FooterCol>
@@ -76,7 +76,7 @@ export function Footer() {
               </FooterLink>
             </li>
             <li>
-              <FooterLink href="/products">All machines →</FooterLink>
+              <FooterLink href="/products">{t('footer.allMachines')} →</FooterLink>
             </li>
           </ul>
         </FooterCol>
@@ -126,13 +126,13 @@ export function Footer() {
               href="/privacy"
               className="hover:text-[color:var(--color-paper)] transition"
             >
-              Privacy
+              {t('footer.privacy')}
             </Link>
             <Link
               href="/terms"
               className="hover:text-[color:var(--color-paper)] transition"
             >
-              Terms
+              {t('footer.terms')}
             </Link>
           </span>
         </span>

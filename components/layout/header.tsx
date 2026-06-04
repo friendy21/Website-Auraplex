@@ -46,6 +46,7 @@ const NAV: { key: NavKey; href: string }[] = [
  */
 export function Header() {
   const t = useTranslations('nav');
+  const tCommon = useTranslations('common');
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { scrollY } = useScroll();
@@ -101,7 +102,7 @@ export function Header() {
         <button
           className="lg:hidden text-[color:var(--color-paper)] relative h-6 w-6 z-[60]"
           onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
+          aria-label={tCommon('menuToggle')}
           aria-expanded={open}
         >
           <AnimatePresence mode="wait" initial={false}>

@@ -9,6 +9,7 @@ import {
 } from 'motion/react';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 /**
  * Floating "Get a quote" pill — appears once the user scrolls past the hero
@@ -23,6 +24,7 @@ import { useState } from 'react';
  * already serves that role. Single-action pill is cleaner.
  */
 export function StickyCta() {
+  const t = useTranslations('common');
   const { scrollY } = useScroll();
   const [show, setShow] = useState(false);
   const pathname = usePathname();
@@ -57,7 +59,7 @@ export function StickyCta() {
             className="pointer-events-auto group inline-flex items-center gap-3 bg-[color:var(--color-signal)] text-[color:var(--color-ink)] px-6 py-4 font-mono text-[11px] uppercase tracking-[0.2em] shadow-2xl shadow-[color:var(--color-signal)]/30 hover:bg-[color:var(--color-signal-bright)] transition-colors"
           >
             <span className="h-1.5 w-1.5 bg-[color:var(--color-ink)] animate-pulse" />
-            Get a quote
+            {t('stickyCta')}
             <span className="text-base group-hover:translate-x-1 transition-transform">
               →
             </span>
