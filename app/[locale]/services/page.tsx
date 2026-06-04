@@ -23,61 +23,16 @@ export async function generateMetadata({
 /**
  * Services landing page.
  *
- * Surfaces the four service disciplines Auraplex sells alongside machines.
- * Content here is generic-but-honest — no fabricated SLAs, response-time
- * promises or pricing. When the sales team provides specifics, fill the
- * `details` array per service. The structure is ready.
+ * Service definitions live in messages/{en,ms,zh}.json under
+ * pages.services.items so service names, summaries and deliverables
+ * translate with the language switcher.
  */
-const SERVICES = [
-  {
-    num: '01',
-    name: 'Installation & Commissioning',
-    summary:
-      'On-site setup, line integration and runtime tuning. Performed by the engineers who built the machine.',
-    deliverables: [
-      'Site survey + power/air requirements check',
-      'Mechanical install on your line',
-      'PLC + HMI configuration',
-      'Operator hand-off & runtime acceptance',
-    ],
-  },
-  {
-    num: '02',
-    name: 'Maintenance & Repair',
-    summary:
-      'Local parts pipeline + service engineers across Peninsular Malaysia, Sabah, and Sarawak.',
-    deliverables: [
-      'Preventive maintenance contracts',
-      'Spare parts pipeline (warehouse in Selangor)',
-      'Break-fix service calls',
-      'Overhaul service for third-party labellers',
-    ],
-  },
-  {
-    num: '03',
-    name: 'Training',
-    summary:
-      'Operator + line-supervisor training on your floor or at our facility in Shah Alam.',
-    deliverables: [
-      'Operator handover training (included with installation)',
-      'Refresher training for new staff',
-      'Supervisor-level diagnostics & recipe management',
-      'Documentation in EN / BM / Mandarin on request',
-    ],
-  },
-  {
-    num: '04',
-    name: 'Custom Automation',
-    summary:
-      'Bespoke rigs engineered for non-standard containers, throughputs, or line topologies.',
-    deliverables: [
-      'Discovery + concept design',
-      'Mechanical, electrical, controls integration',
-      'Optional vision/inspection systems',
-      'Documentation & spare-parts kit on handover',
-    ],
-  },
-];
+type ServiceItem = {
+  num: string;
+  name: string;
+  summary: string;
+  deliverables: string[];
+};
 
 export default async function ServicesPage({
   params,
@@ -87,6 +42,7 @@ export default async function ServicesPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations('pages.services');
+  const SERVICES = t.raw('items') as ServiceItem[];
 
   return (
     <>

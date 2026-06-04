@@ -29,6 +29,11 @@ export default async function AboutPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations('pages.about');
+  const tCommon = await getTranslations('common');
+  const DISCIPLINES = tCommon.raw('disciplines') as {
+    role: string;
+    focus: string;
+  }[];
 
   const featured = getFeaturedMachines();
   const photographed = MACHINES.filter((m) => m.image !== null).length;
@@ -184,19 +189,6 @@ export default async function AboutPage({
     </>
   );
 }
-
-// Disciplines stay in English — they're technical labels (Mechanical /
-// Electrical / Controls / Installation / Service / R&D) that engineering
-// candidates and customers recognize globally. Adding them to i18n would
-// invite inconsistent translations of well-known industry terms.
-const DISCIPLINES = [
-  { role: 'Mechanical', focus: 'Frames, applicators, jigs, conveyors.' },
-  { role: 'Electrical', focus: 'PLCs, sensors, motors, vision systems.' },
-  { role: 'Controls', focus: 'HMI, line integration, recipe management.' },
-  { role: 'Installation', focus: 'On-site commissioning across ASEAN.' },
-  { role: 'Service', focus: 'Response, parts pipeline, operator training.' },
-  { role: 'R&D', focus: 'Custom rigs, AR-series additive manufacturing.' },
-];
 
 function Stat({ n, l }: { n: string; l: string }) {
   return (

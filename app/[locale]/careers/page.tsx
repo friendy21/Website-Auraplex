@@ -19,38 +19,13 @@ export async function generateMetadata({
   });
 }
 
-// Disciplines + internship fields stay English — technical labels recognised
-// globally by engineering candidates. Translating them would invite term
-// inconsistency for well-known industry vocabulary.
-const DISCIPLINES = [
-  { role: 'Mechanical', focus: 'Frames, applicators, jigs, conveyors.' },
-  { role: 'Electrical', focus: 'PLCs, sensors, motors, vision systems.' },
-  { role: 'Controls', focus: 'HMI, line integration, recipe management.' },
-  { role: 'Installation', focus: 'On-site commissioning across ASEAN.' },
-  { role: 'Service', focus: 'Response, parts pipeline, operator training.' },
-  { role: 'R&D', focus: 'Custom rigs, AR-series additive manufacturing.' },
-];
+// Disciplines + internship items now live in messages/*.json so they
+// translate with the locale switcher. Per-language data:
+//   - common.disciplines (shared with /about + /2026)
+//   - pages.careers.internships.items
 
-const INTERNSHIPS = [
-  {
-    field: 'Mechanical Engineering',
-    work:
-      'Frame design, fixture jigs, CAD review, assembly support on the floor.',
-    duration: '12 – 24 weeks',
-  },
-  {
-    field: 'Electrical / Mechatronics',
-    work:
-      'PLC programming, sensor integration, panel build, electrical testing.',
-    duration: '12 – 24 weeks',
-  },
-  {
-    field: 'Software / Controls',
-    work:
-      'HMI development, recipe management, line-integration software, vision-system tuning.',
-    duration: '12 – 24 weeks',
-  },
-];
+type Discipline = { role: string; focus: string };
+type Internship = { field: string; work: string; duration: string };
 
 export default async function CareersPage({
   params,
@@ -60,6 +35,9 @@ export default async function CareersPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations('pages.careers');
+  const tCommon = await getTranslations('common');
+  const DISCIPLINES = tCommon.raw('disciplines') as Discipline[];
+  const INTERNSHIPS = t.raw('internships.items') as Internship[];
 
   return (
     <>

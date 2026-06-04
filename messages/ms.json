@@ -225,7 +225,115 @@
     "whatsappAria": "WhatsApp kami",
     "whatsappDefaultMsg": "Hi Auraplex, saya ingin mengetahui lebih lanjut tentang mesin anda.",
     "menuToggle": "Togol menu",
-    "search": "Cari"
+    "search": "Cari",
+    "disciplines": [
+      { "role": "Mekanikal", "focus": "Rangka, aplikator, jig, konveyor." },
+      { "role": "Elektrikal", "focus": "PLC, sensor, motor, sistem penglihatan." },
+      { "role": "Kawalan", "focus": "HMI, integrasi barisan, pengurusan resipi." },
+      { "role": "Pemasangan", "focus": "Pentauliahan di tapak merentas ASEAN." },
+      { "role": "Servis", "focus": "Respons, saluran alat ganti, latihan operator." },
+      { "role": "R&D", "focus": "Rig khusus, pembuatan aditif siri AR." }
+    ]
+  },
+  "page2026": {
+    "eyebrow": "Ulasan Tahun · 2026",
+    "h1Line1": "2026 di lantai kilang.",
+    "h1Line2": "Setahun dalam mesin.",
+    "lede": "Kami menghantar 30 mesin, memfoto 142 daripadanya di lantai kilang di Selangor, dan menempatkan aplikator presisi dalam 11 industri merentas ASEAN — dari kosmetik di Klang ke farmaseutikal di Pulau Pinang. Inilah tahunnya, mengikut urutan ia berlaku.",
+    "filedFromLabel": "Difailkan dari",
+    "filedFromValue": "Shah Alam, Selangor\nMalaysia",
+    "industriesLabel": "Industri disokong — 2026",
+    "industries": [
+      "Makanan & Minuman",
+      "Farmaseutikal",
+      "Peranti Perubatan",
+      "Kosmetik",
+      "Percetakan",
+      "Acuan Plastik",
+      "Logistik",
+      "Bakeri",
+      "Minyak Pelincir",
+      "Minyak Makan"
+    ],
+    "work": {
+      "eyebrow": "§ 01 / Kerja",
+      "h2Line1": "Lima mesin yang",
+      "h2Line2": "mentakrifkan tahun ini.",
+      "coverLabel": "Mesin utama",
+      "open": "Buka"
+    },
+    "wordCloud": {
+      "eyebrow": "§ 02 / Apa kata pembeli",
+      "h2": "Perkataan yang paling kerap kami dengar.",
+      "words": [
+        "presisi", "tempatan", "dibina di sini", "bersepadu", "balut-sekeliling",
+        "khusus", "boleh diukur", "penghantaran pantas", "boleh dipercayai", "boleh diservis",
+        "pindahan haba", "dua-sisi", "tekanan sudut", "Selangor",
+        "cetak & sapu", "flexy", "continuous-band", "siri AR",
+        "direka", "empat minggu"
+      ]
+    },
+    "stats": {
+      "eyebrow": "§ 03 / Tahun, dalam angka",
+      "h2Line1": "Sesetengahnya",
+      "h2Line2": "membanggakan.",
+      "h2Line3": "Sesetengahnya hanya fakta.",
+      "items": [
+        { "label": "mesin dalam katalog" },
+        { "label": "industri disokong" },
+        { "label": "foto di lantai kilang" },
+        { "label": "kilang disebarkan" },
+        { "label": "purata masa beroperasi" },
+        { "label": "purata pulang modal" },
+        { "label": "tempoh penghantaran biasa" },
+        { "label": "alat ganti luar" }
+      ]
+    },
+    "team": {
+      "eyebrow": "§ 04 / Pasukan",
+      "h2Line1": "Cukup kecil",
+      "h2Line2": "untuk mengenali",
+      "h2Line3": "barisan anda.",
+      "body": "Enam disiplin kejuruteraan dalam satu lantai kilang. Setiap mesin yang keluar dari bangunan ini telah disentuh oleh kesemuanya."
+    },
+    "timeline": {
+      "eyebrow": "§ 05 / Suku demi suku",
+      "h2Line1": "Empat keluaran.",
+      "h2Line2": "Setiap satu mendapat namanya.",
+      "items": [
+        { "q": "Q1", "h": "Two-Side w/ Corner Press dihantar", "note": "Pusingan ke-3 iterasi dipandu pelanggan." },
+        { "q": "Q2", "h": "AR600 mula pengeluaran", "note": "Aditif berkapasiti tinggi untuk pemasangan dalaman." },
+        { "q": "Q3", "h": "Custom Top w/ Checking System", "note": "Barisan reject berintegrasi penglihatan untuk farmaseutikal." },
+        { "q": "Q4", "h": "Kit retrofit Continuous Band v2", "note": "Laluan naik taraf serta-merta untuk v1 asal." }
+      ]
+    },
+    "founder": {
+      "eyebrow": "§ 06 / Nota dari lantai kilang",
+      "lead": "Apabila kami memulakan Auraplex, kami membuat satu keputusan yang membentuk setiap mesin sejak itu: bina di sini.",
+      "leadSub": "Tiada penjenamaan semula dari Wenzhou. Tiada kawalan diluar-sumber. Tiada penghantaran laut 14 minggu untuk alat ganti yang anda perlukan semalam.",
+      "p1": "2026 adalah tahun keputusan itu mula membayar balik kepada pembeli. Pengeluar kosmetik di Klang menghubungi kami pada 9 malam Sabtu — pelabel tersekat di pertengahan operasi. Seorang jurutera berada di tapak menjelang 8 pagi Ahad dengan alat ganti yang betul dalam Toyota Hilux. Itu tidak berlaku dengan barangan import.",
+      "p2": "Kami menambah sistem pemeriksaan penglihatan kepada barisan Custom Top Labelling, yang membolehkan pelanggan farmaseutikal mengurangkan kadar reject mereka dari 1.4% kepada di bawah 0.2%. Continuous Band Sealer mendapat v2 dengan tetingkap toleransi yang lebih luas — jenis pembetulan kecil yang hanya berlaku apabila pasukan R&D makan tengah hari bersama pasukan servis.",
+      "p3": "Dalam 2027 kami akan condong lebih jauh ke arah rig khusus. Dua pelanggan perintis telah meminta integrasi barisan penuh — satu rig yang mengisi, menutup, melabel dan menutup dari satu HMI. Pembinaan tersebut berlaku di lantai kilang kami di Shah Alam, dengan jurutera yang pengurus loji anda boleh panggil dengan nama.",
+      "signature": "— Pasukan kejuruteraan Auraplex",
+      "ctaPrimary": "Hubungi jurutera",
+      "ctaWhatsapp": "WhatsApp kami",
+      "ctaWhatsappMsg": "Lihat ulasan tahun 2026 — ingin berbual tentang mesin."
+    },
+    "catalogue": {
+      "eyebrow": "§ 07 / Katalog penuh",
+      "h2Line1": "Setiap mesin yang kami hantar",
+      "h2Line2": "tahun ini.",
+      "browse": "Layari katalog",
+      "summary": "{total} mesin · {photo} difoto di lantai kilang · 3 kategori",
+      "pending": "Foto\nakan datang"
+    },
+    "closer": {
+      "eyebrow": "Akhir fail · 2026",
+      "h2Line1": "Jumpa anda di",
+      "h2Line2": "lantai kilang.",
+      "body": "Lawatan diadakan mingguan. Kopi adalah dari kami. Bawa bekas sampel — kami akan jalankannya pada aplikator terdekat semasa anda menonton.",
+      "cta": "Tempah lawatan kilang"
+    }
   },
   "pages": {
     "about": {
@@ -261,6 +369,52 @@
       "h1Line1": "Kami bukan sekadar menghantar mesin.",
       "h1Line2": "Kami menghantar barisan yang berfungsi.",
       "subtitle": "Setiap pemasangan Auraplex termasuk pentauliahan, serahan operator, dan jurutera servis tempatan yang sedia membantu. Empat disiplin, semuanya di bawah satu bumbung di Shah Alam.",
+      "items": [
+        {
+          "num": "01",
+          "name": "Pemasangan & Pentauliahan",
+          "summary": "Pemasangan di tapak, integrasi barisan dan penalaan operasi. Dilakukan oleh jurutera yang membina mesin itu sendiri.",
+          "deliverables": [
+            "Tinjauan tapak + semakan keperluan kuasa/udara",
+            "Pemasangan mekanikal pada barisan anda",
+            "Konfigurasi PLC + HMI",
+            "Serahan kepada operator & penerimaan operasi"
+          ]
+        },
+        {
+          "num": "02",
+          "name": "Penyelenggaraan & Pembaikan",
+          "summary": "Saluran alat ganti tempatan + jurutera servis di Semenanjung Malaysia, Sabah dan Sarawak.",
+          "deliverables": [
+            "Kontrak penyelenggaraan pencegahan",
+            "Saluran alat ganti (gudang di Selangor)",
+            "Panggilan servis pembaikan",
+            "Khidmat baik pulih untuk pelabel pihak ketiga"
+          ]
+        },
+        {
+          "num": "03",
+          "name": "Latihan",
+          "summary": "Latihan operator + penyelia barisan di lantai kilang anda atau di fasiliti kami di Shah Alam.",
+          "deliverables": [
+            "Latihan serahan operator (termasuk dengan pemasangan)",
+            "Latihan ulangan untuk kakitangan baharu",
+            "Diagnostik peringkat penyelia & pengurusan resipi",
+            "Dokumentasi dalam EN / BM / Mandarin atas permintaan"
+          ]
+        },
+        {
+          "num": "04",
+          "name": "Automasi Khusus",
+          "summary": "Rig khusus direka untuk bekas, kelajuan atau topologi barisan yang luar biasa.",
+          "deliverables": [
+            "Penemuan + reka bentuk konsep",
+            "Integrasi mekanikal, elektrikal, kawalan",
+            "Sistem penglihatan/pemeriksaan pilihan",
+            "Dokumentasi & kit alat ganti semasa serahan"
+          ]
+        }
+      ],
       "cta": {
         "h2Line1": "Sudah menggunakan mesin Auraplex?",
         "h2Line2": "Atau pesaing?",
@@ -283,7 +437,24 @@
         "eyebrow": "Latihan industri",
         "h2Line1": "Tiga program.",
         "h2Line2": "Mesin sebenar, barisan sebenar.",
-        "body": "Kami menerima 6–8 pelatih sarjana muda setiap tahun. Anda akan bekerja pada mesin yang sedang dibina sekarang — bukan rig latihan, bukan projek sandbox. Terbuka kepada universiti Malaysia dan pelajar pertukaran ASEAN."
+        "body": "Kami menerima 6–8 pelatih sarjana muda setiap tahun. Anda akan bekerja pada mesin yang sedang dibina sekarang — bukan rig latihan, bukan projek sandbox. Terbuka kepada universiti Malaysia dan pelajar pertukaran ASEAN.",
+        "items": [
+          {
+            "field": "Kejuruteraan Mekanikal",
+            "work": "Reka bentuk rangka, jig pemasangan, semakan CAD, sokongan pemasangan di lantai kilang.",
+            "duration": "12 – 24 minggu"
+          },
+          {
+            "field": "Elektrikal / Mekatronik",
+            "work": "Pengaturcaraan PLC, integrasi sensor, pembinaan panel, ujian elektrikal.",
+            "duration": "12 – 24 minggu"
+          },
+          {
+            "field": "Perisian / Kawalan",
+            "work": "Pembangunan HMI, pengurusan resipi, perisian integrasi barisan, penalaan sistem penglihatan.",
+            "duration": "12 – 24 minggu"
+          }
+        ]
       },
       "cv": {
         "h2Line1": "Tiada jawatan dibuka?",

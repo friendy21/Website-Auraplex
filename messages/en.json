@@ -225,7 +225,115 @@
     "whatsappAria": "WhatsApp us",
     "whatsappDefaultMsg": "Hi Auraplex, I'd like to learn more about your machines.",
     "menuToggle": "Toggle menu",
-    "search": "Search"
+    "search": "Search",
+    "disciplines": [
+      { "role": "Mechanical", "focus": "Frames, applicators, jigs, conveyors." },
+      { "role": "Electrical", "focus": "PLCs, sensors, motors, vision systems." },
+      { "role": "Controls", "focus": "HMI, line integration, recipe management." },
+      { "role": "Installation", "focus": "On-site commissioning across ASEAN." },
+      { "role": "Service", "focus": "Response, parts pipeline, operator training." },
+      { "role": "R&D", "focus": "Custom rigs, AR-series additive manufacturing." }
+    ]
+  },
+  "page2026": {
+    "eyebrow": "Year in Review · 2026",
+    "h1Line1": "2026 on the floor.",
+    "h1Line2": "A year in machines.",
+    "lede": "We shipped 30 machines, photographed 142 of them on the floor in Selangor, and put precision applicators into 11 industries across ASEAN — from cosmetics in Klang to pharma in Penang. Here's the year, in the order it happened.",
+    "filedFromLabel": "Filed from",
+    "filedFromValue": "Shah Alam, Selangor\nMalaysia",
+    "industriesLabel": "Industries served — 2026",
+    "industries": [
+      "Food & Beverage",
+      "Pharmaceuticals",
+      "Medical Devices",
+      "Cosmetics",
+      "Printing",
+      "Plastic Molding",
+      "Logistics",
+      "Bakery",
+      "Lubricant Oil",
+      "Edible Oil"
+    ],
+    "work": {
+      "eyebrow": "§ 01 / The work",
+      "h2Line1": "Five machines that",
+      "h2Line2": "defined the year.",
+      "coverLabel": "Cover machine",
+      "open": "Open"
+    },
+    "wordCloud": {
+      "eyebrow": "§ 02 / What buyers say",
+      "h2": "The words that came back to us most.",
+      "words": [
+        "precise", "local", "built here", "integrated", "wrap-around",
+        "custom", "measurable", "fast lead time", "reliable", "serviceable",
+        "thermal transfer", "two-side", "corner press", "Selangor",
+        "print & apply", "flexy", "continuous-band", "AR-series",
+        "engineered", "four weeks"
+      ]
+    },
+    "stats": {
+      "eyebrow": "§ 03 / The year, in numbers",
+      "h2Line1": "Some of them",
+      "h2Line2": "we're proud of.",
+      "h2Line3": "Some are just facts.",
+      "items": [
+        { "label": "machines in the catalogue" },
+        { "label": "industries served" },
+        { "label": "photographs on the floor" },
+        { "label": "factories deployed" },
+        { "label": "average uptime" },
+        { "label": "average payback" },
+        { "label": "typical lead time" },
+        { "label": "outsourced parts" }
+      ]
+    },
+    "team": {
+      "eyebrow": "§ 04 / The team",
+      "h2Line1": "Small enough",
+      "h2Line2": "to recognise",
+      "h2Line3": "your line.",
+      "body": "Six engineering disciplines on one floor. Every machine that leaves the building has been touched by all of them."
+    },
+    "timeline": {
+      "eyebrow": "§ 05 / Quarter by quarter",
+      "h2Line1": "Four releases.",
+      "h2Line2": "Each one earned a name.",
+      "items": [
+        { "q": "Q1", "h": "Two-Side w/ Corner Press shipped", "note": "Round 3 of customer-led iteration." },
+        { "q": "Q2", "h": "AR600 enters production", "note": "High-capacity additive for in-house fixturing." },
+        { "q": "Q3", "h": "Custom Top w/ Checking System", "note": "Vision-integrated reject line for pharma." },
+        { "q": "Q4", "h": "Continuous Band v2 retrofit kits", "note": "Drop-in upgrade path for the original v1." }
+      ]
+    },
+    "founder": {
+      "eyebrow": "§ 06 / A note from the floor",
+      "lead": "When we started Auraplex, we made one decision that's shaped every machine since: build it here.",
+      "leadSub": "No re-badging from Wenzhou. No outsourced controls. No 14-week ocean freight on a part you needed yesterday.",
+      "p1": "2026 was the year that decision started paying buyers back. A cosmetics manufacturer in Klang called us at 9pm on a Saturday — a labeller had jammed mid-run. An engineer was on-site by 8am Sunday with the right part in a Toyota Hilux. That doesn't happen with an import.",
+      "p2": "We added a vision-checking system to the Custom Top Labelling line, which let a pharma customer drop their reject rate from 1.4% to under 0.2%. The Continuous Band Sealer got a v2 with a wider tolerance window — the kind of small fix that only happens when the R&D team eats lunch with the service team.",
+      "p3": "In 2027 we're leaning further into custom rigs. Two pilot customers have asked for full-line integration — a single rig that fills, caps, labels and seals from one HMI. Those builds happen on our floor in Shah Alam, with engineers your plant manager can call by name.",
+      "signature": "— The Auraplex engineering team",
+      "ctaPrimary": "Talk to an engineer",
+      "ctaWhatsapp": "WhatsApp us",
+      "ctaWhatsappMsg": "Saw the 2026 year-in-review — want to talk machines."
+    },
+    "catalogue": {
+      "eyebrow": "§ 07 / The full catalogue",
+      "h2Line1": "Every machine we shipped",
+      "h2Line2": "this year.",
+      "browse": "Browse the catalogue",
+      "summary": "{total} machines · {photo} photographed on the floor · 3 categories",
+      "pending": "Photography\npending"
+    },
+    "closer": {
+      "eyebrow": "End of file · 2026",
+      "h2Line1": "See you on",
+      "h2Line2": "the floor.",
+      "body": "Tours run weekly. Coffee's on us. Bring a sample container — we'll run it on the closest applicator while you watch.",
+      "cta": "Book a factory tour"
+    }
   },
   "pages": {
     "about": {
@@ -261,6 +369,52 @@
       "h1Line1": "We don't ship machines.",
       "h1Line2": "We ship working lines.",
       "subtitle": "Every Auraplex install includes commissioning, operator handover, and a local service engineer on call. Four disciplines, all under one roof in Shah Alam.",
+      "items": [
+        {
+          "num": "01",
+          "name": "Installation & Commissioning",
+          "summary": "On-site setup, line integration and runtime tuning. Performed by the engineers who built the machine.",
+          "deliverables": [
+            "Site survey + power/air requirements check",
+            "Mechanical install on your line",
+            "PLC + HMI configuration",
+            "Operator hand-off & runtime acceptance"
+          ]
+        },
+        {
+          "num": "02",
+          "name": "Maintenance & Repair",
+          "summary": "Local parts pipeline + service engineers across Peninsular Malaysia, Sabah, and Sarawak.",
+          "deliverables": [
+            "Preventive maintenance contracts",
+            "Spare parts pipeline (warehouse in Selangor)",
+            "Break-fix service calls",
+            "Overhaul service for third-party labellers"
+          ]
+        },
+        {
+          "num": "03",
+          "name": "Training",
+          "summary": "Operator + line-supervisor training on your floor or at our facility in Shah Alam.",
+          "deliverables": [
+            "Operator handover training (included with installation)",
+            "Refresher training for new staff",
+            "Supervisor-level diagnostics & recipe management",
+            "Documentation in EN / BM / Mandarin on request"
+          ]
+        },
+        {
+          "num": "04",
+          "name": "Custom Automation",
+          "summary": "Bespoke rigs engineered for non-standard containers, throughputs, or line topologies.",
+          "deliverables": [
+            "Discovery + concept design",
+            "Mechanical, electrical, controls integration",
+            "Optional vision/inspection systems",
+            "Documentation & spare-parts kit on handover"
+          ]
+        }
+      ],
       "cta": {
         "h2Line1": "Already running an Auraplex machine?",
         "h2Line2": "Or a competitor's?",
@@ -283,7 +437,24 @@
         "eyebrow": "Internships",
         "h2Line1": "Three programmes.",
         "h2Line2": "Real machines, real lines.",
-        "body": "We host 6 – 8 undergraduate interns per year. You'll work on machines currently being built — not training rigs, not sandbox projects. Open to Malaysian universities and ASEAN exchange students."
+        "body": "We host 6 – 8 undergraduate interns per year. You'll work on machines currently being built — not training rigs, not sandbox projects. Open to Malaysian universities and ASEAN exchange students.",
+        "items": [
+          {
+            "field": "Mechanical Engineering",
+            "work": "Frame design, fixture jigs, CAD review, assembly support on the floor.",
+            "duration": "12 – 24 weeks"
+          },
+          {
+            "field": "Electrical / Mechatronics",
+            "work": "PLC programming, sensor integration, panel build, electrical testing.",
+            "duration": "12 – 24 weeks"
+          },
+          {
+            "field": "Software / Controls",
+            "work": "HMI development, recipe management, line-integration software, vision-system tuning.",
+            "duration": "12 – 24 weeks"
+          }
+        ]
       },
       "cv": {
         "h2Line1": "No formal openings listed?",
