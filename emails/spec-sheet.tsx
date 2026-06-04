@@ -44,7 +44,9 @@ export default function SpecSheet({
       </Section>
       <Hr style={{ borderColor: PAL.border, margin: '24px 0' }} />
       <Text style={{ fontSize: 14, color: PAL.body, lineHeight: 1.7 }}>
-        Want to talk through dimensions, throughput, or financing? Reply to this email or WhatsApp us at +60 12-345-6789.
+        Want to talk through dimensions, throughput, or a custom
+        configuration? Reply to this email or call our sales hotline at
+        1700-82-6502.
       </Text>
     </EmailShell>
   );

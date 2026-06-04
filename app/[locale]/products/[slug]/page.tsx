@@ -5,10 +5,10 @@ import { setRequestLocale } from 'next-intl/server';
 import { Button } from '@/components/primitives/button';
 import { QuoteForm } from '@/components/forms/quote-form';
 import { SpecSheetGate } from '@/components/forms/spec-sheet-gate';
-// RoiCalculator is intentionally unwired — it was built on the fabricated
-// "RM 1,800/month MIDA financing" framing that doesn't reflect Auraplex's
-// real pricing model. When the sales team provides real per-machine pricing
-// tiers, restore the import + JSX block below and update the i18n keys.
+// RoiCalculator is intentionally unwired — the original implementation
+// embedded fabricated assumptions that don't reflect Auraplex's real
+// pricing model. When the sales team provides real per-machine numbers,
+// reconnect a rewritten version here.
 // import { RoiCalculator } from '@/components/sections/roi-calculator';
 import { ProductHeroImage } from '@/components/sections/product-hero-image';
 import {

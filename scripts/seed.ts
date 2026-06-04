@@ -94,43 +94,11 @@ const products = [
   },
 ];
 
-const caseStudies = [
-  {
-    _id: 'case-xyz-foods',
-    _type: 'caseStudy',
-    title: 'A 40% throughput lift, financed in 14 months.',
-    slug: { _type: 'slug', current: 'xyz-foods' },
-    customer: 'XYZ Foods · Selangor',
-    industry: 'Food & beverage',
-    summary: 'A mid-size sauce manufacturer in Shah Alam replaced two ageing imports with one Solo-Wrap and reallocated three operators to QC.',
-    outcomes: [
-      { _key: 'o1', _type: 'outcome', metric: 'Throughput', value: '+40%' },
-      { _key: 'o2', _type: 'outcome', metric: 'Annual savings', value: 'RM 180k' },
-      { _key: 'o3', _type: 'outcome', metric: 'Payback', value: '14 mo' },
-      { _key: 'o4', _type: 'outcome', metric: 'Uptime', value: '99.6%' },
-    ],
-    pullQuote: 'The financing made our CFO say yes. The reliability made us reorder.',
-    attribution: 'Plant Manager, XYZ Foods',
-    publishedAt: '2026-03-15T00:00:00Z',
-  },
-  {
-    _id: 'case-cosmetic-jb',
-    _type: 'caseStudy',
-    title: 'Three import labellers, retired in one weekend.',
-    slug: { _type: 'slug', current: 'cosmetic-jb' },
-    customer: 'Selasih Cosmetics · Johor Bahru',
-    industry: 'Cosmetics',
-    summary: 'A growing skincare brand consolidated three under-supported Chinese-import machines into one Duo unit, freeing 18m² of floor space.',
-    outcomes: [
-      { _key: 'o1', _type: 'outcome', metric: 'Floor space', value: '−18m²' },
-      { _key: 'o2', _type: 'outcome', metric: 'SKU changeover', value: '−65%' },
-      { _key: 'o3', _type: 'outcome', metric: 'Maintenance', value: '−RM 30k/yr' },
-    ],
-    pullQuote: 'We retired three labellers for one. The floor felt twice as big.',
-    attribution: 'COO, Selasih Cosmetics',
-    publishedAt: '2026-02-08T00:00:00Z',
-  },
-];
+// Case studies seed array left empty. The previous entries were fabricated
+// stories ("XYZ Foods", "Selasih Cosmetics") that don't correspond to real
+// Auraplex customers. Populate from real interviews once customer permission
+// is on file. The Sanity schema (sanity/schemaTypes/caseStudy.ts) is ready.
+const caseStudies: unknown[] = [];
 
 const settings = {
   _id: 'site-settings',
@@ -140,7 +108,6 @@ const settings = {
   tickerUptime: '99.4%',
   tickerFactories: 340,
   whatsappNumber: '60123456789',
-  midaApproved: true,
 };
 
 async function seed() {

@@ -36,7 +36,7 @@ export default function QuoteAck({
             <Text style={{ fontSize: 18, color: PAL.ink, margin: '4px 0 0' }}>{productName}</Text>
             {monthlyPrice && (
               <Text style={{ fontFamily: 'Berkeley Mono, monospace', color: PAL.signal, fontSize: 14 }}>
-                From RM {monthlyPrice.toLocaleString()}/month · MIDA financing
+                Indicative RM {monthlyPrice.toLocaleString()} — final quote in proposal
               </Text>
             )}
           </Section>
@@ -44,7 +44,8 @@ export default function QuoteAck({
       )}
       <Hr style={{ borderColor: PAL.border, margin: '24px 0' }} />
       <Text style={{ fontSize: 14, color: PAL.body }}>
-        For urgent questions, WhatsApp us at +60 12-345-6789 — that&apos;s the fastest line.
+        For urgent questions, reach our sales hotline at 1700-82-6502 or
+        reply to this email.
       </Text>
     </EmailShell>
   );

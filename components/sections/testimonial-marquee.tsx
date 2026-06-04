@@ -2,14 +2,15 @@
 
 import { useState } from 'react';
 
+// ⚠ Placeholder testimonials — to be replaced with verified customer
+// quotes (with on-file permission) before launch. All entries below are
+// un-attributed and need verification against real customer interviews.
+// Keep this array sized to 4+ items so the two-row marquee still loops
+// cleanly when one is removed.
 const TESTIMONIALS = [
   {
     quote: 'Installation took two days. Production hit spec on day three.',
     author: 'Ops Director · KL beverage co.',
-  },
-  {
-    quote: 'The financing made our CFO say yes. The reliability made us reorder.',
-    author: 'GM · JB cosmetics manufacturer',
   },
   {
     quote:

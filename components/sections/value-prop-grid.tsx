@@ -8,8 +8,9 @@ import { AnimatedNumber } from '@/components/motion/animated-number';
  * Asymmetric value-prop trio — broken from the safe 3-column sameness.
  *
  *   01  Full-width banner — large display title, subtle grid background
- *   02  Right-aligned editorial card — split-flap RM 1,800 + payback months
- *       counting down from 60 → 14
+ *   02  Right-aligned editorial card — capability stack (Labelling /
+ *       Packaging / 3D printing / MES & SCADA / Custom automation) +
+ *       lead-time stat counting up
  *   03  Diagonal layout — text top-left, SVG line drawing of a machine
  *       silhouette bottom-right, with the line drawing itself in on scroll
  *

@@ -7,7 +7,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   return buildMetadata({
     title: 'Machine Finder — Auraplex',
-    description: 'AI-powered recommendation. Describe your line, get the right machine and financing tier.',
+    description: 'AI-powered machine recommendation. Describe your line and we will match the right Auraplex machine.',
     path: `/${locale}/machine-finder`,
   });
 }
@@ -26,7 +26,7 @@ export default async function MachineFinderPage({ params }: { params: Promise<{ 
           Describe your line. We'll match the machine.
         </h1>
         <p className="mt-8 max-w-2xl prose-editorial text-[color:var(--color-steel-soft)]">
-          Talk to our AI application engineer. Trained on the Auraplex catalogue, financing tiers, and 340+ deployed installations.
+          Talk to our AI application engineer. Trained on the Auraplex catalogue and 340+ deployed installations.
           Every recommendation is reviewed by a human engineer within 24 hours.
         </p>
       </Reveal>
