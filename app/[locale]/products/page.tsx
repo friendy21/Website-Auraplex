@@ -123,8 +123,12 @@ export default async function ProductsPage({
         </Reveal>
       </section>
 
-      {/* ────── CONTROLS BAR ────── */}
-      <section className="sticky top-[72px] z-30 bg-[color:var(--color-ink)]/85 backdrop-blur-xl border-y border-[color:var(--color-neutral-700)]">
+      {/* ────── CONTROLS BAR ──────
+          Pins flush against the scrolled-state header bottom. The header
+          collapses to ~56px (py-1 outer + paddingY 10 inner + ~32px content)
+          when scrolled past 40px — sticky-bar top must match or content
+          scrolls into the gap between them. */}
+      <section className="sticky top-14 z-30 bg-[color:var(--color-ink)]/90 backdrop-blur-xl border-b border-[color:var(--color-neutral-700)]">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12 py-4 flex items-center justify-between gap-6 flex-wrap">
           {/* Category filter chips with counts */}
           <div className="flex flex-wrap gap-2 font-mono text-[11px] uppercase tracking-[0.15em]">
