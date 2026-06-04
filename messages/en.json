@@ -89,5 +89,169 @@
   "footer": {
     "rights": "© 2026 Auraplex SDN BHD. All rights reserved.",
     "made": "Made in Malaysia."
+  },
+  "pages": {
+    "about": {
+      "eyebrow": "Inside Auraplex · Shah Alam",
+      "h1Line1": "We engineer machines",
+      "h1Line2": "for the floors we visit.",
+      "p1": "Auraplex is an engineering company in Shah Alam, Selangor. We design, build, install and support self-adhesive labelling machines, packaging machinery, 3D printers and custom automation for manufacturers across ASEAN — under one roof, with one team.",
+      "p2": "The model is simple. Manufacturers don't need cheaper machines — they need machines that don't strand them when a sensor fails on a Tuesday night. We staff full-time engineers locally. Parts ship from a warehouse you can drive to. Service calls get an engineer on the floor, not a ticket number.",
+      "p3": "The catalogue covers labelling machines, packaging machinery, 3D printers, MES & SCADA solutions, and bespoke automation rigs. What ties them together isn't a product family — it's that they're engineered by people who'll be on your floor on installation day, and on a WhatsApp call when something needs servicing.",
+      "stat": {
+        "catalog": "Machines in the catalogue",
+        "photographed": "Photographed on the floor",
+        "families": "Engineering families",
+        "disciplines": "Disciplines under one roof"
+      },
+      "disciplines": {
+        "eyebrow": "Under one roof",
+        "h2Line1": "Six disciplines.",
+        "h2Line2": "One floor in Shah Alam."
+      },
+      "tour": {
+        "eyebrow": "Visit us",
+        "h2": "Schedule a factory tour.",
+        "body": "The fastest way to understand an Auraplex machine is to watch one being built. Walk the floor with our chief engineer. Bring a sample container — we'll run it on the closest applicator while you watch.",
+        "address": "Auraplex SDN BHD · Shah Alam · Selangor · Malaysia",
+        "book": "Book a tour",
+        "whatsapp": "WhatsApp",
+        "whatsappMsg": "Hi — I'd like to book a factory tour."
+      }
+    },
+    "services": {
+      "eyebrow": "Services",
+      "h1Line1": "We don't ship machines.",
+      "h1Line2": "We ship working lines.",
+      "subtitle": "Every Auraplex install includes commissioning, operator handover, and a local service engineer on call. Four disciplines, all under one roof in Shah Alam.",
+      "cta": {
+        "h2Line1": "Already running an Auraplex machine?",
+        "h2Line2": "Or a competitor's?",
+        "body": "We service third-party labellers too. Send us the model and photographs of the issue — we'll quote within one business day.",
+        "primary": "Talk to service",
+        "whatsapp": "WhatsApp",
+        "whatsappMsg": "Hi — I need service on a machine. Can I send photos?"
+      }
+    },
+    "careers": {
+      "eyebrow": "Careers · Internships",
+      "h1Line1": "Build machines",
+      "h1Line2": "that ship on time.",
+      "subtitle": "Auraplex employs engineers, technicians, installers and service specialists across six disciplines in Shah Alam. We hire when the work demands it — small team, real ownership.",
+      "disciplines": {
+        "eyebrow": "Where you'd work",
+        "h2": "Six disciplines. One floor."
+      },
+      "internships": {
+        "eyebrow": "Internships",
+        "h2Line1": "Three programmes.",
+        "h2Line2": "Real machines, real lines.",
+        "body": "We host 6 – 8 undergraduate interns per year. You'll work on machines currently being built — not training rigs, not sandbox projects. Open to Malaysian universities and ASEAN exchange students."
+      },
+      "cv": {
+        "h2Line1": "No formal openings listed?",
+        "h2Line2": "Send us your CV anyway.",
+        "body": "We keep a rolling shortlist. When we're ready to hire, the shortlist is where we start. Email your CV with a short note about which discipline interests you most.",
+        "email": "Email careers@auraplex.my",
+        "about": "About Auraplex"
+      }
+    },
+    "news": {
+      "eyebrow": "News & Events",
+      "h1Line1": "What's happening",
+      "h1Line2": "on the floor.",
+      "subtitle": "Exhibitions, awards, partnerships, new machine releases. Updates from Auraplex go here — quarterly, honest, no marketing fluff.",
+      "divider": {
+        "editionLabel": "Edition",
+        "editionValue": "001 · Drafting",
+        "cadenceLabel": "Cadence",
+        "cadenceValue": "Quarterly",
+        "filedLabel": "Filed from",
+        "filedValue": "Shah Alam, Selangor"
+      },
+      "empty": {
+        "h2": "First issue lands soon.",
+        "body": "We'd rather wait until we have news worth telling. In the meantime — talk to the engineers who'll be in the first issue.",
+        "primary": "Talk to us",
+        "secondary": "See the 2026 review"
+      },
+      "article": {
+        "eyebrow": "Drafting",
+        "h2Line1": "This article is still",
+        "h2Line2": "being written.",
+        "body": "Auraplex news lands quarterly. Head back to the index for the latest, or talk to us directly.",
+        "back": "Back to news",
+        "talkToUs": "Talk to us"
+      }
+    },
+    "contact": {
+      "eyebrow": "Get in touch",
+      "h1": "Talk to an engineer.",
+      "subtitle": "We respond within one business day. For urgent matters, WhatsApp is fastest.",
+      "labels": {
+        "sales": "Sales hotline",
+        "email": "Email",
+        "whatsappLabel": "WhatsApp",
+        "whatsappValue": "Send a message"
+      },
+      "hours": {
+        "weekdays": "Mon–Fri · 09:00–18:00 MYT",
+        "saturday": "Sat · 09:00–13:00 MYT"
+      },
+      "response": {
+        "lead": "We respond:",
+        "body": "within 1 business day by email · within the hour on WhatsApp during business hours."
+      },
+      "routing": "Routing to {team}",
+      "departments": {
+        "sales": "Sales team",
+        "service": "Service team",
+        "tour": "Factory tour scheduling",
+        "engineering": "Engineering team"
+      }
+    },
+    "caseStudies": {
+      "eyebrow": "Field reports · Quarterly",
+      "h1Line1": "The first field report",
+      "h1Line2": "is being photographed.",
+      "subtitle": "Auraplex field reports are long-form, photographed on-site, and published quarterly. We'd rather ship one honest story than twelve press releases.",
+      "divider": {
+        "issueLabel": "Issue 01",
+        "issueValue": "In production",
+        "subjectLabel": "Subject",
+        "subjectValue": "Custom Top w/ Checking System",
+        "filedLabel": "Filed from",
+        "filedValue": "Shah Alam, Selangor"
+      },
+      "expect": {
+        "eyebrow": "What to expect",
+        "h2Line1": "Long-form. Photographed.",
+        "h2Line2": "Honest about what didn't work.",
+        "items": [
+          { "num": "01", "title": "On the floor", "body": "Every report is photographed in the customer's plant — not in our showroom." },
+          { "num": "02", "title": "With numbers", "body": "Throughput before / after. Reject rate before / after. Payback in months, not narrative." },
+          { "num": "03", "title": "And the snags", "body": "What the install missed, what the second iteration fixed, what we learned for the next build." }
+        ]
+      },
+      "cta": {
+        "h2": "Want the first issue when it lands?",
+        "body": "Or skip the wait — talk to the engineers who'll be in the report. We'll walk you through what works on real floors.",
+        "primary": "Talk to an engineer",
+        "secondary": "See the 2026 review"
+      },
+      "detail": {
+        "eyebrow": "Field report · In production",
+        "h2Line1": "This report is still",
+        "h2Line2": "being photographed.",
+        "body": "Auraplex field reports are produced quarterly, on-site, with real throughput numbers. The first issue is in editorial. Sign up to get it when it lands — or skip the wait and talk to the team directly.",
+        "back": "Back to field reports",
+        "talkToUs": "Talk to an engineer"
+      }
+    },
+    "machineFinder": {
+      "eyebrow": "AI Engineer · 24h human review",
+      "h1": "Describe your line. We'll match the machine.",
+      "subtitle": "Talk to our AI application engineer. Trained on the Auraplex catalogue and 340+ deployed installations. Every recommendation is reviewed by a human engineer within 24 hours."
+    }
   }
 }

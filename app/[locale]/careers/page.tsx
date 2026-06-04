@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { setRequestLocale } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
 import { Button } from '@/components/primitives/button';
 import { Magnetic } from '@/components/motion/magnetic';
@@ -19,7 +19,9 @@ export async function generateMetadata({
   });
 }
 
-// Six engineering disciplines from the /2026 page — same source of truth.
+// Disciplines + internship fields stay English — technical labels recognised
+// globally by engineering candidates. Translating them would invite term
+// inconsistency for well-known industry vocabulary.
 const DISCIPLINES = [
   { role: 'Mechanical', focus: 'Frames, applicators, jigs, conveyors.' },
   { role: 'Electrical', focus: 'PLCs, sensors, motors, vision systems.' },
@@ -57,40 +59,37 @@ export default async function CareersPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const t = await getTranslations('pages.careers');
 
   return (
     <>
-      {/* ────── HERO ────── */}
       <section className="mx-auto max-w-[1600px] px-6 lg:px-12 pt-40 pb-24">
         <Reveal variant="up">
           <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6 flex items-center gap-3">
             <span className="h-px w-12 bg-[color:var(--color-signal)]" />
-            Careers · Internships
+            {t('eyebrow')}
           </div>
         </Reveal>
         <Reveal variant="up" delay={100}>
           <h1 className="font-display text-[clamp(3rem,9vw,8rem)] tracking-[-0.03em] leading-[0.92] max-w-5xl">
-            Build machines
+            {t('h1Line1')}
             <br />
-            that ship on time.
+            {t('h1Line2')}
           </h1>
         </Reveal>
         <Reveal variant="up" delay={200}>
           <p className="mt-12 max-w-2xl prose-editorial text-[color:var(--color-steel-soft)] text-xl">
-            Auraplex employs engineers, technicians, installers and service
-            specialists across six disciplines in Shah Alam. We hire when the
-            work demands it — small team, real ownership.
+            {t('subtitle')}
           </p>
         </Reveal>
       </section>
 
-      {/* ────── DISCIPLINES ────── */}
       <section className="border-y border-[color:var(--color-neutral-700)]">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12 py-24">
           <div className="grid grid-cols-12 gap-6 mb-16">
             <Reveal variant="up" className="col-span-12 md:col-span-3">
               <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-4">
-                — Where you&apos;d work
+                — {t('disciplines.eyebrow')}
               </div>
             </Reveal>
             <Reveal
@@ -99,7 +98,7 @@ export default async function CareersPage({
               className="col-span-12 md:col-span-9"
             >
               <h2 className="font-display text-[clamp(2rem,5vw,4.5rem)] tracking-[-0.02em] leading-[1]">
-                Six disciplines. One floor.
+                {t('disciplines.h2')}
               </h2>
             </Reveal>
           </div>
@@ -127,27 +126,23 @@ export default async function CareersPage({
         </div>
       </section>
 
-      {/* ────── INTERNSHIPS ────── */}
       <section className="mx-auto max-w-[1600px] px-6 lg:px-12 py-32">
         <div className="grid grid-cols-12 gap-6 mb-16">
           <Reveal variant="up" className="col-span-12 md:col-span-3">
             <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-4">
-              — Internships
+              — {t('internships.eyebrow')}
             </div>
           </Reveal>
           <Reveal variant="up" delay={100} className="col-span-12 md:col-span-9">
             <h2 className="font-display text-[clamp(2rem,5vw,4.5rem)] tracking-[-0.02em] leading-[1]">
-              Three programmes.
+              {t('internships.h2Line1')}
               <br />
               <span className="text-[color:var(--color-neutral-400)]">
-                Real machines, real lines.
+                {t('internships.h2Line2')}
               </span>
             </h2>
             <p className="mt-8 prose-editorial text-[color:var(--color-steel-soft)] max-w-2xl">
-              We host 6 – 8 undergraduate interns per year. You&apos;ll work on
-              machines currently being built — not training rigs, not sandbox
-              projects. Open to Malaysian universities and ASEAN exchange
-              students.
+              {t('internships.body')}
             </p>
           </Reveal>
         </div>
@@ -174,32 +169,29 @@ export default async function CareersPage({
         </div>
       </section>
 
-      {/* ────── CTA — SEND CV ────── */}
       <section className="border-t border-[color:var(--color-neutral-700)] mx-auto max-w-[1600px] px-6 lg:px-12 py-32">
         <Reveal variant="up">
           <h2 className="font-display text-[clamp(2rem,5vw,4.5rem)] tracking-[-0.02em] leading-[1.05] max-w-3xl">
-            No formal openings listed?
+            {t('cv.h2Line1')}
             <br />
             <span className="text-[color:var(--color-signal)]">
-              Send us your CV anyway.
+              {t('cv.h2Line2')}
             </span>
           </h2>
           <p className="mt-8 prose-editorial text-[color:var(--color-steel-soft)] max-w-2xl">
-            We keep a rolling shortlist. When we&apos;re ready to hire, the
-            shortlist is where we start. Email your CV with a short note about
-            which discipline interests you most.
+            {t('cv.body')}
           </p>
           <div className="mt-12 flex flex-wrap gap-4">
             <Magnetic strength={0.35}>
               <Button asChild size="lg">
                 <a href="mailto:careers@auraplex.my?subject=CV%20%E2%80%94%20Auraplex%20careers">
-                  Email careers@auraplex.my →
+                  {t('cv.email')} →
                 </a>
               </Button>
             </Magnetic>
             <Magnetic>
               <Button asChild variant="ghost" size="lg">
-                <Link href={`/${locale}/about`}>About Auraplex →</Link>
+                <Link href={`/${locale}/about`}>{t('cv.about')} →</Link>
               </Button>
             </Magnetic>
           </div>

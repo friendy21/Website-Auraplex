@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { setRequestLocale } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
 import { Button } from '@/components/primitives/button';
 import { buildMetadata } from '@/lib/seo';
@@ -28,17 +28,14 @@ export default async function AboutPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const t = await getTranslations('pages.about');
 
   const featured = getFeaturedMachines();
   const photographed = MACHINES.filter((m) => m.image !== null).length;
 
   return (
     <>
-      {/* ────── HERO ────── */}
       <section className="relative min-h-[80dvh] w-full overflow-hidden bg-[color:var(--color-ink)] flex items-end">
-        {/* Photographic mosaic backdrop — real factory output, gridded.
-            Replaces the missing /video/about-reel.mp4 with what we actually
-            have: 11 photographed machines arranged as a 4×3 mosaic. */}
         <div
           className="absolute inset-0 grid grid-cols-4 grid-rows-3 opacity-25"
           aria-hidden="true"
@@ -72,71 +69,50 @@ export default async function AboutPage({
         <div className="relative z-10 mx-auto max-w-[1600px] w-full px-6 lg:px-12 pb-20 pt-40">
           <Reveal variant="up">
             <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6">
-              — Inside Auraplex / Shah Alam
+              — {t('eyebrow')}
             </div>
             <h1 className="font-display text-[clamp(3rem,9vw,8rem)] tracking-[-0.03em] leading-[0.92] max-w-5xl">
-              We engineer machines
+              {t('h1Line1')}
               <br />
-              for the floors we visit.
+              {t('h1Line2')}
             </h1>
           </Reveal>
         </div>
       </section>
 
-      {/* ────── FOUNDER PROSE ────── */}
       <section className="mx-auto max-w-3xl px-6 lg:px-12 py-32 prose-editorial text-[color:var(--color-steel-soft)] text-lg space-y-6">
         <Reveal variant="up">
-          <p>
-            Auraplex is an engineering company in Shah Alam, Selangor. We
-            design, build, install and support precision labelling and packaging
-            machines for manufacturers across ASEAN — under one roof, with one
-            team.
-          </p>
+          <p>{t('p1')}</p>
         </Reveal>
         <Reveal variant="up" delay={80}>
-          <p>
-            The model is simple. Manufacturers don&apos;t need cheaper machines
-            — they need machines that don&apos;t strand them when a sensor fails
-            on a Tuesday night. We staff full-time engineers locally. Parts ship
-            from a warehouse you can drive to. Service calls get an engineer on
-            the floor, not a ticket number.
-          </p>
+          <p>{t('p2')}</p>
         </Reveal>
         <Reveal variant="up" delay={160}>
-          <p>
-            The catalogue covers labelling machines, packaging machinery, 3D
-            printers, MES &amp; SCADA solutions, and bespoke automation rigs.
-            What ties them together isn&apos;t a product family — it&apos;s
-            that they&apos;re engineered by people who&apos;ll be on your
-            floor on installation day, and on a WhatsApp call when something
-            needs servicing.
-          </p>
+          <p>{t('p3')}</p>
         </Reveal>
       </section>
 
-      {/* ────── CATALOG-DERIVED STATS ────── */}
       <section className="mx-auto max-w-[1600px] px-6 lg:px-12 py-24 border-y border-[color:var(--color-neutral-700)]">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          <Stat n={String(MACHINES.length)} l="Machines in the catalogue" />
-          <Stat n={String(photographed)} l="Photographed on the floor" />
-          <Stat n="3" l="Engineering families" />
-          <Stat n="6" l="Disciplines under one roof" />
+          <Stat n={String(MACHINES.length)} l={t('stat.catalog')} />
+          <Stat n={String(photographed)} l={t('stat.photographed')} />
+          <Stat n="3" l={t('stat.families')} />
+          <Stat n="6" l={t('stat.disciplines')} />
         </div>
       </section>
 
-      {/* ────── DISCIPLINES ────── */}
       <section className="mx-auto max-w-[1600px] px-6 lg:px-12 py-32">
         <div className="grid grid-cols-12 gap-6 mb-16">
           <Reveal variant="up" className="col-span-12 md:col-span-3">
             <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-4">
-              — Under one roof
+              — {t('disciplines.eyebrow')}
             </div>
           </Reveal>
           <Reveal variant="up" delay={100} className="col-span-12 md:col-span-9">
             <h2 className="font-display text-[clamp(2rem,5vw,4.5rem)] tracking-[-0.02em] leading-[1]">
-              Six disciplines.
+              {t('disciplines.h2Line1')}
               <br />
-              One floor in Shah Alam.
+              {t('disciplines.h2Line2')}
             </h2>
           </Reveal>
         </div>
@@ -163,7 +139,6 @@ export default async function AboutPage({
         </div>
       </section>
 
-      {/* ────── FACTORY TOUR CTA ────── */}
       <section
         id="tour"
         className="mx-auto max-w-[1600px] px-6 lg:px-12 py-32 border-t border-[color:var(--color-neutral-700)]"
@@ -172,10 +147,10 @@ export default async function AboutPage({
           <div className="col-span-12 md:col-span-5">
             <Reveal variant="up">
               <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-4">
-                — Visit us
+                — {t('tour.eyebrow')}
               </div>
               <h2 className="font-display text-4xl md:text-5xl tracking-[-0.02em] leading-[1.05]">
-                Schedule a factory tour.
+                {t('tour.h2')}
               </h2>
             </Reveal>
           </div>
@@ -184,27 +159,22 @@ export default async function AboutPage({
             delay={120}
             className="col-span-12 md:col-span-6 md:col-start-7 prose-editorial text-[color:var(--color-steel-soft)]"
           >
-            <p>
-              The fastest way to understand an Auraplex machine is to watch one
-              being built. Walk the floor with our chief engineer. Bring a
-              sample container — we&apos;ll run it on the closest applicator
-              while you watch.
-            </p>
+            <p>{t('tour.body')}</p>
             <p className="mt-6 font-mono text-sm uppercase tracking-widest text-[color:var(--color-paper)]">
-              Auraplex SDN BHD · Shah Alam · Selangor · Malaysia
+              {t('tour.address')}
             </p>
 
             <div className="mt-10 flex flex-wrap gap-3">
               <Button asChild size="lg">
-                <Link href="/contact">Book a tour →</Link>
+                <Link href="/contact">{t('tour.book')} →</Link>
               </Button>
               <Button asChild size="lg" variant="ghost">
                 <a
-                  href={whatsappLink('Hi — I’d like to book a factory tour.')}
+                  href={whatsappLink(t('tour.whatsappMsg'))}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  WhatsApp →
+                  {t('tour.whatsapp')} →
                 </a>
               </Button>
             </div>
@@ -215,6 +185,10 @@ export default async function AboutPage({
   );
 }
 
+// Disciplines stay in English — they're technical labels (Mechanical /
+// Electrical / Controls / Installation / Service / R&D) that engineering
+// candidates and customers recognize globally. Adding them to i18n would
+// invite inconsistent translations of well-known industry terms.
 const DISCIPLINES = [
   { role: 'Mechanical', focus: 'Frames, applicators, jigs, conveyors.' },
   { role: 'Electrical', focus: 'PLCs, sensors, motors, vision systems.' },

@@ -89,5 +89,169 @@
   "footer": {
     "rights": "© 2026 Auraplex SDN BHD. 版权所有。",
     "made": "马来西亚制造。"
+  },
+  "pages": {
+    "about": {
+      "eyebrow": "走进 Auraplex · 莎阿南",
+      "h1Line1": "我们为所到之处的",
+      "h1Line2": "工厂车间打造机器。",
+      "p1": "Auraplex 是位于雪兰莪莎阿南的工程公司。我们为东盟各地制造商设计、制造、安装并支持自粘标签机、包装机械、3D 打印机和定制自动化方案——全在一个屋檐下,一个团队。",
+      "p2": "我们的模式很简单。制造商不需要更便宜的机器——他们需要的是周二夜里传感器故障时不会让他们束手无策的机器。我们在本地配备全职工程师。零件从您可以驱车到达的仓库发货。维修电话得到的是车间里的工程师,而非一张工单。",
+      "p3": "目录涵盖贴标机、包装机械、3D 打印机、MES 与 SCADA 解决方案和定制自动化设备。将它们联系起来的不是产品线——而是它们由这样一群人设计:他们会在安装当天出现在您的车间,会在 WhatsApp 上接听您的维修来电。",
+      "stat": {
+        "catalog": "目录中的机器",
+        "photographed": "已在车间拍摄",
+        "families": "工程系列",
+        "disciplines": "一个屋檐下的学科"
+      },
+      "disciplines": {
+        "eyebrow": "一个屋檐下",
+        "h2Line1": "六个学科。",
+        "h2Line2": "莎阿南一座车间。"
+      },
+      "tour": {
+        "eyebrow": "拜访我们",
+        "h2": "预约参观工厂。",
+        "body": "了解 Auraplex 机器最快的方式就是看它被制造出来。和我们的首席工程师在车间里走一走。带上样品容器——我们会在最近的应用机器上为您试运行。",
+        "address": "Auraplex SDN BHD · 莎阿南 · 雪兰莪 · 马来西亚",
+        "book": "预约参观",
+        "whatsapp": "WhatsApp",
+        "whatsappMsg": "您好 — 我想预约工厂参观。"
+      }
+    },
+    "services": {
+      "eyebrow": "服务",
+      "h1Line1": "我们不只交付机器。",
+      "h1Line2": "我们交付能运转的产线。",
+      "subtitle": "每次 Auraplex 安装都包含调试、操作员交接,以及待命的本地维修工程师。四个学科,全在莎阿南一个屋檐下。",
+      "cta": {
+        "h2Line1": "已在使用 Auraplex 机器?",
+        "h2Line2": "或竞品机器?",
+        "body": "我们也维修第三方贴标机。把型号和故障照片发给我们——一个工作日内提供报价。",
+        "primary": "联系维修团队",
+        "whatsapp": "WhatsApp",
+        "whatsappMsg": "您好 — 我有一台机器需要维修,可以发照片给您吗?"
+      }
+    },
+    "careers": {
+      "eyebrow": "招聘 · 实习",
+      "h1Line1": "制造",
+      "h1Line2": "按时交付的机器。",
+      "subtitle": "Auraplex 在莎阿南雇用六个学科的工程师、技术员、安装工与维修专员。当工作需要时我们才招聘——小团队,真正的责任。",
+      "disciplines": {
+        "eyebrow": "您将在哪里工作",
+        "h2": "六个学科。一座车间。"
+      },
+      "internships": {
+        "eyebrow": "实习项目",
+        "h2Line1": "三个项目。",
+        "h2Line2": "真实的机器,真实的产线。",
+        "body": "我们每年招收 6–8 名本科实习生。您将参与正在制造的机器——不是培训装置,不是沙盒项目。面向马来西亚大学及东盟交换生开放。"
+      },
+      "cv": {
+        "h2Line1": "暂无公开职位?",
+        "h2Line2": "仍然欢迎投递简历。",
+        "body": "我们保留一份滚动候选名单。当我们准备招聘时,会从这份名单开始。请将简历发送给我们,并附上一段简短说明,告诉我们您最感兴趣的学科。",
+        "email": "邮件至 careers@auraplex.my",
+        "about": "关于 Auraplex"
+      }
+    },
+    "news": {
+      "eyebrow": "新闻与活动",
+      "h1Line1": "车间里",
+      "h1Line2": "正在发生的事。",
+      "subtitle": "展会、奖项、合作、新机型发布。Auraplex 的更新发布在这里——每季度一次,诚实,无营销修饰。",
+      "divider": {
+        "editionLabel": "期号",
+        "editionValue": "001 · 撰写中",
+        "cadenceLabel": "频率",
+        "cadenceValue": "每季度",
+        "filedLabel": "发自",
+        "filedValue": "莎阿南,雪兰莪"
+      },
+      "empty": {
+        "h2": "首期即将面世。",
+        "body": "我们宁愿等到有值得讲述的内容。在此之前——与将在首期出现的工程师们聊聊。",
+        "primary": "联系我们",
+        "secondary": "查看 2026 年回顾"
+      },
+      "article": {
+        "eyebrow": "撰写中",
+        "h2Line1": "这篇文章",
+        "h2Line2": "仍在撰写中。",
+        "body": "Auraplex 新闻每季度发布。返回索引查看最新内容,或直接与我们联系。",
+        "back": "返回新闻",
+        "talkToUs": "联系我们"
+      }
+    },
+    "contact": {
+      "eyebrow": "联系",
+      "h1": "联系工程师。",
+      "subtitle": "我们在一个工作日内回复。紧急事项,WhatsApp 最快。",
+      "labels": {
+        "sales": "销售热线",
+        "email": "邮箱",
+        "whatsappLabel": "WhatsApp",
+        "whatsappValue": "发送消息"
+      },
+      "hours": {
+        "weekdays": "周一至周五 · 09:00–18:00 MYT",
+        "saturday": "周六 · 09:00–13:00 MYT"
+      },
+      "response": {
+        "lead": "我们的回复:",
+        "body": "邮件 1 个工作日内 · 营业时间 WhatsApp 1 小时内回复。"
+      },
+      "routing": "正在转接至 {team}",
+      "departments": {
+        "sales": "销售团队",
+        "service": "维修团队",
+        "tour": "工厂参观预约",
+        "engineering": "工程团队"
+      }
+    },
+    "caseStudies": {
+      "eyebrow": "实地报告 · 每季度",
+      "h1Line1": "首期实地报告",
+      "h1Line2": "正在拍摄中。",
+      "subtitle": "Auraplex 实地报告内容详尽、现场拍摄、每季度发布。我们宁愿发布一篇诚实的故事,也不愿发十二篇新闻稿。",
+      "divider": {
+        "issueLabel": "第 01 期",
+        "issueValue": "制作中",
+        "subjectLabel": "主题",
+        "subjectValue": "Custom Top w/ Checking System",
+        "filedLabel": "发自",
+        "filedValue": "莎阿南,雪兰莪"
+      },
+      "expect": {
+        "eyebrow": "您可以期待",
+        "h2Line1": "长篇内容。现场拍摄。",
+        "h2Line2": "诚实面对哪些没成功。",
+        "items": [
+          { "num": "01", "title": "在车间", "body": "每份报告都在客户工厂拍摄——而非我们的展厅。" },
+          { "num": "02", "title": "带数据", "body": "前后产量。前后报废率。回报期以月计,非叙述。" },
+          { "num": "03", "title": "也讲挑战", "body": "安装时漏掉的、第二次迭代修正的、下一台机器我们学到的。" }
+        ]
+      },
+      "cta": {
+        "h2": "想在首期面世时收到?",
+        "body": "或者不必等——与将在报告中出现的工程师聊聊。我们会告诉您真实车间里行得通的方法。",
+        "primary": "联系工程师",
+        "secondary": "查看 2026 年回顾"
+      },
+      "detail": {
+        "eyebrow": "实地报告 · 制作中",
+        "h2Line1": "这份报告",
+        "h2Line2": "仍在拍摄中。",
+        "body": "Auraplex 实地报告每季度制作,现场拍摄,带有真实产量数据。首期在编辑中。订阅以在面世时收到,或直接与团队联系。",
+        "back": "返回实地报告",
+        "talkToUs": "联系工程师"
+      }
+    },
+    "machineFinder": {
+      "eyebrow": "AI 工程师 · 24 小时人工审核",
+      "h1": "描述您的生产线,我们为您匹配机器。",
+      "subtitle": "与我们的 AI 应用工程师交谈。基于 Auraplex 目录和 340+ 已部署案例训练。每条推荐都在 24 小时内由人工工程师审核。"
+    }
   }
 }

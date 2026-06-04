@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { setRequestLocale } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
 import { Button } from '@/components/primitives/button';
 import { Magnetic } from '@/components/motion/magnetic';
@@ -86,6 +86,7 @@ export default async function ServicesPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const t = await getTranslations('pages.services');
 
   return (
     <>
@@ -106,23 +107,21 @@ export default async function ServicesPage({
         <Reveal variant="up">
           <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6 flex items-center gap-3">
             <span className="h-px w-12 bg-[color:var(--color-signal)]" />
-            Services
+            {t('eyebrow')}
           </div>
         </Reveal>
         <Reveal variant="up" delay={100}>
           <h1 className="font-display text-[clamp(3rem,9vw,8rem)] tracking-[-0.03em] leading-[0.92] max-w-5xl">
-            We don&apos;t ship machines.
+            {t('h1Line1')}
             <br />
             <span className="text-[color:var(--color-signal)]">
-              We ship working lines.
+              {t('h1Line2')}
             </span>
           </h1>
         </Reveal>
         <Reveal variant="up" delay={200}>
           <p className="mt-12 max-w-2xl prose-editorial text-[color:var(--color-steel-soft)] text-xl">
-            Every Auraplex install includes commissioning, operator handover,
-            and a local service engineer on call. Four disciplines, all under
-            one roof in Shah Alam.
+            {t('subtitle')}
           </p>
         </Reveal>
       </section>
@@ -172,34 +171,30 @@ export default async function ServicesPage({
           <div className="grid grid-cols-12 gap-6 items-end">
             <div className="col-span-12 md:col-span-7">
               <h2 className="font-display text-[clamp(2rem,5vw,4.5rem)] tracking-[-0.02em] leading-[1]">
-                Already running an Auraplex machine?
+                {t('cta.h2Line1')}
                 <br />
                 <span className="text-[color:var(--color-neutral-400)]">
-                  Or a competitor&apos;s?
+                  {t('cta.h2Line2')}
                 </span>
               </h2>
               <p className="mt-8 prose-editorial text-[color:var(--color-steel-soft)] max-w-xl">
-                We service third-party labellers too. Send us the model and
-                photographs of the issue — we&apos;ll quote within one business
-                day.
+                {t('cta.body')}
               </p>
             </div>
             <div className="col-span-12 md:col-span-4 md:col-start-9 flex flex-wrap gap-3">
               <Magnetic strength={0.35}>
                 <Button asChild size="lg">
-                  <Link href="/contact">Talk to service →</Link>
+                  <Link href="/contact">{t('cta.primary')} →</Link>
                 </Button>
               </Magnetic>
               <Magnetic>
                 <Button asChild variant="ghost" size="lg">
                   <a
-                    href={whatsappLink(
-                      'Hi — I need service on a machine. Can I send photos?',
-                    )}
+                    href={whatsappLink(t('cta.whatsappMsg'))}
                     target="_blank"
                     rel="noreferrer"
                   >
-                    WhatsApp →
+                    {t('cta.whatsapp')} →
                   </a>
                 </Button>
               </Magnetic>

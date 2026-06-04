@@ -1,17 +1,11 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { setRequestLocale } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
 import { Button } from '@/components/primitives/button';
 import { buildMetadata } from '@/lib/seo';
 
-// Until Sanity is connected with real case study content, the case-studies
-// listing renders a "first issue in production" landing page. Any deep-linked
-// /case-studies/<slug> requests redirect to that landing page so users never
-// hit a dead end.
-
 export async function generateStaticParams() {
-  // cacheComponents requires at least one slug for static analysis.
   return [{ slug: '__placeholder__' }];
 }
 
@@ -35,6 +29,7 @@ export default async function CaseStudyPage({
 }) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
+  const t = await getTranslations('pages.caseStudies.detail');
 
   if (slug === '__placeholder__') {
     redirect(`/${locale}/case-studies`);
@@ -44,24 +39,22 @@ export default async function CaseStudyPage({
     <section className="mx-auto max-w-3xl px-6 lg:px-12 pt-40 pb-32 text-center">
       <Reveal variant="up">
         <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6">
-          — Field report · In production
+          — {t('eyebrow')}
         </div>
         <h1 className="font-display text-[clamp(2.5rem,7vw,6rem)] tracking-[-0.03em] leading-[0.95]">
-          This report is still
+          {t('h2Line1')}
           <br />
-          being photographed.
+          {t('h2Line2')}
         </h1>
         <p className="mt-10 prose-editorial text-[color:var(--color-steel-soft)] text-lg max-w-xl mx-auto">
-          Auraplex field reports are produced quarterly, on-site, with real
-          throughput numbers. The first issue is in editorial. Sign up to get it
-          when it lands — or skip the wait and talk to the team directly.
+          {t('body')}
         </p>
         <div className="mt-12 flex flex-wrap justify-center gap-4">
           <Button asChild size="lg">
-            <Link href={`/${locale}/case-studies`}>Back to field reports</Link>
+            <Link href={`/${locale}/case-studies`}>{t('back')}</Link>
           </Button>
           <Button asChild size="lg" variant="ghost">
-            <Link href={`/${locale}/contact`}>Talk to an engineer →</Link>
+            <Link href={`/${locale}/contact`}>{t('talkToUs')} →</Link>
           </Button>
         </div>
       </Reveal>

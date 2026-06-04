@@ -89,5 +89,169 @@
   "footer": {
     "rights": "© 2026 Auraplex SDN BHD. Hak cipta terpelihara.",
     "made": "Buatan Malaysia."
+  },
+  "pages": {
+    "about": {
+      "eyebrow": "Tentang Auraplex · Shah Alam",
+      "h1Line1": "Kami mereka mesin",
+      "h1Line2": "untuk lantai yang kami lawati.",
+      "p1": "Auraplex ialah syarikat kejuruteraan di Shah Alam, Selangor. Kami mereka, membina, memasang dan menyokong mesin pelabel pelekat sendiri, mesin pembungkusan, pencetak 3D dan automasi khusus untuk pengeluar di seluruh ASEAN — di bawah satu bumbung, dengan satu pasukan.",
+      "p2": "Modelnya mudah. Pengeluar tidak perlukan mesin yang lebih murah — mereka perlukan mesin yang tidak meninggalkan mereka apabila sensor rosak pada malam Selasa. Kami menggaji jurutera sepenuh masa di sini. Alat ganti dihantar dari gudang yang anda boleh pandu ke sana. Panggilan servis mendapat jurutera di lantai, bukan nombor tiket.",
+      "p3": "Katalog meliputi mesin pelabel, mesin pembungkusan, pencetak 3D, penyelesaian MES & SCADA, dan rig automasi tersuai. Apa yang menyatukannya bukanlah keluarga produk — tetapi mereka direka oleh orang yang akan berada di lantai anda pada hari pemasangan, dan dalam panggilan WhatsApp apabila sesuatu perlu diselenggara.",
+      "stat": {
+        "catalog": "Mesin dalam katalog",
+        "photographed": "Difoto di lantai kilang",
+        "families": "Keluarga kejuruteraan",
+        "disciplines": "Disiplin di bawah satu bumbung"
+      },
+      "disciplines": {
+        "eyebrow": "Di bawah satu bumbung",
+        "h2Line1": "Enam disiplin.",
+        "h2Line2": "Satu lantai di Shah Alam."
+      },
+      "tour": {
+        "eyebrow": "Lawati kami",
+        "h2": "Jadualkan lawatan kilang.",
+        "body": "Cara terpantas untuk memahami mesin Auraplex adalah dengan melihatnya dibina. Berjalan di lantai bersama ketua jurutera kami. Bawa bekas sampel — kami akan jalankannya pada aplikator terdekat semasa anda menonton.",
+        "address": "Auraplex SDN BHD · Shah Alam · Selangor · Malaysia",
+        "book": "Tempah lawatan",
+        "whatsapp": "WhatsApp",
+        "whatsappMsg": "Hi — saya ingin menempah lawatan kilang."
+      }
+    },
+    "services": {
+      "eyebrow": "Khidmat",
+      "h1Line1": "Kami bukan sekadar menghantar mesin.",
+      "h1Line2": "Kami menghantar barisan yang berfungsi.",
+      "subtitle": "Setiap pemasangan Auraplex termasuk pentauliahan, serahan operator, dan jurutera servis tempatan yang sedia membantu. Empat disiplin, semuanya di bawah satu bumbung di Shah Alam.",
+      "cta": {
+        "h2Line1": "Sudah menggunakan mesin Auraplex?",
+        "h2Line2": "Atau pesaing?",
+        "body": "Kami juga menservis pelabel pihak ketiga. Hantar model dan gambar masalah kepada kami — kami akan sebut harga dalam satu hari bekerja.",
+        "primary": "Hubungi pasukan servis",
+        "whatsapp": "WhatsApp",
+        "whatsappMsg": "Hi — saya perlukan servis untuk satu mesin. Boleh saya hantar gambar?"
+      }
+    },
+    "careers": {
+      "eyebrow": "Kerjaya · Latihan industri",
+      "h1Line1": "Bina mesin",
+      "h1Line2": "yang sampai tepat pada masanya.",
+      "subtitle": "Auraplex menggaji jurutera, juruteknik, pemasang dan pakar khidmat merentas enam disiplin di Shah Alam. Kami mengambil pekerja apabila kerja menuntutnya — pasukan kecil, pemilikan sebenar.",
+      "disciplines": {
+        "eyebrow": "Di mana anda bekerja",
+        "h2": "Enam disiplin. Satu lantai."
+      },
+      "internships": {
+        "eyebrow": "Latihan industri",
+        "h2Line1": "Tiga program.",
+        "h2Line2": "Mesin sebenar, barisan sebenar.",
+        "body": "Kami menerima 6–8 pelatih sarjana muda setiap tahun. Anda akan bekerja pada mesin yang sedang dibina sekarang — bukan rig latihan, bukan projek sandbox. Terbuka kepada universiti Malaysia dan pelajar pertukaran ASEAN."
+      },
+      "cv": {
+        "h2Line1": "Tiada jawatan dibuka?",
+        "h2Line2": "Hantar CV anda juga.",
+        "body": "Kami menyimpan senarai pendek bergulir. Apabila tiba masa kami mengambil pekerja, senarai pendek adalah tempat kami bermula. E-mel CV anda dengan nota ringkas tentang disiplin yang paling menarik minat anda.",
+        "email": "E-mel careers@auraplex.my",
+        "about": "Tentang Auraplex"
+      }
+    },
+    "news": {
+      "eyebrow": "Berita & Acara",
+      "h1Line1": "Apa yang berlaku",
+      "h1Line2": "di lantai kilang.",
+      "subtitle": "Pameran, anugerah, perkongsian, pelancaran mesin baharu. Kemas kini dari Auraplex di sini — sukuan, jujur, tanpa hiasan pemasaran.",
+      "divider": {
+        "editionLabel": "Edisi",
+        "editionValue": "001 · Sedang dirangka",
+        "cadenceLabel": "Kekerapan",
+        "cadenceValue": "Sukuan",
+        "filedLabel": "Difailkan dari",
+        "filedValue": "Shah Alam, Selangor"
+      },
+      "empty": {
+        "h2": "Edisi pertama akan tiba tidak lama lagi.",
+        "body": "Kami lebih rela menunggu sehingga ada berita yang berbaloi diceritakan. Sementara itu — berbual dengan jurutera yang akan ada dalam edisi pertama.",
+        "primary": "Hubungi kami",
+        "secondary": "Lihat ulasan 2026"
+      },
+      "article": {
+        "eyebrow": "Sedang dirangka",
+        "h2Line1": "Artikel ini masih",
+        "h2Line2": "sedang ditulis.",
+        "body": "Berita Auraplex diterbitkan sukuan. Kembali ke indeks untuk yang terkini, atau hubungi kami terus.",
+        "back": "Kembali ke berita",
+        "talkToUs": "Hubungi kami"
+      }
+    },
+    "contact": {
+      "eyebrow": "Hubungi",
+      "h1": "Hubungi jurutera.",
+      "subtitle": "Kami balas dalam satu hari bekerja. Untuk perkara segera, WhatsApp paling pantas.",
+      "labels": {
+        "sales": "Talian jualan",
+        "email": "E-mel",
+        "whatsappLabel": "WhatsApp",
+        "whatsappValue": "Hantar mesej"
+      },
+      "hours": {
+        "weekdays": "Isn–Jum · 09:00–18:00 MYT",
+        "saturday": "Sab · 09:00–13:00 MYT"
+      },
+      "response": {
+        "lead": "Kami balas:",
+        "body": "dalam 1 hari bekerja melalui e-mel · dalam sejam melalui WhatsApp semasa waktu pejabat."
+      },
+      "routing": "Disalurkan kepada {team}",
+      "departments": {
+        "sales": "Pasukan jualan",
+        "service": "Pasukan servis",
+        "tour": "Penjadualan lawatan kilang",
+        "engineering": "Pasukan kejuruteraan"
+      }
+    },
+    "caseStudies": {
+      "eyebrow": "Laporan lapangan · Sukuan",
+      "h1Line1": "Laporan lapangan pertama",
+      "h1Line2": "sedang difoto.",
+      "subtitle": "Laporan lapangan Auraplex adalah panjang lebar, difoto di tapak, dan diterbitkan sukuan. Kami lebih rela menerbitkan satu cerita jujur daripada dua belas siaran akhbar.",
+      "divider": {
+        "issueLabel": "Edisi 01",
+        "issueValue": "Dalam pengeluaran",
+        "subjectLabel": "Subjek",
+        "subjectValue": "Custom Top w/ Checking System",
+        "filedLabel": "Difailkan dari",
+        "filedValue": "Shah Alam, Selangor"
+      },
+      "expect": {
+        "eyebrow": "Apa yang dijangka",
+        "h2Line1": "Panjang lebar. Difoto.",
+        "h2Line2": "Jujur tentang apa yang tidak berjaya.",
+        "items": [
+          { "num": "01", "title": "Di lantai", "body": "Setiap laporan difoto di kilang pelanggan — bukan di bilik pameran kami." },
+          { "num": "02", "title": "Dengan angka", "body": "Kelajuan sebelum / selepas. Kadar reject sebelum / selepas. Tempoh pulang modal dalam bulan, bukan naratif." },
+          { "num": "03", "title": "Dan kekangan", "body": "Apa yang terlepas semasa pemasangan, apa yang dibetulkan iterasi kedua, apa yang kami pelajari untuk binaan seterusnya." }
+        ]
+      },
+      "cta": {
+        "h2": "Mahu edisi pertama apabila ia tiba?",
+        "body": "Atau jangan tunggu — berbual dengan jurutera yang akan ada dalam laporan. Kami akan terangkan apa yang berjaya di lantai sebenar.",
+        "primary": "Hubungi jurutera",
+        "secondary": "Lihat ulasan 2026"
+      },
+      "detail": {
+        "eyebrow": "Laporan lapangan · Dalam pengeluaran",
+        "h2Line1": "Laporan ini masih",
+        "h2Line2": "sedang difoto.",
+        "body": "Laporan lapangan Auraplex diterbitkan sukuan, di tapak, dengan angka kelajuan sebenar. Edisi pertama dalam editorial. Daftar untuk mendapatkannya apabila ia tiba — atau berbual dengan pasukan terus.",
+        "back": "Kembali ke laporan lapangan",
+        "talkToUs": "Hubungi jurutera"
+      }
+    },
+    "machineFinder": {
+      "eyebrow": "Jurutera AI · semakan manusia 24 jam",
+      "h1": "Terangkan barisan anda. Kami padankan mesin.",
+      "subtitle": "Berbual dengan jurutera aplikasi AI kami. Dilatih pada katalog Auraplex dan 340+ pemasangan disebarkan. Setiap cadangan disemak oleh jurutera manusia dalam 24 jam."
+    }
   }
 }
