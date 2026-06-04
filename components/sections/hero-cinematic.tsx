@@ -10,8 +10,15 @@ import { Magnetic } from '@/components/motion/magnetic';
 import { CursorSpotlight } from '@/components/motion/cursor-spotlight';
 import { ShaderGrid } from '@/components/three/shader-grid';
 import { HeroParticles } from '@/components/sections/hero-particles';
+import { YoutubeHeroBg } from '@/components/sections/youtube-hero-bg';
 import { getFeaturedMachines } from '@/lib/catalog';
 import { whatsappLink } from '@/lib/utils';
+
+// Hero background YouTube video. If YouTube blocks the embed (Shorts
+// restriction, bot wall, region lock, etc.), YoutubeHeroBg detects the
+// failure within 6s and fades itself to opacity 0 — the HeroParticles
+// layer underneath then carries the hero seamlessly.
+const HERO_VIDEO_ID = 'vqv4IKY30BU';
 
 /**
  * Hero — orchestrated 3.2s entrance timeline, generative background.
@@ -56,7 +63,8 @@ export function HeroCinematic() {
       ref={sectionRef}
       className="relative h-[100dvh] w-full overflow-hidden bg-[color:var(--color-ink)]"
     >
-      {/* ── Layer 0: Particle constellation ── */}
+      {/* ── Layer 0: Particle constellation — deepest layer, always rendered.
+              Acts as the visual fallback when the YouTube embed fails. ── */}
       <motion.div
         style={{ opacity: particleOpacity }}
         className="absolute inset-0"
@@ -64,7 +72,21 @@ export function HeroCinematic() {
         <HeroParticles />
       </motion.div>
 
-      {/* ── Layer 1: video darkening + brand wash ── */}
+      {/* ── Layer 1: YouTube factory video — sits above the particle layer.
+              When playing, it covers the particles entirely. When YouTube
+              blocks the embed it fades to opacity 0 and the particles below
+              become the hero. Watchdog: 6s for state PLAYING. ── */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.2, delay: 0.3, ease: 'easeOut' }}
+        style={{ opacity: particleOpacity }}
+        className="absolute inset-0"
+      >
+        <YoutubeHeroBg id={HERO_VIDEO_ID} title={t('heroVideoTitle')} />
+      </motion.div>
+
+      {/* ── Layer 2: video darkening + brand wash ── */}
       <div className="absolute inset-0 bg-[color:var(--color-ink)]/50 pointer-events-none" />
 
       {/* Cursor spotlight halo */}
