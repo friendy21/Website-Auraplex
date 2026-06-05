@@ -69,10 +69,16 @@ export function ScrollDrawLine({
   // wrapped block. By the time the visitor is in the last ~12% of scroll
   // the footer is about to enter view — the rope quietly disappears
   // instead of crossing over the footer content.
+  //
+  // Peak opacity is intentionally low (0.45) so the rope reads as
+  // atmospheric background texture rather than a foreground UI element.
+  // Combined with mix-blend-mode: screen below, this gives the
+  // on.energy / Adelt feel — the line is part of the environment, not
+  // crossing over text.
   const opacity = useTransform(
     scrollYProgress,
     [0, 0.85, 0.98],
-    [0.7, 0.7, 0],
+    [0.45, 0.45, 0],
   );
 
   return (
@@ -90,6 +96,11 @@ export function ScrollDrawLine({
         className="fixed top-20 bottom-0 inset-x-0 pointer-events-none z-[40] overflow-hidden"
         style={{
           opacity,
+          // mix-blend: screen composites the cerulean against whatever
+          // is underneath — on dark sections it reads as a glowing
+          // wire, on lighter content it dims. Perceptually pushes the
+          // rope BEHIND content even though z-index keeps it in front.
+          mixBlendMode: 'screen',
           WebkitMaskImage:
             'linear-gradient(to bottom, black 0%, black 70%, transparent 100%)',
           maskImage:
