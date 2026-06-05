@@ -13,7 +13,7 @@ export async function generateMetadata({
   return buildMetadata({
     title: 'News & Events — Auraplex',
     description:
-      'Auraplex news, industry awards, exhibition updates and announcements from the Shah Alam floor.',
+      'Auraplex news, industry awards, exhibition updates and announcements from the Seri Kembangan floor.',
     path: `/${locale}/news`,
   });
 }

@@ -25,7 +25,7 @@ export function EmailShell({ preview, children }: { preview: string; children: R
             {children}
             <Section style={{ borderTop: `1px solid ${PAL.border}`, marginTop: 40, paddingTop: 24 }}>
               <Text style={{ fontSize: 11, color: PAL.mute, fontFamily: 'Berkeley Mono, monospace', margin: 0 }}>
-                Auraplex SDN BHD · Shah Alam · Selangor · +60-3-0000-0000 · hello@auraplex.my
+                Auraplex SDN BHD · Seri Kembangan · Selangor · +60-3-0000-0000 · hello@auraplex.my
               </Text>
             </Section>
           </Container>

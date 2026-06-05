@@ -14,7 +14,7 @@ export async function generateMetadata({
   return buildMetadata({
     title: 'Careers & Internships — Auraplex',
     description:
-      'Engineering, controls and service roles at Auraplex Shah Alam. Internships for mechanical, electrical and software undergraduates.',
+      'Engineering, controls and service roles at Auraplex Seri Kembangan. Internships for mechanical, electrical and software undergraduates.',
     path: `/${locale}/careers`,
   });
 }

@@ -23,7 +23,7 @@
     "heroVideoTitle": "Auraplex factory floor",
     "heroWhatsappMsg": "Hi Auraplex, I saw your site and want to talk.",
     "heroH1": "Engineered in Malaysia. Built to outlast the line.",
-    "heroSub": "Self-adhesive labelling machines, packaging machinery and custom automation for ASEAN manufacturers. Designed, built, installed and serviced from our floor in Shah Alam.",
+    "heroSub": "Self-adhesive labelling machines, packaging machinery and custom automation for ASEAN manufacturers. Designed, built, installed and serviced from our floor in Seri Kembangan.",
     "heroCallout": "Labelling · Packaging · 3D printing · Custom automation",
     "ctaPrimary": "See the machines",
     "ctaSecondary": "Talk on WhatsApp",
@@ -57,7 +57,7 @@
         { "q": "How long is lead time?", "a": "Standard machines ship in 4 weeks from order confirmation. Custom builds are typically 8–12 weeks." },
         { "q": "Do you provide installation?", "a": "Yes. Every machine includes on-site installation, line integration, and operator training across Peninsular Malaysia, Sabah, and Sarawak." },
         { "q": "What's the warranty?", "a": "Two years parts and labour, with optional extended-coverage plans up to five years." },
-        { "q": "Do you offer custom configurations?", "a": "Yes — every machine can be tailored to your container shape, throughput target, label material, and existing line topology. Bring a sample to our Shah Alam floor — we'll engineer to your reality." },
+        { "q": "Do you offer custom configurations?", "a": "Yes — every machine can be tailored to your container shape, throughput target, label material, and existing line topology. Bring a sample to our Seri Kembangan floor — we'll engineer to your reality." },
         { "q": "Do you handle export documentation?", "a": "Yes — we ship across ASEAN with full CE, SIRIM, and origin documentation." },
         { "q": "What containers do your labellers support?", "a": "Round, oval, square, conical, and custom shapes from 30mm to 250mm diameter. Wrap-around, front-and-back, top, and bottom labelling supported." }
       ]
@@ -71,7 +71,7 @@
       "whatsappMsg": "Hi Auraplex."
     },
     "manifesto": {
-      "eyebrow": "Auraplex · Shah Alam",
+      "eyebrow": "Auraplex · Seri Kembangan",
       "title": "Precision is not a feature.",
       "body": "It is the foundation of every machine that leaves our floor. Built here. Serviced here. Engineered to outlast the line.",
       "region": "Selangor · Malaysia · ASEAN"
@@ -91,7 +91,7 @@
       "browseAll": "See the full catalogue"
     },
     "narrative": {
-      "dateline": "Shah Alam · Selangor",
+      "dateline": "Seri Kembangan · Selangor",
       "s1Line1": "One machine.",
       "s1Line2": "Described in motion.",
       "inMotion": "In motion / {machineName}",
@@ -122,7 +122,7 @@
       "eyebrow": "Precision · 120 units / min",
       "h2Line1": "Engineered",
       "h2Line2": "on this floor.",
-      "body": "Mechanical, electrical, controls, installation — all under one roof in Shah Alam. No re-badge, no outsourced engineering."
+      "body": "Mechanical, electrical, controls, installation — all under one roof in Seri Kembangan. No re-badge, no outsourced engineering."
     },
     "zoomB": {
       "eyebrow": "Vision · 1 ms detection",
@@ -221,7 +221,7 @@
   "footer": {
     "rights": "© 2026 Auraplex SDN BHD. All rights reserved.",
     "made": "Made in Malaysia.",
-    "address": "Auraplex SDN BHD · Shah Alam · Selangor · Malaysia",
+    "address": "Auraplex SDN BHD · Seri Kembangan · Selangor · Malaysia",
     "allMachines": "All machines",
     "privacy": "Privacy",
     "terms": "Terms"
@@ -248,7 +248,7 @@
     "h1Line2": "A year in machines.",
     "lede": "We shipped 30 machines, photographed 142 of them on the floor in Selangor, and put precision applicators into 11 industries across ASEAN — from cosmetics in Klang to pharma in Penang. Here's the year, in the order it happened.",
     "filedFromLabel": "Filed from",
-    "filedFromValue": "Shah Alam, Selangor\nMalaysia",
+    "filedFromValue": "Seri Kembangan, Selangor\nMalaysia",
     "industriesLabel": "Industries served — 2026",
     "industries": [
       "Food & Beverage",
@@ -320,7 +320,7 @@
       "leadSub": "No re-badging from Wenzhou. No outsourced controls. No 14-week ocean freight on a part you needed yesterday.",
       "p1": "2026 was the year that decision started paying buyers back. A cosmetics manufacturer in Klang called us at 9pm on a Saturday — a labeller had jammed mid-run. An engineer was on-site by 8am Sunday with the right part in a Toyota Hilux. That doesn't happen with an import.",
       "p2": "We added a vision-checking system to the Custom Top Labelling line, which let a pharma customer drop their reject rate from 1.4% to under 0.2%. The Continuous Band Sealer got a v2 with a wider tolerance window — the kind of small fix that only happens when the R&D team eats lunch with the service team.",
-      "p3": "In 2027 we're leaning further into custom rigs. Two pilot customers have asked for full-line integration — a single rig that fills, caps, labels and seals from one HMI. Those builds happen on our floor in Shah Alam, with engineers your plant manager can call by name.",
+      "p3": "In 2027 we're leaning further into custom rigs. Two pilot customers have asked for full-line integration — a single rig that fills, caps, labels and seals from one HMI. Those builds happen on our floor in Seri Kembangan, with engineers your plant manager can call by name.",
       "signature": "— The Auraplex engineering team",
       "ctaPrimary": "Talk to an engineer",
       "ctaWhatsapp": "WhatsApp us",
@@ -344,10 +344,10 @@
   },
   "pages": {
     "about": {
-      "eyebrow": "Inside Auraplex · Shah Alam",
+      "eyebrow": "Inside Auraplex · Seri Kembangan",
       "h1Line1": "We engineer machines",
       "h1Line2": "for the floors we visit.",
-      "p1": "Auraplex is an engineering company in Shah Alam, Selangor. We design, build, install and support self-adhesive labelling machines, packaging machinery, 3D printers and custom automation for manufacturers across ASEAN — under one roof, with one team.",
+      "p1": "Auraplex is an engineering company in Seri Kembangan, Selangor. We design, build, install and support self-adhesive labelling machines, packaging machinery, 3D printers and custom automation for manufacturers across ASEAN — under one roof, with one team.",
       "p2": "The model is simple. Manufacturers don't need cheaper machines — they need machines that don't strand them when a sensor fails on a Tuesday night. We staff full-time engineers locally. Parts ship from a warehouse you can drive to. Service calls get an engineer on the floor, not a ticket number.",
       "p3": "The catalogue covers labelling machines, packaging machinery, 3D printers, MES & SCADA solutions, and bespoke automation rigs. What ties them together isn't a product family — it's that they're engineered by people who'll be on your floor on installation day, and on a WhatsApp call when something needs servicing.",
       "stat": {
@@ -359,13 +359,13 @@
       "disciplines": {
         "eyebrow": "Under one roof",
         "h2Line1": "Six disciplines.",
-        "h2Line2": "One floor in Shah Alam."
+        "h2Line2": "One floor in Seri Kembangan."
       },
       "tour": {
         "eyebrow": "Visit us",
         "h2": "Schedule a factory tour.",
         "body": "The fastest way to understand an Auraplex machine is to watch one being built. Walk the floor with our chief engineer. Bring a sample container — we'll run it on the closest applicator while you watch.",
-        "address": "Auraplex SDN BHD · Shah Alam · Selangor · Malaysia",
+        "address": "Auraplex SDN BHD · Seri Kembangan · Selangor · Malaysia",
         "book": "Book a tour",
         "whatsapp": "WhatsApp",
         "whatsappMsg": "Hi — I'd like to book a factory tour."
@@ -375,7 +375,7 @@
       "eyebrow": "Services",
       "h1Line1": "We don't ship machines.",
       "h1Line2": "We ship working lines.",
-      "subtitle": "Every Auraplex install includes commissioning, operator handover, and a local service engineer on call. Four disciplines, all under one roof in Shah Alam.",
+      "subtitle": "Every Auraplex install includes commissioning, operator handover, and a local service engineer on call. Four disciplines, all under one roof in Seri Kembangan.",
       "items": [
         {
           "num": "01",
@@ -402,7 +402,7 @@
         {
           "num": "03",
           "name": "Training",
-          "summary": "Operator + line-supervisor training on your floor or at our facility in Shah Alam.",
+          "summary": "Operator + line-supervisor training on your floor or at our facility in Seri Kembangan.",
           "deliverables": [
             "Operator handover training (included with installation)",
             "Refresher training for new staff",
@@ -435,7 +435,7 @@
       "eyebrow": "Careers · Internships",
       "h1Line1": "Build machines",
       "h1Line2": "that ship on time.",
-      "subtitle": "Auraplex employs engineers, technicians, installers and service specialists across six disciplines in Shah Alam. We hire when the work demands it — small team, real ownership.",
+      "subtitle": "Auraplex employs engineers, technicians, installers and service specialists across six disciplines in Seri Kembangan. We hire when the work demands it — small team, real ownership.",
       "disciplines": {
         "eyebrow": "Where you'd work",
         "h2": "Six disciplines. One floor."
@@ -482,7 +482,7 @@
         "cadenceLabel": "Cadence",
         "cadenceValue": "Quarterly",
         "filedLabel": "Filed from",
-        "filedValue": "Shah Alam, Selangor"
+        "filedValue": "Seri Kembangan, Selangor"
       },
       "empty": {
         "h2": "First issue lands soon.",
@@ -536,7 +536,7 @@
         "subjectLabel": "Subject",
         "subjectValue": "Custom Top w/ Checking System",
         "filedLabel": "Filed from",
-        "filedValue": "Shah Alam, Selangor"
+        "filedValue": "Seri Kembangan, Selangor"
       },
       "expect": {
         "eyebrow": "What to expect",

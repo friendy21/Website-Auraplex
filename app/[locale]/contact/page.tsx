@@ -22,7 +22,7 @@ export async function generateMetadata({
   return buildMetadata({
     title: 'Contact — Auraplex',
     description:
-      'Talk to an Auraplex engineer. Quotes, factory tours, service requests, technical questions. Shah Alam, Selangor.',
+      'Talk to an Auraplex engineer. Quotes, factory tours, service requests, technical questions. Seri Kembangan, Selangor.',
     path: `/${locale}/contact`,
   });
 }
@@ -50,11 +50,11 @@ export default async function ContactPage({
     '@type': 'LocalBusiness',
     name: 'Auraplex SDN BHD',
     description:
-      'Precision labelling and packaging machine manufacturer in Shah Alam, Selangor.',
+      'Precision labelling and packaging machine manufacturer in Seri Kembangan, Selangor.',
     url: 'https://auraplex.my',
     address: {
       '@type': 'PostalAddress',
-      addressLocality: 'Shah Alam',
+      addressLocality: 'Seri Kembangan',
       addressRegion: 'Selangor',
       addressCountry: 'MY',
     },

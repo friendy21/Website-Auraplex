@@ -231,7 +231,7 @@ export function ScrollNarrative() {
               <span className="s1-dot inline-block h-2 w-2 bg-[color:var(--color-signal)]" />
               <span className="s1-line inline-block h-px w-16 bg-[color:var(--color-signal)] origin-left" />
               <span className="s1-dateline font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)]">
-                Shah Alam · Selangor
+                Seri Kembangan · Selangor
               </span>
             </div>
             <h2 className="s1-headline font-display text-[clamp(2rem,5vw,4.5rem)] tracking-[-0.02em] leading-[1] max-w-3xl mx-auto">

@@ -23,7 +23,7 @@
     "heroVideoTitle": "Lantai kilang Auraplex",
     "heroWhatsappMsg": "Hi Auraplex, saya lihat laman web anda dan ingin berbual.",
     "heroH1": "Direka di Malaysia. Dibina untuk tahan lama.",
-    "heroSub": "Mesin pelabel pelekat sendiri, mesin pembungkusan dan automasi khusus untuk pengeluar ASEAN. Direka, dibina, dipasang dan diselenggara dari lantai kilang kami di Shah Alam.",
+    "heroSub": "Mesin pelabel pelekat sendiri, mesin pembungkusan dan automasi khusus untuk pengeluar ASEAN. Direka, dibina, dipasang dan diselenggara dari lantai kilang kami di Seri Kembangan.",
     "heroCallout": "Pelabel · Pembungkus · Cetakan 3D · Automasi khusus",
     "ctaPrimary": "Lihat mesin",
     "ctaSecondary": "Hubungi WhatsApp",
@@ -57,7 +57,7 @@
         { "q": "Berapa lama tempoh penghantaran?", "a": "Mesin standard dihantar dalam 4 minggu selepas pengesahan pesanan. Mesin tersuai biasanya 8–12 minggu." },
         { "q": "Adakah anda menyediakan pemasangan?", "a": "Ya. Setiap mesin termasuk pemasangan di tapak, integrasi barisan, dan latihan operator merentas Semenanjung Malaysia, Sabah, dan Sarawak." },
         { "q": "Apakah jaminannya?", "a": "Dua tahun alat ganti dan tenaga kerja, dengan pelan perlindungan lanjutan pilihan sehingga lima tahun." },
-        { "q": "Adakah konfigurasi tersuai disediakan?", "a": "Ya — setiap mesin boleh disesuaikan dengan bentuk bekas, sasaran kelajuan, bahan label, dan topologi barisan sedia ada. Bawa sampel ke lantai kilang Shah Alam — kami akan mereka mengikut realiti anda." },
+        { "q": "Adakah konfigurasi tersuai disediakan?", "a": "Ya — setiap mesin boleh disesuaikan dengan bentuk bekas, sasaran kelajuan, bahan label, dan topologi barisan sedia ada. Bawa sampel ke lantai kilang Seri Kembangan — kami akan mereka mengikut realiti anda." },
         { "q": "Adakah anda mengendalikan dokumentasi eksport?", "a": "Ya — kami menghantar merentas ASEAN dengan dokumentasi CE, SIRIM, dan asal penuh." },
         { "q": "Bekas apa yang disokong oleh pelabel anda?", "a": "Bulat, bujur, segi empat, kerucut, dan bentuk khusus dari 30mm hingga 250mm diameter. Pelabelan balut, depan-belakang, atas, dan bawah disokong." }
       ]
@@ -71,7 +71,7 @@
       "whatsappMsg": "Hi Auraplex."
     },
     "manifesto": {
-      "eyebrow": "Auraplex · Shah Alam",
+      "eyebrow": "Auraplex · Seri Kembangan",
       "title": "Presisi bukan ciri tambahan.",
       "body": "Ia asas setiap mesin yang keluar dari lantai kami. Dibina di sini. Diservis di sini. Direka untuk tahan lebih lama daripada talian pengeluaran.",
       "region": "Selangor · Malaysia · ASEAN"
@@ -91,7 +91,7 @@
       "browseAll": "Lihat katalog penuh"
     },
     "narrative": {
-      "dateline": "Shah Alam · Selangor",
+      "dateline": "Seri Kembangan · Selangor",
       "s1Line1": "Satu mesin.",
       "s1Line2": "Diterangkan dalam pergerakan.",
       "inMotion": "Dalam pergerakan / {machineName}",
@@ -122,7 +122,7 @@
       "eyebrow": "Presisi · 120 unit / min",
       "h2Line1": "Direka",
       "h2Line2": "di lantai ini.",
-      "body": "Mekanikal, elektrikal, kawalan, pemasangan — semuanya di bawah satu bumbung di Shah Alam. Tiada rebrand, tiada kejuruteraan luar."
+      "body": "Mekanikal, elektrikal, kawalan, pemasangan — semuanya di bawah satu bumbung di Seri Kembangan. Tiada rebrand, tiada kejuruteraan luar."
     },
     "zoomB": {
       "eyebrow": "Penglihatan · pengesanan 1 ms",
@@ -221,7 +221,7 @@
   "footer": {
     "rights": "© 2026 Auraplex SDN BHD. Hak cipta terpelihara.",
     "made": "Buatan Malaysia.",
-    "address": "Auraplex SDN BHD · Shah Alam · Selangor · Malaysia",
+    "address": "Auraplex SDN BHD · Seri Kembangan · Selangor · Malaysia",
     "allMachines": "Semua mesin",
     "privacy": "Privasi",
     "terms": "Terma"
@@ -248,7 +248,7 @@
     "h1Line2": "Setahun dalam mesin.",
     "lede": "Kami menghantar 30 mesin, memfoto 142 daripadanya di lantai kilang di Selangor, dan menempatkan aplikator presisi dalam 11 industri merentas ASEAN — dari kosmetik di Klang ke farmaseutikal di Pulau Pinang. Inilah tahunnya, mengikut urutan ia berlaku.",
     "filedFromLabel": "Difailkan dari",
-    "filedFromValue": "Shah Alam, Selangor\nMalaysia",
+    "filedFromValue": "Seri Kembangan, Selangor\nMalaysia",
     "industriesLabel": "Industri disokong — 2026",
     "industries": [
       "Makanan & Minuman",
@@ -320,7 +320,7 @@
       "leadSub": "Tiada penjenamaan semula dari Wenzhou. Tiada kawalan diluar-sumber. Tiada penghantaran laut 14 minggu untuk alat ganti yang anda perlukan semalam.",
       "p1": "2026 adalah tahun keputusan itu mula membayar balik kepada pembeli. Pengeluar kosmetik di Klang menghubungi kami pada 9 malam Sabtu — pelabel tersekat di pertengahan operasi. Seorang jurutera berada di tapak menjelang 8 pagi Ahad dengan alat ganti yang betul dalam Toyota Hilux. Itu tidak berlaku dengan barangan import.",
       "p2": "Kami menambah sistem pemeriksaan penglihatan kepada barisan Custom Top Labelling, yang membolehkan pelanggan farmaseutikal mengurangkan kadar reject mereka dari 1.4% kepada di bawah 0.2%. Continuous Band Sealer mendapat v2 dengan tetingkap toleransi yang lebih luas — jenis pembetulan kecil yang hanya berlaku apabila pasukan R&D makan tengah hari bersama pasukan servis.",
-      "p3": "Dalam 2027 kami akan condong lebih jauh ke arah rig khusus. Dua pelanggan perintis telah meminta integrasi barisan penuh — satu rig yang mengisi, menutup, melabel dan menutup dari satu HMI. Pembinaan tersebut berlaku di lantai kilang kami di Shah Alam, dengan jurutera yang pengurus loji anda boleh panggil dengan nama.",
+      "p3": "Dalam 2027 kami akan condong lebih jauh ke arah rig khusus. Dua pelanggan perintis telah meminta integrasi barisan penuh — satu rig yang mengisi, menutup, melabel dan menutup dari satu HMI. Pembinaan tersebut berlaku di lantai kilang kami di Seri Kembangan, dengan jurutera yang pengurus loji anda boleh panggil dengan nama.",
       "signature": "— Pasukan kejuruteraan Auraplex",
       "ctaPrimary": "Hubungi jurutera",
       "ctaWhatsapp": "WhatsApp kami",
@@ -344,10 +344,10 @@
   },
   "pages": {
     "about": {
-      "eyebrow": "Tentang Auraplex · Shah Alam",
+      "eyebrow": "Tentang Auraplex · Seri Kembangan",
       "h1Line1": "Kami mereka mesin",
       "h1Line2": "untuk lantai yang kami lawati.",
-      "p1": "Auraplex ialah syarikat kejuruteraan di Shah Alam, Selangor. Kami mereka, membina, memasang dan menyokong mesin pelabel pelekat sendiri, mesin pembungkusan, pencetak 3D dan automasi khusus untuk pengeluar di seluruh ASEAN — di bawah satu bumbung, dengan satu pasukan.",
+      "p1": "Auraplex ialah syarikat kejuruteraan di Seri Kembangan, Selangor. Kami mereka, membina, memasang dan menyokong mesin pelabel pelekat sendiri, mesin pembungkusan, pencetak 3D dan automasi khusus untuk pengeluar di seluruh ASEAN — di bawah satu bumbung, dengan satu pasukan.",
       "p2": "Modelnya mudah. Pengeluar tidak perlukan mesin yang lebih murah — mereka perlukan mesin yang tidak meninggalkan mereka apabila sensor rosak pada malam Selasa. Kami menggaji jurutera sepenuh masa di sini. Alat ganti dihantar dari gudang yang anda boleh pandu ke sana. Panggilan servis mendapat jurutera di lantai, bukan nombor tiket.",
       "p3": "Katalog meliputi mesin pelabel, mesin pembungkusan, pencetak 3D, penyelesaian MES & SCADA, dan rig automasi tersuai. Apa yang menyatukannya bukanlah keluarga produk — tetapi mereka direka oleh orang yang akan berada di lantai anda pada hari pemasangan, dan dalam panggilan WhatsApp apabila sesuatu perlu diselenggara.",
       "stat": {
@@ -359,13 +359,13 @@
       "disciplines": {
         "eyebrow": "Di bawah satu bumbung",
         "h2Line1": "Enam disiplin.",
-        "h2Line2": "Satu lantai di Shah Alam."
+        "h2Line2": "Satu lantai di Seri Kembangan."
       },
       "tour": {
         "eyebrow": "Lawati kami",
         "h2": "Jadualkan lawatan kilang.",
         "body": "Cara terpantas untuk memahami mesin Auraplex adalah dengan melihatnya dibina. Berjalan di lantai bersama ketua jurutera kami. Bawa bekas sampel — kami akan jalankannya pada aplikator terdekat semasa anda menonton.",
-        "address": "Auraplex SDN BHD · Shah Alam · Selangor · Malaysia",
+        "address": "Auraplex SDN BHD · Seri Kembangan · Selangor · Malaysia",
         "book": "Tempah lawatan",
         "whatsapp": "WhatsApp",
         "whatsappMsg": "Hi — saya ingin menempah lawatan kilang."
@@ -375,7 +375,7 @@
       "eyebrow": "Khidmat",
       "h1Line1": "Kami bukan sekadar menghantar mesin.",
       "h1Line2": "Kami menghantar barisan yang berfungsi.",
-      "subtitle": "Setiap pemasangan Auraplex termasuk pentauliahan, serahan operator, dan jurutera servis tempatan yang sedia membantu. Empat disiplin, semuanya di bawah satu bumbung di Shah Alam.",
+      "subtitle": "Setiap pemasangan Auraplex termasuk pentauliahan, serahan operator, dan jurutera servis tempatan yang sedia membantu. Empat disiplin, semuanya di bawah satu bumbung di Seri Kembangan.",
       "items": [
         {
           "num": "01",
@@ -402,7 +402,7 @@
         {
           "num": "03",
           "name": "Latihan",
-          "summary": "Latihan operator + penyelia barisan di lantai kilang anda atau di fasiliti kami di Shah Alam.",
+          "summary": "Latihan operator + penyelia barisan di lantai kilang anda atau di fasiliti kami di Seri Kembangan.",
           "deliverables": [
             "Latihan serahan operator (termasuk dengan pemasangan)",
             "Latihan ulangan untuk kakitangan baharu",
@@ -435,7 +435,7 @@
       "eyebrow": "Kerjaya · Latihan industri",
       "h1Line1": "Bina mesin",
       "h1Line2": "yang sampai tepat pada masanya.",
-      "subtitle": "Auraplex menggaji jurutera, juruteknik, pemasang dan pakar khidmat merentas enam disiplin di Shah Alam. Kami mengambil pekerja apabila kerja menuntutnya — pasukan kecil, pemilikan sebenar.",
+      "subtitle": "Auraplex menggaji jurutera, juruteknik, pemasang dan pakar khidmat merentas enam disiplin di Seri Kembangan. Kami mengambil pekerja apabila kerja menuntutnya — pasukan kecil, pemilikan sebenar.",
       "disciplines": {
         "eyebrow": "Di mana anda bekerja",
         "h2": "Enam disiplin. Satu lantai."
@@ -482,7 +482,7 @@
         "cadenceLabel": "Kekerapan",
         "cadenceValue": "Sukuan",
         "filedLabel": "Difailkan dari",
-        "filedValue": "Shah Alam, Selangor"
+        "filedValue": "Seri Kembangan, Selangor"
       },
       "empty": {
         "h2": "Edisi pertama akan tiba tidak lama lagi.",
@@ -536,7 +536,7 @@
         "subjectLabel": "Subjek",
         "subjectValue": "Custom Top w/ Checking System",
         "filedLabel": "Difailkan dari",
-        "filedValue": "Shah Alam, Selangor"
+        "filedValue": "Seri Kembangan, Selangor"
       },
       "expect": {
         "eyebrow": "Apa yang dijangka",

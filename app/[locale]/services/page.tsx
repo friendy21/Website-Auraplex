@@ -16,7 +16,7 @@ export async function generateMetadata({
   return buildMetadata({
     title: 'Services — Auraplex',
     description:
-      'Installation, maintenance, training and custom automation — delivered by Auraplex engineers from Shah Alam.',
+      'Installation, maintenance, training and custom automation — delivered by Auraplex engineers from Seri Kembangan.',
     path: `/${locale}/services`,
   });
 }

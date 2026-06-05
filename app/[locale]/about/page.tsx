@@ -17,7 +17,7 @@ export async function generateMetadata({
   return buildMetadata({
     title: 'About — Auraplex',
     description:
-      'Engineered in Malaysia. Built to outlast the line. Inside the Auraplex factory floor in Shah Alam.',
+      'Engineered in Malaysia. Built to outlast the line. Inside the Auraplex factory floor in Seri Kembangan.',
     path: `/${locale}/about`,
   });
 }

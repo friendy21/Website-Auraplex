@@ -71,7 +71,7 @@ export function organizationSchema() {
     // street/postcode that doesn't exist.
     address: {
       '@type': 'PostalAddress',
-      addressLocality: 'Shah Alam',
+      addressLocality: 'Seri Kembangan',
       addressRegion: 'Selangor',
       addressCountry: 'MY',
     },
