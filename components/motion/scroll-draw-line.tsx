@@ -59,18 +59,27 @@ export function ScrollDrawLine({
   // 100vh fixed window so the rope appears to scroll through view.
   const y = useTransform(scrollYProgress, [0, 1], ['0vh', '-200vh']);
 
+  // Fade the overlay out as scroll progress approaches the end of the
+  // wrapped block. By the time the visitor is in the last ~12% of scroll
+  // the footer is about to enter view — the rope quietly disappears
+  // instead of crossing over the footer content.
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, 0.85, 0.98],
+    [0.7, 0.7, 0],
+  );
+
   return (
     <div ref={ref} className="relative">
-      {/* The fixed overlay is intentionally clipped to the area BELOW the
-          header. With inset-0 the rope's top reached viewport-top, where
-          the header sits — visitors saw the line crossing under the
-          header bar. top-20 leaves 80px clear at the top (enough for both
-          the expanded and collapsed header states), so the rope:
-            - starts just below the video / header line on scroll-in
-            - never touches the header at any scroll position. */}
-      <div
+      {/* Fixed overlay clipped below the header (top-20) and faded out
+          before the footer (opacity drives to 0 in the last ~12% of
+          scroll). The rope:
+            - starts just below the video on scroll-in
+            - never touches the header at any scroll position
+            - fades away cleanly before the footer enters view. */}
+      <motion.div
         className="fixed top-20 bottom-0 inset-x-0 pointer-events-none z-[40] overflow-hidden"
-        style={{ opacity: 0.7 }}
+        style={{ opacity }}
         aria-hidden="true"
       >
         <motion.svg
@@ -136,7 +145,7 @@ export function ScrollDrawLine({
             style={{ pathLength }}
           />
         </motion.svg>
-      </div>
+      </motion.div>
 
       {children}
     </div>
