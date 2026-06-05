@@ -46,14 +46,20 @@ export function ScrollDrawLine({
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
+  // 'start start' → scrollYProgress = 0 until the wrapper top reaches
+  // the top of viewport (i.e. the hero has fully scrolled out). Below
+  // that the value is clamped, so pathLength stays 0 and the line is
+  // fully invisible while the visitor is still looking at the hero.
+  // 'end end' → completes at the very end of the wrapped block.
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ['start end', 'end end'],
+    offset: ['start start', 'end end'],
   });
 
-  // pathLength completes at 70% of wrapper scroll — the rope is fully
-  // drawn for the last third of the page so visitors see it land.
-  const pathLength = useTransform(scrollYProgress, [0, 0.7, 1], [0.04, 1, 1]);
+  // pathLength STARTS at 0 (fully invisible during hero) and completes
+  // at 70% of wrapper scroll — the rope is fully drawn for the last
+  // third of the page so visitors see it land.
+  const pathLength = useTransform(scrollYProgress, [0, 0.7, 1], [0, 1, 1]);
 
   // Vertical translation — the 300vh-tall SVG slides upward through the
   // 100vh fixed window so the rope appears to scroll through view.
@@ -71,15 +77,24 @@ export function ScrollDrawLine({
 
   return (
     <div ref={ref} className="relative">
-      {/* Fixed overlay clipped below the header (top-20) and faded out
-          before the footer (opacity drives to 0 in the last ~12% of
-          scroll). The rope:
-            - starts just below the video on scroll-in
-            - never touches the header at any scroll position
-            - fades away cleanly before the footer enters view. */}
+      {/* Fixed overlay — three guards stack to keep the rope strictly
+          inside its lane:
+            1. top-20  clips the top so it never crosses the header.
+            2. CSS mask gradient hard-fades the bottom 25% of the
+               overlay to transparent at ALL times — the rope
+               physically cannot render where the footer enters view
+               from below, no matter what scrollYProgress reports.
+            3. opacity drives to 0 in the last ~12% of wrapper scroll
+               as a belt-and-suspenders fallback. */}
       <motion.div
         className="fixed top-20 bottom-0 inset-x-0 pointer-events-none z-[40] overflow-hidden"
-        style={{ opacity }}
+        style={{
+          opacity,
+          WebkitMaskImage:
+            'linear-gradient(to bottom, black 0%, black 70%, transparent 100%)',
+          maskImage:
+            'linear-gradient(to bottom, black 0%, black 70%, transparent 100%)',
+        }}
         aria-hidden="true"
       >
         <motion.svg
