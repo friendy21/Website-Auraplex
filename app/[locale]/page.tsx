@@ -33,9 +33,12 @@ export default async function Home({
   return (
     <>
       <HeroCinematic />
-      <ManifestoSection />
-      <ScrollDrawLine label="The line — Shah Alam to your floor" />
-      <LiveDataTicker stats={stats} />
+      {/* ── Everything after the hero is wrapped by ScrollDrawLine so the
+              cerulean rope draws across the whole journey, from just below
+              the hero to the bottom of the page. ── */}
+      <ScrollDrawLine>
+        <ManifestoSection />
+        <LiveDataTicker stats={stats} />
       <ValuePropGrid />
       <ProductShowcase />
 
@@ -97,6 +100,7 @@ export default async function Home({
       <TestimonialMarquee />
       <FaqSection />
       <CloserSection />
+      </ScrollDrawLine>
     </>
   );
 }
