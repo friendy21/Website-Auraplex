@@ -4,31 +4,40 @@ import { motion, useScroll, useTransform } from 'motion/react';
 import { useRef } from 'react';
 
 /**
- * ScrollDrawLine — wraps the post-hero portion of a page and renders an
- * SVG curve that draws itself in lockstep with the visitor's scroll
- * through the wrapped block. Cerulean variant of the skiper-ui
- * "Skiper19" pattern (https://skiper-ui.com/v1/skiper19): the line
- * lives on the page (not on the viewport), so it scrolls naturally with
- * the content rather than hovering in front of it.
+ * ScrollDrawLine — wraps the post-hero portion of a page and renders a
+ * cerulean rope that draws itself as the visitor scrolls.
  *
- * Two specific lessons that the first cut failed:
+ * Architecture (third revision — the first two kept losing the line):
  *
- *   1. The SVG must be OVERLAID on section content, not behind it. With
- *      mix-blend-mode: screen there has to be a dark surface underneath
- *      the line for the blend to brighten — placing the SVG at z-[5]
- *      under the sections meant their bg-ink simply hid it. The line
- *      now sits at z-[30] (above section content, below the header
- *      at z-50). pointer-events: none so it never blocks clicks.
+ *   Previous attempts placed the SVG INSIDE the wrapper at z-30 with
+ *   mix-blend-mode: screen. That broke for two reasons:
  *
- *   2. The path must visually span all the way to the bottom. With
- *      preserveAspectRatio="none" the viewBox stretches to the wrapper
- *      height — but the path geometry has to actually use that full
- *      vertical extent. Eight cubic Beziers across a 0→6400 viewBox
- *      gives the line enough crossings to read as a rope through every
- *      section, all the way to the closer.
+ *     1. Several wrapped sections (ProductShowcase, ScrollNarrative,
+ *        ManifestoSection, CloserSection) create their own stacking
+ *        contexts via transform / will-change / GSAP pin. Once a section
+ *        owns its stacking context, no z-index from a sibling can lift
+ *        the SVG above it.
  *
- * Reduced-motion: Motion respects prefers-reduced-motion on style-driven
- * useTransform outputs — the path snaps to fully drawn for those users.
+ *     2. mix-blend-mode: screen is unreliable on mobile browsers and
+ *        fails entirely against any section whose composited background
+ *        isn't dark — the cerulean just disappears.
+ *
+ *   This version uses a position:fixed layer at z-[40] that lives OUTSIDE
+ *   any wrapped section's stacking context. The rope is always visible
+ *   on every device, regardless of what's pinned or what theme any given
+ *   section uses. No mix-blend-mode — straight cerulean at 0.7 opacity
+ *   so it reads everywhere without dominating text.
+ *
+ *   The SVG is 300vh tall. We translate it from y=0vh to y=-200vh as the
+ *   visitor scrolls through the wrapped block, so the rope appears to
+ *   pass through their viewport from top to bottom — the "follow me"
+ *   feeling the page-anchored version was supposed to deliver. pathLength
+ *   reveals the path progressively and completes at 70% of scroll so the
+ *   full rope is visible for the final third of the page.
+ *
+ * Reduced motion: Motion's useTransform respects prefers-reduced-motion
+ * on style-driven outputs — the path snaps to fully drawn and stops
+ * translating for those users.
  */
 export function ScrollDrawLine({
   children,
@@ -37,86 +46,90 @@ export function ScrollDrawLine({
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
-  // Begin drawing as soon as the wrapper top enters the viewport bottom
-  // (the moment the visitor scrolls past the hero), finish at the very
-  // end of the wrapped block (the bottom of the closer).
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start end', 'end end'],
   });
 
-  const pathLength = useTransform(scrollYProgress, [0, 1], [0.02, 1]);
+  // pathLength completes at 70% of wrapper scroll — the rope is fully
+  // drawn for the last third of the page so visitors see it land.
+  const pathLength = useTransform(scrollYProgress, [0, 0.7, 1], [0.04, 1, 1]);
+
+  // Vertical translation — the 300vh-tall SVG slides upward through the
+  // 100vh fixed window so the rope appears to scroll through view.
+  const y = useTransform(scrollYProgress, [0, 1], ['0vh', '-200vh']);
 
   return (
     <div ref={ref} className="relative">
-      <svg
-        viewBox="0 0 1280 6400"
-        preserveAspectRatio="none"
-        className="absolute inset-0 h-full w-full pointer-events-none z-[30]"
-        style={{ mixBlendMode: 'screen' }}
+      <div
+        className="fixed inset-0 pointer-events-none z-[40] overflow-hidden"
+        style={{ opacity: 0.7 }}
         aria-hidden="true"
       >
-        <defs>
-          <filter
-            id="signal-glow-rope"
-            x="-5%"
-            y="-1%"
-            width="110%"
-            height="102%"
-          >
-            <feGaussianBlur stdDeviation="6" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
+        <motion.svg
+          viewBox="0 0 1280 3000"
+          preserveAspectRatio="none"
+          style={{
+            y,
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '300vh',
+          }}
+        >
+          <defs>
+            <filter
+              id="signal-glow-rope"
+              x="-5%"
+              y="-1%"
+              width="110%"
+              height="102%"
+            >
+              <feGaussianBlur stdDeviation="5" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
 
-        {/* A longer rope — eight cubic Bezier segments across the full
-            0→6400 vertical extent. Each segment crosses (or near-crosses)
-            horizontal centre so the rope reads as a continuous sinuous
-            thread regardless of how tall the wrapper turns out to be. */}
-        <motion.path
-          d="
-            M 640,0
-            C 1140,400 140,800 640,1200
-            C 1140,1600 140,2000 640,2400
-            C 1140,2800 140,3200 640,3600
-            C 1140,4000 140,4400 640,4800
-            C 1100,5100 180,5400 640,5700
-            C 880,5900 880,6200 640,6400
-          "
-          fill="none"
-          stroke="#2796df"
-          strokeWidth={4}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          filter="url(#signal-glow-rope)"
-          vectorEffect="non-scaling-stroke"
-          style={{ pathLength }}
-        />
+          {/* Outer cerulean stroke with glow halo */}
+          <motion.path
+            d="
+              M 640,0
+              C 1140,375 140,750 640,1125
+              C 1140,1500 140,1875 640,2250
+              C 880,2500 880,2750 640,3000
+            "
+            fill="none"
+            stroke="#2796df"
+            strokeWidth={4}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            filter="url(#signal-glow-rope)"
+            vectorEffect="non-scaling-stroke"
+            style={{ pathLength }}
+          />
 
-        {/* Crisp inner stroke — keeps the line readable on top of the
-            softer glow halo of the outer stroke. */}
-        <motion.path
-          d="
-            M 640,0
-            C 1140,400 140,800 640,1200
-            C 1140,1600 140,2000 640,2400
-            C 1140,2800 140,3200 640,3600
-            C 1140,4000 140,4400 640,4800
-            C 1100,5100 180,5400 640,5700
-            C 880,5900 880,6200 640,6400
-          "
-          fill="none"
-          stroke="#4eaae9"
-          strokeWidth={1}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          vectorEffect="non-scaling-stroke"
-          style={{ pathLength }}
-        />
-      </svg>
+          {/* Bright inner stroke for crispness on top of the halo */}
+          <motion.path
+            d="
+              M 640,0
+              C 1140,375 140,750 640,1125
+              C 1140,1500 140,1875 640,2250
+              C 880,2500 880,2750 640,3000
+            "
+            fill="none"
+            stroke="#4eaae9"
+            strokeWidth={1}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
+            style={{ pathLength }}
+          />
+        </motion.svg>
+      </div>
 
       {children}
     </div>
