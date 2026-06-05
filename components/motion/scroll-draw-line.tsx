@@ -4,28 +4,28 @@ import { motion, useScroll, useTransform } from 'motion/react';
 import { useRef } from 'react';
 
 /**
- * ScrollDrawLine — wraps a slice of the page and renders an SVG curve
- * behind/over it that draws itself in lockstep with scroll progress
- * through the wrapped content. Cerulean variant of the skiper-ui
- * "Skiper19" pattern (https://skiper-ui.com/v1/skiper19).
+ * ScrollDrawLine — wraps the post-hero portion of a page and renders an
+ * SVG curve that draws itself in lockstep with the visitor's scroll
+ * through the wrapped block. Cerulean variant of the skiper-ui
+ * "Skiper19" pattern (https://skiper-ui.com/v1/skiper19): the line
+ * lives on the page (not on the viewport), so it scrolls naturally with
+ * the content rather than hovering in front of it.
  *
- * Usage on the home page:
+ * Two specific lessons that the first cut failed:
  *
- *   <HeroCinematic />
- *   <ScrollDrawLine>
- *     ... every section after the hero ...
- *   </ScrollDrawLine>
+ *   1. The SVG must be OVERLAID on section content, not behind it. With
+ *      mix-blend-mode: screen there has to be a dark surface underneath
+ *      the line for the blend to brighten — placing the SVG at z-[5]
+ *      under the sections meant their bg-ink simply hid it. The line
+ *      now sits at z-[30] (above section content, below the header
+ *      at z-50). pointer-events: none so it never blocks clicks.
  *
- * The line begins drawing the moment the top of the wrapped block
- * enters the viewport (i.e. as soon as you scroll past the hero) and
- * finishes when the bottom of the block reaches the bottom of the
- * viewport (i.e. when you're at the end of the page). It threads through
- * every wrapped section using mix-blend-mode: screen so it glows on the
- * dark ink backgrounds without disrupting text legibility.
- *
- * preserveAspectRatio="none" lets the SVG stretch to fit any wrapper
- * height; vectorEffect="non-scaling-stroke" keeps the stroke a constant
- * pixel width regardless of how stretched the curve becomes.
+ *   2. The path must visually span all the way to the bottom. With
+ *      preserveAspectRatio="none" the viewBox stretches to the wrapper
+ *      height — but the path geometry has to actually use that full
+ *      vertical extent. Eight cubic Beziers across a 0→6400 viewBox
+ *      gives the line enough crossings to read as a rope through every
+ *      section, all the way to the closer.
  *
  * Reduced-motion: Motion respects prefers-reduced-motion on style-driven
  * useTransform outputs — the path snaps to fully drawn for those users.
@@ -37,8 +37,9 @@ export function ScrollDrawLine({
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
-  // start: container top hits bottom of viewport (first scroll past hero)
-  // end:   container bottom hits bottom of viewport (last bit of page)
+  // Begin drawing as soon as the wrapper top enters the viewport bottom
+  // (the moment the visitor scrolls past the hero), finish at the very
+  // end of the wrapped block (the bottom of the closer).
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start end', 'end end'],
@@ -51,17 +52,17 @@ export function ScrollDrawLine({
       <svg
         viewBox="0 0 1280 6400"
         preserveAspectRatio="none"
-        className="absolute inset-0 h-full w-full pointer-events-none z-[5]"
+        className="absolute inset-0 h-full w-full pointer-events-none z-[30]"
         style={{ mixBlendMode: 'screen' }}
         aria-hidden="true"
       >
         <defs>
           <filter
             id="signal-glow-rope"
-            x="-10%"
-            y="-2%"
-            width="120%"
-            height="104%"
+            x="-5%"
+            y="-1%"
+            width="110%"
+            height="102%"
           >
             <feGaussianBlur stdDeviation="6" result="blur" />
             <feMerge>
@@ -71,12 +72,20 @@ export function ScrollDrawLine({
           </filter>
         </defs>
 
-        {/* Outer cerulean stroke with glow halo */}
+        {/* A longer rope — eight cubic Bezier segments across the full
+            0→6400 vertical extent. Each segment crosses (or near-crosses)
+            horizontal centre so the rope reads as a continuous sinuous
+            thread regardless of how tall the wrapper turns out to be. */}
         <motion.path
-          d="M 640,0
-             C 1180,800 100,1600 640,2400
-             C 1180,3200 100,4000 640,4800
-             C 880,5400 880,5900 640,6400"
+          d="
+            M 640,0
+            C 1140,400 140,800 640,1200
+            C 1140,1600 140,2000 640,2400
+            C 1140,2800 140,3200 640,3600
+            C 1140,4000 140,4400 640,4800
+            C 1100,5100 180,5400 640,5700
+            C 880,5900 880,6200 640,6400
+          "
           fill="none"
           stroke="#2796df"
           strokeWidth={4}
@@ -87,12 +96,18 @@ export function ScrollDrawLine({
           style={{ pathLength }}
         />
 
-        {/* Inner bright stroke for crispness */}
+        {/* Crisp inner stroke — keeps the line readable on top of the
+            softer glow halo of the outer stroke. */}
         <motion.path
-          d="M 640,0
-             C 1180,800 100,1600 640,2400
-             C 1180,3200 100,4000 640,4800
-             C 880,5400 880,5900 640,6400"
+          d="
+            M 640,0
+            C 1140,400 140,800 640,1200
+            C 1140,1600 140,2000 640,2400
+            C 1140,2800 140,3200 640,3600
+            C 1140,4000 140,4400 640,4800
+            C 1100,5100 180,5400 640,5700
+            C 880,5900 880,6200 640,6400
+          "
           fill="none"
           stroke="#4eaae9"
           strokeWidth={1}
