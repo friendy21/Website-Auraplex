@@ -61,8 +61,15 @@ export function ScrollDrawLine({
 
   return (
     <div ref={ref} className="relative">
+      {/* The fixed overlay is intentionally clipped to the area BELOW the
+          header. With inset-0 the rope's top reached viewport-top, where
+          the header sits — visitors saw the line crossing under the
+          header bar. top-20 leaves 80px clear at the top (enough for both
+          the expanded and collapsed header states), so the rope:
+            - starts just below the video / header line on scroll-in
+            - never touches the header at any scroll position. */}
       <div
-        className="fixed inset-0 pointer-events-none z-[40] overflow-hidden"
+        className="fixed top-20 bottom-0 inset-x-0 pointer-events-none z-[40] overflow-hidden"
         style={{ opacity: 0.7 }}
         aria-hidden="true"
       >
