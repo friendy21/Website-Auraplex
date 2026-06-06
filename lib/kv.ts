@@ -1,6 +1,6 @@
 import { kv } from '@vercel/kv';
 
-export type LeadKind = 'quote' | 'contact' | 'spec-sheet' | 'machine-finder' | 'tour';
+export type LeadKind = 'quote' | 'contact' | 'spec-sheet' | 'machine-finder' | 'tour' | 'internship';
 
 export interface Lead {
   id: string;

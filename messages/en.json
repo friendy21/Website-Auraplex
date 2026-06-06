@@ -216,7 +216,44 @@
     "machineFinderAiLabel": "Auraplex AI",
     "machineFinderUserLabel": "You",
     "specSheetCta": "Send me the PDF",
-    "send": "Send"
+    "send": "Send",
+    "intent": {
+      "label": "What can we help with?",
+      "options": {
+        "quote": "Request a quote",
+        "service": "Service & support",
+        "tour": "Factory tour",
+        "engineering": "Engineering question",
+        "internship": "Internship",
+        "other": "Other"
+      }
+    },
+    "internship": {
+      "thanks": "Application received — we review every CV within 5 business days and reply either way.",
+      "submit": "Send application",
+      "fieldLabel": "Which discipline?",
+      "fields": {
+        "mechanical": "Mechanical",
+        "electrical": "Electrical",
+        "controls": "Controls & PLC",
+        "software": "Software / firmware",
+        "industrial-design": "Industrial design",
+        "service": "Service & install",
+        "other": "Other"
+      },
+      "university": "University",
+      "semester": "Current semester",
+      "semesterHelper": "e.g. Year 3 Sem 1, or Year 4 Sem 2",
+      "startDate": "Earliest start",
+      "startDateHelper": "e.g. January 2027, or \"as soon as possible\"",
+      "durationMonths": "Duration (months)",
+      "cvUrl": "CV link",
+      "cvUrlHelper": "Drive, Dropbox, GitHub — anything shareable",
+      "portfolioUrl": "Portfolio / GitHub (optional)",
+      "portfolioUrlHelper": "Link to your projects, dissertations, or repos",
+      "motivation": "Why Auraplex?",
+      "motivationHelper": "What machines or problems do you want to work on? 2–3 sentences is fine."
+    }
   },
   "footer": {
     "rights": "© 2026 Auraplex SDN BHD. All rights reserved.",
@@ -463,10 +500,19 @@
           }
         ]
       },
+      "apply": {
+        "eyebrow": "Apply for an internship",
+        "h2Line1": "Apply in five minutes.",
+        "h2Line2": "We reply within five business days.",
+        "body": "We review every CV. The form below captures everything our recruiting team needs to triage your application without a back-and-forth — pick the discipline that fits you best, tell us when you can start, and link to your CV.",
+        "bullet1": "Paid internship — RM stipend confirmed at offer",
+        "bullet2": "3–6 months, extendable to a full-time offer",
+        "bullet3": "Seri Kembangan, Selangor — on-floor with the engineers"
+      },
       "cv": {
-        "h2Line1": "No formal openings listed?",
-        "h2Line2": "Send us your CV anyway.",
-        "body": "We keep a rolling shortlist. When we're ready to hire, the shortlist is where we start. Email your CV with a short note about which discipline interests you most.",
+        "h2Line1": "Graduate or experienced engineer?",
+        "h2Line2": "Send your CV.",
+        "body": "Not an internship application? Email your CV with a short note about which discipline interests you most. We keep a rolling shortlist — when we're ready to hire, the shortlist is where we start.",
         "email": "Email careers@auraplex.my",
         "about": "About Auraplex"
       }

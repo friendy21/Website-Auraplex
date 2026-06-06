@@ -216,7 +216,44 @@
     "machineFinderAiLabel": "Auraplex AI",
     "machineFinderUserLabel": "Anda",
     "specSheetCta": "Hantar PDF kepada saya",
-    "send": "Hantar"
+    "send": "Hantar",
+    "intent": {
+      "label": "Apa yang kami boleh bantu?",
+      "options": {
+        "quote": "Minta sebut harga",
+        "service": "Servis & sokongan",
+        "tour": "Lawatan kilang",
+        "engineering": "Soalan kejuruteraan",
+        "internship": "Latihan industri",
+        "other": "Lain-lain"
+      }
+    },
+    "internship": {
+      "thanks": "Permohonan diterima — kami menyemak setiap CV dalam 5 hari bekerja dan akan membalas.",
+      "submit": "Hantar permohonan",
+      "fieldLabel": "Disiplin yang mana?",
+      "fields": {
+        "mechanical": "Mekanikal",
+        "electrical": "Elektrikal",
+        "controls": "Kawalan & PLC",
+        "software": "Perisian / firmware",
+        "industrial-design": "Reka bentuk perindustrian",
+        "service": "Servis & pemasangan",
+        "other": "Lain-lain"
+      },
+      "university": "Universiti",
+      "semester": "Semester semasa",
+      "semesterHelper": "cth. Tahun 3 Sem 1, atau Tahun 4 Sem 2",
+      "startDate": "Tarikh mula terawal",
+      "startDateHelper": "cth. Januari 2027, atau \"secepat mungkin\"",
+      "durationMonths": "Tempoh (bulan)",
+      "cvUrl": "Pautan CV",
+      "cvUrlHelper": "Drive, Dropbox, GitHub — mana-mana yang boleh dikongsi",
+      "portfolioUrl": "Portfolio / GitHub (pilihan)",
+      "portfolioUrlHelper": "Pautan kepada projek, disertasi atau repo anda",
+      "motivation": "Mengapa Auraplex?",
+      "motivationHelper": "Mesin atau masalah apa yang anda ingin sentuh? 2–3 ayat sudah memadai."
+    }
   },
   "footer": {
     "rights": "© 2026 Auraplex SDN BHD. Hak cipta terpelihara.",
@@ -463,10 +500,19 @@
           }
         ]
       },
+      "apply": {
+        "eyebrow": "Mohon latihan industri",
+        "h2Line1": "Mohon dalam lima minit.",
+        "h2Line2": "Kami akan membalas dalam lima hari bekerja.",
+        "body": "Kami menyemak setiap CV. Borang di bawah merangkumi semua yang diperlukan oleh pasukan pengambilan kami untuk menilai permohonan anda tanpa berbalas-balas — pilih disiplin yang paling sesuai, beritahu kami bila anda boleh mula, dan kongsi pautan ke CV anda.",
+        "bullet1": "Latihan bergaji — elaun RM disahkan semasa tawaran",
+        "bullet2": "3–6 bulan, boleh dilanjutkan kepada tawaran tetap",
+        "bullet3": "Seri Kembangan, Selangor — di lantai kilang bersama jurutera"
+      },
       "cv": {
-        "h2Line1": "Tiada jawatan dibuka?",
-        "h2Line2": "Hantar CV anda juga.",
-        "body": "Kami menyimpan senarai pendek bergulir. Apabila tiba masa kami mengambil pekerja, senarai pendek adalah tempat kami bermula. E-mel CV anda dengan nota ringkas tentang disiplin yang paling menarik minat anda.",
+        "h2Line1": "Graduan atau jurutera berpengalaman?",
+        "h2Line2": "Hantar CV anda.",
+        "body": "Bukan permohonan latihan industri? E-mel CV anda dengan nota ringkas tentang disiplin yang paling menarik minat anda. Kami menyimpan senarai pendek bergulir — apabila tiba masa kami mengambil pekerja, senarai pendek adalah tempat kami bermula.",
         "email": "E-mel careers@auraplex.my",
         "about": "Tentang Auraplex"
       }

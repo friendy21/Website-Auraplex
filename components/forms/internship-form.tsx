@@ -3,37 +3,51 @@
 import { useActionState, useState } from 'react';
 import { motion } from 'motion/react';
 import { useTranslations } from 'next-intl';
-import { submitContact, type ActionState } from '@/actions/submit-contact';
+import {
+  submitInternship,
+  type ActionState,
+} from '@/actions/submit-internship';
 import { Button } from '@/components/primitives/button';
 import { Field } from '@/components/primitives/field';
 
 const initial: ActionState = { ok: false };
 
-type Intent = 'quote' | 'service' | 'tour' | 'engineering' | 'internship' | 'other';
+type FieldKey =
+  | 'mechanical'
+  | 'electrical'
+  | 'controls'
+  | 'software'
+  | 'industrial-design'
+  | 'service'
+  | 'other';
 
-const INTENTS: Intent[] = [
-  'quote',
+const FIELDS: FieldKey[] = [
+  'mechanical',
+  'electrical',
+  'controls',
+  'software',
+  'industrial-design',
   'service',
-  'tour',
-  'engineering',
-  'internship',
   'other',
 ];
 
-export function ContactForm({
-  locale,
-  department,
-  defaultIntent = 'quote',
-}: {
-  locale: string;
-  /** Pre-filled department routing — passed via ?dept= URL param on /contact. */
-  department?: string;
-  /** Pre-select an intent (e.g. when the form is embedded under a service). */
-  defaultIntent?: Intent;
-}) {
-  const t = useTranslations('forms');
-  const [state, action, pending] = useActionState(submitContact, initial);
-  const [intent, setIntent] = useState<Intent>(defaultIntent);
+/**
+ * Internship application form — replaces the previous mailto: link on
+ * the careers page. Captures everything the recruiting team needs to
+ * triage without a back-and-forth: field of study, university, current
+ * semester, target start date, duration, optional CV + portfolio URLs,
+ * and a free-text motivation paragraph.
+ *
+ * CV upload is intentionally a URL field (Drive / Dropbox / GitHub),
+ * not a file input — file uploads require multipart handling on the
+ * server action + binary storage. Asking for a hosted link skips that
+ * cost and is industry-standard for software/eng applications.
+ */
+export function InternshipForm({ locale }: { locale: string }) {
+  const t = useTranslations('forms.internship');
+  const tCommon = useTranslations('forms');
+  const [state, action, pending] = useActionState(submitInternship, initial);
+  const [field, setField] = useState<FieldKey>('mechanical');
 
   if (state.ok) {
     return (
@@ -45,7 +59,7 @@ export function ContactForm({
       >
         <div className="font-mono text-xs uppercase tracking-widest text-[color:var(--color-signal)] mb-3 flex items-center gap-2">
           <span className="h-1.5 w-1.5 bg-[color:var(--color-signal)] animate-pulse" />
-          {t('received')}
+          {tCommon('received')}
         </div>
         <p className="font-display text-2xl">{t('thanks')}</p>
       </motion.div>
@@ -55,26 +69,21 @@ export function ContactForm({
   return (
     <form action={action} className="space-y-2">
       <input type="hidden" name="locale" value={locale} />
-      {department && (
-        <input type="hidden" name="department" value={department} />
-      )}
 
-      {/* Intent picker — six tappable pills above the form. Replaces a
-          native <select> for better mobile touch + visual consistency
-          with the rest of the design system. */}
+      {/* Field picker — same pill style as ContactForm's intent picker */}
       <fieldset className="pb-4">
         <legend className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)] mb-3">
-          {t('intent.label')}
+          {t('fieldLabel')}
         </legend>
-        <input type="hidden" name="intent" value={intent} />
+        <input type="hidden" name="field" value={field} />
         <div className="flex flex-wrap gap-2">
-          {INTENTS.map((key) => {
-            const active = intent === key;
+          {FIELDS.map((key) => {
+            const active = field === key;
             return (
               <button
                 type="button"
                 key={key}
-                onClick={() => setIntent(key)}
+                onClick={() => setField(key)}
                 aria-pressed={active}
                 className={`px-4 py-2 font-mono text-xs uppercase tracking-[0.2em] border transition-colors ${
                   active
@@ -82,7 +91,7 @@ export function ContactForm({
                     : 'border-[color:var(--color-neutral-700)] text-[color:var(--color-steel)] hover:border-[color:var(--color-signal)] hover:text-[color:var(--color-signal)]'
                 }`}
               >
-                {t(`intent.options.${key}`)}
+                {t(`fields.${key}`)}
               </button>
             );
           })}
@@ -90,18 +99,47 @@ export function ContactForm({
       </fieldset>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
-        <Field label={t('name')} name="name" required />
-        <Field label={t('company')} name="company" />
+        <Field label={tCommon('name')} name="name" required />
+        <Field label={tCommon('email')} name="email" type="email" required />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
-        <Field label={t('email')} name="email" type="email" required />
-        <Field label={t('phone')} name="phone" />
+        <Field label={tCommon('phone')} name="phone" />
+        <Field label={t('university')} name="university" required />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+        <Field
+          label={t('semester')}
+          name="semester"
+          helper={t('semesterHelper')}
+          required
+        />
+        <Field
+          label={t('startDate')}
+          name="startDate"
+          helper={t('startDateHelper')}
+          required
+        />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+        <Field
+          label={t('durationMonths')}
+          name="durationMonths"
+          type="number"
+        />
+        <Field label={t('cvUrl')} name="cvUrl" type="url" helper={t('cvUrlHelper')} />
       </div>
       <Field
-        label={t('message')}
-        name="message"
+        label={t('portfolioUrl')}
+        name="portfolioUrl"
+        type="url"
+        helper={t('portfolioUrlHelper')}
+      />
+      <Field
+        label={t('motivation')}
+        name="motivation"
         as="textarea"
         rows={6}
+        helper={t('motivationHelper')}
         required
       />
 
@@ -121,7 +159,7 @@ export function ContactForm({
           {pending ? (
             <span className="inline-flex items-center gap-2">
               <span className="inline-block h-2 w-2 rounded-full bg-current animate-pulse" />
-              {t('sending')}
+              {tCommon('sending')}
             </span>
           ) : (
             <>{t('submit')} →</>

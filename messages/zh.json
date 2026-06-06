@@ -216,7 +216,44 @@
     "machineFinderAiLabel": "Auraplex AI",
     "machineFinderUserLabel": "您",
     "specSheetCta": "把 PDF 发给我",
-    "send": "发送"
+    "send": "发送",
+    "intent": {
+      "label": "我们能为您做什么?",
+      "options": {
+        "quote": "索取报价",
+        "service": "服务与支持",
+        "tour": "工厂参观",
+        "engineering": "工程问题",
+        "internship": "实习",
+        "other": "其他"
+      }
+    },
+    "internship": {
+      "thanks": "申请已收到 — 我们将在 5 个工作日内审阅每份简历并回复。",
+      "submit": "提交申请",
+      "fieldLabel": "哪个方向?",
+      "fields": {
+        "mechanical": "机械",
+        "electrical": "电气",
+        "controls": "控制 & PLC",
+        "software": "软件 / 固件",
+        "industrial-design": "工业设计",
+        "service": "服务与安装",
+        "other": "其他"
+      },
+      "university": "大学",
+      "semester": "当前学期",
+      "semesterHelper": "例如:三年级上学期、四年级下学期",
+      "startDate": "最早开始日期",
+      "startDateHelper": "例如:2027 年 1 月,或\"尽快\"",
+      "durationMonths": "时长(月)",
+      "cvUrl": "简历链接",
+      "cvUrlHelper": "Drive、Dropbox、GitHub — 任何可共享链接",
+      "portfolioUrl": "作品集 / GitHub(可选)",
+      "portfolioUrlHelper": "您的项目、论文或代码仓库链接",
+      "motivation": "为什么选择 Auraplex?",
+      "motivationHelper": "您想接触哪些机器或问题?2–3 句话即可。"
+    }
   },
   "footer": {
     "rights": "© 2026 Auraplex SDN BHD. 版权所有。",
@@ -463,10 +500,19 @@
           }
         ]
       },
+      "apply": {
+        "eyebrow": "申请实习",
+        "h2Line1": "五分钟提交申请。",
+        "h2Line2": "五个工作日内回复。",
+        "body": "我们审阅每一份简历。下面的表单收集招聘团队评估申请所需的全部信息,无需来回沟通 — 选择最适合您的方向,告诉我们您可以开始的时间,并附上简历链接。",
+        "bullet1": "带薪实习 — 录用时确认 RM 津贴",
+        "bullet2": "3–6 个月,可延续转为全职 offer",
+        "bullet3": "雪兰莪史里肯邦安 — 与工程师一同在车间"
+      },
       "cv": {
-        "h2Line1": "暂无公开职位?",
-        "h2Line2": "仍然欢迎投递简历。",
-        "body": "我们保留一份滚动候选名单。当我们准备招聘时,会从这份名单开始。请将简历发送给我们,并附上一段简短说明,告诉我们您最感兴趣的学科。",
+        "h2Line1": "毕业生或资深工程师?",
+        "h2Line2": "投递您的简历。",
+        "body": "不是实习申请?请将简历发送给我们,并附上一段简短说明,告诉我们您最感兴趣的学科。我们保留一份滚动候选名单 — 当我们准备招聘时,会从这份名单开始。",
         "email": "邮件至 careers@auraplex.my",
         "about": "关于 Auraplex"
       }

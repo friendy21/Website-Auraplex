@@ -3,6 +3,7 @@ import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
 import { Button } from '@/components/primitives/button';
 import { Magnetic } from '@/components/motion/magnetic';
+import { InternshipForm } from '@/components/forms/internship-form';
 import { buildMetadata } from '@/lib/seo';
 
 export async function generateMetadata({
@@ -147,7 +148,58 @@ export default async function CareersPage({
         </div>
       </section>
 
-      <section className="border-t border-[color:var(--color-neutral-700)] mx-auto max-w-[1600px] px-6 lg:px-12 py-32">
+      {/* ── INTERNSHIP APPLICATION FORM — replaces the old mailto-only
+              path. Captures field, university, semester, start date,
+              CV/portfolio URLs, motivation — everything the recruiting
+              team needs to triage without follow-up. ── */}
+      <section
+        id="apply"
+        className="border-t border-[color:var(--color-neutral-700)] mx-auto max-w-[1600px] px-6 lg:px-12 py-32"
+      >
+        <div className="grid grid-cols-12 gap-6">
+          <Reveal variant="up" className="col-span-12 lg:col-span-5">
+            <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-4">
+              — {t('apply.eyebrow')}
+            </div>
+            <h2 className="font-display text-[clamp(2rem,5vw,4.5rem)] tracking-[-0.02em] leading-[1.05]">
+              {t('apply.h2Line1')}
+              <br />
+              <span className="text-[color:var(--color-signal)]">
+                {t('apply.h2Line2')}
+              </span>
+            </h2>
+            <p className="mt-8 prose-editorial text-[color:var(--color-steel-soft)]">
+              {t('apply.body')}
+            </p>
+            <ul className="mt-8 space-y-3 font-mono text-xs uppercase tracking-[0.2em] text-[color:var(--color-steel)]">
+              <li className="flex items-center gap-3">
+                <span className="h-1 w-1 bg-[color:var(--color-signal)]" />
+                {t('apply.bullet1')}
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="h-1 w-1 bg-[color:var(--color-signal)]" />
+                {t('apply.bullet2')}
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="h-1 w-1 bg-[color:var(--color-signal)]" />
+                {t('apply.bullet3')}
+              </li>
+            </ul>
+          </Reveal>
+
+          <Reveal
+            variant="up"
+            delay={100}
+            className="col-span-12 lg:col-span-7"
+          >
+            <InternshipForm locale={locale} />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── CV fallback — kept as a secondary path for graduates and
+              experienced engineers (not interns) ── */}
+      <section className="border-t border-[color:var(--color-neutral-700)] mx-auto max-w-[1600px] px-6 lg:px-12 py-24">
         <Reveal variant="up">
           <h2 className="font-display text-[clamp(2rem,5vw,4.5rem)] tracking-[-0.02em] leading-[1.05] max-w-3xl">
             {t('cv.h2Line1')}
