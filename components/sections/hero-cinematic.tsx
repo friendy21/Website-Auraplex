@@ -8,15 +8,14 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@/components/primitives/button';
 import { Magnetic } from '@/components/motion/magnetic';
 import { CursorSpotlight } from '@/components/motion/cursor-spotlight';
-import dynamic from 'next/dynamic';
 import { HeroParticles } from '@/components/sections/hero-particles';
 
-// ParticleMesh ships Three.js — keep it out of the server bundle and the
-// initial JS payload. Lazy-loaded after first paint.
-const ParticleMesh = dynamic(
-  () => import('@/components/three/particle-mesh').then((m) => m.ParticleMesh),
-  { ssr: false },
-);
+// ParticleMesh (4000 R3F points) was removed from the hero — running it
+// alongside HeroParticles (Canvas2D constellation) AND the YouTube video
+// meant three concurrent particle systems composited every frame, the
+// single biggest perf hit on the page. HeroParticles + the video give
+// enough visual depth on their own; ParticleMesh can be revived on a
+// less-trafficked page later if needed.
 import { YoutubeHeroBg } from '@/components/sections/youtube-hero-bg';
 import { getFeaturedMachines } from '@/lib/catalog';
 import { whatsappLink } from '@/lib/utils';
@@ -98,19 +97,6 @@ export function HeroCinematic() {
 
       {/* Cursor spotlight halo */}
       <CursorSpotlight size={420} intensity={0.2} />
-
-      {/* ── Layer 2: ParticleMesh — replaces ShaderGrid (v3). 4000-point
-              R3F field with cursor repulsion + scroll-velocity ripple.
-              Hidden below sm to protect mobile perf. ── */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.6 }}
-        transition={{ duration: 1.6, ease: 'easeOut' }}
-        style={{ opacity: shaderOpacity }}
-        className="absolute inset-0 hidden sm:block"
-      >
-        <ParticleMesh opacity={1} />
-      </motion.div>
 
       {/* Ink overlay that floods in as user scrolls past the hero */}
       <motion.div

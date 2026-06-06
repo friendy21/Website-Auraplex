@@ -413,25 +413,24 @@ html.cursor-custom body { cursor: none; }
  * AtmosphereProvider skips rendering them when prefers-reduced-motion is
  * set, so the keyframes here only ever animate when the user opted in.
  * ────────────────────────────────────────────────────────────────────────── */
-.atmosphere-grain {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0.035;
-  mix-blend-mode: overlay;
-}
+/* .atmosphere-grain removed — feTurbulence on a fixed full-viewport
+   overlay with mix-blend-mode was the largest single paint cost on
+   the page. The 3.5% opacity grain was barely visible anyway. */
+
 .atmosphere-vignette {
   position: fixed;
   inset: 0;
   z-index: 1;
   pointer-events: none;
+  /* Static — no breathing animation. The previous keyframes
+     interpolated the `background` shorthand which can't be GPU-
+     accelerated and forced full repaints of a fixed full-viewport
+     layer every animation tick forever. */
   background: radial-gradient(
-    ellipse 80% 70% at 50% 50%,
-    transparent 38%,
-    color-mix(in oklab, var(--color-ink) 70%, transparent) 100%
+    ellipse 82% 72% at 50% 50%,
+    transparent 40%,
+    color-mix(in oklab, var(--color-ink) 73%, transparent) 100%
   );
-  animation: vignette-breathe 8s var(--ease-out) infinite;
 }
 .atmosphere-fog {
   position: fixed;

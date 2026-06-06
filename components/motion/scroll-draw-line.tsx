@@ -120,23 +120,10 @@ export function ScrollDrawLine({
             height: '300vh',
           }}
         >
-          <defs>
-            <filter
-              id="signal-glow-rope"
-              x="-5%"
-              y="-1%"
-              width="110%"
-              height="102%"
-            >
-              <feGaussianBlur stdDeviation="5" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-
-          {/* Outer cerulean stroke with glow halo */}
+          {/* Two strokes — single bright inner line + outer wider stroke
+              at lower opacity for a glow halo. Cheaper than the previous
+              feGaussianBlur filter which forced SVG-filter rasterization
+              on every pathLength tick. */}
           <motion.path
             d="
               M 640,0
@@ -146,15 +133,13 @@ export function ScrollDrawLine({
             "
             fill="none"
             stroke="#2796df"
-            strokeWidth={4}
+            strokeWidth={10}
+            strokeOpacity={0.35}
             strokeLinecap="round"
             strokeLinejoin="round"
-            filter="url(#signal-glow-rope)"
             vectorEffect="non-scaling-stroke"
             style={{ pathLength }}
           />
-
-          {/* Bright inner stroke for crispness on top of the halo */}
           <motion.path
             d="
               M 640,0
@@ -164,7 +149,7 @@ export function ScrollDrawLine({
             "
             fill="none"
             stroke="#4eaae9"
-            strokeWidth={1}
+            strokeWidth={1.5}
             strokeLinecap="round"
             strokeLinejoin="round"
             vectorEffect="non-scaling-stroke"

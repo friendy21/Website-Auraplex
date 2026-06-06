@@ -163,16 +163,48 @@ export function HeroParticles() {
       mouseRef.current.y = -9999;
     }
 
+    // Pause the RAF loop when the canvas is offscreen — the hero is only
+    // visible for the first viewport-height of scroll; running 60fps
+    // canvas updates afterward is pure waste. visibilitychange also
+    // covers the user switching tabs.
+    let running = false;
+    function start() {
+      if (running) return;
+      running = true;
+      rafRef.current = requestAnimationFrame(draw);
+    }
+    function stop() {
+      if (!running) return;
+      running = false;
+      cancelAnimationFrame(rafRef.current);
+    }
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) start();
+        else stop();
+      },
+      { threshold: 0 },
+    );
+    io.observe(canvas!);
+
+    function onVisibility() {
+      if (document.hidden) stop();
+      else if (canvas!.getBoundingClientRect().bottom > 0) start();
+    }
+    document.addEventListener('visibilitychange', onVisibility);
+
     resize();
     initParticles();
-    rafRef.current = requestAnimationFrame(draw);
 
     window.addEventListener('resize', resize);
     canvas!.addEventListener('pointermove', onMove);
     canvas!.addEventListener('pointerleave', onLeave);
 
     return () => {
-      cancelAnimationFrame(rafRef.current);
+      stop();
+      io.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('resize', resize);
       canvas!.removeEventListener('pointermove', onMove);
       canvas!.removeEventListener('pointerleave', onLeave);

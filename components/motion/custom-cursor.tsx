@@ -39,15 +39,14 @@ export function CustomCursor() {
   const sx = useSpring(x, { stiffness: 500, damping: 32, mass: 0.5 });
   const sy = useSpring(y, { stiffness: 500, damping: 32, mass: 0.5 });
 
-  // Four trail dots — each progressively softer, creating a comet tail.
+  // Trail dots — trimmed from four to two for perf. Each trail dot is
+  // an additional pair of springs driven by Motion's RAF tick; four
+  // dots meant 10 concurrent springs writing transforms every frame.
+  // Two is enough to read as a comet tail without the throughput cost.
   const tx1 = useSpring(x, { stiffness: 400, damping: 40 });
   const ty1 = useSpring(y, { stiffness: 400, damping: 40 });
-  const tx2 = useSpring(x, { stiffness: 200, damping: 30 });
-  const ty2 = useSpring(y, { stiffness: 200, damping: 30 });
-  const tx3 = useSpring(x, { stiffness: 100, damping: 25 });
-  const ty3 = useSpring(y, { stiffness: 100, damping: 25 });
-  const tx4 = useSpring(x, { stiffness: 50, damping: 20 });
-  const ty4 = useSpring(y, { stiffness: 50, damping: 20 });
+  const tx2 = useSpring(x, { stiffness: 150, damping: 28 });
+  const ty2 = useSpring(y, { stiffness: 150, damping: 28 });
 
   const [mode, setMode] = useState<Mode>('default');
   const [pressed, setPressed] = useState(false);
@@ -76,10 +75,21 @@ export function CustomCursor() {
       return 'default';
     }
 
+    // Pointermove fires at ~120Hz on modern trackpads. The cursor
+    // position has to track every event for smoothness, but classify()
+    // walks the DOM tree with .closest() up to four times — far too
+    // expensive to run on every move. Throttle the classify call to
+    // ~30Hz (every 33ms) which is well below the threshold at which a
+    // cursor state change would be perceptible.
+    let lastClassifyAt = 0;
     function onMove(e: PointerEvent) {
       x.set(e.clientX);
       y.set(e.clientY);
-      setMode(classify(e.target as Element));
+      const now = performance.now();
+      if (now - lastClassifyAt > 33) {
+        lastClassifyAt = now;
+        setMode(classify(e.target as Element));
+      }
     }
     function onDown() {
       setPressed(true);
@@ -193,10 +203,8 @@ export function CustomCursor() {
   const showTrail = mode === 'default' || mode === 'text';
 
   const trail = [
-    { x: tx1, y: ty1, size: 6, opacity: 0.3 },
-    { x: tx2, y: ty2, size: 5, opacity: 0.2 },
-    { x: tx3, y: ty3, size: 4, opacity: 0.12 },
-    { x: tx4, y: ty4, size: 4, opacity: 0.05 },
+    { x: tx1, y: ty1, size: 6, opacity: 0.28 },
+    { x: tx2, y: ty2, size: 4, opacity: 0.14 },
   ];
 
   return (

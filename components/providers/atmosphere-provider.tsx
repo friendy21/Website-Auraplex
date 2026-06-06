@@ -12,16 +12,25 @@ function noop() {
 }
 
 /**
- * Global atmospheric layers — noise grain, breathing vignette, and signal fog.
- * These are fixed overlays (pointer-events:none) that give the ink background
- * atmospheric depth so the site never feels like a flat webpage.
+ * Global atmospheric layers — vignette + signal fog.
  *
- * - Grain: SVG fractalNoise at very low opacity, mix-blend overlay.
- * - Vignette: Radial gradient that slowly breathes (8s cycle).
- * - Fog: Subtle signal-colored haze that pools at the bottom edge.
+ * v2 of this provider has lost the SVG fractalNoise grain and the
+ * background-shorthand-interpolated "breathing" vignette. Both were
+ * profiled as serious perf offenders:
  *
- * All layers are disabled for users with prefers-reduced-motion via
- * useSyncExternalStore (hydration-safe, no setState-in-effect).
+ *   - feTurbulence on a fixed full-viewport overlay with mix-blend-mode:
+ *     overlay forced the browser to re-rasterize a per-pixel turbulence
+ *     filter every paint. Removed entirely; the 3.5% opacity grain was
+ *     barely visible anyway.
+ *
+ *   - The vignette keyframes interpolated the `background` shorthand
+ *     (radial-gradient), which can't be GPU-accelerated and forced full
+ *     repaints on a fixed full-viewport layer every frame for 8 seconds
+ *     forever. Now the vignette is static (no animation) — visually
+ *     identical because the breath was only a ±0.05 ellipse variation.
+ *
+ * Disabled entirely for users with prefers-reduced-motion (no point
+ * rendering atmospheric overlays they explicitly opted out of).
  */
 export function AtmosphereProvider({ children }: { children: React.ReactNode }) {
   const reduced = useSyncExternalStore(
@@ -36,25 +45,10 @@ export function AtmosphereProvider({ children }: { children: React.ReactNode }) 
       {children}
       {active && (
         <>
-          {/* Noise grain — fractalNoise SVG overlay */}
-          <div className="atmosphere-grain" aria-hidden="true">
-            <svg width="100%" height="100%">
-              <filter id="global-grain">
-                <feTurbulence
-                  type="fractalNoise"
-                  baseFrequency="0.85"
-                  numOctaves="3"
-                  stitchTiles="stitch"
-                />
-              </filter>
-              <rect width="100%" height="100%" filter="url(#global-grain)" />
-            </svg>
-          </div>
-
-          {/* Breathing vignette */}
+          {/* Static vignette — no animation, no expensive interpolation */}
           <div className="atmosphere-vignette" aria-hidden="true" />
 
-          {/* Signal fog */}
+          {/* Signal-deep fog at the bottom edge */}
           <div className="atmosphere-fog" aria-hidden="true" />
         </>
       )}
