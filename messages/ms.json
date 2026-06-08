@@ -459,6 +459,49 @@
           ]
         }
       ],
+      "process": {
+        "eyebrow": "Bagaimana kami membina",
+        "h2Line1": "Tujuh langkah dari",
+        "h2Line2": "panggilan pertama ke sokongan.",
+        "body": "Setiap mesin Auraplex — standard atau khusus — melalui proses tujuh langkah yang sama. Tempoh penghantaran tetap, harga tetap pada sebut harga, tiada perubahan mengejut pertengahan binaan.",
+        "steps": [
+          {
+            "num": "01",
+            "name": "Penemuan",
+            "summary": "Bawa sampel bekas, kongsi topologi barisan dan sasaran kelajuan. Kami berjalan di lantai anda (atau anda di kami) dan mengesahkan skop secara bertulis."
+          },
+          {
+            "num": "02",
+            "name": "Sebut Harga",
+            "summary": "Sebut harga tetap dalam satu hari bekerja untuk mesin standard, tiga hari untuk khusus. Tempoh penghantaran dikunci secara bertulis — biasanya 4 minggu standard, 8–12 minggu khusus."
+          },
+          {
+            "num": "03",
+            "name": "Kejuruteraan",
+            "summary": "Semakan CAD, kunci bil bahan, kelulusan skematik elektrik. Anda lihat lukisan binaan sebelum keluli dipotong."
+          },
+          {
+            "num": "04",
+            "name": "Pembinaan",
+            "summary": "Dipasang di lantai kami di Seri Kembangan. Jurutera yang sama yang merekanya pula yang memasang. Ujian Penerimaan Kilang (FAT) difoto dan dikongsi dengan pasukan anda."
+          },
+          {
+            "num": "05",
+            "name": "Pemasangan",
+            "summary": "Ditauliahkan di barisan anda oleh jurutera kami. Kami mengurus integrasi barisan, pendawaian sensor, konfigurasi HMI dan tetapan resipi."
+          },
+          {
+            "num": "06",
+            "name": "Latihan",
+            "summary": "Serahan operator + penyelia barisan. Buku panduan dalam EN / BM / Mandarin. Pasukan anda mengesahkan pertukaran sebelum kami pergi."
+          },
+          {
+            "num": "07",
+            "name": "Sokongan",
+            "summary": "Jaminan dua tahun alat ganti dan tenaga kerja. Jurutera servis tempatan boleh dihubungi melalui telefon. Alat ganti dihantar semalaman merentas Semenanjung Malaysia."
+          }
+        ]
+      },
       "cta": {
         "h2Line1": "Sudah menggunakan mesin Auraplex?",
         "h2Line2": "Atau pesaing?",
@@ -497,6 +540,36 @@
             "field": "Perisian / Kawalan",
             "work": "Pembangunan HMI, pengurusan resipi, perisian integrasi barisan, penalaan sistem penglihatan.",
             "duration": "12 – 24 minggu"
+          }
+        ]
+      },
+      "faq": {
+        "eyebrow": "Soalan lazim latihan industri",
+        "h2": "Soalan yang setiap pemohon tanya.",
+        "items": [
+          {
+            "q": "Adakah latihan industri bergaji?",
+            "a": "Ya. Setiap latihan mempunyai elaun RM bulanan, disahkan secara bertulis pada tawaran. Elaun bergantung kepada disiplin dan tahap kerja."
+          },
+          {
+            "q": "Berapa lama program ini?",
+            "a": "3 hingga 6 bulan secara lalai, dengan pilihan untuk dilanjutkan jika anda masih dalam semester. Pelatih yang menonjol selalu beralih kepada separa masa semasa peperiksaan akhir + sepenuh masa selepas tamat pengajian."
+          },
+          {
+            "q": "Bila saya boleh mula?",
+            "a": "Kami menerima pelatih sepanjang tahun. Pilih tarikh yang sesuai dengan semester anda. Biasanya kami memulakan dua pelatih baharu sebulan jadi anda akan ada sekurang-kurangnya seorang lagi pelatih dalam kohort anda."
+          },
+          {
+            "q": "Adakah jarak jauh atau di tapak?",
+            "a": "Di tapak kilang kami di Seri Kembangan. Kerja kejuruteraan bermaksud menyentuh mesin sebenar — anda akan memakai but keselamatan, memegang angkup, debug pada HMI."
+          },
+          {
+            "q": "Apa yang berlaku selepas latihan?",
+            "a": "Pelatih cemerlang mendapat tawaran tetap. Kami membuat tawaran sebelum anda meninggalkan bangunan, bukan beberapa minggu kemudian. Bagi yang tidak beralih, kami menulis rujukan terperinci."
+          },
+          {
+            "q": "Adakah saya perlu warganegara Malaysia?",
+            "a": "Tidak semestinya. Kami merekrut penduduk dan warganegara Malaysia secara lalai; pemohon antarabangsa dengan pas pelajar yang sah boleh menghubungi kami — kami akan bincang kes demi kes."
           }
         ]
       },

@@ -459,6 +459,49 @@
           ]
         }
       ],
+      "process": {
+        "eyebrow": "How we build",
+        "h2Line1": "Seven steps from",
+        "h2Line2": "first call to support.",
+        "body": "Every Auraplex machine — standard or custom — moves through the same seven-step process. Fixed lead time, fixed price at quote, no surprise change-orders mid-build.",
+        "steps": [
+          {
+            "num": "01",
+            "name": "Discovery",
+            "summary": "Bring a sample container, share your line topology and target throughput. We walk your floor (or you ours) and confirm scope in writing."
+          },
+          {
+            "num": "02",
+            "name": "Quote",
+            "summary": "Fixed-price quote within one business day for standard machines, three days for custom. Lead time locked in writing — typically 4 weeks standard, 8–12 weeks custom."
+          },
+          {
+            "num": "03",
+            "name": "Engineering",
+            "summary": "CAD review, bill-of-materials lock, electrical schematic sign-off. You see the build drawings before steel is cut."
+          },
+          {
+            "num": "04",
+            "name": "Build",
+            "summary": "Assembled on our floor in Seri Kembangan. Same engineers who designed it are the ones turning the wrenches. FAT (Factory Acceptance Test) photographed and shared with your team."
+          },
+          {
+            "num": "05",
+            "name": "Install",
+            "summary": "Commissioned on your line by our engineers. We handle line integration, sensor wiring, HMI configuration, and recipe setup."
+          },
+          {
+            "num": "06",
+            "name": "Train",
+            "summary": "Operator + line-supervisor handover. Runbook in EN / BM / Mandarin. Your team is signing off changeovers before we leave."
+          },
+          {
+            "num": "07",
+            "name": "Support",
+            "summary": "Two-year parts and labour warranty. Local service engineers reachable by phone. Parts shipped overnight across Peninsular Malaysia."
+          }
+        ]
+      },
       "cta": {
         "h2Line1": "Already running an Auraplex machine?",
         "h2Line2": "Or a competitor's?",
@@ -497,6 +540,36 @@
             "field": "Software / Controls",
             "work": "HMI development, recipe management, line-integration software, vision-system tuning.",
             "duration": "12 – 24 weeks"
+          }
+        ]
+      },
+      "faq": {
+        "eyebrow": "Internship FAQ",
+        "h2": "The questions every applicant asks.",
+        "items": [
+          {
+            "q": "Are internships paid?",
+            "a": "Yes. Every internship has a monthly RM stipend, confirmed in writing at offer. Stipend scales with discipline and seniority of the work."
+          },
+          {
+            "q": "How long is the program?",
+            "a": "3 to 6 months by default, with the option to extend if you're still in semester. Strong performers often convert to part-time during finals + full-time on graduation."
+          },
+          {
+            "q": "When can I start?",
+            "a": "We onboard year-round. Pick a date that fits your semester. We try to start two new interns per month so you'll usually have at least one other intern in your cohort."
+          },
+          {
+            "q": "Is it remote or on-site?",
+            "a": "On-site at our Seri Kembangan floor. Engineering work means touching real machines — you'll be in safety boots, holding calipers, debugging on the HMI."
+          },
+          {
+            "q": "What happens after the internship?",
+            "a": "Strong performers get a full-time offer. We make the offer before you leave the building, not weeks later. For those who don't convert, we write detailed references."
+          },
+          {
+            "q": "Do I need to be Malaysian?",
+            "a": "Not necessarily. We recruit Malaysian residents and citizens by default; international applicants with a valid student pass should reach out — we'll discuss case by case."
           }
         ]
       },

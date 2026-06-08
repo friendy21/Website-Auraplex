@@ -197,6 +197,45 @@ export default async function CareersPage({
         </div>
       </section>
 
+      {/* ── INTERNSHIP FAQ — removes the friction that stops good
+              candidates from applying. Six short Q&A pairs. ── */}
+      <section className="border-t border-[color:var(--color-neutral-700)] mx-auto max-w-[1600px] px-6 lg:px-12 py-32">
+        <div className="grid grid-cols-12 gap-6 mb-16">
+          <Reveal variant="up" className="col-span-12 md:col-span-3">
+            <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-4">
+              — {t('faq.eyebrow')}
+            </div>
+          </Reveal>
+          <Reveal
+            variant="up"
+            delay={100}
+            className="col-span-12 md:col-span-9"
+          >
+            <h2 className="font-display text-[clamp(2rem,5vw,4.5rem)] tracking-[-0.02em] leading-[1]">
+              {t('faq.h2')}
+            </h2>
+          </Reveal>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[color:var(--color-neutral-700)] border border-[color:var(--color-neutral-700)]">
+          {(t.raw('faq.items') as { q: string; a: string }[]).map((item, i) => (
+            <Reveal
+              key={i}
+              variant="up"
+              delay={i * 60}
+              className="bg-[color:var(--color-ink)] p-8 lg:p-10"
+            >
+              <h3 className="font-display text-xl md:text-2xl tracking-[-0.01em] mb-4">
+                {item.q}
+              </h3>
+              <p className="text-sm text-[color:var(--color-steel-soft)] leading-relaxed">
+                {item.a}
+              </p>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
       {/* ── CV fallback — kept as a secondary path for graduates and
               experienced engineers (not interns) ── */}
       <section className="border-t border-[color:var(--color-neutral-700)] mx-auto max-w-[1600px] px-6 lg:px-12 py-24">

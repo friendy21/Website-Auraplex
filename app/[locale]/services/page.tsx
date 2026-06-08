@@ -35,6 +35,12 @@ type ServiceItem = {
   deliverables: string[];
 };
 
+type ProcessStep = {
+  num: string;
+  name: string;
+  summary: string;
+};
+
 export default async function ServicesPage({
   params,
 }: {
@@ -44,6 +50,7 @@ export default async function ServicesPage({
   setRequestLocale(locale);
   const t = await getTranslations('pages.services');
   const SERVICES = t.raw('items') as ServiceItem[];
+  const PROCESS = t.raw('process.steps') as ProcessStep[];
 
   return (
     <>
@@ -114,6 +121,63 @@ export default async function ServicesPage({
                   </li>
                 ))}
               </ul>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* ────── "HOW WE BUILD" PROCESS TIMELINE ──────
+              7-step journey from first call to support, rendered as a
+              vertical rail with numbered steps. Buyers convert when
+              they can see the journey end-to-end. */}
+      <section className="mx-auto max-w-[1600px] px-6 lg:px-12 py-32">
+        <div className="grid grid-cols-12 gap-6 mb-16">
+          <Reveal variant="up" className="col-span-12 md:col-span-3">
+            <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-4">
+              — {t('process.eyebrow')}
+            </div>
+          </Reveal>
+          <Reveal
+            variant="up"
+            delay={100}
+            className="col-span-12 md:col-span-9"
+          >
+            <h2 className="font-display text-[clamp(2rem,5vw,4.5rem)] tracking-[-0.02em] leading-[1]">
+              {t('process.h2Line1')}
+              <br />
+              <span className="text-[color:var(--color-neutral-400)]">
+                {t('process.h2Line2')}
+              </span>
+            </h2>
+            <p className="mt-8 prose-editorial text-[color:var(--color-steel-soft)] max-w-2xl">
+              {t('process.body')}
+            </p>
+          </Reveal>
+        </div>
+
+        {/* Step rail — each step is a row: number → name → summary.
+            On hover the row's signal hairline draws across. */}
+        <div className="border-t border-[color:var(--color-neutral-700)]">
+          {PROCESS.map((step, i) => (
+            <Reveal
+              key={step.num}
+              variant="up"
+              delay={i * 60}
+              className="group grid grid-cols-12 gap-6 py-10 border-b border-[color:var(--color-neutral-700)] hover:bg-[color:var(--color-neutral-800)]/30 transition-colors"
+            >
+              <div className="col-span-2 md:col-span-1 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] pt-2">
+                {step.num}
+              </div>
+              <div className="col-span-10 md:col-span-3">
+                <h3 className="font-display text-2xl md:text-3xl tracking-[-0.01em]">
+                  {step.name}
+                </h3>
+              </div>
+              <div className="col-span-12 md:col-span-8 md:col-start-5">
+                <p className="prose-editorial text-[color:var(--color-steel-soft)]">
+                  {step.summary}
+                </p>
+              </div>
             </Reveal>
           ))}
         </div>
