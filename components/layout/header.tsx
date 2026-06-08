@@ -55,7 +55,12 @@ export function Header() {
   useMotionValueEvent(scrollY, 'change', (y) => setScrolled(y > 40));
 
   // Lock body scroll while the mobile menu is open so touch events don't
-  // bleed through to the page underneath. Also closes the menu on Escape.
+  // bleed through to the page underneath. Also closes the menu on Escape
+  // AND on resize-to-desktop. Without the resize handler, a user who
+  // opens the menu on mobile and rotates / resizes past the lg breakpoint
+  // (where the panel + toggle both become display:none) would be left
+  // with overflow:hidden permanently stuck on body — the page becomes
+  // un-scrollable with no visible UI to fix it.
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
@@ -63,14 +68,21 @@ export function Header() {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setOpen(false);
     };
+    const lgMq = window.matchMedia('(min-width: 1024px)');
+    const onMq = (e: MediaQueryListEvent) => {
+      if (e.matches) setOpen(false);
+    };
     window.addEventListener('keydown', onKey);
+    lgMq.addEventListener('change', onMq);
     return () => {
       document.body.style.overflow = prev;
       window.removeEventListener('keydown', onKey);
+      lgMq.removeEventListener('change', onMq);
     };
   }, [open]);
 
   return (
+    <>
     <motion.header
       initial={{ y: -32, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
@@ -124,21 +136,28 @@ export function Header() {
           </Button>
         </div>
 
-        {/* Spacer to balance flexbox where the toggle button used to live.
-            The actual toggle is rendered outside the toolbar (see below) so
-            that it can sit above the mobile-menu z-stacking context. */}
-        <div className="lg:hidden h-10 w-10" aria-hidden="true" />
+        {/* Toolbar ends here — no mobile-toggle spacer needed because the
+            toggle is now rendered OUTSIDE motion.header (see below). On
+            mobile the toolbar's justify-between balances logo vs. the
+            implicit empty right edge; the actual toggle floats over the
+            top-right via position:fixed at viewport scope. */}
       </motion.div>
+    </motion.header>
+    {/* ─────────────────────────────────────────────────────────────────
+        Both the toggle button AND the mobile menu panel are siblings of
+        <motion.header> rather than children. Reason: motion.header
+        applies a transform (y-axis entrance animation) which creates a
+        containing block for any descendant position:fixed elements.
+        That meant the toggle's `top-5 right-5` was being resolved
+        relative to the header's bounding box rather than the viewport,
+        causing the button to drift during entrance / pin animations.
+        Lifting them out makes fixed positioning resolve cleanly against
+        the viewport on every device.
+        ───────────────────────────────────────────────────────────────── */}
 
-      {/* Mobile toggle — rendered AS A SIBLING of the menu (not inside the
-          toolbar) so its z-index actually applies above the menu panel.
-          Previously the button was nested inside the toolbar motion.div,
-          which created a sub-stacking context that buried it behind the
-          menu's z-[55] when open. Position fixed keeps it at the same
-          screen location whether the header has collapsed or not, and the
-          h-10 w-10 hit area gives it a proper 40×40 tap target. */}
+      {/* Mobile toggle */}
       <button
-        className="lg:hidden fixed top-5 right-5 h-10 w-10 z-[70] flex items-center justify-center text-[color:var(--color-paper)]"
+        className="lg:hidden fixed top-5 right-5 h-10 w-10 z-[70] flex items-center justify-center text-[color:var(--color-paper)] focus-visible:outline-2 focus-visible:outline-[color:var(--color-signal)] focus-visible:outline-offset-2"
         onClick={() => setOpen(!open)}
         aria-label={tCommon('menuToggle')}
         aria-expanded={open}
@@ -245,7 +264,7 @@ export function Header() {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+    </>
   );
 }
 

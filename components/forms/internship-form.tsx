@@ -85,7 +85,7 @@ export function InternshipForm({ locale }: { locale: string }) {
                 key={key}
                 onClick={() => setField(key)}
                 aria-pressed={active}
-                className={`px-4 py-2 font-mono text-xs uppercase tracking-[0.2em] border transition-colors ${
+                className={`px-3 py-2 font-mono text-[11px] uppercase tracking-[0.15em] border transition-colors ${
                   active
                     ? 'border-[color:var(--color-signal)] text-[color:var(--color-signal)] bg-[color:var(--color-signal)]/10'
                     : 'border-[color:var(--color-neutral-700)] text-[color:var(--color-steel)] hover:border-[color:var(--color-signal)] hover:text-[color:var(--color-signal)]'
