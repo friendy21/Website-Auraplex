@@ -35,10 +35,32 @@ export function ScrollNarrative() {
   const container = useRef<HTMLElement>(null);
 
   // Real machines from the catalog — never hardcode image paths.
+  //
+  // The home page already showcases two machines via ZoomTransition before
+  // ScrollNarrative runs: Flexy Applicator (zoomA) and the Customized Top
+  // Labelling Machine with Checking System (zoomB). Picking either of
+  // those as the narrative hero produces a visible duplicate on the
+  // page. We exclude both from the candidate set and fall back through a
+  // priority list so the narrative always lands on a fresh machine that
+  // hasn't been featured yet.
+  //
+  // The narrative's spec copy (vision · 1 ms detection, reject ·
+  // auto-deviation handling, 120 units/min) describes a print-and-apply
+  // top labelling rig — a much better fit than Flexy.
+  const ZOOM_EXCLUDE = new Set([
+    'flexy-applicator',
+    'customized-top-labelling-machine',
+    'custom-top-labelling-machine-with-checking-system',
+  ]);
+
   const hero =
-    getMachine('flexy-applicator') ?? getFeaturedMachines()[0] ?? null;
+    getMachine('print-apply-top-labelling-machine') ??
+    getMachine('semi-auto-wrap-around-labelling-machine') ??
+    getFeaturedMachines().find((m) => !ZOOM_EXCLUDE.has(m.slug)) ??
+    null;
+
   const supporting = getFeaturedMachines()
-    .filter((m) => m.slug !== hero?.slug)
+    .filter((m) => m.slug !== hero?.slug && !ZOOM_EXCLUDE.has(m.slug))
     .slice(0, 2);
 
   useGSAP(
