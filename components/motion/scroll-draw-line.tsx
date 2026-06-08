@@ -57,18 +57,21 @@ export function ScrollDrawLine({
   });
 
   // pathLength STARTS at 0 (fully invisible during hero) and completes
-  // at 70% of wrapper scroll — the rope is fully drawn for the last
-  // third of the page so visitors see it land.
-  const pathLength = useTransform(scrollYProgress, [0, 0.7, 1], [0, 1, 1]);
+  // at 55% of wrapper scroll — the rope finishes drawing well before
+  // the visitor reaches the end of the wrapped block so there's a
+  // generous "rope fully drawn" window before the opacity fade.
+  const pathLength = useTransform(scrollYProgress, [0, 0.55, 1], [0, 1, 1]);
 
   // Vertical translation — the 300vh-tall SVG slides upward through the
   // 100vh fixed window so the rope appears to scroll through view.
   const y = useTransform(scrollYProgress, [0, 1], ['0vh', '-200vh']);
 
-  // Fade the overlay out as scroll progress approaches the end of the
-  // wrapped block. By the time the visitor is in the last ~12% of scroll
-  // the footer is about to enter view — the rope quietly disappears
-  // instead of crossing over the footer content.
+  // Fade the overlay out aggressively in the back half of scroll. The
+  // rope is fully drawn by 55% — from 70% onward we drive opacity to 0
+  // so by the time the visitor reaches the end of the wrapped block
+  // (FaqSection bottom on the home page) the line is already gone.
+  // The CloserSection that follows is a sibling of the wrapper, not a
+  // child, so the line cannot reach it structurally either.
   //
   // Peak opacity is intentionally low (0.45) so the rope reads as
   // atmospheric background texture rather than a foreground UI element.
@@ -77,7 +80,7 @@ export function ScrollDrawLine({
   // crossing over text.
   const opacity = useTransform(
     scrollYProgress,
-    [0, 0.85, 0.98],
+    [0, 0.7, 0.88],
     [0.45, 0.45, 0],
   );
 

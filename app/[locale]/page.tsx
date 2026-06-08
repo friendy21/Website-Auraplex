@@ -99,8 +99,13 @@ export default async function Home({
       <ScrollNarrative />
       <TestimonialMarquee />
       <FaqSection />
-      <CloserSection />
       </ScrollDrawLine>
+      {/* CloserSection is intentionally OUTSIDE the ScrollDrawLine
+          wrapper so the cerulean rope can't reach the cinematic finale
+          or the footer. The line's scroll-progress range ends at the
+          bottom of FaqSection; from there the rope has already finished
+          drawing and the opacity fade has resolved to 0. */}
+      <CloserSection />
     </>
   );
 }
