@@ -382,6 +382,10 @@
   },
   "pages": {
     "about": {
+      "trustedBy": {
+        "eyebrow": "Trusted on the floor by",
+        "footnote": "+ dozens of ASEAN manufacturers across food, beverage, FMCG and industrial labelling."
+      },
       "eyebrow": "Inside Auraplex · Seri Kembangan",
       "h1Line1": "We engineer machines",
       "h1Line2": "for the floors we visit.",
@@ -626,6 +630,7 @@
       }
     },
     "news": {
+      "readMore": "Read more",
       "eyebrow": "News & Events",
       "h1Line1": "What's happening",
       "h1Line2": "on the floor.",

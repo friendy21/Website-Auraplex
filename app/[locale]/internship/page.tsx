@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
@@ -73,6 +74,27 @@ export default async function InternshipPage({
           <p className="mt-12 max-w-2xl prose-editorial text-[color:var(--color-steel-soft)] text-xl">
             {t('lede')}
           </p>
+        </Reveal>
+      </section>
+
+      {/* ────── FLOOR PHOTO — real Auraplex factory floor ────── */}
+      <section className="mx-auto max-w-[1600px] px-6 lg:px-12 pb-16">
+        <Reveal variant="up">
+          <div className="relative aspect-[21/9] overflow-hidden border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)]">
+            <Image
+              src="/floor/workers.jpg"
+              alt="Auraplex engineers on the Seri Kembangan factory floor"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover"
+            />
+            <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between">
+              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-paper)] bg-[color:var(--color-ink)]/70 backdrop-blur-sm px-3 py-2">
+                Auraplex · Seri Kembangan · 2026
+              </div>
+            </div>
+          </div>
         </Reveal>
       </section>
 

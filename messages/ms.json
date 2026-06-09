@@ -382,6 +382,10 @@
   },
   "pages": {
     "about": {
+      "trustedBy": {
+        "eyebrow": "Dipercayai di lantai kilang oleh",
+        "footnote": "+ berpuluh-puluh pengeluar ASEAN merentas makanan, minuman, FMCG dan pelabelan industri."
+      },
       "eyebrow": "Tentang Auraplex · Seri Kembangan",
       "h1Line1": "Kami mereka mesin",
       "h1Line2": "untuk lantai yang kami lawati.",
@@ -626,6 +630,7 @@
       }
     },
     "news": {
+      "readMore": "Baca lagi",
       "eyebrow": "Berita & Acara",
       "h1Line1": "Apa yang berlaku",
       "h1Line2": "di lantai kilang.",

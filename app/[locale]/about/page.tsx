@@ -108,6 +108,55 @@ export default async function AboutPage({
         </div>
       </section>
 
+      {/* ────── TRUSTED BY ──────
+              Real client logos synced from autolabellermalaysia.com
+              into /public/clients/ — same Auraplex SDN BHD entity, same
+              logo treatment as their live site. Grayscale + hover-to-
+              color treatment keeps the wall visually quiet while still
+              being unmistakably the real names. */}
+      <section className="border-b border-[color:var(--color-neutral-700)]">
+        <div className="mx-auto max-w-[1600px] px-6 lg:px-12 py-20">
+          <Reveal variant="up">
+            <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-10 flex items-center gap-3">
+              <span className="h-px w-12 bg-[color:var(--color-signal)]" />
+              {t('trustedBy.eyebrow')}
+            </div>
+          </Reveal>
+          <Reveal variant="up" delay={100}>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-12 items-center">
+              {[
+                { name: 'PentaMaster', src: '/clients/pentamaster.jpg' },
+                { name: 'EcoWorld', src: '/clients/ecoworld.jpg' },
+                { name: 'SIRIM', src: '/clients/sirim.jpg' },
+                { name: 'Honda', src: '/clients/honda.jpg' },
+                { name: 'Perodua', src: '/clients/perodua.jpg' },
+                { name: 'Schmaco', src: '/clients/schmaco.jpg' },
+                { name: 'FGV', src: '/clients/fgv.jpg' },
+                { name: 'Hextar', src: '/clients/hextar.jpg' },
+              ].map((client) => (
+                <div
+                  key={client.name}
+                  className="relative h-14 md:h-16 group"
+                >
+                  <Image
+                    src={client.src}
+                    alt={client.name}
+                    fill
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                    className="object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition duration-500"
+                  />
+                </div>
+              ))}
+            </div>
+          </Reveal>
+          <Reveal variant="up" delay={200}>
+            <p className="mt-12 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)] text-center">
+              {t('trustedBy.footnote')}
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
       <section className="mx-auto max-w-[1600px] px-6 lg:px-12 py-32">
         <div className="grid grid-cols-12 gap-6 mb-16">
           <Reveal variant="up" className="col-span-12 md:col-span-3">
