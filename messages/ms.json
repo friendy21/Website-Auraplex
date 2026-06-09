@@ -11,6 +11,7 @@
     "news": "Berita",
     "careers": "Kerjaya",
     "yearReview": "Ulasan 2026",
+    "internship": "Latihan Industri",
     "about": "Tentang Kami",
     "contact": "Hubungi",
     "quote": "Dapatkan sebut harga",
@@ -543,6 +544,11 @@
           }
         ]
       },
+      "internshipLink": {
+        "eyebrow": "Mencari latihan industri?",
+        "body": "Kami ada halaman khusus untuk permohonan latihan industri — bidang lebih ringkas, FAQ disesuaikan untuk pelajar, dan permohonan dihalakan ke peti masuk pengambilan yang sama.",
+        "cta": "Pergi ke /internship"
+      },
       "faq": {
         "eyebrow": "Soalan lazim latihan industri",
         "h2": "Soalan yang setiap pemohon tanya.",
@@ -588,6 +594,35 @@
         "body": "Bukan permohonan latihan industri? E-mel CV anda dengan nota ringkas tentang disiplin yang paling menarik minat anda. Kami menyimpan senarai pendek bergulir — apabila tiba masa kami mengambil pekerja, senarai pendek adalah tempat kami bermula.",
         "email": "E-mel careers@auraplex.my",
         "about": "Tentang Auraplex"
+      }
+    },
+    "internship": {
+      "eyebrow": "Latihan Industri · Auraplex Seri Kembangan",
+      "h1Line1": "Jurutera mesin",
+      "h1Line2": "yang anda belajar.",
+      "lede": "Latihan industri bergaji merentas enam disiplin — mekanikal, elektrikal, kawalan, perisian, reka bentuk perindustrian, dan servis. Tiga hingga enam bulan di lantai kilang Seri Kembangan, bersama jurutera yang mereka mesin yang anda akan sentuh.",
+      "why": {
+        "paid": {
+          "title": "Bergaji, disahkan pada tawaran.",
+          "body": "Elaun RM bulanan, berskala mengikut disiplin. Jumlah elaun bertulis pada surat tawaran anda — tiada \"kita bincang nanti\"."
+        },
+        "duration": {
+          "title": "3–6 bulan.",
+          "body": "Lalai 3 bulan, boleh dilanjutkan ke 6 jika semester anda sesuai. Pelatih cemerlang selalu beralih dari pelatih → separa masa semasa peperiksaan → tetap selepas tamat pengajian."
+        },
+        "floor": {
+          "title": "Di lantai kilang, bukan di sudut.",
+          "body": "But keselamatan, angkup, debug HMI. Anda duduk bersebelahan jurutera yang mereka mesin yang anda kerjakan — bukan di \"meja pelatih\" jauh dari kerja sebenar."
+        }
+      },
+      "disciplines": {
+        "eyebrow": "Disiplin yang anda boleh sertai",
+        "h2": "Enam bidang. Satu lantai."
+      },
+      "careersLink": {
+        "eyebrow": "Mencari jawatan tetap?",
+        "body": "Graduan dan jurutera berpengalaman — pergi ke /careers. Latihan industri di halaman ini; jawatan tetap di sebelah sana.",
+        "cta": "Pergi ke /careers"
       }
     },
     "news": {

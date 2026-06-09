@@ -16,6 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/case-studies',
     '/news',
     '/careers',
+    '/internship',
     '/2026',
     '/about',
     '/contact',

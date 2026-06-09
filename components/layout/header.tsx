@@ -22,14 +22,19 @@ type NavKey =
   | 'machineFinder'
   | 'caseStudies'
   | 'yearReview'
+  | 'internship'
   | 'about';
 
+// Internship sits as a top-level nav item — matches the real
+// autolabellermalaysia.com convention and signals "we hire" to every
+// visitor on every page rather than burying it inside /careers.
 const NAV: { key: NavKey; href: string }[] = [
   { key: 'products', href: '/products' },
   { key: 'services', href: '/services' },
   { key: 'machineFinder', href: '/machine-finder' },
   { key: 'caseStudies', href: '/case-studies' },
   { key: 'yearReview', href: '/2026' },
+  { key: 'internship', href: '/internship' },
   { key: 'about', href: '/about' },
 ];
 
@@ -209,6 +214,7 @@ export function Header() {
                   ['caseStudies', '/case-studies'],
                   ['news', '/news'],
                   ['yearReview', '/2026'],
+                  ['internship', '/internship'],
                   ['careers', '/careers'],
                   ['about', '/about'],
                   ['contact', '/contact'],

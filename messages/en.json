@@ -11,6 +11,7 @@
     "news": "News",
     "careers": "Careers",
     "yearReview": "2026 Review",
+    "internship": "Internship",
     "about": "About",
     "contact": "Contact",
     "quote": "Get a quote",
@@ -543,6 +544,11 @@
           }
         ]
       },
+      "internshipLink": {
+        "eyebrow": "Looking for an internship?",
+        "body": "We have a dedicated landing page for internship applications — fewer fields than the careers form, FAQ tailored to students, and the application routes to the same recruiting inbox.",
+        "cta": "Go to /internship"
+      },
       "faq": {
         "eyebrow": "Internship FAQ",
         "h2": "The questions every applicant asks.",
@@ -588,6 +594,35 @@
         "body": "Not an internship application? Email your CV with a short note about which discipline interests you most. We keep a rolling shortlist — when we're ready to hire, the shortlist is where we start.",
         "email": "Email careers@auraplex.my",
         "about": "About Auraplex"
+      }
+    },
+    "internship": {
+      "eyebrow": "Internship · Auraplex Seri Kembangan",
+      "h1Line1": "Engineer the machines",
+      "h1Line2": "you study.",
+      "lede": "Paid internships across six disciplines — mechanical, electrical, controls, software, industrial design, and service. Three to six months on the floor in Seri Kembangan, with the engineers who designed the machines you'll touch.",
+      "why": {
+        "paid": {
+          "title": "Paid, confirmed at offer.",
+          "body": "Monthly RM stipend, scaled with discipline. Stipend amount is in writing on your offer letter — no \"we'll discuss it later.\""
+        },
+        "duration": {
+          "title": "3–6 months.",
+          "body": "Default 3 months, extendable to 6 if your semester aligns. Strong performers often go from intern → part-time during finals → full-time on graduation."
+        },
+        "floor": {
+          "title": "On the floor, not in a corner.",
+          "body": "Safety boots, calipers, HMI debugging. You sit next to the engineer who designed the machine you're working on — not in a separate \"interns desk\" away from the real work."
+        }
+      },
+      "disciplines": {
+        "eyebrow": "Disciplines you can intern in",
+        "h2": "Six fields. One floor."
+      },
+      "careersLink": {
+        "eyebrow": "Looking for full-time?",
+        "body": "Graduates and experienced engineers — head to /careers. Internships are this page; full-time is over there.",
+        "cta": "Go to /careers"
       }
     },
     "news": {
