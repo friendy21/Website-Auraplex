@@ -259,7 +259,7 @@ function ComposerInput({
         rows={1}
         placeholder={t('machineFinderPlaceholder')}
         disabled={disabled}
-        className="w-full bg-transparent outline-none py-2 pr-2 font-body text-[color:var(--color-paper)] resize-none placeholder:text-[color:var(--color-neutral-500)] disabled:opacity-50"
+        className="w-full bg-transparent outline-none py-2 pr-2 font-body text-[color:var(--color-paper)] resize-none placeholder:text-[color:var(--color-neutral-400)] disabled:opacity-50"
       />
 
       {/* Static base border */}

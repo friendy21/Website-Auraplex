@@ -94,7 +94,7 @@ export function ProductsGrid({
                     className={`relative z-10 text-[10px] ${
                       active
                         ? 'text-[color:var(--color-signal-bright)]'
-                        : 'text-[color:var(--color-neutral-500)]'
+                        : 'text-[color:var(--color-neutral-400)]'
                     }`}
                   >
                     {c.count}
@@ -106,7 +106,7 @@ export function ProductsGrid({
 
           {/* Sort tabs */}
           <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.15em]">
-            <span className="text-[color:var(--color-neutral-500)]">{t.sortLabel}</span>
+            <span className="text-[color:var(--color-neutral-400)]">{t.sortLabel}</span>
             <div className="flex gap-1">
               {sortItems.map((s) => (
                 <button
@@ -138,7 +138,7 @@ export function ProductsGrid({
             </>
           )}
         </div>
-        <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-500)]">
+        <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-400)]">
           {t.photographedSummary
             ?.replace('{photo}', String(photographedCount))
             ?.replace('{pending}', String(pendingCount))}
@@ -184,7 +184,7 @@ export function ProductsGrid({
                           />
                         ) : (
                           <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-500)] text-center leading-relaxed">
+                            <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-400)] text-center leading-relaxed">
                               {t.photographyPending}
                             </div>
                           </div>
@@ -242,7 +242,7 @@ export function ProductsGrid({
                         )}
 
                         <div className="flex items-end justify-between gap-2 pt-3 border-t border-[color:var(--color-neutral-700)]">
-                          <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-neutral-500)] leading-relaxed">
+                          <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-neutral-400)] leading-relaxed">
                             {p.monthlyPrice != null ? (
                               <>
                                 {t.from}

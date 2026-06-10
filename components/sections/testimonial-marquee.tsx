@@ -75,9 +75,16 @@ export function TestimonialMarquee() {
             const idx = i % TESTIMONIALS.length;
             const isActive = activeIdx === idx;
             const dim = activeIdx !== null && !isActive;
+            // The second copy exists purely for the seamless CSS loop —
+            // hide it from assistive tech and the tab order, otherwise
+            // screen readers announce every quote twice and keyboard
+            // users tab through phantom duplicates.
+            const isDuplicate = i >= TESTIMONIALS.length;
             return (
               <button
                 key={`q-${i}`}
+                aria-hidden={isDuplicate || undefined}
+                tabIndex={isDuplicate ? -1 : undefined}
                 onMouseEnter={() => setActiveIdx(idx)}
                 onMouseLeave={() => setActiveIdx(null)}
                 onFocus={() => setActiveIdx(idx)}
@@ -86,7 +93,7 @@ export function TestimonialMarquee() {
                   isActive
                     ? 'text-[color:var(--color-paper)] scale-[1.02]'
                     : dim
-                      ? 'text-[color:var(--color-neutral-500)] opacity-50 blur-[1px]'
+                      ? 'text-[color:var(--color-neutral-400)] opacity-50 blur-[1px]'
                       : 'text-[color:var(--color-paper)]'
                 }`}
               >
@@ -120,14 +127,16 @@ export function TestimonialMarquee() {
             const idx = i % TESTIMONIALS.length;
             const isActive = activeIdx === idx;
             const dim = activeIdx !== null && !isActive;
+            const isDuplicate = i >= TESTIMONIALS.length;
             return (
               <span
                 key={`a-${i}`}
+                aria-hidden={isDuplicate || undefined}
                 className={`inline-flex shrink-0 items-center gap-3 font-mono text-xs uppercase tracking-[0.25em] transition-all duration-500 ${
                   isActive
                     ? 'text-[color:var(--color-signal-bright)] scale-[1.02]'
                     : dim
-                      ? 'opacity-40 blur-[1px] text-[color:var(--color-neutral-500)]'
+                      ? 'opacity-40 blur-[1px] text-[color:var(--color-neutral-400)]'
                       : 'text-[color:var(--color-signal)]'
                 }`}
               >

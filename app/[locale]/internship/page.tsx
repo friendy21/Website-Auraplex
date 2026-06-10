@@ -144,7 +144,7 @@ export default async function InternshipPage({
               delay={i * 60}
               className="bg-[color:var(--color-ink)] p-10 md:p-12"
             >
-              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-500)] mb-4">
+              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-400)] mb-4">
                 0{i + 1}
               </div>
               <h3 className="font-display text-3xl tracking-[-0.01em] mb-3">
@@ -233,7 +233,7 @@ export default async function InternshipPage({
         <Reveal variant="up">
           <div className="flex items-end justify-between flex-wrap gap-6">
             <div>
-              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-500)] mb-3">
+              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-400)] mb-3">
                 — {t('careersLink.eyebrow')}
               </div>
               <h2 className="font-display text-[clamp(1.5rem,3vw,2.5rem)] tracking-[-0.01em] max-w-2xl">

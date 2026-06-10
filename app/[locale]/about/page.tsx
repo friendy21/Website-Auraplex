@@ -181,7 +181,7 @@ export default async function AboutPage({
               delay={i * 80}
               className="bg-[color:var(--color-ink)] p-10 md:p-12"
             >
-              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-500)] mb-4">
+              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-400)] mb-4">
                 0{i + 1}
               </div>
               <h3 className="font-display text-3xl tracking-[-0.01em] mb-3">

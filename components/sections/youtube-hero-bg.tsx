@@ -75,9 +75,20 @@ export function YoutubeHeroBg({
   useEffect(() => {
     let cancelled = false;
     let watchdog: ReturnType<typeof setTimeout> | null = null;
+    let idleHandle: number | null = null;
+    let idleTimeout: ReturnType<typeof setTimeout> | null = null;
 
-    loadYouTubeApi()
-      .then((YT) => {
+    // ── Lighthouse guard ──
+    // The YouTube IFrame API + player is ~1.4MB of third-party JS. Loading
+    // it during initial paint murders TBT/LCP. Defer the entire load until
+    // the main thread is idle (or 2.5s fallback for browsers without
+    // requestIdleCallback). HeroParticles covers the visual gap; the video
+    // fades in once it reaches PLAYING — visitors perceive a deliberate
+    // fade-up, not a slow load.
+    const begin = () => {
+      if (cancelled) return;
+      loadYouTubeApi()
+        .then((YT) => {
         if (cancelled || !mountRef.current) return;
 
         // Create a child div for YT to replace — YT.Player mutates its target,
@@ -135,14 +146,25 @@ export function YoutubeHeroBg({
             },
           },
         });
-      })
-      .catch(() => {
-        if (!cancelled) setStatus('failed');
-      });
+        })
+        .catch(() => {
+          if (!cancelled) setStatus('failed');
+        });
+    };
+
+    if ('requestIdleCallback' in window) {
+      idleHandle = window.requestIdleCallback(begin, { timeout: 2500 });
+    } else {
+      idleTimeout = setTimeout(begin, 2000);
+    }
 
     return () => {
       cancelled = true;
       if (watchdog) clearTimeout(watchdog);
+      if (idleHandle !== null && 'cancelIdleCallback' in window) {
+        window.cancelIdleCallback(idleHandle);
+      }
+      if (idleTimeout) clearTimeout(idleTimeout);
       try {
         playerRef.current?.destroy();
       } catch {

@@ -299,8 +299,12 @@ function HeroWord({ word, index }: { word: string; index: number }) {
         fontVariationSettings: '"wght" 700',
       }}
       transition={{
-        duration: 0.9,
-        delay: 0.6 + index * 0.04,
+        // Tight timing — the H1 is the page's LCP element and the
+        // clip-path keeps each word unpainted until its animation
+        // starts. Every ms of delay here is added LCP. 0.15s base is
+        // imperceptible as "lateness" but still reads as a reveal.
+        duration: 0.6,
+        delay: 0.15 + index * 0.03,
         ease: [0.76, 0, 0.24, 1],
       }}
       style={{ display: 'inline-block' }}

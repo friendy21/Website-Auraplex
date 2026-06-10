@@ -239,7 +239,7 @@ export function Header() {
                     className="font-display text-[clamp(2.5rem,11vw,5rem)] tracking-[-0.02em] leading-[1] block group"
                   >
                     <span className="flex items-baseline gap-3">
-                      <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-500)]">
+                      <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-400)]">
                         0{i + 1}
                       </span>
                       <span className="group-hover:text-[color:var(--color-signal)] transition-colors duration-300">
@@ -263,7 +263,7 @@ export function Header() {
             </motion.nav>
 
             {/* Mobile footer mark */}
-            <div className="px-8 py-6 border-t border-[color:var(--color-neutral-800)] font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-500)] flex items-center gap-3">
+            <div className="px-8 py-6 border-t border-[color:var(--color-neutral-800)] font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-400)] flex items-center gap-3">
               <span className="h-1.5 w-1.5 bg-[color:var(--color-signal)]" />
               Auraplex · MY · 2026
             </div>

@@ -91,7 +91,7 @@ export default async function ProductPage({
               className="relative aspect-[4/3] overflow-hidden border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)] flex items-center justify-center"
               data-cursor="caliper"
             >
-              <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-neutral-500)]">
+              <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-neutral-400)]">
                 Photography pending
               </div>
             </div>

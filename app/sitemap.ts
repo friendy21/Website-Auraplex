@@ -27,6 +27,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const urls: MetadataRoute.Sitemap = [];
   const now = new Date();
 
+  // hreflang keys must match the region-qualified codes used in page
+  // metadata (lib/seo.ts) — bare 'en'/'ms'/'zh' vs 'en-MY' mismatches
+  // make Google treat them as separate alternate sets. x-default points
+  // search engines at the English version for unmatched locales.
+  const HREFLANG: Record<string, string> = {
+    en: 'en-MY',
+    ms: 'ms-MY',
+    zh: 'zh-MY',
+  };
+
   for (const locale of locales) {
     for (const route of staticRoutes) {
       urls.push({
@@ -35,9 +45,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: 'weekly',
         priority: route === '' ? 1 : 0.7,
         alternates: {
-          languages: Object.fromEntries(
-            locales.map((l) => [l, `${SITE}/${l}${route}`]),
-          ),
+          languages: {
+            ...Object.fromEntries(
+              locales.map((l) => [HREFLANG[l] ?? l, `${SITE}/${l}${route}`]),
+            ),
+            'x-default': `${SITE}/en${route}`,
+          },
         },
       });
     }

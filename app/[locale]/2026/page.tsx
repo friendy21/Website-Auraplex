@@ -128,7 +128,7 @@ export default async function YearInReviewPage({
               {t('lede')}
             </p>
             <div className="col-span-12 md:col-span-4 md:col-start-9 self-end">
-              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-500)] mb-3">
+              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-600)] mb-3">
                 {t('filedFromLabel')}
               </div>
               <div className="font-display text-2xl leading-tight whitespace-pre-line">
@@ -142,7 +142,7 @@ export default async function YearInReviewPage({
       {/* ────── INDUSTRY MARQUEE ────── */}
       <section className="border-y border-[color:var(--color-neutral-200)] py-8 overflow-hidden">
         <div className="flex items-center gap-6 mb-6 px-6 lg:px-12">
-          <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-500)]">
+          <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-600)]">
             {t('industriesLabel')}
           </span>
         </div>
@@ -204,7 +204,7 @@ export default async function YearInReviewPage({
                   className="object-contain p-20 transition-transform duration-700 group-hover:scale-[1.03]"
                 />
               )}
-              <div className="absolute top-8 left-8 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-500)]">
+              <div className="absolute top-8 left-8 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-600)]">
                 {t('work.coverLabel')} · {categoryLabel(hero.category)}
               </div>
               <div className="absolute bottom-8 left-8 right-8 flex items-end justify-between">
@@ -247,7 +247,7 @@ export default async function YearInReviewPage({
                       className="object-contain p-10 transition-transform duration-700 group-hover:scale-[1.04]"
                     />
                   )}
-                  <div className="absolute top-6 left-6 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-500)]">
+                  <div className="absolute top-6 left-6 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-600)]">
                     0{i + 2} / {categoryLabel(m.category)}
                   </div>
                   <div className="absolute bottom-6 left-6 right-6">
@@ -298,7 +298,7 @@ export default async function YearInReviewPage({
               <br />
               {t('stats.h2Line2')}
               <br />
-              <span className="text-[color:var(--color-neutral-400)]">
+              <span className="text-[color:var(--color-neutral-600)]">
                 {t('stats.h2Line3')}
               </span>
             </h2>
@@ -322,7 +322,7 @@ export default async function YearInReviewPage({
                   <div className="font-display text-5xl md:text-7xl tracking-[-0.03em] leading-none mb-3">
                     <AnimatedNumber value={s.value} suffix={s.suffix} />
                   </div>
-                  <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-neutral-500)] leading-relaxed">
+                  <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-neutral-600)] leading-relaxed">
                     {statLabels[i]}
                   </div>
                 </div>
@@ -362,7 +362,7 @@ export default async function YearInReviewPage({
               delay={i * 80}
               className="bg-[color:var(--color-paper)] p-10 md:p-14 group hover:bg-[color:var(--color-neutral-100)] transition-colors"
             >
-              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-500)] mb-6">
+              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-600)] mb-6">
                 0{i + 1}
               </div>
               <h3 className="font-display text-4xl md:text-5xl tracking-[-0.02em] mb-4">
@@ -389,7 +389,7 @@ export default async function YearInReviewPage({
               <h2 className="font-display text-[clamp(2.5rem,7vw,7rem)] tracking-[-0.03em] leading-[0.95]">
                 {t('timeline.h2Line1')}
                 <br />
-                <span className="text-[color:var(--color-neutral-500)]">
+                <span className="text-[color:var(--color-neutral-600)]">
                   {t('timeline.h2Line2')}
                 </span>
               </h2>
@@ -421,7 +421,7 @@ export default async function YearInReviewPage({
               <h3 className="font-display text-[clamp(2rem,5vw,4.5rem)] tracking-[-0.02em] leading-[1.05] mb-8">
                 {q.h}
               </h3>
-              <p className="text-lg md:text-xl text-[color:var(--color-neutral-400)] leading-relaxed max-w-xl">
+              <p className="text-lg md:text-xl text-[color:var(--color-neutral-600)] leading-relaxed max-w-xl">
                 {q.note}
               </p>
 
@@ -438,7 +438,7 @@ export default async function YearInReviewPage({
                   ))}
                 </div>
                 <div className="h-px flex-1 bg-gradient-to-r from-[color:var(--color-neutral-700)] to-transparent" />
-                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-500)]">
+                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-600)]">
                   0{i + 1} / 04
                 </span>
               </div>
@@ -458,7 +458,7 @@ export default async function YearInReviewPage({
         <Reveal variant="up" delay={100}>
           <p className="font-display text-[clamp(1.75rem,3.5vw,3rem)] tracking-[-0.02em] leading-[1.2]">
             {t('founder.lead')}{' '}
-            <span className="text-[color:var(--color-neutral-400)]">
+            <span className="text-[color:var(--color-neutral-600)]">
               {t('founder.leadSub')}
             </span>
           </p>
@@ -469,7 +469,7 @@ export default async function YearInReviewPage({
             <p>{t('founder.p1')}</p>
             <p>{t('founder.p2')}</p>
             <p>{t('founder.p3')}</p>
-            <p className="font-mono text-sm uppercase tracking-[0.2em] text-[color:var(--color-neutral-500)] pt-6">
+            <p className="font-mono text-sm uppercase tracking-[0.2em] text-[color:var(--color-neutral-600)] pt-6">
               {t('founder.signature')}
             </p>
           </div>
@@ -548,7 +548,7 @@ export default async function YearInReviewPage({
                     />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center p-4">
-                      <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-[color:var(--color-neutral-400)] text-center whitespace-pre-line">
+                      <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-[color:var(--color-neutral-600)] text-center whitespace-pre-line">
                         {t('catalogue.pending')}
                       </div>
                     </div>
@@ -562,7 +562,7 @@ export default async function YearInReviewPage({
           </div>
 
           <Reveal variant="up" delay={200}>
-            <div className="mt-16 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-500)] text-center">
+            <div className="mt-16 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-600)] text-center">
               {t('catalogue.summary', {
                 total: MACHINES.length,
                 photo: photographed.length,

@@ -43,7 +43,7 @@ export function WordCloud({ words, accentEvery = 4 }: Props) {
             ? 'text-5xl md:text-7xl'
             : w.size === 'md'
               ? 'text-3xl md:text-5xl'
-              : 'text-xl md:text-3xl text-[color:var(--color-neutral-500)]';
+              : 'text-xl md:text-3xl text-[color:var(--color-neutral-400)]';
 
         return (
           <motion.span
