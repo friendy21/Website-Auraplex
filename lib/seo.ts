@@ -66,18 +66,20 @@ export function organizationSchema() {
       'https://www.linkedin.com/company/auraplex',
       'https://www.facebook.com/auraplex',
     ],
-    // Address is locality-only until the full street address is supplied —
-    // partial Schema.org address still validates and avoids fabricating a
-    // street/postcode that doesn't exist.
+    // Full street address as published on the live autolabellermalaysia.com
     address: {
       '@type': 'PostalAddress',
+      streetAddress: 'No 5, Jalan BS9/7B, Taman Bukit Serdang, Seksyen 9',
+      postalCode: '43300',
       addressLocality: 'Seri Kembangan',
       addressRegion: 'Selangor',
       addressCountry: 'MY',
     },
+    telephone: '+60389407709',
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'sales',
+      telephone: '1700-82-6502',
       areaServed: 'ASEAN',
       availableLanguage: ['English', 'Malay', 'Chinese'],
     },

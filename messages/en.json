@@ -259,7 +259,7 @@
   "footer": {
     "rights": "© 2026 Auraplex SDN BHD. All rights reserved.",
     "made": "Made in Malaysia.",
-    "address": "Auraplex SDN BHD · Seri Kembangan · Selangor · Malaysia",
+    "address": "Auraplex SDN BHD · No 5, Jalan BS9/7B, Taman Bukit Serdang, Seksyen 9, 43300 Seri Kembangan, Selangor, Malaysia",
     "allMachines": "All machines",
     "privacy": "Privacy",
     "terms": "Terms"
@@ -407,7 +407,7 @@
         "eyebrow": "Visit us",
         "h2": "Schedule a factory tour.",
         "body": "The fastest way to understand an Auraplex machine is to watch one being built. Walk the floor with our chief engineer. Bring a sample container — we'll run it on the closest applicator while you watch.",
-        "address": "Auraplex SDN BHD · Seri Kembangan · Selangor · Malaysia",
+        "address": "Auraplex SDN BHD · No 5, Jalan BS9/7B, Taman Bukit Serdang, Seksyen 9, 43300 Seri Kembangan, Selangor, Malaysia",
         "book": "Book a tour",
         "whatsapp": "WhatsApp",
         "whatsappMsg": "Hi — I'd like to book a factory tour."
@@ -664,13 +664,20 @@
       "subtitle": "We respond within one business day. For urgent matters, WhatsApp is fastest.",
       "labels": {
         "sales": "Sales hotline",
+        "office": "Office line",
         "email": "Email",
         "whatsappLabel": "WhatsApp",
         "whatsappValue": "Send a message"
       },
+      "people": {
+        "eyebrow": "Talk to a person",
+        "h2": "Three direct lines. No phone tree.",
+        "body": "The same people who answer on auraplex.com.my answer here — message any of them directly on WhatsApp.",
+        "direct": "WhatsApp · direct line"
+      },
       "hours": {
         "weekdays": "Mon–Fri · 09:00–18:00 MYT",
-        "saturday": "Sat · 09:00–13:00 MYT"
+        "saturday": "Sat · 09:00–15:00 MYT"
       },
       "response": {
         "lead": "We respond:",

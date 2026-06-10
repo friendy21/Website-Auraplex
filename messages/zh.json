@@ -259,7 +259,7 @@
   "footer": {
     "rights": "© 2026 Auraplex SDN BHD. 版权所有。",
     "made": "马来西亚制造。",
-    "address": "Auraplex SDN BHD · 史里肯邦安 · 雪兰莪 · 马来西亚",
+    "address": "Auraplex SDN BHD · No 5, Jalan BS9/7B, Taman Bukit Serdang, Seksyen 9, 43300 Seri Kembangan, Selangor, Malaysia",
     "allMachines": "所有机器",
     "privacy": "隐私",
     "terms": "条款"
@@ -407,7 +407,7 @@
         "eyebrow": "拜访我们",
         "h2": "预约参观工厂。",
         "body": "了解 Auraplex 机器最快的方式就是看它被制造出来。和我们的首席工程师在车间里走一走。带上样品容器——我们会在最近的应用机器上为您试运行。",
-        "address": "Auraplex SDN BHD · 史里肯邦安 · 雪兰莪 · 马来西亚",
+        "address": "Auraplex SDN BHD · No 5, Jalan BS9/7B, Taman Bukit Serdang, Seksyen 9, 43300 Seri Kembangan, Selangor, Malaysia",
         "book": "预约参观",
         "whatsapp": "WhatsApp",
         "whatsappMsg": "您好 — 我想预约工厂参观。"
@@ -664,13 +664,20 @@
       "subtitle": "我们在一个工作日内回复。紧急事项,WhatsApp 最快。",
       "labels": {
         "sales": "销售热线",
+        "office": "办公室电话",
         "email": "邮箱",
         "whatsappLabel": "WhatsApp",
         "whatsappValue": "发送消息"
       },
+      "people": {
+        "eyebrow": "联系真人",
+        "h2": "三条直线。没有语音菜单。",
+        "body": "在 auraplex.com.my 接听的就是这几位 — 可直接在 WhatsApp 上联系任何一位。",
+        "direct": "WhatsApp · 直线"
+      },
       "hours": {
         "weekdays": "周一至周五 · 09:00–18:00 MYT",
-        "saturday": "周六 · 09:00–13:00 MYT"
+        "saturday": "周六 · 09:00–15:00 MYT"
       },
       "response": {
         "lead": "我们的回复:",

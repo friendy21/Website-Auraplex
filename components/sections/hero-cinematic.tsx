@@ -277,11 +277,9 @@ export function HeroCinematic() {
         className="absolute bottom-6 left-1/2 -translate-x-1/2 font-mono text-xs uppercase tracking-widest text-[color:var(--color-steel)] flex flex-col items-center gap-2 z-20 pointer-events-none"
       >
         <span>{t('heroScrollLabel')}</span>
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-          className="h-6 w-px bg-[color:var(--color-steel)]"
-        />
+        {/* Breathing line + traveling spark (CSS-only via .scroll-spark —
+            the dot rides the ::after, no JS per-frame cost) */}
+        <div className="scroll-spark h-8 w-px bg-gradient-to-b from-[color:var(--color-steel)] via-[color:var(--color-signal)]/60 to-transparent" />
       </motion.div>
     </section>
   );

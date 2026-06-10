@@ -259,7 +259,7 @@
   "footer": {
     "rights": "© 2026 Auraplex SDN BHD. Hak cipta terpelihara.",
     "made": "Buatan Malaysia.",
-    "address": "Auraplex SDN BHD · Seri Kembangan · Selangor · Malaysia",
+    "address": "Auraplex SDN BHD · No 5, Jalan BS9/7B, Taman Bukit Serdang, Seksyen 9, 43300 Seri Kembangan, Selangor, Malaysia",
     "allMachines": "Semua mesin",
     "privacy": "Privasi",
     "terms": "Terma"
@@ -407,7 +407,7 @@
         "eyebrow": "Lawati kami",
         "h2": "Jadualkan lawatan kilang.",
         "body": "Cara terpantas untuk memahami mesin Auraplex adalah dengan melihatnya dibina. Berjalan di lantai bersama ketua jurutera kami. Bawa bekas sampel — kami akan jalankannya pada aplikator terdekat semasa anda menonton.",
-        "address": "Auraplex SDN BHD · Seri Kembangan · Selangor · Malaysia",
+        "address": "Auraplex SDN BHD · No 5, Jalan BS9/7B, Taman Bukit Serdang, Seksyen 9, 43300 Seri Kembangan, Selangor, Malaysia",
         "book": "Tempah lawatan",
         "whatsapp": "WhatsApp",
         "whatsappMsg": "Hi — saya ingin menempah lawatan kilang."
@@ -664,13 +664,20 @@
       "subtitle": "Kami balas dalam satu hari bekerja. Untuk perkara segera, WhatsApp paling pantas.",
       "labels": {
         "sales": "Talian jualan",
+        "office": "Talian pejabat",
         "email": "E-mel",
         "whatsappLabel": "WhatsApp",
         "whatsappValue": "Hantar mesej"
       },
+      "people": {
+        "eyebrow": "Berbual dengan orang sebenar",
+        "h2": "Tiga talian terus. Tiada mesin penjawab.",
+        "body": "Orang yang sama yang menjawab di auraplex.com.my menjawab di sini — hantar mesej terus kepada mana-mana mereka di WhatsApp.",
+        "direct": "WhatsApp · talian terus"
+      },
       "hours": {
         "weekdays": "Isn–Jum · 09:00–18:00 MYT",
-        "saturday": "Sab · 09:00–13:00 MYT"
+        "saturday": "Sab · 09:00–15:00 MYT"
       },
       "response": {
         "lead": "Kami balas:",

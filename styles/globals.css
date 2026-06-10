@@ -453,6 +453,52 @@ html.cursor-custom body { cursor: none; }
   opacity: 0.45;
 }
 
+/* ── .glass ───────────────────────────────────────────────────────────────
+ * Liquid-glass surface, adapted from the 2026 spatial-glass system to
+ * the Auraplex cerulean/ink palette (brand tokens stay untouched).
+ * Pair with a border utility; the ::after sheen brightens on hover.
+ */
+.glass {
+  background: color-mix(in oklab, var(--color-neutral-800) 40%, transparent);
+  backdrop-filter: blur(24px) saturate(120%);
+  -webkit-backdrop-filter: blur(24px) saturate(120%);
+  border: 1px solid color-mix(in oklab, var(--color-paper) 6%, transparent);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  transition: border-color 400ms var(--ease-out);
+}
+.glass:hover {
+  border-color: color-mix(in oklab, var(--color-signal) 35%, transparent);
+}
+
+/* ── .scroll-spark ────────────────────────────────────────────────────────
+ * Breathing vertical line with a spark that travels downward — the 2026
+ * scroll-indicator pattern in brand cerulean. Apply to a thin vertical
+ * element (e.g. h-6 w-px); the spark is the ::after dot.
+ */
+@keyframes spark-travel {
+  0%   { top: -10%; opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+.scroll-spark {
+  position: relative;
+  overflow: visible;
+}
+.scroll-spark::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: -10%;
+  width: 3px;
+  height: 3px;
+  border-radius: 9999px;
+  transform: translateX(-50%);
+  background: var(--color-signal-bright);
+  box-shadow: 0 0 6px color-mix(in oklab, var(--color-signal-bright) 80%, transparent);
+  animation: spark-travel 2.2s var(--ease-out) infinite;
+}
+
 /* ── .breathing-vignette ──────────────────────────────────────────────────
  * Radial gradient that gently breathes — 8s cycle. Apply to a full-bleed
  * absolute overlay (pointer-events:none) inside a hero section to make

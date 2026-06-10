@@ -5,10 +5,23 @@ import { KineticReveal } from '@/components/motion/kinetic-reveal';
 import { buildMetadata } from '@/lib/seo';
 import { whatsappLink } from '@/lib/utils';
 
-// Contact details mirror the live auraplex.com.my:
+// Contact details mirror the live auraplex.com.my / autolabellermalaysia.com:
 //   Sales hotline: 1700-82-6502
+//   Office line:   603-8940-7709
 //   Email:         sales.auraplex@gmail.com
-//   WhatsApp:      via wa.me link (number lives in lib/utils.ts)
+//   Address:       No 5, Jalan BS9/7B, Taman Bukit Serdang, Seksyen 9,
+//                  43300 Seri Kembangan, Selangor
+//   WhatsApp persons (listed on the live site footer):
+//     Mr. Kan  012-667 5762 · Mr. Khor 016-201 0251 · Mr. Chan 010-392 5767
+
+const PEOPLE = [
+  { name: 'Mr. Kan', phone: '012-667 5762', wa: '60126675762' },
+  { name: 'Mr. Khor', phone: '016-201 0251', wa: '60162010251' },
+  { name: 'Mr. Chan', phone: '010-392 5767', wa: '60103925767' },
+] as const;
+
+const STREET_ADDRESS =
+  'No 5, Jalan BS9/7B, Taman Bukit Serdang, Seksyen 9, 43300 Seri Kembangan, Selangor';
 
 const DEPARTMENT_KEYS = ['sales', 'service', 'tour', 'engineering'] as const;
 type DepartmentKey = (typeof DEPARTMENT_KEYS)[number];
@@ -52,8 +65,12 @@ export default async function ContactPage({
     description:
       'Precision labelling and packaging machine manufacturer in Seri Kembangan, Selangor.',
     url: 'https://auraplex.my',
+    telephone: '+60389407709',
     address: {
       '@type': 'PostalAddress',
+      streetAddress:
+        'No 5, Jalan BS9/7B, Taman Bukit Serdang, Seksyen 9',
+      postalCode: '43300',
       addressLocality: 'Seri Kembangan',
       addressRegion: 'Selangor',
       addressCountry: 'MY',
@@ -77,7 +94,7 @@ export default async function ContactPage({
         '@type': 'OpeningHoursSpecification',
         dayOfWeek: 'Saturday',
         opens: '09:00',
-        closes: '13:00',
+        closes: '15:00',
       },
     ],
   };
@@ -112,7 +129,12 @@ export default async function ContactPage({
             <Contact
               label={t('labels.sales')}
               value="1700-82-6502"
-              href="tel:+60317008265026"
+              href="tel:1700826502"
+            />
+            <Contact
+              label={t('labels.office')}
+              value="603-8940-7709"
+              href="tel:+60389407709"
             />
             <Contact
               label={t('labels.email')}
@@ -129,6 +151,12 @@ export default async function ContactPage({
           <div className="mt-12 font-mono text-xs uppercase tracking-widest text-[color:var(--color-steel)] space-y-1">
             <div>{t('hours.weekdays')}</div>
             <div>{t('hours.saturday')}</div>
+          </div>
+
+          <div className="mt-8 font-mono text-xs text-[color:var(--color-steel-soft)] leading-relaxed max-w-sm">
+            Auraplex SDN BHD
+            <br />
+            {STREET_ADDRESS}
           </div>
 
           <div className="mt-12 pt-8 border-t border-[color:var(--color-neutral-700)] font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)] leading-relaxed">
@@ -151,6 +179,54 @@ export default async function ContactPage({
             </Reveal>
           )}
           <ContactForm locale={locale} department={department} />
+        </div>
+      </section>
+
+      {/* ────── TALK TO A PERSON ──────
+              The three named WhatsApp contacts listed on the live
+              autolabellermalaysia.com footer — Mr. Kan, Mr. Khor,
+              Mr. Chan — as liquid-glass cards with direct wa.me links. */}
+      <section className="mx-auto max-w-[1600px] px-6 lg:px-12 pb-32">
+        <Reveal variant="up">
+          <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-4 flex items-center gap-3">
+            <span className="h-px w-12 bg-[color:var(--color-signal)]" />
+            {t('people.eyebrow')}
+          </div>
+          <h2 className="font-display text-[clamp(1.75rem,4vw,3.5rem)] tracking-[-0.02em] leading-[1.05] max-w-3xl">
+            {t('people.h2')}
+          </h2>
+          <p className="mt-6 prose-editorial text-[color:var(--color-steel-soft)] max-w-2xl">
+            {t('people.body')}
+          </p>
+        </Reveal>
+
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+          {PEOPLE.map((p, i) => (
+            <Reveal key={p.name} variant="up" delay={i * 80}>
+              <a
+                href={`https://wa.me/${p.wa}`}
+                target="_blank"
+                rel="noreferrer"
+                className="glass block p-8 group"
+              >
+                <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6">
+                  {t('people.direct')}
+                </div>
+                <div className="font-display text-3xl tracking-[-0.01em] mb-2 group-hover:text-[color:var(--color-signal)] transition-colors">
+                  {p.name}
+                </div>
+                <div className="font-mono text-sm text-[color:var(--color-steel-soft)]">
+                  {p.phone}
+                </div>
+                <div className="mt-6 font-mono text-xs uppercase tracking-[0.2em] text-[color:var(--color-steel)] group-hover:text-[color:var(--color-paper)] transition-colors inline-flex items-center gap-2">
+                  WhatsApp
+                  <span className="transition-transform group-hover:translate-x-1">
+                    →
+                  </span>
+                </div>
+              </a>
+            </Reveal>
+          ))}
         </div>
       </section>
     </>
