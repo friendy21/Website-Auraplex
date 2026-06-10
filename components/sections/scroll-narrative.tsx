@@ -67,6 +67,38 @@ export function ScrollNarrative() {
     () => {
       if (!container.current) return;
 
+      // ── Mobile / reduced-motion guard ──
+      // This was the ONLY pinned section without one. A 3800px pinned
+      // scrub timeline on a phone means GSAP recalculates and repaints
+      // five scenes of transforms on every scroll tick of a 2-core SoC —
+      // the single biggest mobile TBT + jank source on the home page.
+      // Degraded mode: show every scene element in its final state and
+      // let the section flow normally. The desktop cinematic is intact.
+      const isMobile =
+        typeof window !== 'undefined' && window.innerWidth < 768;
+      const prefersReduce =
+        typeof window !== 'undefined' &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (isMobile || prefersReduce) {
+        // Degraded layout: the section is one static screen showing the
+        // core content (hero machine, applied label, spec rows, counter).
+        // Scene 1 and Scene 5 are full-bleed absolute overlays designed
+        // to crossfade during the pin — without the pin they'd just sit
+        // on top of the machine, so they're hidden.
+        gsap.set('.s1-cluster, .s5-closer', { display: 'none' });
+        gsap.set('.machine-hero, .spec-row, .s3-label, .s4-counter', {
+          opacity: 1,
+          clipPath: 'none',
+          x: 0,
+          rotate: 0,
+        });
+        const counter =
+          container.current.querySelector('.s4-counter-value');
+        if (counter) counter.textContent = '30';
+        return;
+      }
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: container.current,
