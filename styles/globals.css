@@ -398,10 +398,16 @@ html.cursor-custom body { cursor: none; }
  * animate-ping is faster + clips at 1.5; this reads slower and more
  * deliberate. Apply to a child span that overlays the dot.
  */
+/* Opacity-only pulse. The previous version (and Tailwind's animate-ping)
+   scaled the dot via transform — Chrome was not compositing those tiny
+   layers and its layout-shift tracker logged every pulse, producing a
+   deterministic 0.235 CLS on any page with a pinging dot. Opacity
+   animations are always composited and CLS-exempt; the halo effect is
+   recreated with a box-shadow fade instead of a scale. */
 @keyframes ping-signal {
-  0%   { transform: scale(1);   opacity: 0.8; }
-  80%  { opacity: 0; }
-  100% { transform: scale(2.5); opacity: 0; }
+  0%   { opacity: 0.9; box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-signal) 60%, transparent); }
+  70%  { opacity: 0.35; box-shadow: 0 0 0 6px color-mix(in oklab, var(--color-signal) 0%, transparent); }
+  100% { opacity: 0.9; box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-signal) 0%, transparent); }
 }
 .ping-signal {
   animation: ping-signal 2s var(--ease-out) infinite;
@@ -487,14 +493,14 @@ html.cursor-custom body { cursor: none; }
 }
 
 /* ── .footer-col-rule ─────────────────────────────────────────────────────
- * Blueprint-style top border that draws from the center out as the
- * footer scrolls into view. The animation is driven by view() so it
- * triggers exactly when the column enters the viewport.
+ * Blueprint-style top hairline on each footer column. STATIC by design:
+ * the previous version drew the line via a scroll-driven animation
+ * (animation-timeline: view() + scaleX 0→1), which Chrome's layout-shift
+ * tracker attributed as a 0.235 CLS — a quarter of the entire Lighthouse
+ * CLS budget for one decorative line. The Motion column-stagger on
+ * FooterCol already animates the footer entrance; the hairline doesn't
+ * need its own choreography.
  */
-@keyframes draw-rule-center-out {
-  from { transform: scaleX(0); }
-  to   { transform: scaleX(1); }
-}
 .footer-col-rule {
   position: relative;
 }
@@ -511,11 +517,6 @@ html.cursor-custom body { cursor: none; }
     var(--color-signal) 50%,
     transparent 100%
   );
-  transform: scaleX(0);
-  transform-origin: center;
-  animation: draw-rule-center-out 900ms var(--ease-entrance) both;
-  animation-timeline: view();
-  animation-range: entry 0% entry 60%;
 }
 
 /* ──────────────────────────────────────────────────────────────────────────

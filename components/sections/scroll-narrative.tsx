@@ -99,14 +99,14 @@ export function ScrollNarrative() {
         return;
       }
 
+      // No pin — static 100dvh+3800px runway + CSS sticky (see
+      // manifesto-section.tsx for the CLS rationale).
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: container.current,
           start: 'top top',
-          end: '+=3800',
-          pin: true,
+          end: 'bottom bottom',
           scrub: 0.8,
-          anticipatePin: 1,
         },
         defaults: { ease: 'power3.out' },
       });
@@ -263,10 +263,13 @@ export function ScrollNarrative() {
   );
 
   return (
+    // Outer scroll runway — statically sized in server HTML (no
+    // pin-spacer mutation). Mobile stays a plain 100dvh static screen.
     <section
       ref={container}
-      className="relative h-[100dvh] overflow-hidden bg-[color:var(--color-ink)]"
+      className="relative bg-[color:var(--color-ink)] h-[100dvh] md:h-[calc(100dvh+3800px)]"
     >
+      <div className="sticky top-0 h-[100dvh] overflow-hidden">
       {/* Noise grain layer for cinematic texture */}
       <div className="absolute inset-0 opacity-[0.04] pointer-events-none mix-blend-overlay">
         <svg width="100%" height="100%" aria-hidden>
@@ -394,6 +397,7 @@ export function ScrollNarrative() {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

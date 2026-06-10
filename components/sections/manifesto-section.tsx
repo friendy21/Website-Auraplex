@@ -43,14 +43,16 @@ export function ManifestoSection() {
         return;
       }
 
+      // No pin — the outer section is statically 100dvh + 2200px tall
+      // (in the server HTML), the visual layer is CSS sticky. GSAP's
+      // pin-spacer insertion was shifting the whole document at
+      // hydration (0.235 CLS).
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: container.current,
           start: 'top top',
-          end: '+=2200',
-          pin: true,
+          end: 'bottom bottom',
           scrub: 0.7,
-          anticipatePin: 1,
         },
         defaults: { ease: 'none' },
       });
@@ -107,10 +109,14 @@ export function ManifestoSection() {
   const words = t('title').split(/\s+/).filter(Boolean);
 
   return (
+    // Outer scroll runway — statically sized in server HTML (no pin-spacer
+    // mutation). Mobile stays a plain 100dvh block (the GSAP guard skips
+    // the timeline there anyway).
     <section
       ref={container}
-      className="relative h-[100dvh] overflow-hidden bg-[color:var(--color-ink)] flex items-center"
+      className="relative bg-[color:var(--color-ink)] h-[100dvh] md:h-[calc(100dvh+2200px)]"
     >
+      <div className="sticky top-0 h-[100dvh] overflow-hidden flex items-center">
       {/* Atmospheric noise grain for this section */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay">
         <svg width="100%" height="100%" aria-hidden>
@@ -167,6 +173,7 @@ export function ManifestoSection() {
       {/* Bottom-right massive watermark */}
       <div className="absolute bottom-8 right-8 lg:bottom-16 lg:right-16 font-display text-[color:var(--color-neutral-800)] text-[15vw] leading-none tracking-[-0.04em] select-none pointer-events-none" aria-hidden="true">
         01
+      </div>
       </div>
     </section>
   );

@@ -69,9 +69,9 @@ export function Footer() {
         </FooterCol>
 
         <FooterCol>
-          <h4 className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-5">
+          <h3 className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-5">
             {t('nav.products')}
-          </h4>
+          </h3>
           <ul className="space-y-3 text-sm">
             <li>
               <FooterLink href="/products?category=labelling">
@@ -95,9 +95,9 @@ export function Footer() {
         </FooterCol>
 
         <FooterCol>
-          <h4 className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-5">
+          <h3 className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-5">
             Company
-          </h4>
+          </h3>
           <ul className="space-y-3 text-sm">
             <li>
               <FooterLink href="/about">{t('nav.about')}</FooterLink>

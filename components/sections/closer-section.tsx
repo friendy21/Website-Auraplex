@@ -43,14 +43,14 @@ export function CloserSection() {
         return;
       }
 
+      // No pin — static 100dvh+2400px runway + CSS sticky (see
+      // manifesto-section.tsx for the CLS rationale).
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: container.current,
           start: 'top top',
-          end: '+=2400',
-          pin: true,
+          end: 'bottom bottom',
           scrub: 0.7,
-          anticipatePin: 1,
         },
         defaults: { ease: 'none' },
       });
@@ -114,8 +114,9 @@ export function CloserSection() {
   return (
     <section
       ref={container}
-      className="relative h-[100dvh] overflow-hidden bg-[color:var(--color-ink)] flex items-center"
+      className="relative bg-[color:var(--color-ink)] h-[100dvh] md:h-[calc(100dvh+2400px)]"
     >
+      <div className="sticky top-0 h-[100dvh] overflow-hidden flex items-center">
       {/* Watermark */}
       <div
         className="c-watermark absolute inset-0 flex items-center justify-center pointer-events-none select-none"
@@ -177,6 +178,7 @@ export function CloserSection() {
 
       {/* Bottom signal hairline */}
       <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[color:var(--color-signal)]/60 to-transparent pointer-events-none" />
+      </div>
     </section>
   );
 }

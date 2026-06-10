@@ -117,11 +117,14 @@ function Cell({
       <div className="flex items-center gap-2">
         {live && (
           <span className="relative inline-flex h-1.5 w-1.5">
-            <span className="absolute inset-0 rounded-full bg-[color:var(--color-signal)] animate-ping opacity-60" />
+            <span className="absolute inset-0 rounded-full bg-[color:var(--color-signal)] ping-signal" />
             <span className="relative inline-block h-1.5 w-1.5 rounded-full bg-[color:var(--color-signal)]" />
           </span>
         )}
-        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)]">
+        {/* steel-soft, not steel — the ticker sits on bg-neutral-800
+            where steel (#8d949d) is only ~4.2:1. steel-soft (#b2b8bf)
+            is ~6:1, clearing WCAG AA 4.5:1. */}
+        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel-soft)]">
           {label}
         </span>
       </div>

@@ -70,14 +70,19 @@ export function ZoomTransition({
         return;
       }
 
+      // No pin. GSAP's pin inserts a spacer element AFTER hydration,
+      // shifting the entire document by `scrollLength` px in one paint —
+      // Lighthouse measured it as 0.235 CLS. Instead the container is
+      // statically tall (100dvh + scrollLength, set in markup so it
+      // exists in the server HTML) and the visual layer is CSS
+      // position:sticky. Same cinematic, zero layout mutation, and
+      // smoother on iOS where pinning fights rubber-band scroll.
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: container.current,
           start: 'top top',
-          end: `+=${scrollLength}`,
-          pin: true,
+          end: 'bottom bottom',
           scrub: 0.6,
-          anticipatePin: 1,
         },
         defaults: { ease: 'none' },
       });
@@ -105,31 +110,38 @@ export function ZoomTransition({
   );
 
   return (
+    // Outer scroll runway: 100dvh on mobile (no scrub), 100dvh +
+    // scrollLength on md+ — statically sized so it's in the server HTML
+    // and never mutates (the CLS contract). The runway height is fed via
+    // a CSS variable because scrollLength is a prop.
     <div
       ref={container}
-      className="relative h-[100dvh] overflow-hidden bg-[color:var(--color-ink)]"
+      className="relative bg-[color:var(--color-ink)] h-[100dvh] md:h-[var(--zt-runway)]"
+      style={{ '--zt-runway': `calc(100dvh + ${scrollLength}px)` } as React.CSSProperties}
     >
-      {/* The zooming image */}
-      <div
-        className="zt-image-wrap absolute inset-0 overflow-hidden"
-        style={{ willChange: 'transform' }}
-      >
-        <Image
-          src={image}
-          alt={alt}
-          fill
-          sizes="100vw"
-          className="object-cover"
-          priority={false}
-        />
-      </div>
-      {/* Ink veil appears as image dims */}
-      <div className="zt-image-overlay absolute inset-0 bg-[color:var(--color-ink)] opacity-0 pointer-events-none" />
-      {/* Final ink flood for the section handoff */}
-      <div className="zt-ink-flood absolute inset-0 bg-[color:var(--color-ink)] opacity-0 pointer-events-none" />
-      {/* Editorial content overlays the dimmed image */}
-      <div className="zt-content relative z-10 h-full flex items-center">
-        {children}
+      <div className="sticky top-0 h-[100dvh] overflow-hidden">
+        {/* The zooming image */}
+        <div
+          className="zt-image-wrap absolute inset-0 overflow-hidden"
+          style={{ willChange: 'transform' }}
+        >
+          <Image
+            src={image}
+            alt={alt}
+            fill
+            sizes="100vw"
+            className="object-cover"
+            priority={false}
+          />
+        </div>
+        {/* Ink veil appears as image dims */}
+        <div className="zt-image-overlay absolute inset-0 bg-[color:var(--color-ink)] opacity-0 pointer-events-none" />
+        {/* Final ink flood for the section handoff */}
+        <div className="zt-ink-flood absolute inset-0 bg-[color:var(--color-ink)] opacity-0 pointer-events-none" />
+        {/* Editorial content overlays the dimmed image */}
+        <div className="zt-content relative z-10 h-full flex items-center">
+          {children}
+        </div>
       </div>
     </div>
   );

@@ -290,14 +290,14 @@ export function HeroCinematic() {
 function HeroWord({ word, index }: { word: string; index: number }) {
   return (
     <motion.span
-      initial={{
-        clipPath: 'inset(0 100% 0 0)',
-        fontVariationSettings: '"wght" 200',
-      }}
-      animate={{
-        clipPath: 'inset(0 0% 0 0)',
-        fontVariationSettings: '"wght" 700',
-      }}
+      // Weight is static — animating fontVariationSettings 200→700
+      // changes glyph widths, which reflows the headline and registers
+      // as cumulative layout shift (Lighthouse measured 0.15 CLS from
+      // this one animation). The clip-path wipe carries the reveal on
+      // its own; clip-path is paint-only, zero layout impact.
+      style={{ display: 'inline-block', fontVariationSettings: '"wght" 700' }}
+      initial={{ clipPath: 'inset(0 100% 0 0)' }}
+      animate={{ clipPath: 'inset(0 0% 0 0)' }}
       transition={{
         // Tight timing — the H1 is the page's LCP element and the
         // clip-path keeps each word unpainted until its animation
@@ -307,7 +307,6 @@ function HeroWord({ word, index }: { word: string; index: number }) {
         delay: 0.15 + index * 0.03,
         ease: [0.76, 0, 0.24, 1],
       }}
-      style={{ display: 'inline-block' }}
     >
       {word}
     </motion.span>

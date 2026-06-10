@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { getTickerStats } from '@/lib/kv';
 import { HeroCinematic } from '@/components/sections/hero-cinematic';
@@ -13,6 +14,31 @@ import { CloserSection } from '@/components/sections/closer-section';
 import { ZoomTransition } from '@/components/motion/zoom-transition';
 import { ScrollDrawLine } from '@/components/motion/scroll-draw-line';
 
+// Static fallback stats — used both as the Suspense fallback (so the
+// ticker section's height is reserved while the KV call streams) and as
+// the error fallback when KV is unreachable.
+const FALLBACK_STATS = {
+  machines: 1247,
+  labels: 8_200_000,
+  uptime: '99.4%',
+  factories: 340,
+};
+
+/**
+ * The KV stats fetch is the ONLY dynamic data on the home page. Awaiting
+ * it at page level made the entire page body part of the dynamic stream:
+ * with PPR the static shell (header/footer) painted first and then the
+ * whole page content inserted above the footer — Lighthouse measured the
+ * insertion as a 0.235 layout shift. Isolating the await in its own
+ * Suspense boundary keeps every other section in the static shell, and
+ * the fallback renders the identical ticker layout with placeholder
+ * numbers so the streamed swap is pixel-stable.
+ */
+async function TickerSlot() {
+  const stats = await getTickerStats().catch(() => FALLBACK_STATS);
+  return <LiveDataTicker stats={stats} />;
+}
+
 export default async function Home({
   params,
 }: {
@@ -23,13 +49,6 @@ export default async function Home({
   const zA = await getTranslations('home.zoomA');
   const zB = await getTranslations('home.zoomB');
 
-  const stats = await getTickerStats().catch(() => ({
-    machines: 1247,
-    labels: 8_200_000,
-    uptime: '99.4%',
-    factories: 340,
-  }));
-
   return (
     <>
       <HeroCinematic />
@@ -38,7 +57,9 @@ export default async function Home({
               the hero to the bottom of the page. ── */}
       <ScrollDrawLine>
         <ManifestoSection />
-        <LiveDataTicker stats={stats} />
+        <Suspense fallback={<LiveDataTicker stats={FALLBACK_STATS} />}>
+          <TickerSlot />
+        </Suspense>
       <ValuePropGrid />
       <ProductShowcase />
 
