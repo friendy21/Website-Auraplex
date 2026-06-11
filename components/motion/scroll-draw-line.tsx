@@ -78,10 +78,15 @@ export function ScrollDrawLine({
   // Combined with mix-blend-mode: screen below, this gives the
   // on.energy / Adelt feel — the line is part of the environment, not
   // crossing over text.
+  // Peak dropped 0.45 → 0.28: at 0.45 the rope read as a foreground
+  // element slicing through machine photography. At 0.28 it reads as
+  // the atmospheric thread it's meant to be. Sections with dense
+  // imagery (carousel, scroll-narrative) additionally sit at z-[45],
+  // above this overlay entirely.
   const opacity = useTransform(
     scrollYProgress,
     [0, 0.7, 0.88],
-    [0.45, 0.45, 0],
+    [0.28, 0.28, 0],
   );
 
   return (

@@ -267,7 +267,9 @@ export function ScrollNarrative() {
     // pin-spacer mutation). Mobile stays a plain 100dvh static screen.
     <section
       ref={container}
-      className="relative bg-[color:var(--color-ink)] h-[100dvh] md:h-[calc(100dvh+3800px)]"
+      // z-[45] lifts the cinematic above the ScrollDrawLine rope (z-40)
+      // — the line was cutting through the hero machine + spec panel.
+      className="relative z-[45] bg-[color:var(--color-ink)] h-[100dvh] md:h-[calc(100dvh+3800px)]"
     >
       <div className="sticky top-0 h-[100dvh] overflow-hidden">
       {/* Noise grain layer for cinematic texture */}

@@ -30,7 +30,14 @@ import { getMachinesWithCover } from '@/lib/catalog';
  *
  * Geometry: 8 panels of 280px → ring radius R = 140/tan(π/8) ≈ 338px.
  */
-const PANEL_W = 280;
+// Geometry tuned so the perspective-enlarged FRONT panel always fits
+// inside the stage: panel 240×300, radius = 120/tan(π/8) ≈ 290px,
+// perspective 1800 → front panel scales ×1.19 → ~357px tall, well
+// inside the 560px stage. (The previous 280px panels at perspective
+// 1400 scaled past the stage bounds and bled into neighbouring
+// sections.)
+const PANEL_W = 240;
+const PANEL_H = 300;
 const PANEL_COUNT = 8;
 const RADIUS = Math.round(PANEL_W / 2 / Math.tan(Math.PI / PANEL_COUNT));
 /** Idle rotation speed in deg/ms (≈ one revolution per 44s). */
@@ -160,7 +167,10 @@ export function MachineCarousel() {
   const step = 360 / machines.length;
 
   return (
-    <section className="relative py-32 overflow-hidden border-y border-[color:var(--color-neutral-700)] bg-[color:var(--color-ink)]">
+    // z-[45] lifts this whole section above the ScrollDrawLine rope
+    // (fixed at z-40) — the cerulean line was slicing straight through
+    // the machine photography here, which read as a rendering glitch.
+    <section className="relative z-[45] py-24 overflow-hidden border-y border-[color:var(--color-neutral-700)] bg-[color:var(--color-ink)]">
       {/* Section heading */}
       <div className="mx-auto max-w-[1600px] px-6 lg:px-12 mb-4">
         <Reveal variant="up">
@@ -179,9 +189,9 @@ export function MachineCarousel() {
           spin the ring. */}
       <div
         ref={stageRef}
-        className="relative mx-auto h-[420px] md:h-[480px] w-full max-w-[1600px] select-none"
+        className="relative mx-auto h-[480px] md:h-[560px] w-full max-w-[1600px] select-none"
         style={{
-          perspective: '1400px',
+          perspective: '1800px',
           cursor: 'grab',
           touchAction: 'pan-y',
         }}
@@ -195,12 +205,12 @@ export function MachineCarousel() {
       >
         <div
           ref={ringRef}
-          className="absolute left-1/2 top-1/2 scale-[0.55] sm:scale-75 lg:scale-100"
+          className="absolute left-1/2 top-1/2 scale-[0.6] sm:scale-75 lg:scale-100"
           style={{
             width: PANEL_W,
-            height: 340,
+            height: PANEL_H,
             marginLeft: -PANEL_W / 2,
-            marginTop: -170,
+            marginTop: -PANEL_H / 2,
             transformStyle: 'preserve-3d',
             willChange: 'transform',
           }}
@@ -217,18 +227,21 @@ export function MachineCarousel() {
                   backfaceVisibility: 'hidden',
                 }}
               >
-                <div className="relative h-[260px] m-3 mb-0 pointer-events-none">
+                <div className="relative h-[215px] m-3 mb-0 pointer-events-none">
                   <Image
                     src={m.image}
                     alt={m.name}
                     fill
-                    sizes="280px"
+                    sizes="240px"
                     draggable={false}
                     className="object-contain transition-transform duration-500 group-hover:scale-[1.06]"
                   />
                 </div>
-                <div className="px-4 py-3 flex items-baseline justify-between gap-2 pointer-events-none">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-[color:var(--color-steel-soft)] truncate">
+                {/* Full machine name — never truncated mid-word; the
+                    name wraps to two lines so every panel reads the
+                    same complete label as the catalogue. */}
+                <div className="px-3 py-2 flex items-start justify-between gap-2 pointer-events-none">
+                  <span className="font-mono text-[9px] uppercase tracking-[0.12em] leading-snug text-[color:var(--color-steel-soft)] line-clamp-2">
                     {m.name}
                   </span>
                   <span className="font-mono text-[10px] text-[color:var(--color-signal)] shrink-0">
