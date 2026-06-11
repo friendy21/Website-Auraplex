@@ -6,6 +6,18 @@ import { useTranslations } from 'next-intl';
 import { motion } from 'motion/react';
 import type { ReactNode } from 'react';
 
+// Real Auraplex social profiles, extracted from the live
+// autolabellermalaysia.com footer HTML (canonical forms, tracking
+// params stripped). Do not add networks that aren't verified there.
+const SOCIALS = [
+  { name: 'Facebook', href: 'https://www.facebook.com/Auraplex-100352958924725/' },
+  { name: 'Instagram', href: 'https://www.instagram.com/auraplex_/' },
+  { name: 'YouTube', href: 'https://www.youtube.com/@auraplex5219' },
+  { name: 'TikTok', href: 'https://www.tiktok.com/@auraplex_' },
+  { name: 'LinkedIn', href: 'https://www.linkedin.com/company/auraplex/' },
+  { name: 'Shopee', href: 'https://shopee.com.my/auraplex' },
+] as const;
+
 /**
  * Global footer — animated reveals + cerulean underline on every link.
  *
@@ -64,6 +76,32 @@ export function Footer() {
             <div>{t('footer.address')}</div>
             <div className="text-[color:var(--color-steel-soft)]">
               sales.auraplex@gmail.com
+            </div>
+            <div className="text-[color:var(--color-steel-soft)]">
+              1700-82-6502 · 603-8940-7709
+            </div>
+          </div>
+
+          {/* Social row — mono text links matching the design system */}
+          <div className="mt-8">
+            <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-3">
+              {t('footer.follow')}
+            </div>
+            <div className="flex flex-wrap gap-x-5 gap-y-2">
+              {SOCIALS.map((s) => (
+                <a
+                  key={s.name}
+                  href={s.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group font-mono text-xs uppercase tracking-[0.15em] text-[color:var(--color-steel-soft)] hover:text-[color:var(--color-paper)] transition-colors duration-300"
+                >
+                  <span className="relative">
+                    {s.name}
+                    <span className="absolute -bottom-0.5 left-0 right-0 h-px bg-[color:var(--color-signal)] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)]" />
+                  </span>
+                </a>
+              ))}
             </div>
           </div>
         </FooterCol>

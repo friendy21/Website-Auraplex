@@ -62,9 +62,15 @@ export function organizationSchema() {
     name: 'Auraplex SDN BHD',
     url: SITE,
     logo: `${SITE}/logo.svg`,
+    // Real profiles verified against the live autolabellermalaysia.com
+    // footer (canonical URLs, tracking params stripped).
     sameAs: [
-      'https://www.linkedin.com/company/auraplex',
-      'https://www.facebook.com/auraplex',
+      'https://www.facebook.com/Auraplex-100352958924725/',
+      'https://www.instagram.com/auraplex_/',
+      'https://www.youtube.com/@auraplex5219',
+      'https://www.tiktok.com/@auraplex_',
+      'https://www.linkedin.com/company/auraplex/',
+      'https://shopee.com.my/auraplex',
     ],
     // Full street address as published on the live autolabellermalaysia.com
     address: {
