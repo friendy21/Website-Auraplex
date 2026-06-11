@@ -5,9 +5,7 @@ import { HeroCinematic } from '@/components/sections/hero-cinematic';
 import { ManifestoSection } from '@/components/sections/manifesto-section';
 import { LiveDataTicker } from '@/components/sections/live-data-ticker';
 import { ValuePropGrid } from '@/components/sections/value-prop-grid';
-import { ProductShowcase } from '@/components/sections/product-showcase';
 import { ScrollNarrative } from '@/components/sections/scroll-narrative';
-import { FeaturedMachines } from '@/components/sections/featured-machines';
 import { TestimonialMarquee } from '@/components/sections/testimonial-marquee';
 import { FaqSection } from '@/components/sections/faq-section';
 import { CloserSection } from '@/components/sections/closer-section';
@@ -49,93 +47,75 @@ export default async function Home({
   const { locale } = await params;
   setRequestLocale(locale);
   const zA = await getTranslations('home.zoomA');
-  const zB = await getTranslations('home.zoomB');
 
+  /* ──────────────────────────────────────────────────────────────────
+   * UNIFIED HOME ARC — one narrative, each section with ONE job:
+   *
+   *   1. Hero            — the floor (video) + the claim
+   *   2. OutlineMarquee  — brand band, bridges hero into the body
+   *   3. Manifesto       — the belief (pinned statement)
+   *   4. LiveDataTicker  — the proof, in numbers
+   *   5. ValuePropGrid   — the three reasons buyers choose us
+   *   6. ZoomTransition  — cinematic pivot from "why" into "what"
+   *   7. MachineCarousel — THE catalogue moment (interactive 3D ring)
+   *   8. ScrollNarrative — one machine, told in depth
+   *   9. Testimonials    — the voices
+   *  10. FAQ             — the questions
+   *  11. Closer          — the invitation
+   *
+   * Removed in the unification pass: ProductShowcase and
+   * FeaturedMachines (both showed the catalogue a 2nd and 3rd time —
+   * the carousel is now the single catalogue moment) and the second
+   * ZoomTransition (one cinematic pivot reads intentional; two reads
+   * like a repeated trick).
+   * ────────────────────────────────────────────────────────────────── */
   return (
     <>
       <HeroCinematic />
-      {/* ── Giant hollow wordmark band in continuous motion — leans with
-              scroll velocity, bridging the hero into the page body. ── */}
       <OutlineMarquee />
-      {/* ── Everything after the hero is wrapped by ScrollDrawLine so the
-              cerulean rope draws across the whole journey, from just below
-              the hero to the bottom of the page. ── */}
+      {/* The cerulean rope threads from just below the hero to the end
+          of the FAQ — Closer stays outside so the line never reaches
+          the finale or footer. */}
       <ScrollDrawLine>
         <ManifestoSection />
         <Suspense fallback={<LiveDataTicker stats={FALLBACK_STATS} />}>
           <TickerSlot />
         </Suspense>
-      <ValuePropGrid />
-      <ProductShowcase />
+        <ValuePropGrid />
 
-      {/* ── Snowhouse zoom-to-fullbleed signature #1 ──
-          Flexy Applicator zooms from thumbnail to full bleed. Copy is
-          locale-aware via home.zoomA.* keys. */}
-      <ZoomTransition
-        image="/products/Flexy_Applicator_11.png"
-        alt="Flexy Applicator"
-        scrollLength={2400}
-      >
-        <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-          <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6 flex items-center gap-3">
-            <span className="h-px w-12 bg-[color:var(--color-signal)]" />
-            {zA('eyebrow')}
+        {/* Cinematic pivot — Flexy Applicator zooms from thumbnail to
+            full bleed, turning the page from "why us" to "the machines". */}
+        <ZoomTransition
+          image="/products/Flexy_Applicator_11.png"
+          alt="Flexy Applicator"
+          scrollLength={2400}
+        >
+          <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
+            <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6 flex items-center gap-3">
+              <span className="h-px w-12 bg-[color:var(--color-signal)]" />
+              {zA('eyebrow')}
+            </div>
+            <h2 className="font-display text-[clamp(3rem,9vw,8rem)] tracking-[-0.04em] leading-[0.88] text-[color:var(--color-paper)] max-w-5xl">
+              {zA('h2Line1')}
+              <br />
+              <span className="text-[color:var(--color-signal)]">
+                {zA('h2Line2')}
+              </span>
+            </h2>
+            <p className="mt-8 max-w-xl font-mono text-sm text-[color:var(--color-steel-soft)]">
+              {zA('body')}
+            </p>
           </div>
-          <h2 className="font-display text-[clamp(3rem,9vw,8rem)] tracking-[-0.04em] leading-[0.88] text-[color:var(--color-paper)] max-w-5xl">
-            {zA('h2Line1')}
-            <br />
-            <span className="text-[color:var(--color-signal)]">
-              {zA('h2Line2')}
-            </span>
-          </h2>
-          <p className="mt-8 max-w-xl font-mono text-sm text-[color:var(--color-steel-soft)]">
-            {zA('body')}
-          </p>
-        </div>
-      </ZoomTransition>
+        </ZoomTransition>
 
-      <FeaturedMachines />
+        {/* THE catalogue moment — drag-to-spin 3D ring, every panel a
+            link into the full catalogue. */}
+        <MachineCarousel />
 
-      {/* ── 3D rotating ring of photographed machines — pure CSS
-              transform carousel, pauses on hover, every panel links
-              into the catalogue. ── */}
-      <MachineCarousel />
-
-      {/* ── Snowhouse zoom-to-fullbleed signature #2 ──
-          Vision-checking system. Copy via home.zoomB.* keys. */}
-      <ZoomTransition
-        image="/products/Custom_Top_Labelling_Machine_with_Checking_System_8.png"
-        alt="Custom Top Labelling Machine with Checking System"
-        scrollLength={2000}
-        startScale={0.12}
-      >
-        <div className="mx-auto max-w-[1600px] px-6 lg:px-12 text-right">
-          <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6 inline-flex items-center gap-3">
-            <span className="h-px w-12 bg-[color:var(--color-signal)]" />
-            {zB('eyebrow')}
-          </div>
-          <h2 className="font-display text-[clamp(3rem,9vw,8rem)] tracking-[-0.04em] leading-[0.88] text-[color:var(--color-paper)]">
-            {zB('h2Line1')}
-            <br />
-            <span className="text-[color:var(--color-signal)]">
-              {zB('h2Line2')}
-            </span>
-          </h2>
-          <p className="mt-8 max-w-md ml-auto font-mono text-sm text-[color:var(--color-steel-soft)]">
-            {zB('body')}
-          </p>
-        </div>
-      </ZoomTransition>
-
-      <ScrollNarrative />
-      <TestimonialMarquee />
-      <FaqSection />
+        <ScrollNarrative />
+        <TestimonialMarquee />
+        <FaqSection />
       </ScrollDrawLine>
-      {/* CloserSection is intentionally OUTSIDE the ScrollDrawLine
-          wrapper so the cerulean rope can't reach the cinematic finale
-          or the footer. The line's scroll-progress range ends at the
-          bottom of FaqSection; from there the rope has already finished
-          drawing and the opacity fade has resolved to 0. */}
       <CloserSection />
     </>
   );
