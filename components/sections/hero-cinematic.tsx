@@ -95,6 +95,12 @@ export function HeroCinematic() {
       {/* ── Layer 2: video darkening + brand wash ── */}
       <div className="absolute inset-0 bg-[color:var(--color-ink)]/50 pointer-events-none" />
 
+      {/* ── Atmosphere: drifting cerulean aurora + static grain tile.
+              Both compositor-safe — the aurora animates transform only;
+              the grain is a static background-image (no runtime filter). ── */}
+      <div className="aurora-blob -bottom-[20vw] -left-[15vw]" aria-hidden="true" />
+      <div className="absolute inset-0 grain-static" aria-hidden="true" />
+
       {/* Cursor spotlight halo */}
       <CursorSpotlight size={420} intensity={0.2} />
 
@@ -197,8 +203,12 @@ export function HeroCinematic() {
               </motion.span>
             </div>
 
-            {/* H1 — words clip-wipe in with variable weight axis */}
-            <h1 className="font-display text-[clamp(3rem,8vw,7.5rem)] tracking-[-0.02em] leading-[0.92]">
+            {/* H1 — words fly in from a 3D depth plane (perspective on
+                the parent so each word's rotateX reads as true depth) */}
+            <h1
+              className="font-display text-[clamp(3rem,8vw,7.5rem)] tracking-[-0.02em] leading-[0.92]"
+              style={{ perspective: 900 }}
+            >
               {words.map((word, i) => {
                 if (/^\s+$/.test(word)) return <span key={i}>{word}</span>;
                 return <HeroWord key={i} word={word} index={i} />;
@@ -246,13 +256,39 @@ export function HeroCinematic() {
             </motion.div>
           </div>
 
-          {/* Live spec callout — slides in from right */}
+          {/* Live spec callout — slides in from right, with a slowly
+              rotating dashed precision ring behind it (CSS spin-slow,
+              compositor-only) */}
           <motion.aside
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 1.2, ease: [0.65, 0, 0.35, 1] }}
-            className="col-span-12 lg:col-span-4 lg:col-start-9 border-l border-[color:var(--color-signal)] pl-6 py-2"
+            className="relative col-span-12 lg:col-span-4 lg:col-start-9 border-l border-[color:var(--color-signal)] pl-6 py-2"
           >
+            <svg
+              viewBox="0 0 200 200"
+              className="spin-slow absolute -top-16 -right-10 h-44 w-44 opacity-25 pointer-events-none hidden lg:block"
+              aria-hidden="true"
+            >
+              <circle
+                cx="100"
+                cy="100"
+                r="92"
+                fill="none"
+                stroke="var(--color-signal)"
+                strokeWidth="1"
+                strokeDasharray="4 10"
+              />
+              <circle
+                cx="100"
+                cy="100"
+                r="70"
+                fill="none"
+                stroke="var(--color-signal-bright)"
+                strokeWidth="0.5"
+                strokeDasharray="2 14"
+              />
+            </svg>
             <div className="font-mono text-xs uppercase tracking-[0.25em] text-[color:var(--color-steel)] mb-2">
               {t('heroLiveSpecLabel')}
             </div>
@@ -288,22 +324,37 @@ export function HeroCinematic() {
 function HeroWord({ word, index }: { word: string; index: number }) {
   return (
     <motion.span
-      // Weight is static — animating fontVariationSettings 200→700
-      // changes glyph widths, which reflows the headline and registers
-      // as cumulative layout shift (Lighthouse measured 0.15 CLS from
-      // this one animation). The clip-path wipe carries the reveal on
-      // its own; clip-path is paint-only, zero layout impact.
-      style={{ display: 'inline-block', fontVariationSettings: '"wght" 700' }}
-      initial={{ clipPath: 'inset(0 100% 0 0)' }}
-      animate={{ clipPath: 'inset(0 0% 0 0)' }}
+      // 3D flight entrance — each word launches from below the baseline,
+      // rotated back 75° in depth, blurred, then snaps into place.
+      // transform + opacity + filter only: composited, zero layout cost,
+      // CLS-exempt (the weight stays static — animating
+      // fontVariationSettings reflows glyph widths and was measured at
+      // 0.15 CLS before being removed). Base delay stays tight at 0.1s
+      // because the H1 is the page's LCP element.
+      style={{
+        display: 'inline-block',
+        fontVariationSettings: '"wght" 700',
+        transformStyle: 'preserve-3d',
+        backfaceVisibility: 'hidden',
+      }}
+      initial={{
+        opacity: 0,
+        y: 70,
+        rotateX: 75,
+        scale: 0.85,
+        filter: 'blur(10px)',
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+        rotateX: 0,
+        scale: 1,
+        filter: 'blur(0px)',
+      }}
       transition={{
-        // Tight timing — the H1 is the page's LCP element and the
-        // clip-path keeps each word unpainted until its animation
-        // starts. Every ms of delay here is added LCP. 0.15s base is
-        // imperceptible as "lateness" but still reads as a reveal.
-        duration: 0.6,
-        delay: 0.15 + index * 0.03,
-        ease: [0.76, 0, 0.24, 1],
+        duration: 0.85,
+        delay: 0.1 + index * 0.05,
+        ease: [0.16, 1, 0.3, 1],
       }}
     >
       {word}

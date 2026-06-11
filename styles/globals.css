@@ -453,6 +453,100 @@ html.cursor-custom body { cursor: none; }
   opacity: 0.45;
 }
 
+/* ── WOW layer — all compositor-safe (transform/opacity/filter only) ─────
+ * These were chosen specifically because the Lighthouse work proved
+ * which effects are free: composited transforms never enter the layout
+ * shift tracker, CSS keyframes on transform run off-main-thread, and
+ * static background tiles cost nothing at runtime.
+ */
+
+/* Aurora blob — a huge blurred cerulean glow that slowly drifts behind
+   hero content. ONE element, transform-only keyframes, GPU-composited. */
+@keyframes aurora-drift {
+  0%   { transform: translate(-10%, 10%) scale(1) rotate(0deg); }
+  33%  { transform: translate(15%, -5%) scale(1.2) rotate(40deg); }
+  66%  { transform: translate(-5%, -15%) scale(0.95) rotate(-30deg); }
+  100% { transform: translate(-10%, 10%) scale(1) rotate(0deg); }
+}
+.aurora-blob {
+  position: absolute;
+  width: 60vw;
+  height: 60vw;
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--color-signal) 22%, transparent) 0%,
+    color-mix(in oklab, var(--color-signal-deep) 10%, transparent) 45%,
+    transparent 70%
+  );
+  filter: blur(60px);
+  animation: aurora-drift 24s var(--ease-out) infinite;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Static grain — a tiled SVG noise data-URI. Zero runtime cost (it's a
+   background-image, not a filter); replaces the feTurbulence overlay
+   that was removed for paint cost. */
+.grain-static {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* Slow precision spin — for dashed ring ornaments. */
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+.spin-slow {
+  animation: spin-slow 40s linear infinite;
+  will-change: transform;
+}
+
+/* Shine sweep — a light band crosses the card on hover. Pure transform. */
+.card-shine {
+  position: relative;
+  overflow: hidden;
+}
+.card-shine::before {
+  content: '';
+  position: absolute;
+  inset: -50% auto;
+  top: -50%;
+  bottom: -50%;
+  left: -30%;
+  width: 30%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    color-mix(in oklab, var(--color-paper) 12%, transparent) 50%,
+    transparent 100%
+  );
+  transform: translateX(-120%) skewX(-12deg);
+  transition: transform 700ms var(--ease-entrance);
+  pointer-events: none;
+}
+.card-shine:hover::before {
+  transform: translateX(520%) skewX(-12deg);
+}
+
+/* 3D ring carousel — the panels are positioned with rotateY+translateZ
+   in markup; this spins the whole ring. Pauses on hover. */
+@keyframes carousel-spin {
+  from { transform: rotateY(0deg); }
+  to   { transform: rotateY(360deg); }
+}
+.carousel-ring {
+  transform-style: preserve-3d;
+  animation: carousel-spin 44s linear infinite;
+  will-change: transform;
+}
+.carousel-stage:hover .carousel-ring {
+  animation-play-state: paused;
+}
+
 /* ── .glass ───────────────────────────────────────────────────────────────
  * Liquid-glass surface, adapted from the 2026 spatial-glass system to
  * the Auraplex cerulean/ink palette (brand tokens stay untouched).

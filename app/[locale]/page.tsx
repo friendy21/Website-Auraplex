@@ -13,6 +13,7 @@ import { FaqSection } from '@/components/sections/faq-section';
 import { CloserSection } from '@/components/sections/closer-section';
 import { ZoomTransition } from '@/components/motion/zoom-transition';
 import { ScrollDrawLine } from '@/components/motion/scroll-draw-line';
+import { MachineCarousel } from '@/components/sections/machine-carousel';
 
 // Static fallback stats — used both as the Suspense fallback (so the
 // ticker section's height is reserved while the KV call streams) and as
@@ -90,6 +91,11 @@ export default async function Home({
       </ZoomTransition>
 
       <FeaturedMachines />
+
+      {/* ── 3D rotating ring of photographed machines — pure CSS
+              transform carousel, pauses on hover, every panel links
+              into the catalogue. ── */}
+      <MachineCarousel />
 
       {/* ── Snowhouse zoom-to-fullbleed signature #2 ──
           Vision-checking system. Copy via home.zoomB.* keys. */}
