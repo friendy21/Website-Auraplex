@@ -14,6 +14,7 @@ import { CloserSection } from '@/components/sections/closer-section';
 import { ZoomTransition } from '@/components/motion/zoom-transition';
 import { ScrollDrawLine } from '@/components/motion/scroll-draw-line';
 import { MachineCarousel } from '@/components/sections/machine-carousel';
+import { OutlineMarquee } from '@/components/sections/outline-marquee';
 
 // Static fallback stats — used both as the Suspense fallback (so the
 // ticker section's height is reserved while the KV call streams) and as
@@ -53,6 +54,9 @@ export default async function Home({
   return (
     <>
       <HeroCinematic />
+      {/* ── Giant hollow wordmark band in continuous motion — leans with
+              scroll velocity, bridging the hero into the page body. ── */}
+      <OutlineMarquee />
       {/* ── Everything after the hero is wrapped by ScrollDrawLine so the
               cerulean rope draws across the whole journey, from just below
               the hero to the bottom of the page. ── */}

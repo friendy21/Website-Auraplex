@@ -496,6 +496,29 @@ html.cursor-custom body { cursor: none; }
   pointer-events: none;
 }
 
+/* Velocity lean — consumers skew with scroll speed (±2.5° max) and
+   spring back to level. Driven by --scroll-skew, written each frame by
+   LenisProvider. Apply to WRAPPERS of marquees/bands (never to the
+   element that owns its own transform animation). */
+:root { --scroll-skew: 0deg; }
+.lean {
+  transform: skewY(var(--scroll-skew));
+  will-change: transform;
+}
+
+/* Outline wordmark band — giant hollow display text in continuous
+   horizontal motion. -webkit-text-stroke draws the cerulean outline;
+   fill stays transparent so the band reads as engineering linework. */
+.outline-text {
+  color: transparent;
+  -webkit-text-stroke: 1.5px
+    color-mix(in oklab, var(--color-signal) 55%, transparent);
+}
+.outline-text-solid {
+  color: var(--color-paper);
+  -webkit-text-stroke: 0;
+}
+
 /* Slow precision spin — for dashed ring ornaments. */
 @keyframes spin-slow {
   to { transform: rotate(360deg); }

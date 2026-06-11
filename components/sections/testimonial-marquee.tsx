@@ -61,7 +61,7 @@ export function TestimonialMarquee() {
       {/* Edge-faded marquee container. Both rows live inside so a single hover
           can pause both via the parent's [&:has(...)] selector. */}
       <div
-        className="group/marquee relative"
+        className="group/marquee lean relative"
         style={{
           WebkitMaskImage:
             'linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%)',

@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "auraplex-prod",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["--no-install", "next", "start", "-p", "3199"],
+      "port": 3199
+    }
+  ]
+}
