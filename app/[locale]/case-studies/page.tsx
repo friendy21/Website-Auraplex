@@ -1,8 +1,44 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
 import { Button } from '@/components/primitives/button';
 import { buildMetadata } from '@/lib/seo';
+
+// Real milestones sourced from auraplex.com.my (news/events). Images already
+// shipped in /public/exhibitions. No fabricated customer claims.
+const MILESTONES = [
+  {
+    img: '/exhibitions/mimf-2023.png',
+    date: '13–15 Jul 2023',
+    title: 'Malaysia International Machinery Fair 2023',
+    note: 'MITEC, Kuala Lumpur — one of the largest equipment exhibitions.',
+  },
+  {
+    img: '/exhibitions/mimf-2024.jpg',
+    date: '2024',
+    title: 'Metaltech Hybrid Exhibition 2024',
+    note: 'MITEC, Kuala Lumpur.',
+  },
+  {
+    img: '/exhibitions/mimf-2022.jpg',
+    date: '2022',
+    title: 'Malaysia International Machinery Fair 2022',
+    note: 'Bringing Auraplex machines to the manufacturing floor.',
+  },
+  {
+    img: '/exhibitions/metaltech-2022.jpg',
+    date: '2022',
+    title: 'Metaltech Hybrid Exhibition 2022',
+    note: 'MITEC.',
+  },
+  {
+    img: '/exhibitions/agro-2022.jpg',
+    date: '2022',
+    title: 'Agro Job Fair — MAHA 2022',
+    note: 'Meeting agri-processing manufacturers.',
+  },
+];
 
 export async function generateMetadata({
   params,
@@ -11,9 +47,9 @@ export async function generateMetadata({
 }) {
   const { locale } = await params;
   return buildMetadata({
-    title: 'Case Studies — Auraplex',
+    title: 'Recognition & Milestones — Auraplex',
     description:
-      'Editorial long-form reports from Auraplex installations across ASEAN. New stories quarterly.',
+      'Auraplex SDN BHD — recognised as a best company for innovation at MIMF 2024, and on the floor at Malaysia International Machinery Fair and Metaltech (MITEC, Kuala Lumpur).',
     path: `/${locale}/case-studies`,
   });
 }
@@ -26,11 +62,6 @@ export default async function CaseStudiesPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations('pages.caseStudies');
-  const items = t.raw('expect.items') as {
-    num: string;
-    title: string;
-    body: string;
-  }[];
 
   return (
     <>
@@ -89,39 +120,77 @@ export default async function CaseStudiesPage({
         </div>
       </section>
 
+      {/* ── REAL RECOGNITION (sourced from auraplex.com.my) ── */}
       <section className="mx-auto max-w-[1600px] px-6 lg:px-12 py-32">
-        <div className="grid grid-cols-12 gap-6 mb-16">
-          <Reveal variant="up" className="col-span-12 md:col-span-3">
-            <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-4">
-              — {t('expect.eyebrow')}
+        <div className="grid grid-cols-12 gap-8 lg:gap-6 items-center">
+          <Reveal variant="up" className="col-span-12 lg:col-span-6">
+            <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6">
+              — Recognition · MIMF 2024
+            </div>
+            <h2 className="font-display text-[clamp(2.5rem,6vw,5.5rem)] tracking-[-0.03em] leading-[0.92]">
+              Best company
+              <br />
+              <span className="text-[color:var(--color-signal)]">for innovation.</span>
+            </h2>
+            <p className="mt-8 prose-editorial text-[color:var(--color-steel-soft)] max-w-xl">
+              Auraplex SDN BHD specializes in manufacturing labelling machines,
+              packaging machines, 3D printers and customized machines —
+              recognised at the Malaysia International Machinery Fair as a best
+              company for innovation.
+            </p>
+            <div className="mt-6 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)]">
+              10 Dec 2024 · MITEC, Kuala Lumpur
             </div>
           </Reveal>
-          <Reveal variant="up" delay={100} className="col-span-12 md:col-span-9">
-            <h2 className="font-display text-[clamp(2rem,5vw,4.5rem)] tracking-[-0.02em] leading-[1]">
-              {t('expect.h2Line1')}
-              <br />
-              {t('expect.h2Line2')}
-            </h2>
+          <Reveal variant="up" delay={120} className="col-span-12 lg:col-span-6">
+            <div className="relative aspect-[4/3] overflow-hidden border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)]">
+              <Image
+                src="/exhibitions/mimf-2024.jpg"
+                alt="Auraplex recognised for innovation at MIMF, MITEC Kuala Lumpur"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+              />
+            </div>
           </Reveal>
         </div>
+      </section>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[color:var(--color-neutral-700)] border border-[color:var(--color-neutral-700)]">
-          {items.map((c, i) => (
-            <Reveal
-              key={c.num}
-              variant="up"
-              delay={i * 100}
-              className="bg-[color:var(--color-ink)] p-10 md:p-12"
-            >
-              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-400)] mb-4">
-                {c.num}
-              </div>
-              <h3 className="font-display text-3xl tracking-[-0.01em] mb-3">
-                {c.title}
-              </h3>
-              <p className="text-sm text-[color:var(--color-steel-soft)] leading-relaxed">
-                {c.body}
-              </p>
+      {/* ── REAL MILESTONES TIMELINE ── */}
+      <section className="border-t border-[color:var(--color-neutral-700)] mx-auto max-w-[1600px] px-6 lg:px-12 py-32">
+        <Reveal variant="up">
+          <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-4">
+            — On the floor
+          </div>
+          <h2 className="font-display text-[clamp(2rem,5vw,4.5rem)] tracking-[-0.02em] leading-[1] mb-16">
+            Where we&apos;ve shown up.
+          </h2>
+        </Reveal>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {MILESTONES.map((m, i) => (
+            <Reveal key={m.title} variant="up" delay={i * 80}>
+              <article className="group h-full border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)] overflow-hidden">
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  <Image
+                    src={m.img}
+                    alt={m.title}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 33vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute bottom-3 left-3 font-mono text-[9px] uppercase tracking-[0.25em] text-[color:var(--color-paper)] bg-[color:var(--color-ink)]/70 backdrop-blur-sm px-2 py-1">
+                    {m.date}
+                  </div>
+                </div>
+                <div className="p-6">
+                  <h3 className="font-display text-xl tracking-[-0.01em] leading-snug mb-2">
+                    {m.title}
+                  </h3>
+                  <p className="text-sm text-[color:var(--color-steel-soft)] leading-relaxed">
+                    {m.note}
+                  </p>
+                </div>
+              </article>
             </Reveal>
           ))}
         </div>
