@@ -1,15 +1,6 @@
 'use client';
 
-import { useSyncExternalStore } from 'react';
-
-function getReducedMotion(): boolean {
-  if (typeof window === 'undefined') return false;
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-}
-
-function noop() {
-  return () => {};
-}
+import { useReducedMotion } from '@/lib/hooks';
 
 /**
  * Global atmospheric layers — vignette + signal fog.
@@ -33,11 +24,9 @@ function noop() {
  * rendering atmospheric overlays they explicitly opted out of).
  */
 export function AtmosphereProvider({ children }: { children: React.ReactNode }) {
-  const reduced = useSyncExternalStore(
-    noop,
-    getReducedMotion,
-    () => false,
-  );
+  // Reactive: toggling the OS "reduce motion" setting now adds/removes the
+  // atmosphere layers at runtime (previously read once via a no-op subscribe).
+  const reduced = useReducedMotion();
   const active = !reduced;
 
   return (

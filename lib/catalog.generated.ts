@@ -153,8 +153,14 @@ export const MACHINES_RAW: RawMachine[] = [
     "name": "One Side Wrap Around Side Labelling Machine",
     "rawName": "One_Side_Wrap_Around_Side_Labelling_Machine",
     "category": "labelling",
-    "image": null,
-    "gallery": []
+    "image": "/products/One_Side_Wrap_Around_Side_Labelling_Machine_0.webp",
+    "gallery": [
+      "/products/One_Side_Wrap_Around_Side_Labelling_Machine_0.webp",
+      "/products/One_Side_Wrap_Around_Side_Labelling_Machine_5.webp",
+      "/products/One_Side_Wrap_Around_Side_Labelling_Machine_6.webp",
+      "/products/One_Side_Wrap_Around_Side_Labelling_Machine_4.webp",
+      "/products/One_Side_Wrap_Around_Side_Labelling_Machine_7.webp"
+    ]
   },
   {
     "id": "6462872",
@@ -162,8 +168,16 @@ export const MACHINES_RAW: RawMachine[] = [
     "name": "Top Labelling Machine With Thermal Transfer Printer Auto Feeder",
     "rawName": "Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder",
     "category": "labelling",
-    "image": null,
-    "gallery": []
+    "image": "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_2.webp",
+    "gallery": [
+      "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_2.webp",
+      "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_5.webp",
+      "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_4.webp",
+      "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_3.webp",
+      "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_1.webp",
+      "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_0.webp",
+      "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_6.webp"
+    ]
   },
   {
     "id": "6461971",
@@ -171,8 +185,12 @@ export const MACHINES_RAW: RawMachine[] = [
     "name": "Bottom Labelling Machine",
     "rawName": "Bottom_Labelling_Machine",
     "category": "labelling",
-    "image": null,
-    "gallery": []
+    "image": "/products/Bottom_Labelling_Machine_1.webp",
+    "gallery": [
+      "/products/Bottom_Labelling_Machine_1.webp",
+      "/products/Bottom_Labelling_Machine_2.webp",
+      "/products/Bottom_Labelling_Machine_0.webp"
+    ]
   },
   {
     "id": "6461970",
@@ -180,8 +198,10 @@ export const MACHINES_RAW: RawMachine[] = [
     "name": "Print Apply Labeller",
     "rawName": "Print_Apply_Labeller",
     "category": "labelling",
-    "image": null,
-    "gallery": []
+    "image": "/products/Print_Apply_Labeller_0.webp",
+    "gallery": [
+      "/products/Print_Apply_Labeller_0.webp"
+    ]
   },
   {
     "id": "6461969",
@@ -189,8 +209,14 @@ export const MACHINES_RAW: RawMachine[] = [
     "name": "Flat Labelling Machine",
     "rawName": "Flat_Labelling_Machine",
     "category": "labelling",
-    "image": null,
-    "gallery": []
+    "image": "/products/Flat_Labelling_Machine_3.webp",
+    "gallery": [
+      "/products/Flat_Labelling_Machine_3.webp",
+      "/products/Flat_Labelling_Machine_1.webp",
+      "/products/Flat_Labelling_Machine_0.webp",
+      "/products/Flat_Labelling_Machine_2.webp",
+      "/products/Flat_Labelling_Machine_4.webp"
+    ]
   },
   {
     "id": "6461968",
@@ -198,8 +224,14 @@ export const MACHINES_RAW: RawMachine[] = [
     "name": "Top Labelling Machine",
     "rawName": "Top_Labelling_Machine",
     "category": "labelling",
-    "image": null,
-    "gallery": []
+    "image": "/products/Top_Labelling_Machine_3.webp",
+    "gallery": [
+      "/products/Top_Labelling_Machine_3.webp",
+      "/products/Top_Labelling_Machine_1.webp",
+      "/products/Top_Labelling_Machine_0.webp",
+      "/products/Top_Labelling_Machine_2.webp",
+      "/products/Top_Labelling_Machine_4.webp"
+    ]
   },
   {
     "id": "6461967",
@@ -207,8 +239,16 @@ export const MACHINES_RAW: RawMachine[] = [
     "name": "Top Labelling Machine With Thermal Transfer Printer Auto Feeder V2",
     "rawName": "Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2",
     "category": "labelling",
-    "image": null,
-    "gallery": []
+    "image": "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_4.webp",
+    "gallery": [
+      "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_4.webp",
+      "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_2.webp",
+      "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_1.webp",
+      "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_3.webp",
+      "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_0.webp",
+      "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_6.webp",
+      "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_5.webp"
+    ]
   },
   {
     "id": "6461966",
@@ -216,8 +256,15 @@ export const MACHINES_RAW: RawMachine[] = [
     "name": "Customized Bottom Labelling Machine",
     "rawName": "Customized_Bottom_Labelling_Machine",
     "category": "labelling",
-    "image": null,
-    "gallery": []
+    "image": "/products/Customized_Bottom_Labelling_Machine_1.webp",
+    "gallery": [
+      "/products/Customized_Bottom_Labelling_Machine_1.webp",
+      "/products/Customized_Bottom_Labelling_Machine_0.webp",
+      "/products/Customized_Bottom_Labelling_Machine_3.webp",
+      "/products/Customized_Bottom_Labelling_Machine_5.webp",
+      "/products/Customized_Bottom_Labelling_Machine_2.webp",
+      "/products/Customized_Bottom_Labelling_Machine_4.webp"
+    ]
   },
   {
     "id": "6461965",
@@ -225,8 +272,15 @@ export const MACHINES_RAW: RawMachine[] = [
     "name": "Egg Tray Labelling Machine",
     "rawName": "Egg_Tray_Labelling_Machine",
     "category": "labelling",
-    "image": null,
-    "gallery": []
+    "image": "/products/Egg_Tray_Labelling_Machine_2.webp",
+    "gallery": [
+      "/products/Egg_Tray_Labelling_Machine_2.webp",
+      "/products/Egg_Tray_Labelling_Machine_5.webp",
+      "/products/Egg_Tray_Labelling_Machine_0.webp",
+      "/products/Egg_Tray_Labelling_Machine_4.webp",
+      "/products/Egg_Tray_Labelling_Machine_1.webp",
+      "/products/Egg_Tray_Labelling_Machine_3.webp"
+    ]
   },
   {
     "id": "6461964",
@@ -373,8 +427,12 @@ export const MACHINES_RAW: RawMachine[] = [
     "name": "AR600 3D Printer",
     "rawName": "AR600_3D_Printer",
     "category": "automation",
-    "image": null,
-    "gallery": []
+    "image": "/products/AR600_3D_Printer_1.webp",
+    "gallery": [
+      "/products/AR600_3D_Printer_1.webp",
+      "/products/AR600_3D_Printer_0.webp",
+      "/products/AR600_3D_Printer_2.webp"
+    ]
   },
   {
     "id": "4788352",
@@ -382,8 +440,10 @@ export const MACHINES_RAW: RawMachine[] = [
     "name": "AR320 3D Printer",
     "rawName": "AR320_3D_Printer",
     "category": "automation",
-    "image": null,
-    "gallery": []
+    "image": "/products/AR320_3D_Printer_0.webp",
+    "gallery": [
+      "/products/AR320_3D_Printer_0.webp"
+    ]
   },
   {
     "id": "4788349",
@@ -391,8 +451,10 @@ export const MACHINES_RAW: RawMachine[] = [
     "name": "AR220 3D Printer",
     "rawName": "AR220_3D_Printer",
     "category": "automation",
-    "image": null,
-    "gallery": []
+    "image": "/products/AR220_3D_Printer_0.webp",
+    "gallery": [
+      "/products/AR220_3D_Printer_0.webp"
+    ]
   },
   {
     "id": "4788387",

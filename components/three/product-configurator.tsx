@@ -3,11 +3,30 @@
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera, Html } from '@react-three/drei';
 import { EffectComposer, Bloom, ToneMapping } from '@react-three/postprocessing';
-import { Suspense, useState, useMemo } from 'react';
+import { Component, Suspense, useState, useMemo, type ReactNode } from 'react';
 import { MachineModel } from './machine-model';
 import { FactoryEnvironment } from './factory-environment';
 import { Button } from '@/components/primitives/button';
 import { formatRM } from '@/lib/utils';
+import { usePerfTier } from '@/lib/hooks';
+
+/**
+ * Catches GLTF load/parse failures inside the Canvas so a bad or missing
+ * model degrades to a quiet fallback instead of crashing the whole page to
+ * the route error boundary.
+ */
+class ModelErrorBoundary extends Component<
+  { fallback: ReactNode; children: ReactNode },
+  { failed: boolean }
+> {
+  state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  render() {
+    return this.state.failed ? this.props.fallback : this.props.children;
+  }
+}
 
 type Config = {
   containerShape: 'round' | 'oval' | 'square';
@@ -30,8 +49,20 @@ const DEFAULTS: Config = {
 const BASE_PRICE_MONTHLY = 1800;
 const ADD_COST = { vision: 400, rejectStation: 300, lineIntegration: 500 };
 
-export function ProductConfigurator({ modelUrl, productName }: { modelUrl: string; productName: string }) {
+export function ProductConfigurator({
+  modelUrl,
+  productName,
+  hasModel,
+}: {
+  modelUrl: string;
+  productName: string;
+  hasModel: boolean;
+}) {
   const [config, setConfig] = useState<Config>(DEFAULTS);
+  const tier = usePerfTier();
+  // Bloom + tone-mapping post-processing is expensive; skip it on phone-class
+  // / low-power devices and when the user prefers reduced motion.
+  const heavyEffects = tier === 'full';
 
   const monthlyPrice = useMemo(() => {
     let p = BASE_PRICE_MONTHLY;
@@ -89,18 +120,26 @@ export function ProductConfigurator({ modelUrl, productName }: { modelUrl: strin
       </aside>
 
       <main className="col-span-12 md:col-span-6 relative">
-        <Canvas shadows dpr={[1, 2]} gl={{ antialias: true }}>
-          <PerspectiveCamera makeDefault position={[3, 2, 5]} fov={35} />
-          <OrbitControls enablePan={false} minDistance={3} maxDistance={10} maxPolarAngle={Math.PI / 2} />
-          <Suspense fallback={<Html center><span className="font-mono text-sm">Loading model…</span></Html>}>
-            <FactoryEnvironment />
-            <MachineModel url={modelUrl} autoRotate={false} highlightPart={config.vision ? 'vision-system' : null} />
-            <EffectComposer>
-              <Bloom intensity={0.4} luminanceThreshold={0.8} mipmapBlur />
-              <ToneMapping />
-            </EffectComposer>
-          </Suspense>
-        </Canvas>
+        {hasModel ? (
+          <Canvas shadows dpr={heavyEffects ? [1, 2] : [1, 1.5]} gl={{ antialias: true }}>
+            <PerspectiveCamera makeDefault position={[3, 2, 5]} fov={35} />
+            <OrbitControls enablePan={false} minDistance={3} maxDistance={10} maxPolarAngle={Math.PI / 2} />
+            <Suspense fallback={<Html center><span className="font-mono text-sm">Loading model…</span></Html>}>
+              <FactoryEnvironment />
+              <ModelErrorBoundary fallback={null}>
+                <MachineModel url={modelUrl} autoRotate={false} highlightPart={config.vision ? 'vision-system' : null} />
+              </ModelErrorBoundary>
+              {heavyEffects && (
+                <EffectComposer>
+                  <Bloom intensity={0.4} luminanceThreshold={0.8} mipmapBlur />
+                  <ToneMapping />
+                </EffectComposer>
+              )}
+            </Suspense>
+          </Canvas>
+        ) : (
+          <ModelPlaceholder productName={productName} />
+        )}
       </main>
 
       <aside className="col-span-12 md:col-span-3 border-l border-[color:var(--color-steel)]/30 p-6 overflow-y-auto flex flex-col">
@@ -123,6 +162,26 @@ export function ProductConfigurator({ modelUrl, productName }: { modelUrl: strin
           <Button variant="ghost" className="w-full">Share configuration</Button>
         </div>
       </aside>
+    </div>
+  );
+}
+
+function ModelPlaceholder({ productName }: { productName: string }) {
+  return (
+    <div className="h-full min-h-[50vh] md:min-h-[100dvh] flex flex-col items-center justify-center gap-4 p-8 text-center bg-[color:var(--color-neutral-800)]/30">
+      <div
+        className="h-16 w-16 rounded-full border border-[color:var(--color-signal)]/40 flex items-center justify-center font-mono text-xl text-[color:var(--color-signal)]"
+        aria-hidden="true"
+      >
+        ◇
+      </div>
+      <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)]">
+        3D preview coming soon
+      </div>
+      <p className="max-w-xs font-mono text-xs text-[color:var(--color-steel)] leading-relaxed">
+        The interactive model for the {productName} is in production. Configure
+        your spec on the left — the indicative quote updates live.
+      </p>
     </div>
   );
 }

@@ -24,6 +24,7 @@ const Configurator = dynamic(
 export function ClientConfigurator(props: {
   modelUrl: string;
   productName: string;
+  hasModel: boolean;
 }) {
   return <Configurator {...props} />;
 }

@@ -31,7 +31,11 @@ export const ContactSchema = z.object({
   locale: z.enum(['en', 'ms', 'zh']).default('en'),
 });
 
-export type ActionState = { ok: boolean; error?: string };
+export type ActionState = {
+  ok: boolean;
+  error?: string;
+  fieldErrors?: Record<string, string[]>;
+};
 
 // Inbox routing — each intent has its own subject prefix so the team
 // can filter/route in Resend. The `to:` stays the same (single inbox)
@@ -50,14 +54,28 @@ export async function submitContact(
   formData: FormData,
 ): Promise<ActionState> {
   const parsed = ContactSchema.safeParse(Object.fromEntries(formData));
-  if (!parsed.success) return { ok: false, error: 'Invalid input' };
+  if (!parsed.success) {
+    return {
+      ok: false,
+      error: 'Please check the highlighted fields.',
+      fieldErrors: parsed.error.flatten().fieldErrors,
+    };
+  }
 
+  // Persist the lead best-effort — a KV outage must not block the emails.
+  let leadId = 'unstored';
   try {
     const lead = await storeLead({
       kind: 'contact',
       locale: parsed.data.locale,
       data: parsed.data,
     });
+    leadId = lead.id;
+  } catch {
+    // KV unconfigured / unreachable — continue to email.
+  }
+
+  try {
     await resend.emails.send({
       from: 'Auraplex <hello@auraplex.my>',
       to: ['hello@auraplex.my'],
@@ -66,7 +84,7 @@ export async function submitContact(
       react: NewLeadInternal({
         kind: 'contact',
         data: parsed.data,
-        leadId: lead.id,
+        leadId,
       }),
     });
     await resend.emails.send({
@@ -76,7 +94,8 @@ export async function submitContact(
       react: ContactAck({ name: parsed.data.name }),
     });
     return { ok: true };
-  } catch (err) {
-    return { ok: false, error: err instanceof Error ? err.message : 'Unknown' };
+  } catch {
+    // Don't leak provider internals to the client.
+    return { ok: false, error: 'Could not send right now. Please try again or WhatsApp us.' };
   }
 }

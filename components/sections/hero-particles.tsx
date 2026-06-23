@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { getPerfTier } from '@/lib/hooks';
 
 /**
  * HeroParticles — procedural Canvas2D constellation.
@@ -15,8 +16,15 @@ import { useEffect, useRef } from 'react';
  * footage. It is intentionally subtle so the typography remains primary.
  */
 
-const PARTICLE_COUNT = 120;
-const CONNECTION_DIST = 140;
+// Per-tier tuning. The connection pass is O(n²), so halving the count on
+// phone-class hardware cuts ~75% of the per-frame work; the glow pass (a
+// per-particle radial gradient) is the next most expensive thing, so it's
+// dropped on 'lite' too. 'minimal' (reduced-motion) skips the loop entirely.
+const TIER_CONFIG = {
+  full: { count: 120, connectionDist: 140, glow: true, mouse: true },
+  lite: { count: 45, connectionDist: 110, glow: false, mouse: false },
+} as const;
+
 const MOUSE_RADIUS = 220;
 const SIGNAL = { r: 39, g: 150, b: 223 }; // #2796df
 
@@ -44,6 +52,12 @@ export function HeroParticles() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    // Degrade (or disable) based on device capability — keeps phones and
+    // reduced-motion users out of a 60fps O(n²) canvas loop.
+    const tier = getPerfTier();
+    if (tier === 'minimal') return; // reduced-motion: leave the canvas blank
+    const cfg = TIER_CONFIG[tier];
+
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let width = 0;
     let height = 0;
@@ -61,7 +75,7 @@ export function HeroParticles() {
     }
 
     function initParticles() {
-      particlesRef.current = Array.from({ length: PARTICLE_COUNT }, () => ({
+      particlesRef.current = Array.from({ length: cfg.count }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
         vx: (Math.random() - 0.5) * 0.25,
@@ -100,7 +114,7 @@ export function HeroParticles() {
         const dym = my - p.y;
         const distMouse = Math.hypot(dxm, dym);
         let mouseBoost = 0;
-        if (distMouse < MOUSE_RADIUS) {
+        if (cfg.mouse && distMouse < MOUSE_RADIUS) {
           mouseBoost = 1 - distMouse / MOUSE_RADIUS;
           p.vx += dxm * 0.00005;
           p.vy += dym * 0.00005;
@@ -118,8 +132,8 @@ export function HeroParticles() {
           const dx = p.x - q.x;
           const dy = p.y - q.y;
           const dist = Math.hypot(dx, dy);
-          if (dist < CONNECTION_DIST) {
-            const opacity = (1 - dist / CONNECTION_DIST) * 0.18 * (p.alpha + q.alpha) * 0.5;
+          if (dist < cfg.connectionDist) {
+            const opacity = (1 - dist / cfg.connectionDist) * 0.18 * (p.alpha + q.alpha) * 0.5;
             ctx!.beginPath();
             ctx!.moveTo(p.x, p.y);
             ctx!.lineTo(q.x, q.y);
@@ -138,8 +152,9 @@ export function HeroParticles() {
         ctx!.fillStyle = `rgba(${SIGNAL.r}, ${SIGNAL.g}, ${SIGNAL.b}, ${Math.min(alpha, 1)})`;
         ctx!.fill();
 
-        // Subtle glow on larger particles
-        if (pulseR > 1.2) {
+        // Subtle glow on larger particles (skipped on lite — the radial
+        // gradient allocation per particle is the heaviest per-frame op).
+        if (cfg.glow && pulseR > 1.2) {
           ctx!.beginPath();
           ctx!.arc(p.x, p.y, pulseR * 3, 0, Math.PI * 2);
           const grad = ctx!.createRadialGradient(p.x, p.y, 0, p.x, p.y, pulseR * 3);

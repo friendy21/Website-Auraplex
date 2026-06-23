@@ -1,16 +1,10 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { setRequestLocale } from 'next-intl/server';
 import { Button } from '@/components/primitives/button';
 import { QuoteForm } from '@/components/forms/quote-form';
 import { SpecSheetGate } from '@/components/forms/spec-sheet-gate';
-// RoiCalculator is intentionally unwired — the original implementation
-// embedded fabricated assumptions that don't reflect Auraplex's real
-// pricing model. When the sales team provides real per-machine numbers,
-// reconnect a rewritten version here.
-// import { RoiCalculator } from '@/components/sections/roi-calculator';
-import { ProductHeroImage } from '@/components/sections/product-hero-image';
+import { ProductGallery } from '@/components/sections/product-gallery';
 import { SpecTable } from '@/components/sections/spec-table';
 import {
   buildMetadata,
@@ -19,6 +13,7 @@ import {
 } from '@/lib/seo';
 import { formatRM, whatsappLink } from '@/lib/utils';
 import { MACHINES, getMachine, categoryLabel } from '@/lib/catalog';
+import { hasMachineModel } from '@/lib/models';
 
 export async function generateStaticParams() {
   return MACHINES.map((m) => ({ slug: m.slug }));
@@ -60,8 +55,8 @@ export default async function ProductPage({
             productSchema({
               name: p.name,
               description: p.summary,
-              image: p.image ?? `https://auraplex.my/og/default.png`,
-              monthlyPrice: p.monthlyPrice ?? 0,
+              image: p.image,
+              monthlyPrice: p.monthlyPrice,
               slug,
             }),
           ),
@@ -85,7 +80,7 @@ export default async function ProductPage({
             info column scrolls past it. lg:top accounts for the header. */}
         <div className="col-span-12 lg:col-span-7 lg:sticky lg:top-24 self-start">
           {p.image ? (
-            <ProductHeroImage src={p.image} alt={p.name} productId={p.id} />
+            <ProductGallery images={p.gallery} alt={p.name} productId={p.id} />
           ) : (
             <div
               className="relative aspect-[4/3] overflow-hidden border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)] flex items-center justify-center"
@@ -93,30 +88,6 @@ export default async function ProductPage({
             >
               <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-neutral-400)]">
                 Photography pending
-              </div>
-            </div>
-          )}
-
-          {p.gallery.length > 1 && (
-            <div className="mt-3 space-y-3">
-              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)]">
-                Gallery · {p.gallery.length} shots
-              </div>
-              <div className="grid grid-cols-4 md:grid-cols-6 gap-3">
-                {p.gallery.slice(1).map((src) => (
-                  <div
-                    key={src}
-                    className="relative aspect-square border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)] group cursor-pointer"
-                  >
-                    <Image
-                      src={src}
-                      alt=""
-                      fill
-                      sizes="(max-width: 768px) 25vw, 12vw"
-                      className="object-contain p-2 transition-transform duration-300 group-hover:scale-[1.05]"
-                    />
-                  </div>
-                ))}
               </div>
             </div>
           )}
@@ -162,9 +133,11 @@ export default async function ProductPage({
             <Button asChild>
               <Link href="#quote">Get a quote →</Link>
             </Button>
-            <Button asChild variant="ghost">
-              <Link href={`/products/${slug}/configurator`}>3D configurator →</Link>
-            </Button>
+            {hasMachineModel(slug) && (
+              <Button asChild variant="ghost">
+                <Link href={`/products/${slug}/configurator`}>3D configurator →</Link>
+              </Button>
+            )}
             <Button asChild variant="ghost">
               <a
                 href={whatsappLink(`Interested in the ${p.name}`)}

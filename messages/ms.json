@@ -217,6 +217,8 @@
     "machineFinderError": "— Sambungan terputus. Cuba lagi, atau WhatsApp kami jika berterusan.",
     "machineFinderAiLabel": "Auraplex AI",
     "machineFinderUserLabel": "Anda",
+    "machineFinderRecommendation": "Mesin disyorkan",
+    "machineFinderViewMachine": "Lihat mesin",
     "specSheetCta": "Hantar PDF kepada saya",
     "send": "Hantar",
     "intent": {

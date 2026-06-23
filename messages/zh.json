@@ -217,6 +217,8 @@
     "machineFinderError": "— 连接中断。请重试,或通过 WhatsApp 联系我们。",
     "machineFinderAiLabel": "Auraplex AI",
     "machineFinderUserLabel": "您",
+    "machineFinderRecommendation": "推荐机器",
+    "machineFinderViewMachine": "查看机器",
     "specSheetCta": "把 PDF 发给我",
     "send": "发送",
     "intent": {

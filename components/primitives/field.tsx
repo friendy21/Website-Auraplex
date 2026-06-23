@@ -13,6 +13,8 @@ type Props = {
   defaultValue?: string;
   /** Optional helper text under the field. */
   helper?: ReactNode;
+  /** Server-side validation error for this field (from zod flatten). */
+  error?: string;
 };
 
 /**
@@ -34,17 +36,24 @@ export function Field({
   rows = 4,
   defaultValue = '',
   helper,
+  error,
 }: Props) {
   const id = useId();
   const [value, setValue] = useState(defaultValue);
   const [focused, setFocused] = useState(false);
   const floated = focused || value.length > 0;
 
+  const errorId = error ? `${id}-error` : undefined;
+  const helperId = helper ? `${id}-helper` : undefined;
+  const describedBy = errorId ?? helperId;
+
   const sharedProps = {
     id,
     name,
     required,
     value,
+    'aria-invalid': error ? true : undefined,
+    'aria-describedby': describedBy,
     onChange: (
       e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => setValue(e.target.value),
@@ -93,8 +102,15 @@ export function Field({
         />
       )}
 
-      {/* Static bottom border — always visible at low opacity */}
-      <div className="absolute left-0 right-0 bottom-2 h-px bg-[color:var(--color-neutral-700)]" />
+      {/* Static bottom border — always visible at low opacity. Turns alert
+          when the field has a validation error. */}
+      <div
+        className={`absolute left-0 right-0 bottom-2 h-px ${
+          error
+            ? 'bg-[color:var(--color-alert)]'
+            : 'bg-[color:var(--color-neutral-700)]'
+        }`}
+      />
 
       {/* Active bottom border — draws in on focus */}
       <motion.div
@@ -102,13 +118,28 @@ export function Field({
         animate={{ scaleX: focused ? 1 : 0 }}
         transition={{ duration: 0.35, ease: [0.65, 0, 0.35, 1] }}
         style={{ originX: 0 }}
-        className="absolute left-0 right-0 bottom-2 h-px bg-[color:var(--color-signal)]"
+        className={`absolute left-0 right-0 bottom-2 h-px ${
+          error ? 'bg-[color:var(--color-alert)]' : 'bg-[color:var(--color-signal)]'
+        }`}
       />
 
-      {helper && (
-        <p className="mt-2 font-mono text-[10px] uppercase tracking-widest text-[color:var(--color-steel)]">
-          {helper}
+      {error ? (
+        <p
+          id={errorId}
+          role="alert"
+          className="mt-2 font-mono text-[10px] uppercase tracking-widest text-[color:var(--color-alert)]"
+        >
+          {error}
         </p>
+      ) : (
+        helper && (
+          <p
+            id={helperId}
+            className="mt-2 font-mono text-[10px] uppercase tracking-widest text-[color:var(--color-steel)]"
+          >
+            {helper}
+          </p>
+        )
       )}
     </div>
   );

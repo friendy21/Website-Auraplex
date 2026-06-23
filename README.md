@@ -1,57 +1,77 @@
 # Auraplex — v2.0
 
-Industrial-editorial website for Auraplex SDN BHD. Next.js 16, React 19, Tailwind v4, Motion 12, R3F + Theatre.js, Sanity CMS, trilingual (EN/BM/ZH).
+Industrial-editorial website for Auraplex SDN BHD. Next.js 16, React 19, Tailwind v4, Motion 12, GSAP + Lenis, React Three Fiber, Sanity CMS, trilingual (EN/BM/ZH).
 
 ## Quickstart
 
 ```bash
 pnpm install
-cp .env.example .env.local      # fill in keys
+cp .env.example .env.local      # fill in keys (all optional for local dev)
 pnpm dev
 ```
 
-Visit http://localhost:3000 — middleware redirects to `/en`.
+Visit http://localhost:3000 — the proxy redirects to `/en`.
+
+> The app runs without any keys: forms, the Machine Finder and the
+> spec-sheet gate degrade gracefully when Resend / Vercel KV / Anthropic /
+> Sanity aren't configured (see "Runtime data" below).
 
 ## Structure
 
 ```
 app/[locale]/        — App Router pages (en, ms, zh)
-actions/             — React Server Actions (forms, AI)
-components/          — primitives, sections, motion, three, forms, layout
-lib/                 — sanity, seo, kv, animations, utils, i18n
-messages/            — i18n JSON
-sanity/              — Studio schemas
-styles/              — globals.css with @theme tokens, view transitions, scroll-driven anims
-public/              — fonts/, video/, models/, products/
+actions/             — React Server Actions (forms, AI machine finder)
+components/          — primitives, sections, motion, three, forms, layout, providers
+lib/                 — catalog, hooks (perf tier), models, sanity, seo, kv, news, animations, utils, i18n
+messages/            — i18n JSON (en/ms/zh — kept key-for-key in sync)
+sanity/              — Studio schemas (optional CMS)
+styles/              — globals.css with @theme tokens + view transitions
+public/              — brand/, products/, clients/, exhibitions/, floor/  (models/ optional)
 ```
+
+## Runtime data
+
+The machine catalogue is the committed source of truth in **`lib/catalog.ts`**
+(generated into `lib/catalog.generated.ts` by `pnpm catalog`). Sanity is an
+**optional** enhancement — when `NEXT_PUBLIC_SANITY_PROJECT_ID` is unset the
+site reads the local catalogue and the CMS-backed features no-op cleanly.
 
 ## Stack notes
 
 - **Tailwind v4** — CSS-first config in `styles/globals.css` using `@theme`. OKLCH tokens.
-- **next-intl** — `/[locale]` segment with `en | ms | zh`. Middleware handles routing.
-- **View Transitions API** — `viewTransitionName` on product images for shared-element morph.
-- **CSS scroll-driven** — `.reveal`, `.reveal-up`, `.reveal-scale` classes drive animations off the compositor.
-- **Motion 12** — UI micro-interactions only.
-- **GSAP** — pinned scroll narrative on homepage (`<ScrollNarrative>`), kinetic heading variable-weight reveal.
-- **R3F** — homepage shader background, product configurator at `/products/[slug]/configurator`.
-- **Sanity** — products, case studies, settings. Studio at `/studio` (after `sanity:dev`).
-- **Resend** — quote/contact confirmations + internal notifications.
-- **Vercel KV** — lead storage, ticker counters.
-- **Anthropic Claude** — Machine Finder, streamed via Vercel AI SDK.
+- **next-intl** — `/[locale]` segment with `en | ms | zh`. `proxy.ts` handles routing.
+- **View Transitions API** — `viewTransitionName` on product images for the grid → detail shared-element morph.
+- **Motion 12** — scroll-into-view reveals (`components/motion/reveal.tsx`, `useInView`), the animated product gallery, and UI micro-interactions. Reduced-motion aware.
+- **GSAP + Lenis** — Lenis smooth scroll (`lenis-provider`) and pinned/scrubbed scroll sequences (`scroll-narrative`, `zoom-transition`, `horizontal-scroll`). Disabled under reduced motion.
+- **Performance tiers** — `lib/hooks.ts` exposes `getPerfTier()` / `usePerfTier()` (`full | lite | minimal`) from reduced-motion + pointer + CPU/memory/Save-Data hints. Heavy effects (hero particle constellation, configurator post-processing) downgrade or switch off on phones / low-power devices.
+- **R3F** — the product configurator at `/products/[slug]/configurator`. It loads `public/models/<slug>.glb` when present and otherwise shows a graceful "3D preview coming soon" placeholder (the CTA is hidden until a model exists). Lazy-loaded, mobile-gated, wrapped in an error boundary.
+- **Sanity** — optional CMS for products / case studies / settings. Studio at `/studio`.
+- **Resend** — quote / contact / internship / spec-sheet confirmations + internal notifications.
+- **Vercel KV** — lead storage and ticker counters.
+- **Anthropic Claude** — Machine Finder, streamed via the Vercel AI SDK; parses a recommendation and links to the matching product.
 
-## Assets to drop in
+## Assets to drop in (optional)
 
-- `/public/fonts/` — PP Editorial New, Inter, Berkeley Mono `.woff2`
-- `/public/video/factory-hero.mp4` + poster
-- `/public/video/about-reel.mp4` + poster
-- `/public/models/solo-wrap.glb` (Draco-compressed)
-- `/public/products/*.jpg` for category hero images
-- `/public/case-studies/*.jpg`
-- `/public/og/default.png` (1200×630)
+- `public/models/<slug>.glb` — per-machine 3D models (Draco-compressed). The configurator auto-detects and enables itself per slug. Filenames must match the catalogue slug.
+- `public/specs/<slug>.pdf` — real spec sheets (the spec-sheet email currently links to the product page until these exist).
+- Real photography for the 7 machines still without images (see `MASTER_PLAN.md` §11).
+
+> OG images are generated dynamically by `/api/og` — there is **no** static
+> `og/default.png` to supply. Fonts are configured in `styles/fonts.css`
+> (currently Fraunces / JetBrains Mono as licensed stand-ins).
+
+## Audit & roadmap
+
+A full audit and phased remediation plan lives in **`MASTER_PLAN.md`**.
+Phases 0–2 (crash fixes, form a11y/robustness, cleanup) are complete; the
+remaining items are content/business decisions (production domain, the
+homepage ticker stats, testimonials/client logos, case studies, legal review).
 
 ## Deploy
 
-Vercel. Region: `sin1` (Singapore). Set env vars from `.env.example`. KV + Sanity + Resend + Anthropic keys required.
+Vercel. Region: `sin1` (Singapore). Set env vars from `.env.example`. The build
+runs `pnpm catalog` (prebuild) and tolerates missing keys; configure
+KV + Sanity + Resend + Anthropic to enable the corresponding features.
 
 ## Performance budget
 

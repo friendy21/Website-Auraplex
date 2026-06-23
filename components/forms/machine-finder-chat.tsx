@@ -1,14 +1,38 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { AnimatePresence, motion } from 'motion/react';
 import { readStreamableValue } from 'ai/rsc';
-import { Send } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import { machineFinderStream } from '@/actions/machine-finder';
+import { ArrowRight, Send } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
+import {
+  machineFinderStream,
+  recordMachineFinderLead,
+} from '@/actions/machine-finder';
+import { getMachine } from '@/lib/catalog';
 import { Button } from '@/components/primitives/button';
 
 type Msg = { role: 'user' | 'assistant'; content: string };
+
+type Recommendation = { slug: string; name: string };
+
+/** Pull the model's trailing ```json {recommendedSlug,...} ``` block, if any. */
+function extractRecommendedSlug(text: string): string | null {
+  const match = text.match(/```json\s*([\s\S]*?)```/i);
+  if (!match) return null;
+  try {
+    const obj = JSON.parse(match[1].trim());
+    return typeof obj?.recommendedSlug === 'string' ? obj.recommendedSlug : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Hide the machine-readable JSON block from the human-facing transcript. */
+function stripJsonBlock(text: string): string {
+  return text.replace(/```json[\s\S]*?```/gi, '').trimEnd();
+}
 
 /**
  * Streaming chat UI for the Machine Finder.
@@ -22,6 +46,7 @@ type Msg = { role: 'user' | 'assistant'; content: string };
  */
 export function MachineFinderChat() {
   const t = useTranslations('forms');
+  const locale = useLocale();
   const [messages, setMessages] = useState<Msg[]>([
     {
       role: 'assistant',
@@ -30,6 +55,9 @@ export function MachineFinderChat() {
   ]);
   const [input, setInput] = useState('');
   const [streaming, setStreaming] = useState(false);
+  const [recommendation, setRecommendation] = useState<Recommendation | null>(
+    null,
+  );
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -37,7 +65,7 @@ export function MachineFinderChat() {
   useEffect(() => {
     if (!scrollRef.current) return;
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-  }, [messages]);
+  }, [messages, recommendation]);
 
   async function send() {
     if (!input.trim() || streaming) return;
@@ -53,6 +81,19 @@ export function MachineFinderChat() {
       for await (const chunk of readStreamableValue(output)) {
         acc += chunk;
         setMessages([...history, { role: 'assistant', content: acc }]);
+      }
+
+      // If the model emitted a recommendation, surface it as a real CTA and
+      // record the session as a lead (best-effort).
+      const slug = extractRecommendedSlug(acc);
+      const machine = slug ? getMachine(slug) : null;
+      if (machine) {
+        setRecommendation({ slug: machine.slug, name: machine.name });
+        void recordMachineFinderLead({
+          recommendedSlug: machine.slug,
+          locale,
+          transcript: [...history, { role: 'assistant', content: acc }],
+        });
       }
     } catch {
       setMessages([
@@ -90,12 +131,36 @@ export function MachineFinderChat() {
             <MessageBubble
               key={i}
               role={m.role}
-              content={m.content}
+              content={m.role === 'assistant' ? stripJsonBlock(m.content) : m.content}
               isLast={i === messages.length - 1}
               streaming={streaming && i === messages.length - 1}
             />
           ))}
         </AnimatePresence>
+
+        {recommendation && !streaming && (
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="border border-[color:var(--color-signal)]/40 bg-[color:var(--color-signal)]/5 p-5"
+          >
+            <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-2">
+              {t('machineFinderRecommendation')}
+            </div>
+            <div className="flex items-center justify-between gap-4 flex-wrap">
+              <div className="font-display text-xl tracking-[-0.01em]">
+                {recommendation.name}
+              </div>
+              <Button asChild size="sm">
+                <Link href={`/${locale}/products/${recommendation.slug}`}>
+                  {t('machineFinderViewMachine')}
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+          </motion.div>
+        )}
       </div>
 
       {/* Composer */}

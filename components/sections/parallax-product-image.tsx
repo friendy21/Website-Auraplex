@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState, useRef, type CSSProperties } from 'react';
+import { useEffect, useRef, type CSSProperties } from 'react';
 
 type Props = {
   src: string;
@@ -17,11 +17,12 @@ type Props = {
  *
  * On desktop (fine pointer), the image's focal point follows the cursor's
  * position within the card bounds — within a small ±4% range so it reads as
- * subtle parallax, not a swing. Combined with the existing scale-on-hover
- * the image feels alive without being theatrical.
+ * subtle parallax, not a swing.
  *
- * On touch devices (pointerType === 'touch'), the handler returns early so
- * we never bind handlers that would just fight with scroll.
+ * Perf: the focal point is written directly to the DOM node inside a single
+ * rAF per frame (no React state → no re-render per pointer move), and the
+ * write is coalesced so rapid pointer events don't queue redundant frames.
+ * On touch devices the handler returns early so we never fight with scroll.
  */
 export function ParallaxProductImage({
   src,
@@ -30,7 +31,10 @@ export function ParallaxProductImage({
   sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw',
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
-  const [pos, setPos] = useState({ x: 50, y: 50 });
+  const imgRef = useRef<HTMLImageElement>(null);
+  const rafRef = useRef<number>(0);
+
+  useEffect(() => () => cancelAnimationFrame(rafRef.current), []);
 
   function onPointerMove(e: React.PointerEvent<HTMLDivElement>) {
     if (e.pointerType === 'touch') return;
@@ -39,16 +43,20 @@ export function ParallaxProductImage({
     // Map cursor to 46–54% range — keeps the parallax restrained.
     const x = 50 + (((e.clientX - r.left) / r.width - 0.5) * 8);
     const y = 50 + (((e.clientY - r.top) / r.height - 0.5) * 8);
-    setPos({ x, y });
+    cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(() => {
+      if (imgRef.current) imgRef.current.style.objectPosition = `${x}% ${y}%`;
+    });
   }
 
   function onPointerLeave() {
-    setPos({ x: 50, y: 50 });
+    cancelAnimationFrame(rafRef.current);
+    if (imgRef.current) imgRef.current.style.objectPosition = '50% 50%';
   }
 
   const style: CSSProperties = {
     viewTransitionName: `product-${productId}`,
-    objectPosition: `${pos.x}% ${pos.y}%`,
+    objectPosition: '50% 50%',
     transition: 'object-position 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
   };
 
@@ -60,6 +68,7 @@ export function ParallaxProductImage({
       className="absolute inset-0"
     >
       <Image
+        ref={imgRef}
         src={src}
         alt={alt}
         fill

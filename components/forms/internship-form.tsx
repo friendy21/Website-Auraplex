@@ -99,12 +99,12 @@ export function InternshipForm({ locale }: { locale: string }) {
       </fieldset>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
-        <Field label={tCommon('name')} name="name" required />
-        <Field label={tCommon('email')} name="email" type="email" required />
+        <Field label={tCommon('name')} name="name" required error={state.fieldErrors?.name?.[0]} />
+        <Field label={tCommon('email')} name="email" type="email" required error={state.fieldErrors?.email?.[0]} />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
-        <Field label={tCommon('phone')} name="phone" />
-        <Field label={t('university')} name="university" required />
+        <Field label={tCommon('phone')} name="phone" error={state.fieldErrors?.phone?.[0]} />
+        <Field label={t('university')} name="university" required error={state.fieldErrors?.university?.[0]} />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
         <Field
@@ -112,12 +112,14 @@ export function InternshipForm({ locale }: { locale: string }) {
           name="semester"
           helper={t('semesterHelper')}
           required
+          error={state.fieldErrors?.semester?.[0]}
         />
         <Field
           label={t('startDate')}
           name="startDate"
           helper={t('startDateHelper')}
           required
+          error={state.fieldErrors?.startDate?.[0]}
         />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
@@ -125,14 +127,16 @@ export function InternshipForm({ locale }: { locale: string }) {
           label={t('durationMonths')}
           name="durationMonths"
           type="number"
+          error={state.fieldErrors?.durationMonths?.[0]}
         />
-        <Field label={t('cvUrl')} name="cvUrl" type="url" helper={t('cvUrlHelper')} />
+        <Field label={t('cvUrl')} name="cvUrl" type="url" helper={t('cvUrlHelper')} error={state.fieldErrors?.cvUrl?.[0]} />
       </div>
       <Field
         label={t('portfolioUrl')}
         name="portfolioUrl"
         type="url"
         helper={t('portfolioUrlHelper')}
+        error={state.fieldErrors?.portfolioUrl?.[0]}
       />
       <Field
         label={t('motivation')}
@@ -141,6 +145,7 @@ export function InternshipForm({ locale }: { locale: string }) {
         rows={6}
         helper={t('motivationHelper')}
         required
+        error={state.fieldErrors?.motivation?.[0]}
       />
 
       {state.error && (

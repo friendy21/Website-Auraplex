@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { setRequestLocale } from 'next-intl/server';
 import { buildMetadata } from '@/lib/seo';
 import { getMachine, MACHINES } from '@/lib/catalog';
+import { hasMachineModel } from '@/lib/models';
 import { ClientConfigurator } from '@/components/three/client-configurator';
 
 export async function generateStaticParams() {
@@ -34,9 +35,17 @@ export default async function ConfiguratorPage({
   const p = getMachine(slug);
   if (!p) notFound();
 
-  // GLTF asset path — defaults to a generic placeholder until per-machine
-  // models are produced. Add /public/models/<slug>.glb to override per machine.
+  // Per-machine GLTF asset. `hasModel` is false until a real
+  // /public/models/<slug>.glb is produced — the configurator then renders a
+  // graceful placeholder viewport instead of crashing on a 404 model.
   const modelUrl = `/models/${slug}.glb`;
+  const hasModel = hasMachineModel(slug);
 
-  return <ClientConfigurator modelUrl={modelUrl} productName={p.name} />;
+  return (
+    <ClientConfigurator
+      modelUrl={modelUrl}
+      productName={p.name}
+      hasModel={hasModel}
+    />
+  );
 }

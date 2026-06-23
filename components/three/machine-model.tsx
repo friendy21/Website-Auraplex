@@ -40,5 +40,3 @@ export function MachineModel({ url, autoRotate = true, highlightPart }: Props) {
     </group>
   );
 }
-
-useGLTF.preload = (url: string) => useGLTF.preload(url);

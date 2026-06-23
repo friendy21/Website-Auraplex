@@ -99,10 +99,11 @@ export function Header() {
           : 'bg-transparent',
       )}
     >
-      <motion.div
-        animate={{ paddingTop: scrolled ? 10 : 18, paddingBottom: scrolled ? 10 : 18 }}
-        transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-        className="mx-auto flex max-w-[1600px] items-center justify-between px-6 lg:px-12"
+      <div
+        className={cn(
+          'mx-auto flex max-w-[1600px] items-center justify-between px-6 lg:px-12 transition-[padding] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]',
+          scrolled ? 'py-2.5' : 'py-[18px]',
+        )}
       >
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 group" aria-label="Auraplex — home">
@@ -146,7 +147,7 @@ export function Header() {
             mobile the toolbar's justify-between balances logo vs. the
             implicit empty right edge; the actual toggle floats over the
             top-right via position:fixed at viewport scope. */}
-      </motion.div>
+      </div>
     </motion.header>
     {/* ─────────────────────────────────────────────────────────────────
         Both the toggle button AND the mobile menu panel are siblings of

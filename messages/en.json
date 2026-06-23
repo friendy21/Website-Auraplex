@@ -217,6 +217,8 @@
     "machineFinderError": "— I lost the connection mid-thought. Try again, or WhatsApp us if it persists.",
     "machineFinderAiLabel": "Auraplex AI",
     "machineFinderUserLabel": "You",
+    "machineFinderRecommendation": "Recommended machine",
+    "machineFinderViewMachine": "View machine",
     "specSheetCta": "Send me the PDF",
     "send": "Send",
     "intent": {

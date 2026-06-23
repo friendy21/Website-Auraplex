@@ -52,11 +52,11 @@ export function QuoteForm({
         />
       )}
 
-      <Field label={t('name')} name="name" required />
-      <Field label={t('company')} name="company" required />
-      <Field label={t('email')} name="email" type="email" required />
-      <Field label={t('phone')} name="phone" required />
-      <Field label={t('message')} name="message" as="textarea" rows={4} />
+      <Field label={t('name')} name="name" required error={state.fieldErrors?.name?.[0]} />
+      <Field label={t('company')} name="company" required error={state.fieldErrors?.company?.[0]} />
+      <Field label={t('email')} name="email" type="email" required error={state.fieldErrors?.email?.[0]} />
+      <Field label={t('phone')} name="phone" required error={state.fieldErrors?.phone?.[0]} />
+      <Field label={t('message')} name="message" as="textarea" rows={4} error={state.fieldErrors?.message?.[0]} />
 
       {state.error && (
         <motion.p

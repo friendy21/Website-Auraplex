@@ -90,12 +90,12 @@ export function ContactForm({
       </fieldset>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
-        <Field label={t('name')} name="name" required />
-        <Field label={t('company')} name="company" />
+        <Field label={t('name')} name="name" required error={state.fieldErrors?.name?.[0]} />
+        <Field label={t('company')} name="company" error={state.fieldErrors?.company?.[0]} />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
-        <Field label={t('email')} name="email" type="email" required />
-        <Field label={t('phone')} name="phone" />
+        <Field label={t('email')} name="email" type="email" required error={state.fieldErrors?.email?.[0]} />
+        <Field label={t('phone')} name="phone" error={state.fieldErrors?.phone?.[0]} />
       </div>
       <Field
         label={t('message')}
@@ -103,6 +103,7 @@ export function ContactForm({
         as="textarea"
         rows={6}
         required
+        error={state.fieldErrors?.message?.[0]}
       />
 
       {state.error && (

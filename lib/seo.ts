@@ -95,18 +95,28 @@ export function organizationSchema() {
 export function productSchema(p: {
   name: string;
   description: string;
-  image: string;
-  monthlyPrice: number;
+  image: string | null;
+  monthlyPrice: number | null;
   slug: string;
 }) {
-  return {
+  const schema: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: p.name,
     description: p.description,
-    image: p.image,
+    // Absolute URL. Falls back to the dynamic OG image (there is no static
+    // /og/default.png) for machines without photography.
+    image: p.image
+      ? `${SITE}${p.image}`
+      : `${SITE}/api/og?title=${encodeURIComponent(p.name)}`,
     brand: { '@type': 'Brand', name: 'Auraplex' },
-    offers: {
+  };
+
+  // Only emit an Offer when a real published price exists. Auraplex sells on
+  // "quote on request", so most machines have no price — emitting price: 0 +
+  // InStock produced invalid, misleading Product markup.
+  if (p.monthlyPrice != null && p.monthlyPrice > 0) {
+    schema.offers = {
       '@type': 'Offer',
       url: `${SITE}/products/${p.slug}`,
       priceCurrency: 'MYR',
@@ -119,8 +129,10 @@ export function productSchema(p: {
       },
       availability: 'https://schema.org/InStock',
       seller: { '@type': 'Organization', name: 'Auraplex SDN BHD' },
-    },
-  };
+    };
+  }
+
+  return schema;
 }
 
 export function faqSchema(items: { q: string; a: string }[]) {

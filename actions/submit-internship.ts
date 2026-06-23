@@ -35,7 +35,11 @@ export const InternshipSchema = z.object({
   locale: z.enum(['en', 'ms', 'zh']).default('en'),
 });
 
-export type ActionState = { ok: boolean; error?: string };
+export type ActionState = {
+  ok: boolean;
+  error?: string;
+  fieldErrors?: Record<string, string[]>;
+};
 
 export async function submitInternship(
   _prev: ActionState,
@@ -50,15 +54,27 @@ export async function submitInternship(
   }
   const parsed = InternshipSchema.safeParse(raw);
   if (!parsed.success) {
-    return { ok: false, error: 'Invalid input — please check required fields.' };
+    return {
+      ok: false,
+      error: 'Please check the highlighted fields.',
+      fieldErrors: parsed.error.flatten().fieldErrors,
+    };
   }
 
+  // Persist best-effort — a KV outage must not block the emails.
+  let leadId = 'unstored';
   try {
     const lead = await storeLead({
       kind: 'internship',
       locale: parsed.data.locale,
       data: parsed.data,
     });
+    leadId = lead.id;
+  } catch {
+    // continue to email
+  }
+
+  try {
     await resend.emails.send({
       from: 'Auraplex <hello@auraplex.my>',
       to: ['hello@auraplex.my'],
@@ -67,7 +83,7 @@ export async function submitInternship(
       react: NewLeadInternal({
         kind: 'internship',
         data: parsed.data,
-        leadId: lead.id,
+        leadId,
       }),
     });
     await resend.emails.send({
@@ -77,7 +93,7 @@ export async function submitInternship(
       react: ContactAck({ name: parsed.data.name }),
     });
     return { ok: true };
-  } catch (err) {
-    return { ok: false, error: err instanceof Error ? err.message : 'Unknown' };
+  } catch {
+    return { ok: false, error: 'Could not send right now. Please try again or WhatsApp us.' };
   }
 }

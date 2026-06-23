@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useState, useSyncExternalStore } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'motion/react';
+import { useIsClient, useMediaQuery } from '@/lib/hooks';
 
 type Mode = 'default' | 'link' | 'caliper' | 'button' | 'text';
 
@@ -257,32 +258,4 @@ export function CustomCursor() {
       </motion.div>
     </>
   );
-}
-
-// ────────────────────────────────────────────────────────────────────────
-// Hydration-safe client/media-query hooks via useSyncExternalStore
-// ────────────────────────────────────────────────────────────────────────
-
-function useIsClient(): boolean {
-  return useSyncExternalStore(
-    noopSubscribe,
-    () => true,
-    () => false,
-  );
-}
-
-function useMediaQuery(query: string): boolean {
-  return useSyncExternalStore(
-    (callback) => {
-      const mq = window.matchMedia(query);
-      mq.addEventListener('change', callback);
-      return () => mq.removeEventListener('change', callback);
-    },
-    () => window.matchMedia(query).matches,
-    () => false,
-  );
-}
-
-function noopSubscribe(): () => void {
-  return () => {};
 }
