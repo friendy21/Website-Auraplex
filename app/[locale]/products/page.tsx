@@ -1,6 +1,7 @@
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { ProductsGrid } from '@/components/sections/products-grid';
 import { ProductsHero } from '@/components/sections/products-hero';
+import { ParallaxMarqueeBand } from '@/components/sections/parallax-marquee-band';
 import { buildMetadata, breadcrumbSchema } from '@/lib/seo';
 import {
   MACHINES,
@@ -146,6 +147,12 @@ export default async function ProductsPage({
         initialSort={sort}
         _locale={locale}
         t={tDict}
+      />
+
+      {/* ────── PARALLAX MARQUEE CLOSER BAND ────── */}
+      <ParallaxMarqueeBand
+        image="/floor/workers.jpg"
+        text="PRECISION · ENGINEERED · IN SELANGOR"
       />
     </>
   );
