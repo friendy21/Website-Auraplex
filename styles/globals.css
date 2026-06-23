@@ -757,6 +757,23 @@ html.cursor-custom body { cursor: none; }
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
+ * Featured ticker marquee (FeaturedHighlights). The track holds the word list
+ * twice; translating -50% loops seamlessly. Frozen by the reduced-motion
+ * block below.
+ * ────────────────────────────────────────────────────────────────────────── */
+@keyframes ax-ticker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.ax-ticker-track {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: ax-ticker 28s linear infinite;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
  * Reduced motion — collapse every animation/transition to instant. The
  * page-in/out keyframes also lose their blur/clip so VT navigations
  * resolve to a plain crossfade.

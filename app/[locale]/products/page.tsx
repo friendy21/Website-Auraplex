@@ -2,6 +2,7 @@ import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { ProductsGrid } from '@/components/sections/products-grid';
 import { ProductsHero } from '@/components/sections/products-hero';
 import { ParallaxMarqueeBand } from '@/components/sections/parallax-marquee-band';
+import { FeaturedHighlights } from '@/components/sections/featured-highlights';
 import { buildMetadata, breadcrumbSchema } from '@/lib/seo';
 import {
   MACHINES,
@@ -137,6 +138,23 @@ export default async function ProductsPage({
           </h1>
         </section>
       )}
+
+      {/* ────── FEATURED HIGHLIGHTS (ticker + ingredient cards) ────── */}
+      <FeaturedHighlights
+        machines={getFeaturedMachines()}
+        featuredLabel={t('featuredBadge')}
+        viewLabel={t('viewMachine')}
+        tickerWords={[
+          'Labelling',
+          'Packaging',
+          'Automation',
+          'Wrap-Around',
+          'Print & Apply',
+          'Built in Selangor',
+          '30 Machines',
+          'ASEAN-ready',
+        ]}
+      />
 
       {/* ────── ANIMATED GRID ────── */}
       <ProductsGrid
