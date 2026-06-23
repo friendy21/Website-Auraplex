@@ -3,7 +3,8 @@ import Link from 'next/link';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
 import { InternshipForm } from '@/components/forms/internship-form';
-import { buildMetadata } from '@/lib/seo';
+import { InternshipBackdrop } from '@/components/sections/internship-backdrop';
+import { buildMetadata, breadcrumbSchema } from '@/lib/seo';
 
 export async function generateMetadata({
   params,
@@ -52,7 +53,23 @@ export default async function InternshipPage({
   }[];
 
   return (
-    <>
+    <div className="relative">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbSchema([
+              { name: 'Home', url: `https://auraplex.my/${locale}` },
+              { name: 'Internship', url: `https://auraplex.my/${locale}/internship` },
+            ]),
+          ),
+        }}
+      />
+
+      {/* Scroll-reactive backdrop (decorative, sits behind all content) */}
+      <InternshipBackdrop />
+
+      <div className="relative z-10">
       {/* ────── HERO ────── */}
       <section className="mx-auto max-w-[1600px] px-6 lg:px-12 pt-40 pb-24">
         <Reveal variant="up">
@@ -249,6 +266,7 @@ export default async function InternshipPage({
           </div>
         </Reveal>
       </section>
-    </>
+      </div>
+    </div>
   );
 }

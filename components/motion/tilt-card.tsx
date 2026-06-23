@@ -36,11 +36,20 @@ export function TiltCard({ children, intensity = 6, className }: Props) {
     const py = (e.clientY - r.top) / r.height - 0.5;
     x.set(px);
     y.set(py);
+    // Expose the pointer position (0–100%) as CSS vars so children can
+    // render a cursor-following spotlight glow without their own handler.
+    el.style.setProperty('--mx', `${(px + 0.5) * 100}%`);
+    el.style.setProperty('--my', `${(py + 0.5) * 100}%`);
   }
 
   function onLeave() {
     x.set(0);
     y.set(0);
+    const el = ref.current;
+    if (el) {
+      el.style.setProperty('--mx', '50%');
+      el.style.setProperty('--my', '50%');
+    }
   }
 
   return (

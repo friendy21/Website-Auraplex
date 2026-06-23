@@ -176,6 +176,15 @@ export function ProductsGrid({
                       <div className="relative aspect-[4/3] bg-[color:var(--color-neutral-800)] overflow-hidden">
                         <div className="absolute inset-0 z-[5] bg-gradient-to-t from-[color:var(--color-ink)]/70 via-[color:var(--color-ink)]/15 to-transparent pointer-events-none transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:-translate-y-full" />
 
+                        {/* Cursor-following cerulean spotlight (reads --mx/--my from TiltCard) */}
+                        <div
+                          className="pointer-events-none absolute inset-0 z-[6] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                          style={{
+                            background:
+                              'radial-gradient(240px circle at var(--mx,50%) var(--my,50%), color-mix(in oklab, var(--color-signal) 24%, transparent), transparent 60%)',
+                          }}
+                        />
+
                         {/* Diagonal sheen sweep — light band crosses the card on hover */}
                         <div className="pointer-events-none absolute inset-0 z-[6] -translate-x-[130%] group-hover:translate-x-[130%] transition-transform duration-[900ms] ease-out">
                           <div className="h-full w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-[color:var(--color-signal)]/20 to-transparent" />
