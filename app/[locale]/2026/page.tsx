@@ -21,6 +21,7 @@ import { CategoryRadial } from '@/components/sections/category-radial';
 import { CoverageMap } from '@/components/sections/coverage-map';
 import { MachineSphere } from '@/components/sections/machine-sphere';
 import { MachineCube } from '@/components/sections/machine-cube';
+import { ScrollHud } from '@/components/sections/scroll-hud';
 
 export async function generateMetadata({
   params,
@@ -109,6 +110,9 @@ export default async function YearInReviewPage({
 
   return (
     <div className="bg-[color:var(--color-paper)] text-[color:var(--color-ink)] min-h-screen">
+      {/* Cinematic HUD overlay (desktop) */}
+      <ScrollHud label="AURAPLEX // 2026 REVIEW" />
+
       {/* ────── HERO ────── */}
       <section className="mx-auto max-w-[1600px] px-6 lg:px-12 pt-40 pb-24">
         <Reveal variant="up">
