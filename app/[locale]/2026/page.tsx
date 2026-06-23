@@ -19,6 +19,7 @@ import { HorizontalScrollSection } from '@/components/motion/horizontal-scroll';
 import { WordCloud } from '@/components/sections/word-cloud';
 import { CategoryRadial } from '@/components/sections/category-radial';
 import { CoverageMap } from '@/components/sections/coverage-map';
+import { MachineSphere } from '@/components/sections/machine-sphere';
 
 export async function generateMetadata({
   params,
@@ -372,6 +373,17 @@ export default async function YearInReviewPage({
           </div>
         </div>
       </section>
+
+      {/* ────── ROTATING MACHINE SPHERE (immersive, dark band) ────── */}
+      <MachineSphere
+        images={photographed.map((m) => m.image).filter((s): s is string => Boolean(s))}
+        slides={[
+          { title: 'Engineered in Selangor', desc: 'Every machine designed, built and tested on our Seri Kembangan floor.' },
+          { title: 'Thirty machines', desc: 'Labelling, packaging and automation — one catalogue, built for ASEAN lines.' },
+          { title: 'Precision, repeated', desc: 'Axis-true applicators tuned to your container shapes and throughput.' },
+          { title: 'Local support', desc: 'Installation, training and parts from the same engineers who build them.' },
+        ]}
+      />
 
       {/* ────── ENGINEERING DISCIPLINES ────── */}
       <section className="border-t border-[color:var(--color-neutral-200)] mx-auto max-w-[1600px] px-6 lg:px-12 py-32 lg:py-48">
