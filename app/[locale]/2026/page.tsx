@@ -7,6 +7,7 @@ import {
   MACHINES,
   getFeaturedMachines,
   getMachinesWithCover,
+  categoryCounts,
   categoryLabel,
 } from '@/lib/catalog';
 import { whatsappLink } from '@/lib/utils';
@@ -16,6 +17,8 @@ import { ImageReveal } from '@/components/motion/image-reveal';
 import { ScanLine } from '@/components/motion/scan-line';
 import { HorizontalScrollSection } from '@/components/motion/horizontal-scroll';
 import { WordCloud } from '@/components/sections/word-cloud';
+import { CategoryRadial } from '@/components/sections/category-radial';
+import { CoverageMap } from '@/components/sections/coverage-map';
 
 export async function generateMetadata({
   params,
@@ -100,6 +103,7 @@ export default async function YearInReviewPage({
   const photographed = getMachinesWithCover();
   const hero = featured[0];
   const supporting = featured.slice(1, 4);
+  const counts = categoryCounts();
 
   return (
     <div className="bg-[color:var(--color-paper)] text-[color:var(--color-ink)] min-h-screen">
@@ -329,6 +333,43 @@ export default async function YearInReviewPage({
               </div>
             </ScanLine>
           ))}
+        </div>
+      </section>
+
+      {/* ────── THE RANGE + COVERAGE (real catalogue data) ────── */}
+      <section className="border-t border-[color:var(--color-neutral-200)] mx-auto max-w-[1600px] px-6 lg:px-12 py-32 lg:py-48">
+        <div className="grid grid-cols-12 gap-12 lg:gap-6 items-center">
+          <div className="col-span-12 lg:col-span-5">
+            <Reveal variant="up">
+              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6">
+                — The range, 2026
+              </div>
+              <h2 className="font-display text-[clamp(2rem,5vw,4rem)] tracking-[-0.03em] leading-[0.95] mb-12">
+                Thirty machines,
+                <br />
+                three families.
+              </h2>
+            </Reveal>
+            <Reveal variant="up" delay={100}>
+              <CategoryRadial
+                total={counts.all}
+                centerLabel="machines"
+                segments={[
+                  { label: 'Labelling', value: counts.labelling, color: 'var(--color-signal)' },
+                  { label: 'Automation', value: counts.automation, color: 'var(--color-ink)' },
+                  { label: 'Packaging', value: counts.packaging, color: 'var(--color-steel)' },
+                ]}
+              />
+            </Reveal>
+          </div>
+          <div className="col-span-12 lg:col-span-7">
+            <Reveal variant="up" delay={150}>
+              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6">
+                — Where they run
+              </div>
+              <CoverageMap />
+            </Reveal>
+          </div>
         </div>
       </section>
 
