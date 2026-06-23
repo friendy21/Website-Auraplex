@@ -3,6 +3,8 @@ import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
 import { KineticReveal } from '@/components/motion/kinetic-reveal';
 import { StackingSteps } from '@/components/sections/stacking-steps';
+import { AutoCarousel3D } from '@/components/sections/auto-carousel-3d';
+import { getMachinesWithCover } from '@/lib/catalog';
 import { Button } from '@/components/primitives/button';
 import { Magnetic } from '@/components/motion/magnetic';
 import { buildMetadata, breadcrumbSchema } from '@/lib/seo';
@@ -159,6 +161,21 @@ export default async function ServicesPage({
         {/* Sticky stacking cards — each step pins, then tilts back + dims
             as the next scrolls over it. */}
         <StackingSteps steps={PROCESS} />
+      </section>
+
+      {/* ────── ROTATING MACHINE CAROUSEL (pure CSS) ────── */}
+      <section className="border-t border-[color:var(--color-neutral-700)] bg-[color:var(--color-ink)] py-20 overflow-hidden">
+        <div className="mx-auto max-w-[1600px] px-6 lg:px-12 mb-2">
+          <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)]">
+            — The machines we install &amp; service
+          </div>
+        </div>
+        <AutoCarousel3D
+          images={getMachinesWithCover()
+            .slice(0, 10)
+            .map((m) => m.image)
+            .filter((s): s is string => Boolean(s))}
+        />
       </section>
 
       {/* ────── CTA ────── */}

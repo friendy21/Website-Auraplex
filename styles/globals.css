@@ -757,6 +757,41 @@ html.cursor-custom body { cursor: none; }
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
+ * Pure-CSS 3D auto-carousel (AutoCarousel3D, thebabydino-style). Cards sit on
+ * a cylinder via rotateY + translateZ (radius from CSS tan()); the scene
+ * rotates forever. --n (count) lives on .acx-3d, --i (index) on each card.
+ * ────────────────────────────────────────────────────────────────────────── */
+.acx-scene {
+  display: grid;
+  overflow: hidden;
+  perspective: 36em;
+  -webkit-mask: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
+  mask: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
+}
+.acx-3d {
+  display: grid;
+  place-self: center;
+  transform-style: preserve-3d;
+  animation: acx-spin 40s linear infinite;
+}
+@keyframes acx-spin {
+  to {
+    rotate: y 1turn;
+  }
+}
+.acx-card {
+  --w: 17.5em;
+  grid-area: 1/1;
+  width: var(--w);
+  aspect-ratio: 7/10;
+  border-radius: 1.25em;
+  overflow: hidden;
+  backface-visibility: hidden;
+  transform: rotateY(calc(var(--i) * (1turn / var(--n))))
+    translateZ(calc(-1 * (0.5 * var(--w) + 0.5em) / tan(0.5 * (1turn / var(--n)))));
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
  * Featured ticker marquee (FeaturedHighlights). The track holds the word list
  * twice; translating -50% loops seamlessly. Frozen by the reduced-motion
  * block below.
