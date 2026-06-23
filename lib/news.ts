@@ -8,11 +8,10 @@
  * Migrate to Sanity once the cadence justifies a CMS.
  *
  * Editorial guidelines:
- *  - Use real entities (PROPAK Asia, internship cohorts, real machine
- *    slugs from the catalog). No fabricated customer names or specs.
- *  - Lead time / throughput numbers should match what lib/catalog.ts
- *    publishes. Don't invent new ones here.
- *  - Cross-link to /internship, /2026, /products/[slug] where natural.
+ *  - Posts are the REAL events published on auraplex.com.my (MIMF /
+ *    Metaltech / MAHA exhibitions + the MIMF innovation recognition).
+ *    No fabricated customer names, specs, or throughput numbers.
+ *  - Cross-link to /products, /contact, /2026 where natural.
  *  - Body is plain markdown-ish strings — the detail page renders them
  *    as paragraphs without parsing markdown syntax (keep it simple).
  */
@@ -45,69 +44,97 @@ export type NewsPost = {
 
 export const NEWS: NewsPost[] = [
   {
-    slug: 'january-2027-internship-cohort-open',
-    date: '2026-11-15',
-    category: 'Cohort',
-    title: 'Applications open — January 2027 internship cohort',
-    summary:
-      'Six disciplines, three to six months, paid stipend. Applications for the January cohort close on 8 December 2026.',
-    image: '/floor/workers.jpg',
-    imageAlt: 'Auraplex engineers on the Seri Kembangan factory floor',
-    ctaHref: '/internship',
-    ctaLabel: 'Apply now',
-    body: [
-      'Auraplex is opening applications for the January 2027 internship cohort. We onboard two interns per month across mechanical, electrical, controls, software, industrial design, and service.',
-      'Every internship is paid — monthly RM stipend confirmed in writing on the offer letter, scaled by discipline and the level of work. Default duration is three months with an option to extend to six if your university semester aligns.',
-      "What's different about the program: you sit next to the engineer who designed the machine you're working on, not at a separate intern desk. Safety boots, calipers, HMI debugging, real machines on the floor. Strong performers leave with a full-time offer signed before they head back to campus for finals.",
-      'The application form below takes about five minutes. We review every CV within five business days and reply either way — even if it\'s a "not this cohort, try the next one" we tell you so you\'re not stuck waiting.',
-    ],
-  },
-  {
-    slug: 'propak-asia-2026-recap',
-    date: '2026-10-22',
-    category: 'Exhibition',
-    title: 'PROPAK Asia 2026 — what we brought to the floor',
-    summary:
-      'Three machines shown live, two custom rigs in conversation, one excellent week in Bangkok.',
-    image: '/exhibitions/mimf-2025.jpg',
-    imageAlt: 'Auraplex booth at Malaysia International Machinery Fair 2025',
-    body: [
-      'PROPAK Asia is the regional pulse-check for packaging and labelling. Auraplex took three machines onto the floor this year: the Flexy Applicator, the Customized Top Labelling Machine with Checking System, and the Continuous Band Sealing Machine. Each ran demo containers in rotation for the four exhibition days.',
-      'The conversations that mattered most weren\'t at the booth — they were the engineering teams from across ASEAN who walked us through their existing lines, their throughput targets, and the bottlenecks they wanted to solve. We came back with two confirmed custom-rig discoveries and a long list of follow-ups.',
-      'If you saw us in Bangkok and would like to continue the conversation, the same engineers who staffed the booth answer the WhatsApp number at the bottom of every page on this site.',
-    ],
-  },
-  {
-    slug: 'behind-the-build-customized-top-labelling',
-    date: '2026-09-14',
-    category: 'Build',
-    title: 'Behind the build — vision-grade top labelling',
-    summary:
-      'Inside the eight-week build of a customized top labeller with integrated checking system, photographed on our Seri Kembangan floor.',
-    image: '/floor/strength.jpg',
-    imageAlt: 'Auraplex engineer working on a labelling machine assembly',
-    ctaHref: '/products/custom-top-labelling-machine-with-checking-system',
-    ctaLabel: 'See the machine',
-    body: [
-      "Custom builds at Auraplex don't happen in a back room. The machine is assembled on the same floor, by the same engineers, that you'll meet when you walk in for a factory tour. This piece is a behind-the-scenes look at one of those builds — a customized top labelling machine with an integrated vision-checking system.",
-      'The build moved through our standard seven-step process: discovery on the customer\'s line in Selangor, fixed-price quote within three days for the custom scope, CAD review with the customer\'s plant manager, then six weeks of build + commissioning on our floor. FAT (Factory Acceptance Test) photographs were shared with the customer at week five so there were no surprises on delivery day.',
-      'The vision system catches deviations at 1 ms detection, with auto-reject handling routed back to the line PLC. Throughput sustained at 120 units per minute through the FAT runs. Two weeks of install + commissioning on the customer floor followed; the line was producing labelled output by week three of install.',
-    ],
-  },
-  {
-    slug: '30-machines-one-year-2026-review',
-    date: '2026-08-30',
+    slug: 'mimf-best-company-for-innovation',
+    date: '2024-12-10',
     category: 'Review',
-    title: '30 machines, one year — read the 2026 floor review',
+    title: 'Recognised as a best company for innovation at MIMF',
     summary:
-      'Every machine we shipped this year, every industry we served, every install we photographed. The Auraplex 2026 review is live.',
-    image: '/exhibitions/mimf-2024.jpg',
-    imageAlt: 'Auraplex at MIMF 2024 — the year in review',
-    ctaHref: '/2026',
-    ctaLabel: 'Read the 2026 review',
+      'Auraplex SDN BHD was recognised as a best company for innovation at the Malaysia International Machinery Fair (MITEC, Kuala Lumpur).',
+    image: '/exhibitions/mimf-2025.jpg',
+    imageAlt: 'Auraplex at the Malaysia International Machinery Fair, MITEC Kuala Lumpur',
+    ctaHref: '/products',
+    ctaLabel: 'Browse the machines',
     body: [
-      "The /2026 page is the long read — every machine, every industry served, every photograph from the floor. It's the closest thing we publish to an annual report, written without the corporate gloss.",
-      'If you only have time for one section, scroll to "§ 05 / Quarter by quarter" — four releases, four named milestones, the honest version of what happened on the floor between January and December.',
+      'Auraplex SDN BHD was recognised as a best company for innovation at the Malaysia International Machinery Fair, held at MITEC in Kuala Lumpur.',
+      'Auraplex specializes in manufacturing labelling machines, packaging machines, 3D printers and customized machines, and is dedicated to delivering high-quality automation solutions tailored to meet your needs.',
+    ],
+  },
+  {
+    slug: 'metaltech-hybrid-exhibition-2024',
+    date: '2024-07-15',
+    category: 'Exhibition',
+    title: 'Metaltech Hybrid Exhibition 2024 — MITEC',
+    summary:
+      'Auraplex joined one of the largest equipment exhibitions at MITEC, Kuala Lumpur, introducing our machines to the manufacturing public.',
+    image: '/exhibitions/mimf-2024.jpg',
+    imageAlt: 'Auraplex booth at the Metaltech Hybrid Exhibition 2024, MITEC',
+    ctaHref: '/contact',
+    ctaLabel: 'Talk to us',
+    body: [
+      'Auraplex Sdn Bhd joined one of the largest equipment exhibitions, held at MITEC in Kuala Lumpur, introducing our company and machines to the general public.',
+      'Visitors saw our labelling, packaging and automation machines first-hand and discussed their own line requirements with the engineers who build them.',
+    ],
+  },
+  {
+    slug: 'malaysia-international-machinery-fair-2023',
+    date: '2023-07-13',
+    category: 'Exhibition',
+    title: 'Malaysia International Machinery Fair 2023',
+    summary:
+      'Auraplex Sdn Bhd joined MIMF 2023 at MITEC, Kuala Lumpur, 13–15 July 2023, presenting our company to the general public.',
+    image: '/exhibitions/mimf-2023.png',
+    imageAlt: 'Auraplex at the Malaysia International Machinery Fair 2023, MITEC',
+    ctaHref: '/products',
+    ctaLabel: 'Browse the machines',
+    body: [
+      'Auraplex Sdn Bhd has joined one of the largest equipment exhibitions, the Malaysia International Machinery Fair 2023, which was held at MITEC in Kuala Lumpur from the 13th to the 15th of July 2023.',
+      'The fair was an opportunity to introduce our company and machines to the general public and to meet manufacturers from across the region.',
+    ],
+  },
+  {
+    slug: 'malaysia-international-machinery-fair-2022',
+    date: '2022-07-15',
+    category: 'Exhibition',
+    title: 'Malaysia International Machinery Fair 2022',
+    summary:
+      'Auraplex exhibited at the Malaysia International Machinery Fair 2022, bringing our machines to the manufacturing floor.',
+    image: '/exhibitions/mimf-2022.jpg',
+    imageAlt: 'Auraplex at the Malaysia International Machinery Fair 2022',
+    ctaHref: '/products',
+    ctaLabel: 'Browse the machines',
+    body: [
+      'Auraplex Sdn Bhd exhibited at the Malaysia International Machinery Fair 2022, presenting our labelling, packaging and automation machines to the public.',
+      'It was an early opportunity to meet manufacturers and understand the line challenges we now build machines to solve.',
+    ],
+  },
+  {
+    slug: 'metaltech-hybrid-exhibition-2022',
+    date: '2022-05-18',
+    category: 'Exhibition',
+    title: 'Metaltech Hybrid Exhibition 2022 — MITEC',
+    summary:
+      'Auraplex joined the Metaltech Hybrid Exhibition 2022 at MITEC, Kuala Lumpur.',
+    image: '/exhibitions/metaltech-2022.jpg',
+    imageAlt: 'Auraplex at the Metaltech Hybrid Exhibition 2022, MITEC',
+    ctaHref: '/contact',
+    ctaLabel: 'Talk to us',
+    body: [
+      'Auraplex Sdn Bhd joined the Metaltech Hybrid Exhibition 2022, held at MITEC in Kuala Lumpur.',
+      'The exhibition put our machines in front of the manufacturing and engineering community in the Klang Valley and beyond.',
+    ],
+  },
+  {
+    slug: 'agro-job-fair-maha-2022',
+    date: '2022-09-15',
+    category: 'Exhibition',
+    title: 'Agro Job Fair at MAHA Exhibition 2022',
+    summary:
+      'Auraplex took part in the Agro Job Fair at the MAHA exhibition in 2022, meeting agri-processing manufacturers.',
+    image: '/exhibitions/agro-2022.jpg',
+    imageAlt: 'Auraplex at the Agro Job Fair, MAHA Exhibition 2022',
+    body: [
+      'Auraplex Sdn Bhd participated in the Agro Job Fair at the MAHA (Malaysia Agriculture, Horticulture & Agrotourism) exhibition in 2022.',
+      'It was a chance to meet agri-processing manufacturers whose packaging and labelling lines our machines are built to serve.',
     ],
   },
 ];
