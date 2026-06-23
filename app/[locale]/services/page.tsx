@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
 import { KineticReveal } from '@/components/motion/kinetic-reveal';
-import { ProcessTimeline } from '@/components/sections/process-timeline';
+import { StackingSteps } from '@/components/sections/stacking-steps';
 import { Button } from '@/components/primitives/button';
 import { Magnetic } from '@/components/motion/magnetic';
 import { buildMetadata, breadcrumbSchema } from '@/lib/seo';
@@ -156,8 +156,9 @@ export default async function ServicesPage({
           </Reveal>
         </div>
 
-        {/* Connected scroll-fill timeline — rail lights up as you scroll. */}
-        <ProcessTimeline steps={PROCESS} />
+        {/* Sticky stacking cards — each step pins, then tilts back + dims
+            as the next scrolls over it. */}
+        <StackingSteps steps={PROCESS} />
       </section>
 
       {/* ────── CTA ────── */}
