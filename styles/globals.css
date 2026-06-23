@@ -788,6 +788,10 @@ html.cursor-custom body { cursor: none; }
   transform-style: preserve-3d;
   animation: acx-spin 40s linear infinite;
 }
+/* Hover anywhere on the scene pauses the spin so cards can be clicked. */
+.acx-scene:hover .acx-3d {
+  animation-play-state: paused;
+}
 @keyframes acx-spin {
   to {
     rotate: y 1turn;
@@ -795,6 +799,7 @@ html.cursor-custom body { cursor: none; }
 }
 .acx-card {
   --w: 17.5em;
+  position: relative;
   grid-area: 1/1;
   width: var(--w);
   aspect-ratio: 7/10;

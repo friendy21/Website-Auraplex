@@ -1,13 +1,14 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import Link from 'next/link';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-type Face = { image: string; label: string };
+type Face = { image: string; label: string; slug: string };
 
 type Props = { faces: Face[] }; // exactly 6
 
@@ -129,9 +130,12 @@ export function MachineCube({ faces }: Props) {
             }}
           >
             {six.map((face, i) => (
-              <div
+              <Link
                 key={i}
-                className="absolute inset-0 overflow-hidden rounded-2xl border border-[color:var(--color-signal)]/30 bg-[color:var(--color-neutral-800)]"
+                href={`/products/${face.slug}`}
+                data-cursor="caliper"
+                aria-label={face.label}
+                className="absolute inset-0 block overflow-hidden rounded-2xl border border-[color:var(--color-signal)]/30 bg-[color:var(--color-neutral-800)]"
                 style={{ transform: FACE_TF[i], backfaceVisibility: 'hidden' }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -145,7 +149,7 @@ export function MachineCube({ faces }: Props) {
                 <div className="absolute bottom-4 left-4 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-paper)]">
                   {face.label}
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -154,8 +158,10 @@ export function MachineCube({ faces }: Props) {
       {/* Static fallback (mobile / reduced-motion) */}
       <div className="md:hidden mx-auto max-w-[1600px] px-6 py-24 grid grid-cols-2 gap-3">
         {six.map((face, i) => (
-          <div
+          <Link
             key={i}
+            href={`/products/${face.slug}`}
+            aria-label={face.label}
             className="relative aspect-square overflow-hidden rounded-xl border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)]"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -163,7 +169,7 @@ export function MachineCube({ faces }: Props) {
             <div className="absolute bottom-2 left-2 font-mono text-[9px] uppercase tracking-[0.25em] text-[color:var(--color-paper)] bg-[color:var(--color-ink)]/70 px-2 py-1">
               {face.label}
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>

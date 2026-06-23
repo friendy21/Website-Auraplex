@@ -171,10 +171,9 @@ export default async function ServicesPage({
           </div>
         </div>
         <AutoCarousel3D
-          images={getMachinesWithCover()
+          items={getMachinesWithCover()
             .slice(0, 10)
-            .map((m) => m.image)
-            .filter((s): s is string => Boolean(s))}
+            .map((m) => ({ image: m.image as string, slug: m.slug, name: m.name }))}
         />
       </section>
 

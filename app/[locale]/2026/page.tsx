@@ -381,7 +381,11 @@ export default async function YearInReviewPage({
 
       {/* ────── ROTATING MACHINE SPHERE (immersive, dark band) ────── */}
       <MachineSphere
-        images={photographed.map((m) => m.image).filter((s): s is string => Boolean(s))}
+        items={photographed.map((m) => ({
+          image: m.image as string,
+          slug: m.slug,
+          name: m.name,
+        }))}
         slides={[
           { title: 'Engineered in Selangor', desc: 'Every machine designed, built and tested on our Seri Kembangan floor.' },
           { title: 'Thirty machines', desc: 'Labelling, packaging and automation — one catalogue, built for ASEAN lines.' },
@@ -565,6 +569,7 @@ export default async function YearInReviewPage({
         faces={photographed.slice(0, 6).map((m) => ({
           image: m.image as string,
           label: m.name,
+          slug: m.slug,
         }))}
       />
 

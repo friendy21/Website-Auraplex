@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import Link from 'next/link';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -9,8 +10,10 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 type Slide = { title: string; desc: string };
 
+type Item = { image: string; slug: string; name: string };
+
 type Props = {
-  images: string[];
+  items: Item[];
   slides: Slide[];
 };
 
@@ -40,7 +43,7 @@ function cardTransform(i: number): string {
  * shown instead — no pinned scrub timeline on low-power devices. Uses a tall
  * runway + CSS sticky (no GSAP pin) to stay CLS-safe.
  */
-export function MachineSphere({ images, slides }: Props) {
+export function MachineSphere({ items, slides }: Props) {
   const container = useRef<HTMLDivElement>(null);
   const sphere = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
@@ -48,7 +51,7 @@ export function MachineSphere({ images, slides }: Props) {
 
   const cards = Array.from(
     { length: CARD_COUNT },
-    (_, i) => images[i % images.length],
+    (_, i) => items[i % items.length],
   );
 
   useGSAP(
@@ -87,7 +90,7 @@ export function MachineSphere({ images, slides }: Props) {
     { scope: container, dependencies: [slides.length] },
   );
 
-  if (!images.length) return null;
+  if (!items.length) return null;
 
   return (
     <section className="relative bg-[color:var(--color-ink)] text-[color:var(--color-paper)]">
@@ -127,20 +130,23 @@ export function MachineSphere({ images, slides }: Props) {
             className="relative"
             style={{ width: 0, height: 0, transformStyle: 'preserve-3d' }}
           >
-            {cards.map((src, i) => (
-              <div
+            {cards.map((m, i) => (
+              <Link
                 key={i}
-                className="absolute h-[220px] w-[160px] -left-20 -top-[110px] rounded-2xl border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)] p-2 shadow-[8px_8px_24px_rgba(0,0,0,0.6)]"
+                href={`/products/${m.slug}`}
+                data-cursor="caliper"
+                aria-label={m.name}
+                className="group absolute block h-[220px] w-[160px] -left-20 -top-[110px] rounded-2xl border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)] p-2 shadow-[8px_8px_24px_rgba(0,0,0,0.6)] transition-[border-color] duration-300 hover:border-[color:var(--color-signal)]"
                 style={{ transform: cardTransform(i), transformStyle: 'preserve-3d', backfaceVisibility: 'visible' }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={src}
-                  alt=""
+                  src={m.image}
+                  alt={m.name}
                   loading="lazy"
-                  className="h-full w-full rounded-xl object-cover [filter:brightness(0.82)]"
+                  className="h-full w-full rounded-xl object-cover [filter:brightness(0.82)] transition-[filter] duration-300 group-hover:brightness-100"
                 />
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -155,14 +161,16 @@ export function MachineSphere({ images, slides }: Props) {
           {slides[0]?.title}
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-          {images.slice(0, 9).map((src, i) => (
-            <div
+          {items.slice(0, 9).map((m, i) => (
+            <Link
               key={i}
+              href={`/products/${m.slug}`}
+              aria-label={m.name}
               className="relative aspect-[3/4] overflow-hidden rounded-xl border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)]"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={src} alt="" loading="lazy" className="h-full w-full object-cover" />
-            </div>
+              <img src={m.image} alt={m.name} loading="lazy" className="h-full w-full object-cover" />
+            </Link>
           ))}
         </div>
       </div>
