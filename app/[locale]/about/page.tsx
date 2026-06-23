@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
 import { KineticReveal } from '@/components/motion/kinetic-reveal';
+import { AboutGallery } from '@/components/sections/about-gallery';
 import { Button } from '@/components/primitives/button';
 import { buildMetadata } from '@/lib/seo';
 import { MACHINES, getFeaturedMachines } from '@/lib/catalog';
@@ -98,6 +99,16 @@ export default async function AboutPage({
           <p>{t('p3')}</p>
         </Reveal>
       </section>
+
+      {/* ────── PARALLAX IMAGE MONTAGE ──────
+              Swap these for hero-grade photography when available. */}
+      <AboutGallery
+        items={[
+          { src: '/floor/about-intro.jpg', alt: 'Auraplex assembly floor, Seri Kembangan', caption: 'Seri Kembangan' },
+          { src: '/floor/strength.jpg', alt: 'Machine build detail', caption: 'Build detail' },
+          { src: '/exhibitions/mimf-2025.jpg', alt: 'Auraplex at MIMF 2025', caption: 'MIMF 2025' },
+        ]}
+      />
 
       <section className="mx-auto max-w-[1600px] px-6 lg:px-12 py-24 border-y border-[color:var(--color-neutral-700)]">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">

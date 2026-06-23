@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
 import { KineticReveal } from '@/components/motion/kinetic-reveal';
+import { ProcessTimeline } from '@/components/sections/process-timeline';
 import { Button } from '@/components/primitives/button';
 import { Magnetic } from '@/components/motion/magnetic';
 import { buildMetadata, breadcrumbSchema } from '@/lib/seo';
@@ -155,32 +156,8 @@ export default async function ServicesPage({
           </Reveal>
         </div>
 
-        {/* Step rail — each step is a row: number → name → summary.
-            On hover the row's signal hairline draws across. */}
-        <div className="border-t border-[color:var(--color-neutral-700)]">
-          {PROCESS.map((step, i) => (
-            <Reveal
-              key={step.num}
-              variant="up"
-              delay={i * 60}
-              className="group grid grid-cols-12 gap-6 py-10 border-b border-[color:var(--color-neutral-700)] hover:bg-[color:var(--color-neutral-800)]/30 transition-colors"
-            >
-              <div className="col-span-2 md:col-span-1 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] pt-2">
-                {step.num}
-              </div>
-              <div className="col-span-10 md:col-span-3">
-                <h3 className="font-display text-2xl md:text-3xl tracking-[-0.01em]">
-                  {step.name}
-                </h3>
-              </div>
-              <div className="col-span-12 md:col-span-8 md:col-start-5">
-                <p className="prose-editorial text-[color:var(--color-steel-soft)]">
-                  {step.summary}
-                </p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+        {/* Connected scroll-fill timeline — rail lights up as you scroll. */}
+        <ProcessTimeline steps={PROCESS} />
       </section>
 
       {/* ────── CTA ────── */}
