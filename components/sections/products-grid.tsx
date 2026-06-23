@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'motion/react';
-import { TiltCard } from '@/components/motion/tilt-card';
 import { ParallaxProductImage } from '@/components/sections/parallax-product-image';
 import { machineTags, type Category, type Machine } from '@/lib/catalog';
 
@@ -166,37 +165,18 @@ export function ProductsGrid({
                   }}
                   className="group"
                 >
-                  <TiltCard intensity={4}>
+                  <div className="mcard-parent">
                     <Link
                       href={`/products/${p.slug}`}
                       data-cursor="caliper"
-                      className="block relative overflow-hidden border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)] transition-all duration-500 hover:border-[color:var(--color-signal)] hover:-translate-y-1.5 hover:shadow-[0_20px_60px_-15px_color-mix(in_oklab,var(--color-signal)_30%,transparent)]"
+                      className="mcard"
                     >
-                      {/* Image area */}
-                      <div className="relative aspect-[4/3] bg-[color:var(--color-neutral-800)] overflow-hidden">
+                      {/* Floating glass rim (decorative) */}
+                      <span className="mcard__glass" aria-hidden="true" />
+
+                      {/* Image layer */}
+                      <div className="mcard__media aspect-[4/3] rounded-t-[18px] overflow-hidden">
                         <div className="absolute inset-0 z-[5] bg-gradient-to-t from-[color:var(--color-ink)]/70 via-[color:var(--color-ink)]/15 to-transparent pointer-events-none transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:-translate-y-full" />
-
-                        {/* Cursor-following cerulean spotlight (reads --mx/--my from TiltCard) */}
-                        <div
-                          className="pointer-events-none absolute inset-0 z-[6] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                          style={{
-                            background:
-                              'radial-gradient(240px circle at var(--mx,50%) var(--my,50%), color-mix(in oklab, var(--color-signal) 24%, transparent), transparent 60%)',
-                          }}
-                        />
-
-                        {/* Diagonal sheen sweep — light band crosses the card on hover */}
-                        <div className="pointer-events-none absolute inset-0 z-[6] -translate-x-[130%] group-hover:translate-x-[130%] transition-transform duration-[900ms] ease-out">
-                          <div className="h-full w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-[color:var(--color-signal)]/20 to-transparent" />
-                        </div>
-
-                        {/* Caliper-style corner registration marks — expand in on hover */}
-                        <div className="pointer-events-none absolute inset-2 z-[7] opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500">
-                          <span className="absolute top-0 left-0 h-3.5 w-3.5 border-t border-l border-[color:var(--color-signal)]" />
-                          <span className="absolute top-0 right-0 h-3.5 w-3.5 border-t border-r border-[color:var(--color-signal)]" />
-                          <span className="absolute bottom-0 left-0 h-3.5 w-3.5 border-b border-l border-[color:var(--color-signal)]" />
-                          <span className="absolute bottom-0 right-0 h-3.5 w-3.5 border-b border-r border-[color:var(--color-signal)]" />
-                        </div>
 
                         {p.image ? (
                           <ParallaxProductImage
@@ -244,8 +224,8 @@ export function ProductsGrid({
                         </div>
                       </div>
 
-                      {/* Info pane */}
-                      <div className="p-5 border-t border-[color:var(--color-neutral-700)] bg-[color:var(--color-ink)]">
+                      {/* Content layer */}
+                      <div className="mcard__content p-5 border-t border-[color:var(--color-neutral-700)]">
                         <h3 className="font-display text-xl tracking-[-0.01em] leading-[1.15] mb-3 min-h-[3.5rem]">
                           {p.name}
                         </h3>
@@ -286,7 +266,7 @@ export function ProductsGrid({
                         </div>
                       </div>
                     </Link>
-                  </TiltCard>
+                  </div>
                 </motion.div>
               );
             })}

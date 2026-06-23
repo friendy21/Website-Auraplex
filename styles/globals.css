@@ -683,6 +683,80 @@ html.cursor-custom body { cursor: none; }
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
+ * Machine card — layered 3D ("DepthFold"-inspired, Auraplex palette).
+ * A perspective parent; the card tilts in 3D on hover while a floating glass
+ * rim and the image/content layers separate in depth (translateZ). Pure CSS,
+ * desktop-hover only (touch never triggers the tilt). Compositor-only
+ * transforms; no heavy backdrop-blur, so a 30-card grid stays smooth.
+ * ────────────────────────────────────────────────────────────────────────── */
+.mcard-parent {
+  perspective: 1100px;
+  perspective-origin: 50% 50%;
+  height: 100%;
+}
+
+.mcard {
+  position: relative;
+  display: block;
+  height: 100%;
+  border-radius: 20px;
+  transform-style: preserve-3d;
+  background:
+    radial-gradient(125% 80% at 82% -10%, color-mix(in oklab, var(--color-signal) 26%, transparent), transparent 55%),
+    linear-gradient(155deg, var(--color-neutral-800) 0%, var(--color-ink) 100%);
+  border: 1px solid var(--color-neutral-700);
+  box-shadow: 0 26px 44px -28px rgba(0, 0, 0, 0.65);
+  transition:
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.55s ease,
+    border-color 0.4s ease;
+}
+
+.mcard-parent:hover .mcard {
+  transform: rotate3d(1, 1, 0, 13deg);
+  border-color: color-mix(in oklab, var(--color-signal) 60%, transparent);
+  box-shadow:
+    0 40px 70px -30px rgba(0, 0, 0, 0.75),
+    0 0 70px -12px color-mix(in oklab, var(--color-signal) 32%, transparent);
+}
+
+/* Floating glass rim — catches light, never covers the photo */
+.mcard__glass {
+  position: absolute;
+  inset: 7px;
+  border-radius: 14px;
+  border: 1px solid color-mix(in oklab, var(--color-paper) 20%, transparent);
+  border-top-color: color-mix(in oklab, var(--color-signal) 45%, transparent);
+  opacity: 0.45;
+  transform: translateZ(40px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: none;
+}
+.mcard-parent:hover .mcard__glass {
+  opacity: 0.9;
+  transform: translateZ(58px);
+}
+
+/* Depth layers — separate toward the viewer as the card tilts */
+.mcard__media {
+  position: relative;
+  transform: translateZ(26px);
+  transition: transform 0.5s ease;
+}
+.mcard-parent:hover .mcard__media {
+  transform: translateZ(44px);
+}
+
+.mcard__content {
+  position: relative;
+  transform: translateZ(18px);
+  transition: transform 0.5s ease;
+}
+.mcard-parent:hover .mcard__content {
+  transform: translateZ(30px);
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
  * Reduced motion — collapse every animation/transition to instant. The
  * page-in/out keyframes also lose their blur/clip so VT navigations
  * resolve to a plain crossfade.

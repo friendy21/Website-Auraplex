@@ -72,16 +72,19 @@ export default async function ProductsPage({
     { key: 'az', label: t('sort.az') },
   ];
 
-  // Build a flat translation dictionary for the client component
+  // Build a flat translation dictionary for the client component.
+  // Strings carrying ICU placeholders ({n}/{total}/{photo}/{pending}) use
+  // t.raw() — the client interpolates them via String.replace at runtime, so
+  // formatting them here (without the vars) would throw a FORMATTING_ERROR.
   const tDict: Record<string, string> = {
     sortLabel: t('sortLabel'),
-    showing: t('showing'),
-    ofTotal: t('ofTotal'),
-    photographedSummary: t('photographedSummary'),
+    showing: t.raw('showing'),
+    ofTotal: t.raw('ofTotal'),
+    photographedSummary: t.raw('photographedSummary'),
     photographyPending: t('photographyPending'),
     viewMachineLong: t('viewMachineLong'),
     featuredBadge: t('featuredBadge'),
-    shotsLabel: t('shotsLabel'),
+    shotsLabel: t.raw('shotsLabel'),
     from: t('from'),
     perMonth: t('perMonth'),
     priceOnRequest: t('priceOnRequest'),
