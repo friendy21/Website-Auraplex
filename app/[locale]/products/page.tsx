@@ -1,8 +1,13 @@
 import { setRequestLocale, getTranslations } from 'next-intl/server';
-import { Reveal } from '@/components/motion/reveal';
 import { ProductsGrid } from '@/components/sections/products-grid';
+import { ProductsHero } from '@/components/sections/products-hero';
 import { buildMetadata, breadcrumbSchema } from '@/lib/seo';
-import { MACHINES, categoryCounts, type Category } from '@/lib/catalog';
+import {
+  MACHINES,
+  categoryCounts,
+  getFeaturedMachines,
+  type Category,
+} from '@/lib/catalog';
 
 export async function generateMetadata({
   params,
@@ -35,6 +40,24 @@ export default async function ProductsPage({
   const counts = categoryCounts();
   const photographed = MACHINES.filter((m) => m.image !== null).length;
   const _pending = MACHINES.length - photographed;
+
+  // Hero machine for the floating visual — first featured machine with a cover.
+  const heroMachine = getFeaturedMachines()[0] ?? null;
+
+  // Catalogue structured data — an ItemList of every machine, so search
+  // engines can surface the full range from this single page.
+  const itemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Auraplex machine catalogue',
+    numberOfItems: MACHINES.length,
+    itemListElement: MACHINES.map((m, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: m.name,
+      url: `https://auraplex.my/${locale}/products/${m.slug}`,
+    })),
+  };
 
   const categories = [
     { key: undefined as Category | undefined, label: t('categories.all'), count: counts.all },
@@ -86,23 +109,30 @@ export default async function ProductsPage({
           ),
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+      />
 
-      {/* ────── COMPACT HEADER ────── */}
-      <section className="mx-auto max-w-[1600px] px-6 lg:px-12 pt-32 pb-12">
-        <Reveal variant="up">
+      {/* ────── FLOATING-MACHINE HERO ────── */}
+      {heroMachine?.image ? (
+        <ProductsHero
+          eyebrow={t('catalogueLine', { count: counts.all })}
+          title={t('title')}
+          subtitle={t('subtitle')}
+          imageSrc={heroMachine.image}
+          imageAlt={heroMachine.name}
+        />
+      ) : (
+        <section className="mx-auto max-w-[1600px] px-6 lg:px-12 pt-32 pb-12">
           <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-4">
             — {t('catalogueLine', { count: counts.all })}
           </div>
-          <div className="flex items-end justify-between flex-wrap gap-6">
-            <h1 className="font-display text-[clamp(2.5rem,6vw,5.5rem)] tracking-[-0.03em] leading-[0.95]">
-              {t('title')}
-            </h1>
-            <p className="max-w-md text-[color:var(--color-steel-soft)] text-base lg:text-lg">
-              {t('subtitle')}
-            </p>
-          </div>
-        </Reveal>
-      </section>
+          <h1 className="font-display text-[clamp(2.5rem,6vw,5.5rem)] tracking-[-0.03em] leading-[0.95]">
+            {t('title')}
+          </h1>
+        </section>
+      )}
 
       {/* ────── ANIMATED GRID ────── */}
       <ProductsGrid

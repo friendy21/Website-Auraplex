@@ -176,6 +176,19 @@ export function ProductsGrid({
                       <div className="relative aspect-[4/3] bg-[color:var(--color-neutral-800)] overflow-hidden">
                         <div className="absolute inset-0 z-[5] bg-gradient-to-t from-[color:var(--color-ink)]/70 via-[color:var(--color-ink)]/15 to-transparent pointer-events-none transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:-translate-y-full" />
 
+                        {/* Diagonal sheen sweep — light band crosses the card on hover */}
+                        <div className="pointer-events-none absolute inset-0 z-[6] -translate-x-[130%] group-hover:translate-x-[130%] transition-transform duration-[900ms] ease-out">
+                          <div className="h-full w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-[color:var(--color-signal)]/20 to-transparent" />
+                        </div>
+
+                        {/* Caliper-style corner registration marks — expand in on hover */}
+                        <div className="pointer-events-none absolute inset-2 z-[7] opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500">
+                          <span className="absolute top-0 left-0 h-3.5 w-3.5 border-t border-l border-[color:var(--color-signal)]" />
+                          <span className="absolute top-0 right-0 h-3.5 w-3.5 border-t border-r border-[color:var(--color-signal)]" />
+                          <span className="absolute bottom-0 left-0 h-3.5 w-3.5 border-b border-l border-[color:var(--color-signal)]" />
+                          <span className="absolute bottom-0 right-0 h-3.5 w-3.5 border-b border-r border-[color:var(--color-signal)]" />
+                        </div>
+
                         {p.image ? (
                           <ParallaxProductImage
                             src={p.image}
