@@ -757,6 +757,20 @@ html.cursor-custom body { cursor: none; }
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
+ * Flow-map lines (CoverageMap). Marching dashes from HQ to each region.
+ * Frozen by the reduced-motion block.
+ * ────────────────────────────────────────────────────────────────────────── */
+.ax-flow {
+  stroke-dasharray: 1.5 3;
+  animation: ax-flow 1.1s linear infinite;
+}
+@keyframes ax-flow {
+  to {
+    stroke-dashoffset: -18;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
  * Pure-CSS 3D auto-carousel (AutoCarousel3D, thebabydino-style). Cards sit on
  * a cylinder via rotateY + translateZ (radius from CSS tan()); the scene
  * rotates forever. --n (count) lives on .acx-3d, --i (index) on each card.

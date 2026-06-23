@@ -4,42 +4,38 @@ import { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
 import { useReducedMotion } from '@/lib/hooks';
 
-type Node = { label: string; ring: 1 | 2 | 3; angle: number };
+type Node = { label: string; x: number; y: number; tier: 1 | 2 | 3 };
 
-// Real served regions (from the Auraplex coverage list). Angles are spread
-// per ring so labels don't collide. This is a reach/coverage diagram, not a
-// geographic map — no fabricated deployment counts.
-const RINGS: Record<1 | 2 | 3, { r: number; tier: string }> = {
-  1: { r: 62, tier: 'Malaysia' },
-  2: { r: 116, tier: 'ASEAN' },
-  3: { r: 168, tier: 'Asia-Pacific' },
-};
+// Stylised (not GIS-accurate) layout of the regions Auraplex serves, with
+// Selangor HQ as the origin. Coordinates are in a 0–100 × 0–66 box.
+const HQ = { x: 34, y: 40 };
 
 const NODES: Node[] = [
-  { label: 'Klang Valley', ring: 1, angle: 18 },
-  { label: 'Penang', ring: 1, angle: 108 },
-  { label: 'Johor', ring: 1, angle: 198 },
-  { label: 'Sabah · Sarawak', ring: 1, angle: 300 },
-  { label: 'Singapore', ring: 2, angle: 58 },
-  { label: 'Thailand', ring: 2, angle: 158 },
-  { label: 'Indonesia', ring: 2, angle: 262 },
-  { label: 'Australia', ring: 3, angle: 122 },
-  { label: 'New Zealand', ring: 3, angle: 238 },
+  { label: 'Penang', x: 26, y: 24, tier: 1 },
+  { label: 'Johor', x: 40, y: 52, tier: 1 },
+  { label: 'Sabah · Sarawak', x: 66, y: 34, tier: 1 },
+  { label: 'Singapore', x: 44, y: 58, tier: 2 },
+  { label: 'Thailand', x: 22, y: 12, tier: 2 },
+  { label: 'Indonesia', x: 56, y: 62, tier: 2 },
+  { label: 'Australia', x: 84, y: 60, tier: 3 },
+  { label: 'New Zealand', x: 95, y: 64, tier: 3 },
 ];
 
-const CX = 220;
-const CY = 200;
+const TIER_OPACITY = { 1: 0.85, 2: 0.55, 3: 0.32 } as const;
 
-function pos(r: number, angleDeg: number) {
-  const t = (angleDeg * Math.PI) / 180;
-  return { x: CX + r * Math.sin(t), y: CY - r * Math.cos(t) };
+function flowPath(n: Node): string {
+  const mx = (HQ.x + n.x) / 2;
+  const my = Math.min(HQ.y, n.y) - 12;
+  return `M ${HQ.x} ${HQ.y} Q ${mx} ${my} ${n.x} ${n.y}`;
 }
 
 /**
- * CoverageMap — concentric reach diagram of where Auraplex machines ship:
- * HQ at the centre, regions placed on Malaysia / ASEAN / Asia-Pacific rings
- * with pulsing signal nodes that stagger in on scroll. Honest coverage, not
- * a GIS map. Light-theme friendly; reduced-motion disables the pulse.
+ * CoverageMap — a flow map of where Auraplex machines ship: animated flow
+ * lines run from Selangor HQ to each served region (Malaysia / ASEAN /
+ * Asia-Pacific), nodes pulse in on scroll. Faithful in spirit to the
+ * amCharts map+Sankey reference (origin→destination flows), but as a
+ * lightweight inline-SVG reach map — no mapping library, no fabricated
+ * deployment counts. Flow dashes are CSS-animated (frozen by reduced-motion).
  */
 export function CoverageMap() {
   const ref = useRef<SVGSVGElement>(null);
@@ -47,83 +43,69 @@ export function CoverageMap() {
   const reduced = useReducedMotion();
 
   return (
-    <svg ref={ref} viewBox="0 0 440 400" className="w-full h-auto" role="img" aria-label="Auraplex machine coverage across Malaysia, ASEAN and Asia-Pacific">
-      {/* Rings */}
-      {Object.values(RINGS).map((ring) => (
-        <circle
-          key={ring.r}
-          cx={CX}
-          cy={CY}
-          r={ring.r}
+    <svg
+      ref={ref}
+      viewBox="0 0 100 66"
+      className="w-full h-auto"
+      role="img"
+      aria-label="Auraplex machine coverage flows from Selangor across Malaysia, ASEAN and Asia-Pacific"
+    >
+      {/* Flow lines */}
+      {NODES.map((n, i) => (
+        <motion.path
+          key={`p-${n.label}`}
+          d={flowPath(n)}
           fill="none"
-          stroke="var(--color-neutral-200)"
-          strokeWidth="1"
-          strokeDasharray="2 6"
+          stroke="var(--color-signal)"
+          strokeWidth="0.5"
+          className={reduced ? undefined : 'ax-flow'}
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: TIER_OPACITY[n.tier] } : { opacity: 0 }}
+          transition={{ duration: reduced ? 0 : 0.6, delay: i * 0.08 }}
         />
       ))}
 
-      {/* Tier labels (top of each ring) */}
-      {Object.values(RINGS).map((ring) => (
-        <text
-          key={`t-${ring.r}`}
-          x={CX}
-          y={CY - ring.r - 6}
-          textAnchor="middle"
-          className="fill-[color:var(--color-neutral-600)]"
-          style={{ font: '600 8px var(--font-mono, monospace)', letterSpacing: '0.2em', textTransform: 'uppercase' }}
+      {/* Region nodes */}
+      {NODES.map((n, i) => (
+        <motion.g
+          key={`n-${n.label}`}
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ duration: 0.4, delay: 0.3 + i * 0.07 }}
         >
-          {ring.tier}
-        </text>
+          {!reduced && (
+            <motion.circle
+              cx={n.x}
+              cy={n.y}
+              r="1"
+              fill="var(--color-signal)"
+              fillOpacity="0.4"
+              animate={{ r: [1, 3, 1], opacity: [0.4, 0, 0.4] }}
+              transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut', delay: i * 0.2 }}
+            />
+          )}
+          <circle cx={n.x} cy={n.y} r="1" fill="var(--color-signal)" />
+          <text
+            x={n.x}
+            y={n.y - 2.4}
+            textAnchor="middle"
+            className="fill-[color:var(--color-ink)]"
+            style={{ font: '600 2.2px var(--font-mono, monospace)', letterSpacing: '0.05em' }}
+          >
+            {n.label}
+          </text>
+        </motion.g>
       ))}
 
-      {/* Connecting lines + nodes */}
-      {NODES.map((n, i) => {
-        const { x, y } = pos(RINGS[n.ring].r, n.angle);
-        const anchor = x < CX - 6 ? 'end' : x > CX + 6 ? 'start' : 'middle';
-        const lx = x + (anchor === 'end' ? -10 : anchor === 'start' ? 10 : 0);
-        return (
-          <motion.g
-            key={n.label}
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 0.4, delay: reduced ? 0 : 0.2 + i * 0.08 }}
-          >
-            <line x1={CX} y1={CY} x2={x} y2={y} stroke="var(--color-signal)" strokeOpacity="0.18" strokeWidth="1" />
-            {/* Pulse halo */}
-            {!reduced && (
-              <motion.circle
-                cx={x}
-                cy={y}
-                r="4"
-                fill="var(--color-signal)"
-                fillOpacity="0.4"
-                animate={{ r: [4, 11, 4], opacity: [0.4, 0, 0.4] }}
-                transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut', delay: i * 0.25 }}
-              />
-            )}
-            <circle cx={x} cy={y} r="4" fill="var(--color-signal)" />
-            <text
-              x={lx}
-              y={y + 3}
-              textAnchor={anchor}
-              className="fill-[color:var(--color-ink)]"
-              style={{ font: '600 9px var(--font-mono, monospace)', letterSpacing: '0.12em' }}
-            >
-              {n.label}
-            </text>
-          </motion.g>
-        );
-      })}
-
-      {/* HQ centre */}
-      <circle cx={CX} cy={CY} r="7" fill="var(--color-ink)" />
-      <circle cx={CX} cy={CY} r="7" fill="none" stroke="var(--color-signal)" strokeWidth="2" />
+      {/* HQ origin */}
+      <circle cx={HQ.x} cy={HQ.y} r="1.8" fill="var(--color-ink)" />
+      <circle cx={HQ.x} cy={HQ.y} r="1.8" fill="none" stroke="var(--color-signal)" strokeWidth="0.6" />
       <text
-        x={CX}
-        y={CY + 22}
+        x={HQ.x}
+        y={HQ.y + 4}
         textAnchor="middle"
         className="fill-[color:var(--color-ink)]"
-        style={{ font: '700 9px var(--font-mono, monospace)', letterSpacing: '0.2em', textTransform: 'uppercase' }}
+        style={{ font: '700 2.4px var(--font-mono, monospace)', letterSpacing: '0.12em', textTransform: 'uppercase' }}
       >
         Selangor HQ
       </text>
