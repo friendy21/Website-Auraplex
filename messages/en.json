@@ -329,13 +329,13 @@
       "h2Line3": "Some are just facts.",
       "items": [
         { "label": "machines in the catalogue" },
-        { "label": "industries served" },
-        { "label": "photographs on the floor" },
-        { "label": "factories deployed" },
-        { "label": "average uptime" },
-        { "label": "average payback" },
-        { "label": "typical lead time" },
-        { "label": "outsourced parts" }
+        { "label": "engineering families" },
+        { "label": "machines photographed on the floor" },
+        { "label": "exhibitions since 2022" },
+        { "label": "Malaysian states served" },
+        { "label": "innovation award · MIMF 2024" },
+        { "label": "languages — EN · BM · ZH" },
+        { "label": "outsourced controls" }
       ]
     },
     "team": {

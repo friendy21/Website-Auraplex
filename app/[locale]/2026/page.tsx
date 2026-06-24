@@ -65,18 +65,6 @@ const WORD_STYLES: { size: 'sm' | 'md' | 'lg'; rotate: number }[] = [
   { size: 'md', rotate: 2 },
 ];
 
-// Stats numeric values + icons live in code; labels come from i18n.
-const STAT_VALUES: { value: number; suffix?: string; icon: string }[] = [
-  { value: 30, icon: '◆' },
-  { value: 11, icon: '◇' },
-  { value: 142, icon: '▣' },
-  { value: 340, suffix: '+', icon: '◉' },
-  { value: 99.4, suffix: '%', icon: '⬡' },
-  { value: 14, suffix: 'mo', icon: '◐' },
-  { value: 4, suffix: 'wk', icon: '▷' },
-  { value: 0, icon: '◍' },
-];
-
 // The "name" each of the four quarterly releases earned — surfaced as the
 // hero of each timeline panel so the section delivers on its headline
 // ("Four releases. Each one earned a name."). Codenames, in release order.
@@ -112,6 +100,21 @@ export default async function YearInReviewPage({
   const hero = featured[0];
   const supporting = featured.slice(1, 4);
   const counts = categoryCounts();
+
+  // Honest, verifiable stats — catalogue size, families, the real
+  // photographed count, real exhibitions/recognition, served states,
+  // languages, and the in-house build model. Labels come from i18n
+  // (page2026.stats.items) and must stay in the same order.
+  const stats: { value: number; suffix?: string; icon: string }[] = [
+    { value: counts.all, icon: '◆' }, // machines in the catalogue
+    { value: 3, icon: '◇' }, // engineering families
+    { value: photographed.length, icon: '▣' }, // machines photographed
+    { value: 5, icon: '◉' }, // exhibitions since 2022
+    { value: 14, icon: '⬡' }, // Malaysian states served
+    { value: 1, icon: '★' }, // innovation award · MIMF 2024
+    { value: 3, icon: '◐' }, // languages — EN · BM · ZH
+    { value: 0, icon: '◍' }, // outsourced controls
+  ];
 
   return (
     <div className="bg-[color:var(--color-paper)] text-[color:var(--color-ink)] min-h-screen">
@@ -321,7 +324,7 @@ export default async function YearInReviewPage({
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[color:var(--color-neutral-200)] border border-[color:var(--color-neutral-200)]">
-          {STAT_VALUES.map((s, i) => (
+          {stats.map((s, i) => (
             <ScanLine
               key={i}
               direction="down"
