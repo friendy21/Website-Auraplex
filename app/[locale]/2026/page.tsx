@@ -77,6 +77,11 @@ const STAT_VALUES: { value: number; suffix?: string; icon: string }[] = [
   { value: 0, icon: '◍' },
 ];
 
+// The "name" each of the four quarterly releases earned — surfaced as the
+// hero of each timeline panel so the section delivers on its headline
+// ("Four releases. Each one earned a name."). Codenames, in release order.
+const RELEASE_NAMES = ['Cornerstone', 'Atlas', 'Argus', 'Encore'];
+
 export default async function YearInReviewPage({
   params,
 }: {
@@ -477,10 +482,14 @@ export default async function YearInReviewPage({
             </div>
 
             <div className="relative z-10 max-w-3xl">
-              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal-bright)] mb-8">
-                {q.q} · 2026
+              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal-bright)] mb-4">
+                {q.q} · 2026 · the {RELEASE_NAMES[i]} release
               </div>
-              <h3 className="font-display text-[clamp(2rem,5vw,4.5rem)] tracking-[-0.02em] leading-[1.05] mb-8">
+              {/* The name it earned */}
+              <div className="font-display text-[clamp(2.5rem,8vw,7rem)] tracking-[-0.04em] leading-[0.85] text-[color:var(--color-signal)] mb-4">
+                {RELEASE_NAMES[i]}
+              </div>
+              <h3 className="font-display text-[clamp(1.4rem,3.2vw,2.5rem)] tracking-[-0.02em] leading-[1.1] text-[color:var(--color-paper)] mb-6">
                 {q.h}
               </h3>
               <p className="text-lg md:text-xl text-[color:var(--color-neutral-600)] leading-relaxed max-w-xl">
