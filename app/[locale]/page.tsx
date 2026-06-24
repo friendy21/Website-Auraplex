@@ -1,7 +1,6 @@
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { categoryCounts } from '@/lib/catalog';
 import { HeroCinematic } from '@/components/sections/hero-cinematic';
-import { ManifestoSection } from '@/components/sections/manifesto-section';
 import { LiveDataTicker } from '@/components/sections/live-data-ticker';
 import { ValuePropGrid } from '@/components/sections/value-prop-grid';
 import { ScrollNarrative } from '@/components/sections/scroll-narrative';
@@ -51,7 +50,6 @@ export default async function Home({
           of the FAQ — Closer stays outside so the line never reaches
           the finale or footer. */}
       <ScrollDrawLine>
-        <ManifestoSection />
         <LiveDataTicker
           machines={categoryCounts().all}
           families={3}
