@@ -3,32 +3,30 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
-// ⚠ Placeholder testimonials — to be replaced with verified customer
-// quotes (with on-file permission) before launch. All entries below are
-// un-attributed and need verification against real customer interviews.
-// Keep this array sized to 4+ items so the two-row marquee still loops
-// cleanly when one is removed.
+// Real, verifiable recognition + positioning — sourced from the live site
+// (auraplex.com.my) and the committed catalogue. No fabricated customer
+// quotes; every line below is true and on the record. Keep 4+ items so the
+// two-row marquee still loops cleanly if one is removed.
 const TESTIMONIALS = [
   {
-    quote: 'Installation took two days. Production hit spec on day three.',
-    author: 'Ops Director · KL beverage co.',
+    quote: 'Recognised as a best company for innovation.',
+    author: 'MIMF 2024 · MITEC, Kuala Lumpur',
   },
   {
-    quote:
-      'Local support means a part on the floor by next morning, not next month.',
-    author: 'Plant Manager · Penang food line',
+    quote: 'Designed, built and tested in Seri Kembangan.',
+    author: 'Auraplex SDN BHD',
   },
   {
-    quote: 'We retired three Chinese-import labellers for one Auraplex unit.',
-    author: 'CEO · Sabah edible oils',
+    quote: 'Labelling, packaging and automation — thirty machines.',
+    author: 'The Auraplex catalogue',
   },
   {
-    quote: 'Throughput up 40%. Labour reallocated, not laid off. That mattered.',
-    author: 'COO · Selangor pharma',
+    quote: 'On the floor at MIMF and Metaltech, MITEC.',
+    author: 'Exhibitions · 2022–2024',
   },
   {
-    quote: 'Their engineer answered my Sunday-night WhatsApp at 9:14pm.',
-    author: 'Plant Manager · Klang cosmetics',
+    quote: 'Local engineers, parts you can drive to, service you can call.',
+    author: 'Built in Malaysia',
   },
 ];
 
