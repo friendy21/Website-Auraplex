@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
 import { KineticReveal } from '@/components/motion/kinetic-reveal';
-import { AboutCardCluster } from '@/components/sections/about-card-cluster';
+import { AboutGallery } from '@/components/sections/about-gallery';
 import { Button } from '@/components/primitives/button';
 import { buildMetadata } from '@/lib/seo';
 import { MACHINES, getFeaturedMachines } from '@/lib/catalog';
@@ -100,14 +100,15 @@ export default async function AboutPage({
         </Reveal>
       </section>
 
-      {/* ────── FANNING MACHINE-CARD CLUSTER (immersive, dark band) ────── */}
-      <AboutCardCluster
+      {/* ────── MACHINE GALLERY (scroll-reveal, dark band) ────── */}
+      <AboutGallery
         eyebrow="Inside Auraplex"
         heading="Built on the floor."
-        sub="Thirty machines, designed and assembled in Seri Kembangan."
-        images={featured
-          .map((m) => m.image)
-          .filter((s): s is string => Boolean(s))}
+        sub="Designed, built and tested in Seri Kembangan."
+        items={MACHINES.filter((m) => m.image).slice(0, 6).map((m) => ({
+          src: m.image as string,
+          alt: m.name,
+        }))}
       />
 
       <section className="mx-auto max-w-[1600px] px-6 lg:px-12 py-24 border-y border-[color:var(--color-neutral-700)]">
