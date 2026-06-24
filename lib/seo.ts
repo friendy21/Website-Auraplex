@@ -65,7 +65,7 @@ export function organizationSchema() {
     // Real profiles verified against the live autolabellermalaysia.com
     // footer (canonical URLs, tracking params stripped).
     sameAs: [
-      'https://www.facebook.com/Auraplex-100352958924725/',
+      'https://www.facebook.com/Auraplex-100068561114645/',
       'https://www.instagram.com/auraplex_/',
       'https://www.youtube.com/@auraplex5219',
       'https://www.tiktok.com/@auraplex_',

@@ -55,7 +55,7 @@ export default async function Home({
         <LiveDataTicker
           machines={categoryCounts().all}
           families={3}
-          since={2023}
+          since={2021}
           recognition="MIMF '24"
         />
         <ValuePropGrid />
