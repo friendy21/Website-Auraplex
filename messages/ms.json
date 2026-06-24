@@ -127,10 +127,10 @@
       "body": "Mekanikal, elektrikal, kawalan, pemasangan — semuanya di bawah satu bumbung di Seri Kembangan. Tiada rebrand, tiada kejuruteraan luar."
     },
     "zoomB": {
-      "eyebrow": "Penglihatan · pengesanan 1 ms",
+      "eyebrow": "Penglihatan · pemeriksaan bersepadu",
       "h2Line1": "Penolakan",
       "h2Line2": "gred penglihatan.",
-      "body": "Kadar reject 0.2%. Turun dari 1.4%. Barisan sama. Mesin berbeza."
+      "body": "Pemeriksaan penglihatan bersepadu pada barisan Custom Top Labelling — dibina dan ditala di lantai kilang kami di Seri Kembangan."
     },
     "valueProp02": {
       "label": "Di bawah satu bumbung",
@@ -288,7 +288,7 @@
     "eyebrow": "Ulasan Tahun · 2026",
     "h1Line1": "2026 di lantai kilang.",
     "h1Line2": "Setahun dalam mesin.",
-    "lede": "Kami menghantar 30 mesin, memfoto 142 daripadanya di lantai kilang di Selangor, dan menempatkan aplikator presisi dalam 11 industri merentas ASEAN — dari kosmetik di Klang ke farmaseutikal di Pulau Pinang. Inilah tahunnya, mengikut urutan ia berlaku.",
+    "lede": "Kami membina mesin pelabelan, pembungkusan dan automasi — tiga puluh dalam katalog — direka, dibina dan diuji di lantai kilang kami di Seri Kembangan, dan dipamerkan merentas ASEAN di MIMF dan Metaltech. Inilah tahunnya, mengikut urutan ia berlaku.",
     "filedFromLabel": "Difailkan dari",
     "filedFromValue": "Seri Kembangan, Selangor\nMalaysia",
     "industriesLabel": "Industri disokong — 2026",
@@ -360,9 +360,9 @@
       "eyebrow": "§ 06 / Nota dari lantai kilang",
       "lead": "Apabila kami memulakan Auraplex, kami membuat satu keputusan yang membentuk setiap mesin sejak itu: bina di sini.",
       "leadSub": "Tiada penjenamaan semula dari Wenzhou. Tiada kawalan diluar-sumber. Tiada penghantaran laut 14 minggu untuk alat ganti yang anda perlukan semalam.",
-      "p1": "2026 adalah tahun keputusan itu mula membayar balik kepada pembeli. Pengeluar kosmetik di Klang menghubungi kami pada 9 malam Sabtu — pelabel tersekat di pertengahan operasi. Seorang jurutera berada di tapak menjelang 8 pagi Ahad dengan alat ganti yang betul dalam Toyota Hilux. Itu tidak berlaku dengan barangan import.",
-      "p2": "Kami menambah sistem pemeriksaan penglihatan kepada barisan Custom Top Labelling, yang membolehkan pelanggan farmaseutikal mengurangkan kadar reject mereka dari 1.4% kepada di bawah 0.2%. Continuous Band Sealer mendapat v2 dengan tetingkap toleransi yang lebih luas — jenis pembetulan kecil yang hanya berlaku apabila pasukan R&D makan tengah hari bersama pasukan servis.",
-      "p3": "Dalam 2027 kami akan condong lebih jauh ke arah rig khusus. Dua pelanggan perintis telah meminta integrasi barisan penuh — satu rig yang mengisi, menutup, melabel dan menutup dari satu HMI. Pembinaan tersebut berlaku di lantai kilang kami di Seri Kembangan, dengan jurutera yang pengurus loji anda boleh panggil dengan nama.",
+      "p1": "Membina di sini adalah yang membayar balik kepada pembeli. Pengeluar dengan pelabel tersekat mendapat jurutera Auraplex di lantai kilang dengan alat ganti yang betul — bukan tiket sokongan dan anggaran penghantaran dari luar negara. Jurutera tempatan, dan alat ganti yang anda boleh pandu untuk ambil.",
+      "p2": "Merentasi katalog — pelabelan, pembungkusan, automasi dan rig tersuai — setiap mesin direka, dibina dan diuji di lantai kilang kami di Seri Kembangan oleh pasukan yang sama yang memasang dan menyelenggarakannya. Pasukan R&D dan pasukan servis berkongsi lantai, jadi pembetulan cepat dan nyata.",
+      "p3": "Pada 2026, kerja itu diiktiraf di Malaysia International Machinery Fair sebagai syarikat terbaik untuk inovasi. Kami memberi tumpuan lebih kepada rig tersuai sepenuhnya — dibina di sini, disokong oleh jurutera yang pengurus loji anda boleh panggil dengan nama.",
       "signature": "— Pasukan kejuruteraan Auraplex",
       "ctaPrimary": "Hubungi jurutera",
       "ctaWhatsapp": "WhatsApp kami",
@@ -736,7 +736,7 @@
     "machineFinder": {
       "eyebrow": "Jurutera AI · semakan manusia 24 jam",
       "h1": "Terangkan barisan anda. Kami padankan mesin.",
-      "subtitle": "Berbual dengan jurutera aplikasi AI kami. Dilatih pada katalog Auraplex dan 340+ pemasangan disebarkan. Setiap cadangan disemak oleh jurutera manusia dalam 24 jam."
+      "subtitle": "Berbual dengan jurutera aplikasi AI kami, dilatih pada keseluruhan katalog Auraplex. Terangkan barisan anda dan ia akan padankan mesin yang sesuai — kemudian pasukan kami akan susuli."
     }
   }
 }

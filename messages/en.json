@@ -127,10 +127,10 @@
       "body": "Mechanical, electrical, controls, installation — all under one roof in Seri Kembangan. No re-badge, no outsourced engineering."
     },
     "zoomB": {
-      "eyebrow": "Vision · 1 ms detection",
+      "eyebrow": "Vision · integrated checking",
       "h2Line1": "Vision-grade",
-      "h2Line2": "rejection.",
-      "body": "0.2% reject rate. Down from 1.4%. Same line. Different machine."
+      "h2Line2": "checking.",
+      "body": "Integrated vision checking on the Custom Top Labelling line — built and tuned on our Seri Kembangan floor."
     },
     "valueProp02": {
       "label": "Under one roof",
@@ -288,7 +288,7 @@
     "eyebrow": "Year in Review · 2026",
     "h1Line1": "2026 on the floor.",
     "h1Line2": "A year in machines.",
-    "lede": "We shipped 30 machines, photographed 142 of them on the floor in Selangor, and put precision applicators into 11 industries across ASEAN — from cosmetics in Klang to pharma in Penang. Here's the year, in the order it happened.",
+    "lede": "We build labelling, packaging and automation machines — thirty in the catalogue — designed, built and tested on our floor in Seri Kembangan, and shown across ASEAN at MIMF and Metaltech. Here's the year, in the order it happened.",
     "filedFromLabel": "Filed from",
     "filedFromValue": "Seri Kembangan, Selangor\nMalaysia",
     "industriesLabel": "Industries served — 2026",
@@ -360,9 +360,9 @@
       "eyebrow": "§ 06 / A note from the floor",
       "lead": "When we started Auraplex, we made one decision that's shaped every machine since: build it here.",
       "leadSub": "No re-badging from Wenzhou. No outsourced controls. No 14-week ocean freight on a part you needed yesterday.",
-      "p1": "2026 was the year that decision started paying buyers back. A cosmetics manufacturer in Klang called us at 9pm on a Saturday — a labeller had jammed mid-run. An engineer was on-site by 8am Sunday with the right part in a Toyota Hilux. That doesn't happen with an import.",
-      "p2": "We added a vision-checking system to the Custom Top Labelling line, which let a pharma customer drop their reject rate from 1.4% to under 0.2%. The Continuous Band Sealer got a v2 with a wider tolerance window — the kind of small fix that only happens when the R&D team eats lunch with the service team.",
-      "p3": "In 2027 we're leaning further into custom rigs. Two pilot customers have asked for full-line integration — a single rig that fills, caps, labels and seals from one HMI. Those builds happen on our floor in Seri Kembangan, with engineers your plant manager can call by name.",
+      "p1": "Building here is what pays buyers back. A manufacturer with a jammed labeller gets an Auraplex engineer on the floor with the right part — not a support ticket and an overseas shipping estimate. Local engineers, and parts you can drive to.",
+      "p2": "Across the catalogue — labelling, packaging, automation and custom rigs — every machine is designed, built and tested on our Seri Kembangan floor by the same team that installs and services it. The R&D bench and the service bench share a floor, so fixes are fast and real.",
+      "p3": "In 2026 that work was recognised at the Malaysia International Machinery Fair as a best company for innovation. We're leaning further into custom, full-line rigs — built here, supported by engineers your plant manager can call by name.",
       "signature": "— The Auraplex engineering team",
       "ctaPrimary": "Talk to an engineer",
       "ctaWhatsapp": "WhatsApp us",
@@ -736,7 +736,7 @@
     "machineFinder": {
       "eyebrow": "AI Engineer · 24h human review",
       "h1": "Describe your line. We'll match the machine.",
-      "subtitle": "Talk to our AI application engineer. Trained on the Auraplex catalogue and 340+ deployed installations. Every recommendation is reviewed by a human engineer within 24 hours."
+      "subtitle": "Talk to our AI application engineer, trained on the full Auraplex catalogue. Describe your line and it will match the right machine — then our team follows up."
     }
   }
 }
