@@ -29,10 +29,10 @@
     "ctaPrimary": "Lihat mesin",
     "ctaSecondary": "Hubungi WhatsApp",
     "ticker": {
-      "machines": "Mesin beroperasi seluruh dunia",
-      "labels": "Label dilekat hari ini",
-      "uptime": "Purata masa beroperasi",
-      "factories": "Kilang disokong"
+      "machines": "Mesin dalam katalog",
+      "families": "Keluarga kejuruteraan",
+      "since": "Beroperasi sejak",
+      "recognition": "Pengiktirafan"
     },
     "valueProps": {
       "title": "Tiga sebab pembeli memilih Auraplex",

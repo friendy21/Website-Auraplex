@@ -29,10 +29,10 @@
     "ctaPrimary": "See the machines",
     "ctaSecondary": "Talk on WhatsApp",
     "ticker": {
-      "machines": "Machines running globally",
-      "labels": "Labels applied today",
-      "uptime": "Avg uptime",
-      "factories": "Factories served"
+      "machines": "Machines in the catalogue",
+      "families": "Engineering families",
+      "since": "Engineering since",
+      "recognition": "Recognition"
     },
     "valueProps": {
       "title": "Three reasons buyers choose Auraplex",

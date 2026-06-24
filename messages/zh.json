@@ -29,10 +29,10 @@
     "ctaPrimary": "查看机器",
     "ctaSecondary": "WhatsApp 联系",
     "ticker": {
-      "machines": "全球运行机器数",
-      "labels": "今日已贴标数",
-      "uptime": "平均运行率",
-      "factories": "服务工厂数"
+      "machines": "目录中的机器",
+      "families": "工程系列",
+      "since": "成立于",
+      "recognition": "认可"
     },
     "valueProps": {
       "title": "客户选择 Auraplex 的三个理由",

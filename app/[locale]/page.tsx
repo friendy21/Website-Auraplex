@@ -1,6 +1,5 @@
-import { Suspense } from 'react';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
-import { getTickerStats } from '@/lib/kv';
+import { categoryCounts } from '@/lib/catalog';
 import { HeroCinematic } from '@/components/sections/hero-cinematic';
 import { ManifestoSection } from '@/components/sections/manifesto-section';
 import { LiveDataTicker } from '@/components/sections/live-data-ticker';
@@ -13,31 +12,6 @@ import { ZoomTransition } from '@/components/motion/zoom-transition';
 import { ScrollDrawLine } from '@/components/motion/scroll-draw-line';
 import { MachineCarousel } from '@/components/sections/machine-carousel';
 import { OutlineMarquee } from '@/components/sections/outline-marquee';
-
-// Static fallback stats — used both as the Suspense fallback (so the
-// ticker section's height is reserved while the KV call streams) and as
-// the error fallback when KV is unreachable.
-const FALLBACK_STATS = {
-  machines: 1247,
-  labels: 8_200_000,
-  uptime: '99.4%',
-  factories: 340,
-};
-
-/**
- * The KV stats fetch is the ONLY dynamic data on the home page. Awaiting
- * it at page level made the entire page body part of the dynamic stream:
- * with PPR the static shell (header/footer) painted first and then the
- * whole page content inserted above the footer — Lighthouse measured the
- * insertion as a 0.235 layout shift. Isolating the await in its own
- * Suspense boundary keeps every other section in the static shell, and
- * the fallback renders the identical ticker layout with placeholder
- * numbers so the streamed swap is pixel-stable.
- */
-async function TickerSlot() {
-  const stats = await getTickerStats().catch(() => FALLBACK_STATS);
-  return <LiveDataTicker stats={stats} />;
-}
 
 export default async function Home({
   params,
@@ -78,9 +52,12 @@ export default async function Home({
           the finale or footer. */}
       <ScrollDrawLine>
         <ManifestoSection />
-        <Suspense fallback={<LiveDataTicker stats={FALLBACK_STATS} />}>
-          <TickerSlot />
-        </Suspense>
+        <LiveDataTicker
+          machines={categoryCounts().all}
+          families={3}
+          since={2023}
+          recognition="MIMF '24"
+        />
         <ValuePropGrid />
 
         {/* Cinematic pivot — Flexy Applicator zooms from thumbnail to

@@ -34,33 +34,3 @@ export async function listLeads(kind: LeadKind | 'all' = 'all', limit = 50): Pro
 export async function incrCounter(name: string, by = 1): Promise<number> {
   return kv.incrby(`counter:${name}`, by);
 }
-
-export interface TickerStats {
-  machines: number;
-  labels: number;
-  uptime: string;
-  factories: number;
-}
-
-const DEFAULT_TICKER: TickerStats = {
-  machines: 1247,
-  labels: 8_200_000,
-  uptime: '99.4%',
-  factories: 340,
-};
-
-export async function getTickerStats(): Promise<TickerStats> {
-  // The ?? must be applied to the resolved value, not the Promise.
-  const [machines, labels, uptime, factories] = await Promise.all([
-    kv.get<number>('ticker:machines'),
-    kv.get<number>('ticker:labels-today'),
-    kv.get<string>('ticker:uptime'),
-    kv.get<number>('ticker:factories'),
-  ]);
-  return {
-    machines: machines ?? DEFAULT_TICKER.machines,
-    labels: labels ?? DEFAULT_TICKER.labels,
-    uptime: uptime ?? DEFAULT_TICKER.uptime,
-    factories: factories ?? DEFAULT_TICKER.factories,
-  };
-}
