@@ -1,21 +1,15 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import Link from 'next/link';
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+import { useDragRotate } from '@/components/motion/use-drag-rotate';
 
 type Face = { image: string; label: string; slug: string };
-
 type Props = { faces: Face[] }; // exactly 6
 
 const S = 340; // cube edge (px)
 const H = S / 2;
 
-// Standard cube face placements.
 const FACE_TF = [
   `translateZ(${H}px)`, // 0 front
   `rotateY(90deg) translateZ(${H}px)`, // 1 right
@@ -25,100 +19,51 @@ const FACE_TF = [
   `rotateX(-90deg) translateZ(${H}px)`, // 5 bottom
 ];
 
-// Cube rotation that brings each face to the front, in scroll order.
-const STOPS = [
-  { rx: 0, ry: 0 }, // front
-  { rx: 0, ry: -90 }, // right
-  { rx: 0, ry: -180 }, // back
-  { rx: 0, ry: -270 }, // left
-  { rx: -90, ry: -360 }, // top
-  { rx: 90, ry: -360 }, // bottom
-];
-
-const easeIO = (t: number) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t);
-
 /**
- * MachineCube — a 3D cube whose six faces (machine photos) rotate past the
- * camera as you scroll. Faithful to the cube centerpiece of luis-lessrain/
- * ZYpyoRV ("Six Faces"), but driven by GSAP ScrollTrigger scrub rather than
- * the pen's custom wheel-hijack momentum engine (which would conflict with
- * this site's Lenis smooth-scroll). Rebranded to Auraplex.
+ * MachineCube — a draggable 3D cube whose six faces are machine photos. Grab
+ * to rotate freely (X/Y), idles with a slow auto-rotation, throws with
+ * momentum on release (useDragRotate). Each face links to its machine.
+ * Faithful to luis-lessrain/ZYpyoRV's cube, made directly interactive
+ * instead of scroll-scrubbed.
  *
- * Mobile / reduced-motion: skips GSAP and shows the six faces as a static
- * grid (codebase perf policy). CSS-sticky runway, no GSAP pin (CLS-safe).
+ * Mobile / reduced-motion: a static 6-image grid.
  */
 export function MachineCube({ faces }: Props) {
-  const container = useRef<HTMLDivElement>(null);
+  const stage = useRef<HTMLDivElement>(null);
   const cube = useRef<HTMLDivElement>(null);
-  const [stop, setStop] = useState(0);
-  const lastStop = useRef(0);
   const six = faces.slice(0, 6);
 
-  useGSAP(
-    () => {
-      if (!container.current || !cube.current) return;
-      const isMobile =
-        typeof window !== 'undefined' && window.innerWidth < 768;
-      const reduce =
-        typeof window !== 'undefined' &&
-        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (isMobile || reduce) return;
-
-      const proxy = { t: 0 };
-      const n = STOPS.length;
-      gsap.to(proxy, {
-        t: 1,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: container.current,
-          start: 'top top',
-          end: 'bottom bottom',
-          scrub: 0.8,
-          onUpdate: (self) => {
-            const s = self.progress;
-            const x = s * (n - 1);
-            const i = Math.min(Math.floor(x), n - 2);
-            const f = easeIO(x - i);
-            const a = STOPS[i];
-            const b = STOPS[i + 1];
-            const rx = a.rx + (b.rx - a.rx) * f;
-            const ry = a.ry + (b.ry - a.ry) * f;
-            if (cube.current) {
-              cube.current.style.transform = `translateZ(-${H}px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
-            }
-            const idx = Math.min(n - 1, Math.round(x));
-            if (idx !== lastStop.current) {
-              lastStop.current = idx;
-              setStop(idx);
-            }
-          },
-        },
-      });
-    },
-    { scope: container, dependencies: [six.length] },
-  );
+  const moved = useDragRotate(stage, cube, {
+    allowVertical: true,
+    dragRatio: 0.32,
+    idleSpeed: 360 / 55000,
+    baseTransform: `translateZ(-${H}px)`,
+    initialX: -18,
+  });
 
   if (six.length < 6) return null;
 
   return (
     <section className="relative bg-[color:var(--color-ink)] text-[color:var(--color-paper)]">
-      {/* Immersive cube (desktop / motion-OK) */}
-      <div ref={container} className="relative hidden md:block h-[260vh]">
-        <div
-          className="sticky top-0 h-screen overflow-hidden flex items-center justify-center"
-          style={{ perspective: '1400px' }}
-        >
-          {/* HUD caption */}
-          <div className="absolute top-[18%] left-1/2 -translate-x-1/2 text-center z-10 pointer-events-none">
-            <div className="font-mono text-[10px] uppercase tracking-[0.4em] text-[color:var(--color-signal)]">
-              {String(stop + 1).padStart(2, '0')} / 06
-            </div>
-            <div className="font-display text-2xl tracking-[-0.01em] mt-2">
-              {six[stop]?.label}
-            </div>
+      {/* Draggable cube (desktop) */}
+      <div
+        ref={stage}
+        className="relative hidden md:block h-[82vh] overflow-hidden select-none flex items-center justify-center"
+        style={{ perspective: '1400px', cursor: 'grab', touchAction: 'pan-y' }}
+        onClickCapture={(e) => {
+          if (moved.current > 6) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
+      >
+        <div className="absolute top-[16%] left-1/2 -translate-x-1/2 z-10 text-center pointer-events-none">
+          <div className="font-mono text-[10px] uppercase tracking-[0.4em] text-[color:var(--color-signal)]">
+            Drag to rotate · 6 machines
           </div>
+        </div>
 
-          {/* Cube */}
+        <div className="absolute left-1/2 top-1/2 -ml-[170px] -mt-[170px]">
           <div
             ref={cube}
             className="relative"
@@ -126,6 +71,7 @@ export function MachineCube({ faces }: Props) {
               width: S,
               height: S,
               transformStyle: 'preserve-3d',
+              willChange: 'transform',
               transform: `translateZ(-${H}px)`,
             }}
           >
@@ -135,6 +81,7 @@ export function MachineCube({ faces }: Props) {
                 href={`/products/${face.slug}`}
                 data-cursor="caliper"
                 aria-label={face.label}
+                draggable={false}
                 className="absolute inset-0 block overflow-hidden rounded-2xl border border-[color:var(--color-signal)]/30 bg-[color:var(--color-neutral-800)]"
                 style={{ transform: FACE_TF[i], backfaceVisibility: 'hidden' }}
               >
@@ -143,6 +90,7 @@ export function MachineCube({ faces }: Props) {
                   src={face.image}
                   alt={face.label}
                   loading="lazy"
+                  draggable={false}
                   className="h-full w-full object-cover [filter:brightness(0.8)]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--color-ink)]/80 via-transparent to-transparent" />

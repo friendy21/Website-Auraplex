@@ -782,21 +782,6 @@ html.cursor-custom body { cursor: none; }
   -webkit-mask: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
   mask: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
 }
-.acx-3d {
-  display: grid;
-  place-self: center;
-  transform-style: preserve-3d;
-  animation: acx-spin 40s linear infinite;
-}
-/* Hover anywhere on the scene pauses the spin so cards can be clicked. */
-.acx-scene:hover .acx-3d {
-  animation-play-state: paused;
-}
-@keyframes acx-spin {
-  to {
-    rotate: y 1turn;
-  }
-}
 .acx-card {
   --w: 17.5em;
   position: relative;
