@@ -114,7 +114,7 @@ export function CloserSection() {
   return (
     <section
       ref={container}
-      className="relative bg-[color:var(--color-ink)] h-[100dvh] md:h-[calc(100dvh+2400px)]"
+      className="relative bg-[color:var(--color-ink)] h-[100dvh] md:h-[calc(100dvh+2400px)] motion-reduce:h-[100dvh]!"
     >
       <div className="sticky top-0 h-[100dvh] overflow-hidden flex items-center">
       {/* Watermark */}

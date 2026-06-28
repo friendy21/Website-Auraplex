@@ -143,22 +143,66 @@ export function MachineHyperscroll({ machines }: Props) {
   if (!machines.length) return null;
 
   // ── Mobile / reduced-motion fallback ──
+  // The 3D flythrough can't run here, so present the same machines as a clean
+  // editorial gallery — named, spaced and linked, matching the rest of the
+  // homepage rather than the old cramped thumbnail grid.
   if (tier !== 'full') {
     return (
-      <section className="bg-[color:var(--color-ink)] text-[color:var(--color-paper)] py-20 px-6">
-        <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6">
-          — Featured machines
-        </div>
-        <div className="grid grid-cols-2 gap-3">
-          {machines.slice(0, 6).map((m) => (
+      <section className="border-y border-[color:var(--color-neutral-700)] bg-[color:var(--color-ink)] text-[color:var(--color-paper)] py-24 lg:py-28">
+        <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
+          <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div>
+              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-4 flex items-center gap-3">
+                <span className="h-px w-12 bg-[color:var(--color-signal)]" />
+                Featured machines
+              </div>
+              <h2 className="font-display text-[clamp(2rem,5vw,4rem)] tracking-[-0.02em] leading-[1]">
+                The full range.
+              </h2>
+            </div>
             <Link
-              key={m.slug}
-              href={`/products/${m.slug}`}
-              className="relative aspect-[3/4] overflow-hidden rounded-xl border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)]"
+              href="/products"
+              className="font-mono text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-steel)] hover:text-[color:var(--color-signal)] transition self-start md:self-auto"
             >
-              <Image src={m.image} alt={m.name} fill sizes="50vw" className="object-contain p-3" />
+              Browse all →
             </Link>
-          ))}
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {machines.slice(0, 8).map((m, i) => (
+              <Link
+                key={m.slug}
+                href={`/products/${m.slug}`}
+                data-cursor="caliper"
+                className="group relative flex flex-col overflow-hidden rounded-2xl border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)] transition-colors duration-300 hover:border-[color:var(--color-signal)]"
+              >
+                <div
+                  className="relative aspect-square"
+                  style={{
+                    background:
+                      'radial-gradient(120% 80% at 50% 0%, color-mix(in oklab, var(--color-signal) 12%, transparent), transparent 60%)',
+                  }}
+                >
+                  <Image
+                    src={m.image}
+                    alt={m.name}
+                    fill
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                    className="object-contain p-6 transition-transform duration-500 group-hover:scale-[1.05]"
+                  />
+                  <span className="absolute top-3 left-3 font-mono text-[10px] text-[color:var(--color-steel)]">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                </div>
+                <div className="border-t border-[color:var(--color-neutral-700)] p-4">
+                  <h3 className="font-display text-base leading-tight line-clamp-2">{m.name}</h3>
+                  <span className="mt-2 inline-block font-mono text-[9px] uppercase tracking-[0.2em] text-[color:var(--color-steel)] group-hover:text-[color:var(--color-signal)] transition">
+                    View →
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
     );
