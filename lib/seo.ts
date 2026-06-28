@@ -9,7 +9,12 @@ export function buildMetadata(opts: {
   image?: string;
   locale?: string;
 }): Metadata {
-  const url = `${SITE}${opts.path ?? ''}`;
+  const path = opts.path ?? '';
+  const url = `${SITE}${path}`;
+  // Callers pass a locale-prefixed path (e.g. "/en/about"). Strip the leading
+  // locale segment so the hreflang alternates point at the correct sibling
+  // URLs (…/ms/about, …/zh/about) instead of double-prefixing (…/en/en/about).
+  const bare = path.replace(/^\/(en|ms|zh)(?=\/|$)/, '');
   return {
     metadataBase: new URL(SITE),
     title: opts.title,
@@ -17,9 +22,10 @@ export function buildMetadata(opts: {
     alternates: {
       canonical: url,
       languages: {
-        'en-MY': `${SITE}/en${opts.path ?? ''}`,
-        'ms-MY': `${SITE}/ms${opts.path ?? ''}`,
-        'zh-MY': `${SITE}/zh${opts.path ?? ''}`,
+        'en-MY': `${SITE}/en${bare}`,
+        'ms-MY': `${SITE}/ms${bare}`,
+        'zh-MY': `${SITE}/zh${bare}`,
+        'x-default': `${SITE}/en${bare}`,
       },
     },
     openGraph: {
