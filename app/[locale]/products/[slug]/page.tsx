@@ -6,13 +6,21 @@ import { QuoteForm } from '@/components/forms/quote-form';
 import { SpecSheetGate } from '@/components/forms/spec-sheet-gate';
 import { ProductGallery } from '@/components/sections/product-gallery';
 import { SpecTable } from '@/components/sections/spec-table';
+import { ProofRail } from '@/components/sections/proof-rail';
+import { MachineQuickSpec } from '@/components/sections/machine-quick-spec';
+import { RelatedMachines } from '@/components/sections/related-machines';
 import {
   buildMetadata,
   productSchema,
   breadcrumbSchema,
 } from '@/lib/seo';
 import { formatRM, whatsappLink } from '@/lib/utils';
-import { MACHINES, getMachine, categoryLabel } from '@/lib/catalog';
+import {
+  MACHINES,
+  getMachine,
+  getMachinesByCategory,
+  categoryLabel,
+} from '@/lib/catalog';
 import { hasMachineModel } from '@/lib/models';
 
 export async function generateStaticParams() {
@@ -45,6 +53,13 @@ export default async function ProductPage({
 
   const p = getMachine(slug);
   if (!p) notFound();
+
+  // Siblings in the same family — photographed first — for the compare rail.
+  const related = getMachinesByCategory(p.category)
+    .filter((m) => m.slug !== p.slug)
+    .sort((a, b) => Number(Boolean(b.image)) - Number(Boolean(a.image)))
+    .slice(0, 4)
+    .map((m) => ({ slug: m.slug, name: m.name, image: m.image }));
 
   return (
     <>
@@ -83,12 +98,24 @@ export default async function ProductPage({
             <ProductGallery images={p.gallery} alt={p.name} productId={p.id} />
           ) : (
             <div
-              className="relative aspect-[4/3] overflow-hidden border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)] flex items-center justify-center"
+              className="relative aspect-[4/3] overflow-hidden border border-[color:var(--color-neutral-700)] flex flex-col items-center justify-center gap-5 text-center px-8"
+              style={{
+                background:
+                  'radial-gradient(120% 90% at 50% 0%, color-mix(in oklab, var(--color-signal) 12%, transparent), transparent 60%), var(--color-neutral-800)',
+              }}
               data-cursor="caliper"
             >
-              <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-neutral-400)]">
-                Photography pending
+              <span className="font-display text-[clamp(3rem,9vw,7rem)] leading-none text-[color:var(--color-signal)]/25 select-none">
+                ◍
+              </span>
+              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)]">
+                On the floor · photography pending
               </div>
+              <p className="max-w-sm text-sm text-[color:var(--color-steel-soft)] leading-relaxed">
+                This {categoryLabel(p.category).toLowerCase()} machine is built and
+                serviced from our Seri Kembangan floor. Talk to an engineer below
+                for photos, drawings and a tailored spec.
+              </p>
             </div>
           )}
         </div>
@@ -107,10 +134,16 @@ export default async function ProductPage({
             {p.summary}
           </p>
 
-          {p.specs.length > 0 && (
+          {p.specs.length > 0 ? (
             <div className="mt-10 border-y border-[color:var(--color-neutral-700)] py-2">
               <SpecTable specs={p.specs.slice(0, 6)} />
             </div>
+          ) : (
+            <MachineQuickSpec
+              family={categoryLabel(p.category)}
+              photos={p.gallery.length}
+              hasModel={hasMachineModel(slug)}
+            />
           )}
 
           <div className="mt-8">
@@ -152,6 +185,8 @@ export default async function ProductPage({
         </div>
       </section>
 
+      <ProofRail />
+
       {p.specs.length > 0 ? (
         <section className="mx-auto max-w-[1600px] px-6 lg:px-12 py-24 border-t border-[color:var(--color-neutral-700)]">
           <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6">
@@ -172,6 +207,12 @@ export default async function ProductPage({
           </p>
         </section>
       )}
+
+      <RelatedMachines
+        family={categoryLabel(p.category)}
+        familyKey={p.category}
+        items={related}
+      />
 
       <section
         id="quote"
