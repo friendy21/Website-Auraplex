@@ -24,9 +24,9 @@ export function ValuePropGrid() {
   const capItems = cap.raw('items') as string[];
 
   return (
-    <section className="mx-auto max-w-[1600px] px-6 lg:px-12 py-32 lg:py-48 space-y-24 lg:space-y-32">
+    <section className="mx-auto max-w-[1600px] px-6 lg:px-12 py-24 lg:py-32 space-y-20 lg:space-y-28">
       <Reveal variant="up">
-        <h2 className="font-display text-[clamp(2rem,5vw,4.5rem)] tracking-[-0.02em] leading-[1] max-w-3xl">
+        <h2 className="font-display text-[clamp(2rem,5vw,4rem)] tracking-[-0.02em] leading-[1] max-w-3xl">
           {t('title')}
         </h2>
       </Reveal>
@@ -91,7 +91,7 @@ export function ValuePropGrid() {
             <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6 md:text-right">
               — {two.num}
             </div>
-            <h3 className="font-display text-[clamp(2rem,5vw,4.5rem)] tracking-[-0.02em] leading-[1] md:text-right">
+            <h3 className="font-display text-[clamp(2rem,5vw,4rem)] tracking-[-0.02em] leading-[1] md:text-right">
               {two.title}
             </h3>
             <p className="mt-8 max-w-md md:ml-auto prose-editorial text-[color:var(--color-steel-soft)] md:text-right">
@@ -108,7 +108,7 @@ export function ValuePropGrid() {
             <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6">
               — {three.num}
             </div>
-            <h3 className="font-display text-[clamp(2rem,5vw,4.5rem)] tracking-[-0.02em] leading-[1]">
+            <h3 className="font-display text-[clamp(2rem,5vw,4rem)] tracking-[-0.02em] leading-[1]">
               {three.title}
             </h3>
             <p className="mt-8 max-w-md prose-editorial text-[color:var(--color-steel-soft)]">

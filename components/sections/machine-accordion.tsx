@@ -88,7 +88,7 @@ export function MachineAccordion({ items }: Props) {
   return (
     <section
       ref={sectionRef}
-      className="bg-[color:var(--color-ink)] text-[color:var(--color-paper)] py-24 lg:py-28"
+      className="bg-[color:var(--color-ink)] text-[color:var(--color-paper)] py-24 lg:py-32"
     >
       <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
         {/* Header */}

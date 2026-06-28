@@ -54,7 +54,7 @@ export function WhatWeMake({ families, viewLabel }: Props) {
           <span className="h-px w-12 bg-[color:var(--color-signal)]" />
           What we make
         </div>
-        <h2 className="font-display text-[clamp(2rem,5vw,4.5rem)] tracking-[-0.02em] leading-[1] max-w-3xl">
+        <h2 className="font-display text-[clamp(2rem,5vw,4rem)] tracking-[-0.02em] leading-[1] max-w-3xl">
           Three families,
           <br />
           <span className="text-[color:var(--color-neutral-400)]">one engineering floor.</span>

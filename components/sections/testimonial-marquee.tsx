@@ -50,7 +50,7 @@ export function TestimonialMarquee() {
   const doubled = [...TESTIMONIALS, ...TESTIMONIALS];
 
   return (
-    <section className="py-28 lg:py-36 overflow-hidden border-y border-[color:var(--color-neutral-700)] bg-[color:var(--color-ink)]">
+    <section className="py-24 lg:py-32 overflow-hidden border-y border-[color:var(--color-neutral-700)] bg-[color:var(--color-ink)]">
       <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-16 mx-auto max-w-[1600px] px-6 lg:px-12 flex items-center gap-3">
         <span className="h-px w-12 bg-[color:var(--color-signal)]" />
         {t('eyebrow')}
