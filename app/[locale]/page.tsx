@@ -4,6 +4,7 @@ import {
   categoryLabel,
   getMachinesByCategory,
   getMachinesWithCover,
+  getFeaturedMachines,
   type Category,
 } from '@/lib/catalog';
 import { HeroCinematic } from '@/components/sections/hero-cinematic';
@@ -15,6 +16,7 @@ import { FaqSection } from '@/components/sections/faq-section';
 import { CloserSection } from '@/components/sections/closer-section';
 import { ScrollDrawLine } from '@/components/motion/scroll-draw-line';
 import { MachineHyperscroll } from '@/components/sections/machine-hyperscroll';
+import { MachineAccordion } from '@/components/sections/machine-accordion';
 import { OutlineMarquee } from '@/components/sections/outline-marquee';
 
 const FAMILY_SUMMARY: Record<Category, string> = {
@@ -43,6 +45,17 @@ export default async function Home({
     image: m.image as string,
     slug: m.slug,
     name: m.name,
+  }));
+
+  // Featured machines for the cinematic expanding-panel accordion.
+  const showcase = getFeaturedMachines().map((m) => ({
+    slug: m.slug,
+    name: m.name,
+    image: m.image as string,
+    category: m.category,
+    label: categoryLabel(m.category),
+    summary: m.summary,
+    photos: m.gallery.length,
   }));
   const families: Family[] = (['labelling', 'packaging', 'automation'] as Category[]).map(
     (key) => ({
@@ -90,6 +103,9 @@ export default async function Home({
         {/* THE catalogue moment — a scroll-driven 3D flythrough of the real
             machines (Hyper Scroll). Every card links into the catalogue. */}
         <MachineHyperscroll machines={flythrough} />
+
+        {/* Cinematic expanding-panel accordion — click a machine to expand. */}
+        <MachineAccordion items={showcase} />
 
         <ValuePropGrid />
         <TestimonialMarquee />
