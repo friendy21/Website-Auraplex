@@ -256,6 +256,22 @@
         }
       ],
       "cta": "View machines"
+    },
+    "compare": {
+      "add": "Compare",
+      "added": "Comparing",
+      "cta": "Compare",
+      "clear": "Clear",
+      "title": "Compare machines",
+      "rowFamily": "Family",
+      "rowPhotos": "Photos",
+      "rowPrice": "Price",
+      "rowTags": "Highlights",
+      "view": "View",
+      "pending": "Pending",
+      "onRequest": "On request",
+      "empty": "Select machines to compare",
+      "max": "up to 4"
     }
   },
   "configurator": {

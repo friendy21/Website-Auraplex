@@ -256,6 +256,22 @@
         }
       ],
       "cta": "查看机器"
+    },
+    "compare": {
+      "add": "对比",
+      "added": "对比中",
+      "cta": "对比",
+      "clear": "清除",
+      "title": "对比机器",
+      "rowFamily": "系列",
+      "rowPhotos": "照片",
+      "rowPrice": "价格",
+      "rowTags": "亮点",
+      "view": "查看",
+      "pending": "待拍摄",
+      "onRequest": "询价",
+      "empty": "选择要对比的机器",
+      "max": "最多 4 台"
     }
   },
   "configurator": {

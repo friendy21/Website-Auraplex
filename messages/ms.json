@@ -256,6 +256,22 @@
         }
       ],
       "cta": "Lihat mesin"
+    },
+    "compare": {
+      "add": "Banding",
+      "added": "Membanding",
+      "cta": "Banding",
+      "clear": "Kosongkan",
+      "title": "Banding mesin",
+      "rowFamily": "Keluarga",
+      "rowPhotos": "Foto",
+      "rowPrice": "Harga",
+      "rowTags": "Ciri utama",
+      "view": "Lihat",
+      "pending": "Belum difoto",
+      "onRequest": "Atas permintaan",
+      "empty": "Pilih mesin untuk dibandingkan",
+      "max": "sehingga 4"
     }
   },
   "configurator": {

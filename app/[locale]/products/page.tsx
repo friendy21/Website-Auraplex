@@ -174,6 +174,7 @@ export default async function ProductsPage({
         initialSort={sort}
         _locale={locale}
         t={tDict}
+        compareT={t.raw('compare') as Record<string, string>}
       />
 
       {/* ────── PARALLAX MARQUEE CLOSER BAND ────── */}

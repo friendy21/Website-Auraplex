@@ -4,9 +4,11 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'motion/react';
 import { ParallaxProductImage } from '@/components/sections/parallax-product-image';
+import { CompareTray } from '@/components/sections/compare-tray';
 import { machineTags, type Category, type Machine } from '@/lib/catalog';
 
 type SortKey = 'featured' | 'photographed' | 'az';
+const MAX_COMPARE = 4;
 
 interface Props {
   machines: Machine[];
@@ -16,6 +18,7 @@ interface Props {
   initialSort?: SortKey;
   _locale: string;
   t: Record<string, string>;
+  compareT: Record<string, string>;
 }
 
 /**
@@ -38,9 +41,23 @@ export function ProductsGrid({
   initialSort = 'featured',
   _locale,
   t,
+  compareT,
 }: Props) {
   const [category, setCategory] = useState<Category | undefined>(initialCategory);
   const [sort, setSort] = useState<SortKey>(initialSort);
+  const [selected, setSelected] = useState<string[]>([]);
+
+  const toggleCompare = (slug: string) =>
+    setSelected((s) =>
+      s.includes(slug)
+        ? s.filter((x) => x !== slug)
+        : s.length >= MAX_COMPARE
+          ? s
+          : [...s, slug],
+    );
+  const selectedMachines = selected
+    .map((slug) => machines.find((m) => m.slug === slug))
+    .filter((m): m is Machine => Boolean(m));
 
   // Silently update URL when filters change (no full reload)
   useEffect(() => {
@@ -166,6 +183,14 @@ export function ProductsGrid({
                   className="group"
                 >
                   <div className="mcard-parent">
+                    {/* Compare toggle — sibling of the Link so it never nests
+                        an interactive control inside the card anchor. */}
+                    <CompareToggle
+                      selected={selected.includes(p.slug)}
+                      atMax={selected.length >= MAX_COMPARE}
+                      onToggle={() => toggleCompare(p.slug)}
+                      label={selected.includes(p.slug) ? compareT.added : compareT.add}
+                    />
                     <Link
                       href={`/products/${p.slug}`}
                       data-cursor="caliper"
@@ -288,7 +313,50 @@ export function ProductsGrid({
           </div>
         )}
       </section>
+
+      <CompareTray
+        machines={selectedMachines}
+        onRemove={(slug) => setSelected((s) => s.filter((x) => x !== slug))}
+        onClear={() => setSelected([])}
+        t={compareT}
+      />
     </>
+  );
+}
+
+/**
+ * CompareToggle — a small floating corner control to add/remove a machine from
+ * the compare set. Sits at the card's top-right corner, above the badges.
+ */
+function CompareToggle({
+  selected,
+  atMax,
+  onToggle,
+  label,
+}: {
+  selected: boolean;
+  atMax: boolean;
+  onToggle: () => void;
+  label: string;
+}) {
+  const dimmed = atMax && !selected;
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      disabled={dimmed}
+      aria-pressed={selected}
+      title={label}
+      className={`absolute -top-2 -right-2 z-30 h-8 w-8 grid place-items-center rounded-full border text-xs font-mono backdrop-blur-sm transition-all duration-300 ${
+        selected
+          ? 'border-[color:var(--color-signal)] bg-[color:var(--color-signal)] text-[color:var(--color-ink)] font-bold'
+          : dimmed
+            ? 'border-[color:var(--color-neutral-700)] bg-[color:var(--color-ink)]/70 text-[color:var(--color-neutral-400)] cursor-not-allowed'
+            : 'border-[color:var(--color-neutral-700)] bg-[color:var(--color-ink)]/80 text-[color:var(--color-steel-soft)] hover:border-[color:var(--color-signal)] hover:text-[color:var(--color-signal)]'
+      }`}
+    >
+      {selected ? '✓' : '+'}
+    </button>
   );
 }
 
