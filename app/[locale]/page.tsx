@@ -3,6 +3,7 @@ import {
   categoryCounts,
   categoryLabel,
   getMachinesByCategory,
+  getMachinesWithCover,
   type Category,
 } from '@/lib/catalog';
 import { HeroCinematic } from '@/components/sections/hero-cinematic';
@@ -13,7 +14,7 @@ import { TestimonialMarquee } from '@/components/sections/testimonial-marquee';
 import { FaqSection } from '@/components/sections/faq-section';
 import { CloserSection } from '@/components/sections/closer-section';
 import { ScrollDrawLine } from '@/components/motion/scroll-draw-line';
-import { MachineCarousel } from '@/components/sections/machine-carousel';
+import { MachineHyperscroll } from '@/components/sections/machine-hyperscroll';
 import { OutlineMarquee } from '@/components/sections/outline-marquee';
 
 const FAMILY_SUMMARY: Record<Category, string> = {
@@ -36,6 +37,13 @@ export default async function Home({
   const counts = categoryCounts();
   const repImage = (cat: Category) =>
     getMachinesByCategory(cat).find((m) => m.image)?.image ?? null;
+
+  // Real machines (with cover art) for the Hyperscroll flythrough.
+  const flythrough = getMachinesWithCover().map((m) => ({
+    image: m.image as string,
+    slug: m.slug,
+    name: m.name,
+  }));
   const families: Family[] = (['labelling', 'packaging', 'automation'] as Category[]).map(
     (key) => ({
       key,
@@ -79,9 +87,9 @@ export default async function Home({
         />
         <WhatWeMake families={families} viewLabel="View {n} machines" />
 
-        {/* THE catalogue moment — drag-to-spin 3D ring, every panel a
-            link into the full catalogue. */}
-        <MachineCarousel />
+        {/* THE catalogue moment — a scroll-driven 3D flythrough of the real
+            machines (Hyper Scroll). Every card links into the catalogue. */}
+        <MachineHyperscroll machines={flythrough} />
 
         <ValuePropGrid />
         <TestimonialMarquee />
