@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
 import { Button } from '@/components/primitives/button';
+import { ProofRail } from '@/components/sections/proof-rail';
+import { ClientLogoWall } from '@/components/sections/client-logo-wall';
 import { buildMetadata } from '@/lib/seo';
 
 // Real milestones sourced from auraplex.com.my (news/events). Images already
@@ -62,6 +64,7 @@ export default async function CaseStudiesPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations('pages.caseStudies');
+  const tAbout = await getTranslations('pages.about');
 
   return (
     <>
@@ -86,6 +89,8 @@ export default async function CaseStudiesPage({
           </p>
         </Reveal>
       </section>
+
+      <ProofRail />
 
       <section className="mx-auto max-w-[1600px] px-6 lg:px-12 py-16 border-y border-[color:var(--color-neutral-700)]">
         <div className="grid grid-cols-12 gap-6 items-end">
@@ -195,6 +200,12 @@ export default async function CaseStudiesPage({
           ))}
         </div>
       </section>
+
+      {/* Client wall — proof consolidated onto the hub (also on About). */}
+      <ClientLogoWall
+        eyebrow={tAbout('trustedBy.eyebrow')}
+        footnote={tAbout('trustedBy.footnote')}
+      />
 
       <section className="mx-auto max-w-3xl px-6 lg:px-12 py-32 text-center">
         <Reveal variant="up">

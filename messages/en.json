@@ -37,9 +37,21 @@
     "valueProps": {
       "title": "Three reasons buyers choose Auraplex",
       "items": [
-        { "num": "01", "title": "Built here.", "body": "Local manufacturing, local engineers, local support. 4-week delivery instead of months from China." },
-        { "num": "02", "title": "End-to-end automation.", "body": "Labelling, packaging, 3D printing, MES & SCADA — engineered as one solution, not bolted-on pieces." },
-        { "num": "03", "title": "Custom by default.", "body": "Every floor is different. We engineer to your container, your throughput, your existing line." }
+        {
+          "num": "01",
+          "title": "Built here.",
+          "body": "Local manufacturing, local engineers, local support. 4-week delivery instead of months from China."
+        },
+        {
+          "num": "02",
+          "title": "End-to-end automation.",
+          "body": "Labelling, packaging, 3D printing, MES & SCADA — engineered as one solution, not bolted-on pieces."
+        },
+        {
+          "num": "03",
+          "title": "Custom by default.",
+          "body": "Every floor is different. We engineer to your container, your throughput, your existing line."
+        }
       ]
     },
     "categories": {
@@ -55,12 +67,30 @@
     "faq": {
       "title": "Frequently asked",
       "items": [
-        { "q": "How long is lead time?", "a": "Standard machines ship in 4 weeks from order confirmation. Custom builds are typically 8–12 weeks." },
-        { "q": "Do you provide installation?", "a": "Yes. Every machine includes on-site installation, line integration, and operator training across Peninsular Malaysia, Sabah, and Sarawak." },
-        { "q": "What's the warranty?", "a": "Two years parts and labour, with optional extended-coverage plans up to five years." },
-        { "q": "Do you offer custom configurations?", "a": "Yes — every machine can be tailored to your container shape, throughput target, label material, and existing line topology. Bring a sample to our Seri Kembangan floor — we'll engineer to your reality." },
-        { "q": "Do you handle export documentation?", "a": "Yes — we ship across ASEAN with full CE, SIRIM, and origin documentation." },
-        { "q": "What containers do your labellers support?", "a": "Round, oval, square, conical, and custom shapes from 30mm to 250mm diameter. Wrap-around, front-and-back, top, and bottom labelling supported." }
+        {
+          "q": "How long is lead time?",
+          "a": "Standard machines ship in 4 weeks from order confirmation. Custom builds are typically 8–12 weeks."
+        },
+        {
+          "q": "Do you provide installation?",
+          "a": "Yes. Every machine includes on-site installation, line integration, and operator training across Peninsular Malaysia, Sabah, and Sarawak."
+        },
+        {
+          "q": "What's the warranty?",
+          "a": "Two years parts and labour, with optional extended-coverage plans up to five years."
+        },
+        {
+          "q": "Do you offer custom configurations?",
+          "a": "Yes — every machine can be tailored to your container shape, throughput target, label material, and existing line topology. Bring a sample to our Seri Kembangan floor — we'll engineer to your reality."
+        },
+        {
+          "q": "Do you handle export documentation?",
+          "a": "Yes — we ship across ASEAN with full CE, SIRIM, and origin documentation."
+        },
+        {
+          "q": "What containers do your labellers support?",
+          "a": "Round, oval, square, conical, and custom shapes from 30mm to 250mm diameter. Wrap-around, front-and-back, top, and bottom labelling supported."
+        }
       ]
     },
     "ctaFooter": {
@@ -71,7 +101,12 @@
       "whatsapp": "WhatsApp us",
       "whatsappMsg": "Hi Auraplex."
     },
-    "carousel": {"eyebrow":"The floor, rotating","h2":"Eight machines. One revolution.","hint":"Hover to pause · click any machine to open it","cta":"Browse all 30"},
+    "carousel": {
+      "eyebrow": "The floor, rotating",
+      "h2": "Eight machines. One revolution.",
+      "hint": "Hover to pause · click any machine to open it",
+      "cta": "Browse all 30"
+    },
     "manifesto": {
       "eyebrow": "Auraplex · Seri Kembangan",
       "title": "Precision is not a feature.",
@@ -148,7 +183,12 @@
   "products": {
     "title": "Machines",
     "subtitle": "Engineered for ASEAN manufacturing realities.",
-    "filters": { "category": "Category", "speed": "Speed", "label": "Label type", "price": "Price range" },
+    "filters": {
+      "category": "Category",
+      "speed": "Speed",
+      "label": "Label type",
+      "price": "Price range"
+    },
     "viewMachine": "View",
     "viewMachineLong": "View machine",
     "from": "From",
@@ -194,6 +234,28 @@
       "specSheetTitle": "Get the spec sheet",
       "specSheetBody": "We'll email the full PDF — dimensions, throughput curves, container chart, installation requirements.",
       "specSheetSent": "Sent. Check your inbox."
+    },
+    "applications": {
+      "title": "Browse by application",
+      "subtitle": "Start from the job, not the machine family.",
+      "items": [
+        {
+          "title": "Label bottles & jars",
+          "body": "Top, side, wrap-around and print-and-apply for round and shaped containers.",
+          "category": "labelling"
+        },
+        {
+          "title": "Seal pouches & bags",
+          "body": "Continuous-band sealing built for production lines.",
+          "category": "packaging"
+        },
+        {
+          "title": "Prototype & short runs",
+          "body": "AR-series 3D printing and bespoke automation for fixtures and parts.",
+          "category": "automation"
+        }
+      ],
+      "cta": "View machines"
     }
   },
   "configurator": {
@@ -257,7 +319,14 @@
       "portfolioUrlHelper": "Link to your projects, dissertations, or repos",
       "motivation": "Why Auraplex?",
       "motivationHelper": "What machines or problems do you want to work on? 2–3 sentences is fine."
-    }
+    },
+    "machineFinderStarterLabel": "Try one of these",
+    "machineFinderStarters": [
+      "We bottle 500 ml sauces and need wrap-around labels at ~40 units/min.",
+      "Round cosmetic jars, top labels, short runs with frequent changeovers.",
+      "Sealing pouches on a continuous line — which packaging machine fits?",
+      "We want to prototype fixtures in-house with 3D printing."
+    ]
   },
   "footer": {
     "rights": "© 2026 Auraplex SDN BHD. All rights reserved.",
@@ -276,12 +345,30 @@
     "menuToggle": "Toggle menu",
     "search": "Search",
     "disciplines": [
-      { "role": "Mechanical", "focus": "Frames, applicators, jigs, conveyors." },
-      { "role": "Electrical", "focus": "PLCs, sensors, motors, vision systems." },
-      { "role": "Controls", "focus": "HMI, line integration, recipe management." },
-      { "role": "Installation", "focus": "On-site commissioning across ASEAN." },
-      { "role": "Service", "focus": "Response, parts pipeline, operator training." },
-      { "role": "R&D", "focus": "Custom rigs, AR-series additive manufacturing." }
+      {
+        "role": "Mechanical",
+        "focus": "Frames, applicators, jigs, conveyors."
+      },
+      {
+        "role": "Electrical",
+        "focus": "PLCs, sensors, motors, vision systems."
+      },
+      {
+        "role": "Controls",
+        "focus": "HMI, line integration, recipe management."
+      },
+      {
+        "role": "Installation",
+        "focus": "On-site commissioning across ASEAN."
+      },
+      {
+        "role": "Service",
+        "focus": "Response, parts pipeline, operator training."
+      },
+      {
+        "role": "R&D",
+        "focus": "Custom rigs, AR-series additive manufacturing."
+      }
     ]
   },
   "page2026": {
@@ -315,11 +402,26 @@
       "eyebrow": "§ 02 / What buyers say",
       "h2": "The words that came back to us most.",
       "words": [
-        "precise", "local", "built here", "integrated", "wrap-around",
-        "custom", "measurable", "fast lead time", "reliable", "serviceable",
-        "thermal transfer", "two-side", "corner press", "Selangor",
-        "print & apply", "flexy", "continuous-band", "AR-series",
-        "engineered", "four weeks"
+        "precise",
+        "local",
+        "built here",
+        "integrated",
+        "wrap-around",
+        "custom",
+        "measurable",
+        "fast lead time",
+        "reliable",
+        "serviceable",
+        "thermal transfer",
+        "two-side",
+        "corner press",
+        "Selangor",
+        "print & apply",
+        "flexy",
+        "continuous-band",
+        "AR-series",
+        "engineered",
+        "four weeks"
       ]
     },
     "stats": {
@@ -328,14 +430,30 @@
       "h2Line2": "we're proud of.",
       "h2Line3": "Some are just facts.",
       "items": [
-        { "label": "machines in the catalogue" },
-        { "label": "engineering families" },
-        { "label": "machines photographed on the floor" },
-        { "label": "exhibitions since 2022" },
-        { "label": "Malaysian states served" },
-        { "label": "innovation award · MIMF 2024" },
-        { "label": "languages — EN · BM · ZH" },
-        { "label": "outsourced controls" }
+        {
+          "label": "machines in the catalogue"
+        },
+        {
+          "label": "engineering families"
+        },
+        {
+          "label": "machines photographed on the floor"
+        },
+        {
+          "label": "exhibitions since 2022"
+        },
+        {
+          "label": "Malaysian states served"
+        },
+        {
+          "label": "innovation award · MIMF 2024"
+        },
+        {
+          "label": "languages — EN · BM · ZH"
+        },
+        {
+          "label": "outsourced controls"
+        }
       ]
     },
     "team": {
@@ -350,10 +468,26 @@
       "h2Line1": "Four releases.",
       "h2Line2": "Each one earned a name.",
       "items": [
-        { "q": "Q1", "h": "Two-Side w/ Corner Press shipped", "note": "Round 3 of customer-led iteration." },
-        { "q": "Q2", "h": "AR600 enters production", "note": "High-capacity additive for in-house fixturing." },
-        { "q": "Q3", "h": "Custom Top w/ Checking System", "note": "Vision-integrated reject line for pharma." },
-        { "q": "Q4", "h": "Continuous Band v2 retrofit kits", "note": "Drop-in upgrade path for the original v1." }
+        {
+          "q": "Q1",
+          "h": "Two-Side w/ Corner Press shipped",
+          "note": "Round 3 of customer-led iteration."
+        },
+        {
+          "q": "Q2",
+          "h": "AR600 enters production",
+          "note": "High-capacity additive for in-house fixturing."
+        },
+        {
+          "q": "Q3",
+          "h": "Custom Top w/ Checking System",
+          "note": "Vision-integrated reject line for pharma."
+        },
+        {
+          "q": "Q4",
+          "h": "Continuous Band v2 retrofit kits",
+          "note": "Drop-in upgrade path for the original v1."
+        }
       ]
     },
     "founder": {
@@ -713,9 +847,21 @@
         "h2Line1": "Long-form. Photographed.",
         "h2Line2": "Honest about what didn't work.",
         "items": [
-          { "num": "01", "title": "On the floor", "body": "Every report is photographed in the customer's plant — not in our showroom." },
-          { "num": "02", "title": "With numbers", "body": "Throughput before / after. Reject rate before / after. Payback in months, not narrative." },
-          { "num": "03", "title": "And the snags", "body": "What the install missed, what the second iteration fixed, what we learned for the next build." }
+          {
+            "num": "01",
+            "title": "On the floor",
+            "body": "Every report is photographed in the customer's plant — not in our showroom."
+          },
+          {
+            "num": "02",
+            "title": "With numbers",
+            "body": "Throughput before / after. Reject rate before / after. Payback in months, not narrative."
+          },
+          {
+            "num": "03",
+            "title": "And the snags",
+            "body": "What the install missed, what the second iteration fixed, what we learned for the next build."
+          }
         ]
       },
       "cta": {
@@ -736,7 +882,28 @@
     "machineFinder": {
       "eyebrow": "AI Engineer · 24h human review",
       "h1": "Describe your line. We'll match the machine.",
-      "subtitle": "Talk to our AI application engineer, trained on the full Auraplex catalogue. Describe your line and it will match the right machine — then our team follows up."
+      "subtitle": "Talk to our AI application engineer, trained on the full Auraplex catalogue. Describe your line and it will match the right machine — then our team follows up.",
+      "how": {
+        "title": "How it works",
+        "steps": [
+          {
+            "n": "01",
+            "title": "Describe your line",
+            "body": "Product, container, throughput and any constraints — in plain language."
+          },
+          {
+            "n": "02",
+            "title": "AI matches the catalogue",
+            "body": "Our application engineer, trained on all 30 Auraplex machines, suggests the closest fit."
+          },
+          {
+            "n": "03",
+            "title": "A human follows up",
+            "body": "An Auraplex engineer reviews the match and follows up within 24 hours."
+          }
+        ],
+        "note": "Recommendations are indicative guidance, not a binding quote. Your messages are used to generate the match and brief our team."
+      }
     }
   }
 }

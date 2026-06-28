@@ -3,6 +3,7 @@ import { ProductsGrid } from '@/components/sections/products-grid';
 import { ProductsHero } from '@/components/sections/products-hero';
 import { ParallaxMarqueeBand } from '@/components/sections/parallax-marquee-band';
 import { FeaturedHighlights } from '@/components/sections/featured-highlights';
+import { ApplicationBrowse } from '@/components/sections/application-browse';
 import { buildMetadata, breadcrumbSchema } from '@/lib/seo';
 import {
   MACHINES,
@@ -154,6 +155,14 @@ export default async function ProductsPage({
           '30 Machines',
           'ASEAN-ready',
         ]}
+      />
+
+      {/* ────── APPLICATION-FIRST BROWSE ────── */}
+      <ApplicationBrowse
+        title={t('applications.title')}
+        subtitle={t('applications.subtitle')}
+        items={t.raw('applications.items') as { title: string; body: string; category: string }[]}
+        cta={t('applications.cta')}
       />
 
       {/* ────── ANIMATED GRID ────── */}

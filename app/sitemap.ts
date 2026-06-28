@@ -15,7 +15,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/machine-finder',
     '/case-studies',
     '/news',
-    '/careers',
     '/internship',
     '/2026',
     '/about',

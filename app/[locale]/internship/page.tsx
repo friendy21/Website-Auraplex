@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
 import { InternshipForm } from '@/components/forms/internship-form';
@@ -21,20 +20,17 @@ export async function generateMetadata({
 }
 
 /**
- * /internship — the primary internship landing page. Matches the real
- * autolabellermalaysia.com convention of a top-level "Internship" nav
- * item rather than burying it inside /careers.
+ * /internship — the recruitment landing page. Auraplex recruits through a
+ * single top-level "Internship" entry (the standalone /careers page was
+ * removed to end the audit-flagged duplication); this page is now the one
+ * recruitment surface.
  *
  * Page anatomy:
  *   1. Hero — eyebrow, big H1, lede
  *   2. Why Auraplex — three bullet block (paid, on-floor, real machines)
  *   3. Disciplines — 6 fields you can intern in (reuses common.disciplines)
- *   4. Application form — full <InternshipForm /> (the same component
- *      embedded on /careers; the form action submits the same lead so
- *      there's a single recruiting inbox no matter which page they
- *      filled in)
- *   5. FAQ — reuses pages.careers.faq.* (single source of truth)
- *   6. Looking for full-time? — cross-link back to /careers
+ *   4. Application form — full <InternshipForm /> → single recruiting inbox
+ *   5. FAQ — reuses pages.careers.* copy as the single source of truth
  */
 export default async function InternshipPage({
   params,
@@ -245,27 +241,6 @@ export default async function InternshipPage({
         </div>
       </section>
 
-      {/* ────── CROSS-LINK BACK TO /careers ────── */}
-      <section className="border-t border-[color:var(--color-neutral-700)] mx-auto max-w-[1600px] px-6 lg:px-12 py-24">
-        <Reveal variant="up">
-          <div className="flex items-end justify-between flex-wrap gap-6">
-            <div>
-              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-400)] mb-3">
-                — {t('careersLink.eyebrow')}
-              </div>
-              <h2 className="font-display text-[clamp(1.5rem,3vw,2.5rem)] tracking-[-0.01em] max-w-2xl">
-                {t('careersLink.body')}
-              </h2>
-            </div>
-            <Link
-              href={`/${locale}/careers`}
-              className="font-mono text-sm uppercase tracking-[0.2em] text-[color:var(--color-signal)] hover:text-[color:var(--color-paper)] transition-colors"
-            >
-              {t('careersLink.cta')} →
-            </Link>
-          </div>
-        </Reveal>
-      </section>
       </div>
     </div>
   );

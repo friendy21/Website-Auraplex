@@ -47,6 +47,7 @@ function stripJsonBlock(text: string): string {
 export function MachineFinderChat() {
   const t = useTranslations('forms');
   const locale = useLocale();
+  const starters = t.raw('machineFinderStarters') as string[];
   const [messages, setMessages] = useState<Msg[]>([
     {
       role: 'assistant',
@@ -67,9 +68,10 @@ export function MachineFinderChat() {
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [messages, recommendation]);
 
-  async function send() {
-    if (!input.trim() || streaming) return;
-    const userMsg: Msg = { role: 'user', content: input };
+  async function send(override?: string) {
+    const text = (override ?? input).trim();
+    if (!text || streaming) return;
+    const userMsg: Msg = { role: 'user', content: text };
     const history = [...messages, userMsg];
     setMessages([...history, { role: 'assistant', content: '' }]);
     setInput('');
@@ -138,6 +140,28 @@ export function MachineFinderChat() {
           ))}
         </AnimatePresence>
 
+        {/* Starter prompts — concrete examples so users know what to say. */}
+        {messages.length === 1 && !streaming && starters.length > 0 && (
+          <div className="pt-2">
+            <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)] mb-3">
+              {t('machineFinderStarterLabel')}
+            </div>
+            <div className="flex flex-col gap-2">
+              {starters.map((s, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => send(s)}
+                  className="group text-left border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)]/60 hover:border-[color:var(--color-signal)] hover:bg-[color:var(--color-signal)]/5 transition-colors px-4 py-3 text-sm text-[color:var(--color-steel-soft)] flex items-center justify-between gap-3"
+                >
+                  <span>{s}</span>
+                  <Send className="h-3.5 w-3.5 shrink-0 text-[color:var(--color-steel)] group-hover:text-[color:var(--color-signal)] transition-colors" />
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         {recommendation && !streaming && (
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -173,7 +197,7 @@ export function MachineFinderChat() {
           disabled={streaming}
         />
         <Button
-          onClick={send}
+          onClick={() => send()}
           disabled={streaming || !input.trim()}
           size="sm"
           aria-label={t('send')}

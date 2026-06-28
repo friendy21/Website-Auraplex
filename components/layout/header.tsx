@@ -216,7 +216,6 @@ export function Header() {
                   ['news', '/news'],
                   ['yearReview', '/2026'],
                   ['internship', '/internship'],
-                  ['careers', '/careers'],
                   ['about', '/about'],
                   ['contact', '/contact'],
                 ] as const

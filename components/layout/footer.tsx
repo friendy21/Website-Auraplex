@@ -153,9 +153,6 @@ export function Footer() {
               <FooterLink href="/internship">{t('nav.internship')}</FooterLink>
             </li>
             <li>
-              <FooterLink href="/careers">{t('nav.careers')}</FooterLink>
-            </li>
-            <li>
               <FooterLink href="/2026">{t('nav.yearReview')}</FooterLink>
             </li>
             <li>

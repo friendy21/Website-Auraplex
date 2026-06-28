@@ -37,9 +37,21 @@
     "valueProps": {
       "title": "Tiga sebab pembeli memilih Auraplex",
       "items": [
-        { "num": "01", "title": "Dibina di sini.", "body": "Pembuatan tempatan, jurutera tempatan, sokongan tempatan. Penghantaran 4 minggu, bukan berbulan dari China." },
-        { "num": "02", "title": "Automasi hujung-ke-hujung.", "body": "Pelabel, pembungkus, cetakan 3D, MES & SCADA — direka sebagai satu penyelesaian, bukan cantuman." },
-        { "num": "03", "title": "Khusus secara lalai.", "body": "Setiap lantai berbeza. Kami mereka mengikut bekas, kelajuan, dan barisan sedia ada anda." }
+        {
+          "num": "01",
+          "title": "Dibina di sini.",
+          "body": "Pembuatan tempatan, jurutera tempatan, sokongan tempatan. Penghantaran 4 minggu, bukan berbulan dari China."
+        },
+        {
+          "num": "02",
+          "title": "Automasi hujung-ke-hujung.",
+          "body": "Pelabel, pembungkus, cetakan 3D, MES & SCADA — direka sebagai satu penyelesaian, bukan cantuman."
+        },
+        {
+          "num": "03",
+          "title": "Khusus secara lalai.",
+          "body": "Setiap lantai berbeza. Kami mereka mengikut bekas, kelajuan, dan barisan sedia ada anda."
+        }
       ]
     },
     "categories": {
@@ -55,12 +67,30 @@
     "faq": {
       "title": "Soalan lazim",
       "items": [
-        { "q": "Berapa lama tempoh penghantaran?", "a": "Mesin standard dihantar dalam 4 minggu selepas pengesahan pesanan. Mesin tersuai biasanya 8–12 minggu." },
-        { "q": "Adakah anda menyediakan pemasangan?", "a": "Ya. Setiap mesin termasuk pemasangan di tapak, integrasi barisan, dan latihan operator merentas Semenanjung Malaysia, Sabah, dan Sarawak." },
-        { "q": "Apakah jaminannya?", "a": "Dua tahun alat ganti dan tenaga kerja, dengan pelan perlindungan lanjutan pilihan sehingga lima tahun." },
-        { "q": "Adakah konfigurasi tersuai disediakan?", "a": "Ya — setiap mesin boleh disesuaikan dengan bentuk bekas, sasaran kelajuan, bahan label, dan topologi barisan sedia ada. Bawa sampel ke lantai kilang Seri Kembangan — kami akan mereka mengikut realiti anda." },
-        { "q": "Adakah anda mengendalikan dokumentasi eksport?", "a": "Ya — kami menghantar merentas ASEAN dengan dokumentasi CE, SIRIM, dan asal penuh." },
-        { "q": "Bekas apa yang disokong oleh pelabel anda?", "a": "Bulat, bujur, segi empat, kerucut, dan bentuk khusus dari 30mm hingga 250mm diameter. Pelabelan balut, depan-belakang, atas, dan bawah disokong." }
+        {
+          "q": "Berapa lama tempoh penghantaran?",
+          "a": "Mesin standard dihantar dalam 4 minggu selepas pengesahan pesanan. Mesin tersuai biasanya 8–12 minggu."
+        },
+        {
+          "q": "Adakah anda menyediakan pemasangan?",
+          "a": "Ya. Setiap mesin termasuk pemasangan di tapak, integrasi barisan, dan latihan operator merentas Semenanjung Malaysia, Sabah, dan Sarawak."
+        },
+        {
+          "q": "Apakah jaminannya?",
+          "a": "Dua tahun alat ganti dan tenaga kerja, dengan pelan perlindungan lanjutan pilihan sehingga lima tahun."
+        },
+        {
+          "q": "Adakah konfigurasi tersuai disediakan?",
+          "a": "Ya — setiap mesin boleh disesuaikan dengan bentuk bekas, sasaran kelajuan, bahan label, dan topologi barisan sedia ada. Bawa sampel ke lantai kilang Seri Kembangan — kami akan mereka mengikut realiti anda."
+        },
+        {
+          "q": "Adakah anda mengendalikan dokumentasi eksport?",
+          "a": "Ya — kami menghantar merentas ASEAN dengan dokumentasi CE, SIRIM, dan asal penuh."
+        },
+        {
+          "q": "Bekas apa yang disokong oleh pelabel anda?",
+          "a": "Bulat, bujur, segi empat, kerucut, dan bentuk khusus dari 30mm hingga 250mm diameter. Pelabelan balut, depan-belakang, atas, dan bawah disokong."
+        }
       ]
     },
     "ctaFooter": {
@@ -71,7 +101,12 @@
       "whatsapp": "WhatsApp kami",
       "whatsappMsg": "Hi Auraplex."
     },
-    "carousel": {"eyebrow":"Lantai kilang, berputar","h2":"Lapan mesin. Satu pusingan.","hint":"Tuding untuk jeda · klik mana-mana mesin untuk buka","cta":"Lihat semua 30"},
+    "carousel": {
+      "eyebrow": "Lantai kilang, berputar",
+      "h2": "Lapan mesin. Satu pusingan.",
+      "hint": "Tuding untuk jeda · klik mana-mana mesin untuk buka",
+      "cta": "Lihat semua 30"
+    },
     "manifesto": {
       "eyebrow": "Auraplex · Seri Kembangan",
       "title": "Presisi bukan ciri tambahan.",
@@ -148,7 +183,12 @@
   "products": {
     "title": "Mesin",
     "subtitle": "Direka untuk realiti pengeluaran ASEAN.",
-    "filters": { "category": "Kategori", "speed": "Kelajuan", "label": "Jenis label", "price": "Julat harga" },
+    "filters": {
+      "category": "Kategori",
+      "speed": "Kelajuan",
+      "label": "Jenis label",
+      "price": "Julat harga"
+    },
     "viewMachine": "Lihat",
     "viewMachineLong": "Lihat mesin",
     "from": "Dari",
@@ -194,6 +234,28 @@
       "specSheetTitle": "Dapatkan helaian spesifikasi",
       "specSheetBody": "Kami akan e-mel PDF penuh — dimensi, lengkung kelajuan, carta bekas, keperluan pemasangan.",
       "specSheetSent": "Dihantar. Semak peti masuk anda."
+    },
+    "applications": {
+      "title": "Layari mengikut aplikasi",
+      "subtitle": "Mula daripada kerja, bukan keluarga mesin.",
+      "items": [
+        {
+          "title": "Label botol & balang",
+          "body": "Atas, sisi, balut keliling dan cetak-&-tampal untuk bekas bulat dan berbentuk.",
+          "category": "labelling"
+        },
+        {
+          "title": "Kedap beg & paket",
+          "body": "Pengedapan jalur berterusan untuk barisan pengeluaran.",
+          "category": "packaging"
+        },
+        {
+          "title": "Prototaip & larian pendek",
+          "body": "Pencetakan 3D siri AR dan automasi tersuai untuk lekapan dan bahagian.",
+          "category": "automation"
+        }
+      ],
+      "cta": "Lihat mesin"
     }
   },
   "configurator": {
@@ -257,7 +319,14 @@
       "portfolioUrlHelper": "Pautan kepada projek, disertasi atau repo anda",
       "motivation": "Mengapa Auraplex?",
       "motivationHelper": "Mesin atau masalah apa yang anda ingin sentuh? 2–3 ayat sudah memadai."
-    }
+    },
+    "machineFinderStarterLabel": "Cuba salah satu",
+    "machineFinderStarters": [
+      "Kami membotolkan sos 500 ml dan perlukan label wrap-around pada ~40 unit/min.",
+      "Balang kosmetik bulat, label atas, larian pendek dengan kerap menukar produk.",
+      "Mengimpal beg pada barisan berterusan — mesin pembungkusan apa yang sesuai?",
+      "Kami mahu membuat prototaip lekapan secara dalaman dengan pencetakan 3D."
+    ]
   },
   "footer": {
     "rights": "© 2026 Auraplex SDN BHD. Hak cipta terpelihara.",
@@ -276,12 +345,30 @@
     "menuToggle": "Togol menu",
     "search": "Cari",
     "disciplines": [
-      { "role": "Mekanikal", "focus": "Rangka, aplikator, jig, konveyor." },
-      { "role": "Elektrikal", "focus": "PLC, sensor, motor, sistem penglihatan." },
-      { "role": "Kawalan", "focus": "HMI, integrasi barisan, pengurusan resipi." },
-      { "role": "Pemasangan", "focus": "Pentauliahan di tapak merentas ASEAN." },
-      { "role": "Servis", "focus": "Respons, saluran alat ganti, latihan operator." },
-      { "role": "R&D", "focus": "Rig khusus, pembuatan aditif siri AR." }
+      {
+        "role": "Mekanikal",
+        "focus": "Rangka, aplikator, jig, konveyor."
+      },
+      {
+        "role": "Elektrikal",
+        "focus": "PLC, sensor, motor, sistem penglihatan."
+      },
+      {
+        "role": "Kawalan",
+        "focus": "HMI, integrasi barisan, pengurusan resipi."
+      },
+      {
+        "role": "Pemasangan",
+        "focus": "Pentauliahan di tapak merentas ASEAN."
+      },
+      {
+        "role": "Servis",
+        "focus": "Respons, saluran alat ganti, latihan operator."
+      },
+      {
+        "role": "R&D",
+        "focus": "Rig khusus, pembuatan aditif siri AR."
+      }
     ]
   },
   "page2026": {
@@ -315,11 +402,26 @@
       "eyebrow": "§ 02 / Apa kata pembeli",
       "h2": "Perkataan yang paling kerap kami dengar.",
       "words": [
-        "presisi", "tempatan", "dibina di sini", "bersepadu", "balut-sekeliling",
-        "khusus", "boleh diukur", "penghantaran pantas", "boleh dipercayai", "boleh diservis",
-        "pindahan haba", "dua-sisi", "tekanan sudut", "Selangor",
-        "cetak & sapu", "flexy", "continuous-band", "siri AR",
-        "direka", "empat minggu"
+        "presisi",
+        "tempatan",
+        "dibina di sini",
+        "bersepadu",
+        "balut-sekeliling",
+        "khusus",
+        "boleh diukur",
+        "penghantaran pantas",
+        "boleh dipercayai",
+        "boleh diservis",
+        "pindahan haba",
+        "dua-sisi",
+        "tekanan sudut",
+        "Selangor",
+        "cetak & sapu",
+        "flexy",
+        "continuous-band",
+        "siri AR",
+        "direka",
+        "empat minggu"
       ]
     },
     "stats": {
@@ -328,14 +430,30 @@
       "h2Line2": "membanggakan.",
       "h2Line3": "Sesetengahnya hanya fakta.",
       "items": [
-        { "label": "mesin dalam katalog" },
-        { "label": "keluarga kejuruteraan" },
-        { "label": "mesin difoto di lantai kilang" },
-        { "label": "pameran sejak 2022" },
-        { "label": "negeri Malaysia dilayan" },
-        { "label": "anugerah inovasi · MIMF 2024" },
-        { "label": "bahasa — EN · BM · ZH" },
-        { "label": "kawalan luar sumber" }
+        {
+          "label": "mesin dalam katalog"
+        },
+        {
+          "label": "keluarga kejuruteraan"
+        },
+        {
+          "label": "mesin difoto di lantai kilang"
+        },
+        {
+          "label": "pameran sejak 2022"
+        },
+        {
+          "label": "negeri Malaysia dilayan"
+        },
+        {
+          "label": "anugerah inovasi · MIMF 2024"
+        },
+        {
+          "label": "bahasa — EN · BM · ZH"
+        },
+        {
+          "label": "kawalan luar sumber"
+        }
       ]
     },
     "team": {
@@ -350,10 +468,26 @@
       "h2Line1": "Empat keluaran.",
       "h2Line2": "Setiap satu mendapat namanya.",
       "items": [
-        { "q": "Q1", "h": "Two-Side w/ Corner Press dihantar", "note": "Pusingan ke-3 iterasi dipandu pelanggan." },
-        { "q": "Q2", "h": "AR600 mula pengeluaran", "note": "Aditif berkapasiti tinggi untuk pemasangan dalaman." },
-        { "q": "Q3", "h": "Custom Top w/ Checking System", "note": "Barisan reject berintegrasi penglihatan untuk farmaseutikal." },
-        { "q": "Q4", "h": "Kit retrofit Continuous Band v2", "note": "Laluan naik taraf serta-merta untuk v1 asal." }
+        {
+          "q": "Q1",
+          "h": "Two-Side w/ Corner Press dihantar",
+          "note": "Pusingan ke-3 iterasi dipandu pelanggan."
+        },
+        {
+          "q": "Q2",
+          "h": "AR600 mula pengeluaran",
+          "note": "Aditif berkapasiti tinggi untuk pemasangan dalaman."
+        },
+        {
+          "q": "Q3",
+          "h": "Custom Top w/ Checking System",
+          "note": "Barisan reject berintegrasi penglihatan untuk farmaseutikal."
+        },
+        {
+          "q": "Q4",
+          "h": "Kit retrofit Continuous Band v2",
+          "note": "Laluan naik taraf serta-merta untuk v1 asal."
+        }
       ]
     },
     "founder": {
@@ -713,9 +847,21 @@
         "h2Line1": "Panjang lebar. Difoto.",
         "h2Line2": "Jujur tentang apa yang tidak berjaya.",
         "items": [
-          { "num": "01", "title": "Di lantai", "body": "Setiap laporan difoto di kilang pelanggan — bukan di bilik pameran kami." },
-          { "num": "02", "title": "Dengan angka", "body": "Kelajuan sebelum / selepas. Kadar reject sebelum / selepas. Tempoh pulang modal dalam bulan, bukan naratif." },
-          { "num": "03", "title": "Dan kekangan", "body": "Apa yang terlepas semasa pemasangan, apa yang dibetulkan iterasi kedua, apa yang kami pelajari untuk binaan seterusnya." }
+          {
+            "num": "01",
+            "title": "Di lantai",
+            "body": "Setiap laporan difoto di kilang pelanggan — bukan di bilik pameran kami."
+          },
+          {
+            "num": "02",
+            "title": "Dengan angka",
+            "body": "Kelajuan sebelum / selepas. Kadar reject sebelum / selepas. Tempoh pulang modal dalam bulan, bukan naratif."
+          },
+          {
+            "num": "03",
+            "title": "Dan kekangan",
+            "body": "Apa yang terlepas semasa pemasangan, apa yang dibetulkan iterasi kedua, apa yang kami pelajari untuk binaan seterusnya."
+          }
         ]
       },
       "cta": {
@@ -736,7 +882,28 @@
     "machineFinder": {
       "eyebrow": "Jurutera AI · semakan manusia 24 jam",
       "h1": "Terangkan barisan anda. Kami padankan mesin.",
-      "subtitle": "Berbual dengan jurutera aplikasi AI kami, dilatih pada keseluruhan katalog Auraplex. Terangkan barisan anda dan ia akan padankan mesin yang sesuai — kemudian pasukan kami akan susuli."
+      "subtitle": "Berbual dengan jurutera aplikasi AI kami, dilatih pada keseluruhan katalog Auraplex. Terangkan barisan anda dan ia akan padankan mesin yang sesuai — kemudian pasukan kami akan susuli.",
+      "how": {
+        "title": "Cara ia berfungsi",
+        "steps": [
+          {
+            "n": "01",
+            "title": "Terangkan barisan anda",
+            "body": "Produk, bekas, kadar pengeluaran dan sebarang kekangan — dalam bahasa biasa."
+          },
+          {
+            "n": "02",
+            "title": "AI memadankan katalog",
+            "body": "Jurutera aplikasi kami, dilatih pada kesemua 30 mesin Auraplex, mencadangkan padanan terdekat."
+          },
+          {
+            "n": "03",
+            "title": "Manusia membuat susulan",
+            "body": "Seorang jurutera Auraplex menyemak padanan dan membuat susulan dalam masa 24 jam."
+          }
+        ],
+        "note": "Cadangan adalah panduan petunjuk, bukan sebut harga yang mengikat. Mesej anda digunakan untuk menjana padanan dan memaklumkan pasukan kami."
+      }
     }
   }
 }
