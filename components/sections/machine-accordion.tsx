@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { AnimatePresence, motion } from 'motion/react';
 import { useMediaQuery, useReducedMotion } from '@/lib/hooks';
 
 export type AccordionItem = {
@@ -106,7 +107,7 @@ export function MachineAccordion({ items }: Props) {
           {!isNarrow && (
             <div className="flex items-center gap-3">
               <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[color:var(--color-steel)] hidden lg:block">
-                Click a panel · ← → to step
+                Hover to expand · ← → to step
               </span>
               <button
                 type="button"
@@ -129,7 +130,12 @@ export function MachineAccordion({ items }: Props) {
         </div>
 
         {isNarrow ? (
-          <MobileGrid items={items} />
+          <MobileAccordion
+            items={items}
+            active={active}
+            setActive={setActive}
+            reduced={reduced}
+          />
         ) : (
           <div className="relative rounded-2xl overflow-hidden border border-[color:var(--color-neutral-700)] shadow-[0_30px_80px_rgba(0,0,0,0.5)]">
             {/* Status bar */}
@@ -203,6 +209,8 @@ function Panel({
     <div
       role="button"
       tabIndex={0}
+      onMouseEnter={onSelect}
+      onFocus={onSelect}
       onClick={onSelect}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -378,35 +386,110 @@ function Meta({ k, v }: { k: string; v: string }) {
   );
 }
 
-/** Clean two-up card grid for real small screens. */
-function MobileGrid({ items }: { items: AccordionItem[] }) {
+/**
+ * MobileAccordion — the phone-friendly vertical accordion: a stack of rows,
+ * one open at a time (mirrors the desktop horizontal accordion). Tapping a row
+ * expands it to reveal the machine image, summary, honest meta and CTA; the
+ * previously open row collapses. Height/opacity reveal is a one-shot tap
+ * animation (not per-frame scroll) and is instant under reduced-motion.
+ */
+function MobileAccordion({
+  items,
+  active,
+  setActive,
+  reduced,
+}: {
+  items: AccordionItem[];
+  active: number;
+  setActive: (i: number) => void;
+  reduced: boolean;
+}) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      {items.map((m) => {
+    <div className="space-y-3">
+      {items.map((m, i) => {
+        const open = i === active;
         const accent = accentOf(m.category);
         return (
-          <Link
+          <div
             key={m.slug}
-            href={`/products/${m.slug}`}
-            className="group relative flex flex-col overflow-hidden rounded-2xl border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)]"
+            className="overflow-hidden rounded-2xl border transition-colors duration-300"
+            style={{ borderColor: open ? hexA(accent, 0.5) : 'var(--color-neutral-700)' }}
           >
-            <div className="h-[2px] w-full" style={{ background: accent }} />
-            <div
-              className="relative aspect-[4/3]"
-              style={{ background: `radial-gradient(120% 80% at 50% 0%, ${hexA(accent, 0.16)}, transparent 60%)` }}
+            {/* Header row — always visible, tap to open */}
+            <button
+              type="button"
+              onClick={() => setActive(i)}
+              aria-expanded={open}
+              className="w-full flex items-center gap-4 p-4 text-left bg-[color:var(--color-neutral-800)]/60"
             >
-              <Image src={m.image} alt={m.name} fill sizes="(max-width:640px) 100vw, 50vw" className="object-contain p-6" />
-            </div>
-            <div className="p-5 border-t border-[color:var(--color-neutral-700)]">
-              <div className="font-mono text-[9px] uppercase tracking-[0.25em]" style={{ color: accent }}>
-                {m.label}
-              </div>
-              <div className="font-display text-xl leading-tight mt-1">{m.name}</div>
-              <div className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-steel)] group-hover:text-[color:var(--color-signal)] transition">
-                View machine →
-              </div>
-            </div>
-          </Link>
+              <span
+                className="h-9 w-1 shrink-0 rounded-full transition-all duration-300"
+                style={{ background: open ? accent : 'var(--color-neutral-700)' }}
+              />
+              <span className="min-w-0 flex-1">
+                <span
+                  className="block font-mono text-[9px] uppercase tracking-[0.25em]"
+                  style={{ color: accent }}
+                >
+                  {String(i + 1).padStart(2, '0')} · {m.label}
+                </span>
+                <span className="block font-display text-lg leading-tight truncate">
+                  {m.name}
+                </span>
+              </span>
+              <span
+                className="shrink-0 text-[color:var(--color-steel)] transition-transform duration-300"
+                style={{ transform: open ? 'rotate(90deg)' : 'none' }}
+                aria-hidden="true"
+              >
+                →
+              </span>
+            </button>
+
+            {/* Expanding detail */}
+            <AnimatePresence initial={false}>
+              {open && (
+                <motion.div
+                  initial={reduced ? false : { height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={reduced ? { opacity: 0 } : { height: 0, opacity: 0 }}
+                  transition={{ duration: reduced ? 0 : 0.4, ease: [0.2, 0.8, 0.2, 1] }}
+                  className="overflow-hidden"
+                >
+                  <div className="p-4 pt-0">
+                    <div
+                      className="relative aspect-[16/10] rounded-xl overflow-hidden border border-[color:var(--color-neutral-700)]"
+                      style={{
+                        background: `radial-gradient(120% 80% at 50% 0%, ${hexA(accent, 0.16)}, transparent 60%)`,
+                      }}
+                    >
+                      <Image
+                        src={m.image}
+                        alt={m.name}
+                        fill
+                        sizes="100vw"
+                        className="object-contain p-5"
+                      />
+                    </div>
+                    <p className="mt-4 text-sm leading-relaxed text-[color:var(--color-steel-soft)]">
+                      {m.summary}
+                    </p>
+                    <div className="mt-4 flex flex-wrap items-center gap-2.5">
+                      <Meta k="Family" v={m.label} />
+                      <Meta k="Photos" v={String(m.photos)} />
+                      <Link
+                        href={`/products/${m.slug}`}
+                        className="ml-auto font-mono text-[10px] uppercase tracking-[0.2em] rounded-full px-4 py-2 text-[color:var(--color-ink)] font-bold"
+                        style={{ background: accent }}
+                      >
+                        View machine →
+                      </Link>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         );
       })}
     </div>
