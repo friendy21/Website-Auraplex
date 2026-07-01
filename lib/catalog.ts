@@ -47,13 +47,108 @@ const FEATURED_SLUGS = new Set([
   'continuous-band-sealing-machine',
 ]);
 
+/**
+ * Real per-machine copy + specs, verified from the live Auraplex site
+ * (autolabellermalaysia.com — the "Auto Labeller Malaysia" trading site),
+ * fetched 2026-07. Only machines whose live application copy could be
+ * CONFIDENTLY matched to our slug are listed here; every other machine falls
+ * back to the honest category summary rather than inventing copy. The site
+ * publishes no numeric labelling specs (speed/dimensions), so only the 3D
+ * printers — which list real feature sets — carry `specs`.
+ */
+const MACHINE_DETAILS: Record<
+  string,
+  { summary?: string; specs?: { label: string; value: string; unit?: string }[] }
+> = {
+  'top-labelling-machine': {
+    summary: 'To apply a label on the top flat surface of a unit box or corrugated carton.',
+  },
+  'standard-top-labelling-machine': {
+    summary:
+      'To apply a label on the top flat surface of a unit box — used for hologram labels, ice-cream lids and pouches.',
+  },
+  'top-labelling-machine-with-corner-press-device': {
+    summary:
+      'A top labelling machine with a corner-press device — applies an anti-counterfeit security label that presses neatly over a corner.',
+  },
+  'two-side-labelling-machine-with-corner-press': {
+    summary:
+      'To apply a front-side corner label on a unit box or corrugated carton, pressed around the corner.',
+  },
+  'customized-top-labelling-machine': {
+    summary:
+      "A customized top labelling machine for uneven-surface products on a customer's production line.",
+  },
+  'bottom-labelling-machine': {
+    summary: 'Applies a label to the bottom of products — a customized bottom-labelling solution.',
+  },
+  'customized-bottom-labelling-machine': {
+    summary: 'Custom-made bottom labelling — e.g. for vegetable packaging.',
+  },
+  'egg-tray-labelling-machine': {
+    summary: 'To apply a label on egg trays — configurable for 4, 6, 10, 15 or 30-egg trays.',
+  },
+  'three-side-labelling-machine': {
+    summary: 'To apply a three-sided label on a square or rectangular container.',
+  },
+  'front-back-labelling-machine': {
+    summary: 'To apply front and back labels on an oval or rectangular container.',
+  },
+  'body-neck-labelling-machine': {
+    summary: 'To apply a body label and a neck label on a round bottle with a tapered neck.',
+  },
+  'semi-auto-round-bottle-labelling-machine': {
+    summary: 'To apply a wrap-around label on a round-shape container.',
+  },
+  'vertical-wrap-around-labelling-machine': {
+    summary: 'A semi-automatic machine to apply a wrap-around label on round bottles.',
+  },
+  'continuous-band-sealing-machine': {
+    summary: 'Suitable to seal any light-weight plastic packaging on a continuous band.',
+  },
+  'continuous-band-sealing-machine-v2': {
+    summary: 'Suitable to seal any light-weight plastic packaging on a continuous band.',
+  },
+  'ar600-3d-printer': {
+    summary:
+      'Locally built and supported 3D printer with HEPA filtration, automatic bed levelling, power-failure resume, a colour touchscreen and a filament run-out alarm.',
+    specs: [
+      { label: 'Bed levelling', value: 'Automatic (BLTouch)' },
+      { label: 'Filtration', value: 'HEPA' },
+      { label: 'Power-failure resume', value: 'Yes (LLRP)' },
+      { label: 'Display', value: 'Colour touchscreen + USB' },
+      { label: 'Filament', value: 'Run-out alarm + auto feed' },
+    ],
+  },
+  'ar320-3d-printer': {
+    summary:
+      'Locally built and supported 3D printer with HEPA filtration, automatic bed levelling, power-failure resume, a colour touchscreen and a filament run-out alarm.',
+    specs: [
+      { label: 'Bed levelling', value: 'Automatic (BLTouch)' },
+      { label: 'Filtration', value: 'HEPA' },
+      { label: 'Power-failure resume', value: 'Yes (LLRP)' },
+      { label: 'Display', value: 'Colour touchscreen + USB' },
+      { label: 'Filament', value: 'Run-out alarm + auto feed' },
+    ],
+  },
+  'ar220-3d-printer': {
+    summary:
+      'Locally built and supported 3D printer with a pause function, heated nozzle and cooling fan, and automatic filament feed.',
+    specs: [
+      { label: 'Pause / resume', value: 'Yes' },
+      { label: 'Hot end', value: 'Heated nozzle + cooling fan' },
+      { label: 'Filament', value: 'Auto feed' },
+    ],
+  },
+};
+
 export const MACHINES: Machine[] = MACHINES_RAW.map((m) => ({
   ...m,
   featured: FEATURED_SLUGS.has(m.slug),
-  summary: CATEGORY_SUMMARY[m.category],
+  summary: MACHINE_DETAILS[m.slug]?.summary ?? CATEGORY_SUMMARY[m.category],
   speed: null,
   monthlyPrice: null,
-  specs: [],
+  specs: MACHINE_DETAILS[m.slug]?.specs ?? [],
 }));
 
 export function getMachine(slug: string): Machine | null {
