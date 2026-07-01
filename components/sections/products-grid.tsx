@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { AnimatePresence, motion } from 'motion/react';
 import { ParallaxProductImage } from '@/components/sections/parallax-product-image';
 import { CompareTray } from '@/components/sections/compare-tray';
+import { EmptyState } from '@/components/primitives/empty-state';
 import { machineTags, type Category, type Machine } from '@/lib/catalog';
 
 type SortKey = 'featured' | 'photographed' | 'az';
@@ -298,19 +299,20 @@ export function ProductsGrid({
           </AnimatePresence>
         </motion.div>
 
-        {/* Empty state */}
+        {/* Empty state — shared EmptyState primitive */}
         {sorted.length === 0 && (
-          <div className="text-center py-32">
-            <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)] mb-4">
-              — {t.noMatch}
-            </div>
-            <Link
-              href="/products"
-              className="font-mono text-sm uppercase tracking-wider text-[color:var(--color-signal)] hover:text-[color:var(--color-signal-bright)] transition"
-            >
-              {t.seeAll} →
-            </Link>
-          </div>
+          <EmptyState
+            icon="◍"
+            title={t.noMatch}
+            action={
+              <Link
+                href="/products"
+                className="font-mono text-sm uppercase tracking-wider text-[color:var(--color-signal)] hover:text-[color:var(--color-signal-bright)] transition"
+              >
+                {t.seeAll} →
+              </Link>
+            }
+          />
         )}
       </section>
 
