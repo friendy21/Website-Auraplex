@@ -95,8 +95,8 @@ export default async function InternshipPage({
         <Reveal variant="up">
           <div className="relative aspect-[21/9] overflow-hidden border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)]">
             <Image
-              src="/floor/workers.jpg"
-              alt="Auraplex engineers on the Seri Kembangan factory floor"
+              src="/floor/auraplex-labelling-line.jpg"
+              alt="An Auraplex labelling line running at the Seri Kembangan factory"
               fill
               priority
               sizes="100vw"
