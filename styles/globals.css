@@ -198,6 +198,28 @@ body {
   to   { transform: scale(1); opacity: 1; }
 }
 
+/* ── Above-the-fold entrances — CSS-driven (time-based, NOT scroll-timeline).
+   The hero headline is each page's LCP element. When it was gated behind
+   Framer's `initial: hidden` it stayed invisible until the ~1.3MB motion
+   bundle hydrated → measured 5s+ LCP on mobile. These CSS animations are
+   present in the server HTML and start at first paint, before React, so the
+   text paints immediately while still animating in. transform/opacity only. */
+@keyframes hero-word-in {
+  from { opacity: 0; transform: translateY(70px) rotateX(75deg) scale(0.85); }
+  to   { opacity: 1; transform: translateY(0) rotateX(0deg) scale(1); }
+}
+.hero-word {
+  display: inline-block;
+  animation: hero-word-in 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes reveal-immediate-kf {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal-immediate {
+  animation: reveal-immediate-kf 0.7s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
 /* ──────────────────────────────────────────────────────────────────────────
  * Focus rings — signal-coloured, generous offset
  * ────────────────────────────────────────────────────────────────────────── */
@@ -852,6 +874,7 @@ html.cursor-custom body { cursor: none; }
     scroll-behavior: auto !important;
   }
   .reveal, .reveal-up, .reveal-scale { opacity: 1; transform: none; }
+  .hero-word, .reveal-immediate { opacity: 1; transform: none; animation: none; }
   ::view-transition-old(root),
   ::view-transition-new(root) {
     animation: none;

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
 import { Button } from '@/components/primitives/button';
-import { buildMetadata } from '@/lib/seo';
+import { buildMetadata, localizedMeta, ogLocale } from '@/lib/seo';
 import { getNewsByDate } from '@/lib/news';
 
 export async function generateMetadata({
@@ -12,11 +12,12 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const meta = localizedMeta('news', locale);
   return buildMetadata({
-    title: 'News & Events — Auraplex',
-    description:
-      'Auraplex news, industry awards, exhibition updates and announcements from the Seri Kembangan floor.',
+    title: meta.title,
+    description: meta.description,
     path: `/${locale}/news`,
+    locale: ogLocale(locale),
   });
 }
 

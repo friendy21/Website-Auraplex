@@ -271,7 +271,10 @@
       "pending": "Pending",
       "onRequest": "On request",
       "empty": "Select machines to compare",
-      "max": "up to 4"
+      "max": "up to 4",
+      "askEngineer": "Ask an engineer about these",
+      "remove": "Remove",
+      "close": "Close"
     }
   },
   "configurator": {
@@ -281,6 +284,16 @@
     "requestQuote": "Request quote with this config"
   },
   "forms": {
+    "errors": {
+      "summary": "Please check the highlighted fields.",
+      "name": "Please enter your name (at least 2 characters).",
+      "email": "Please enter a valid email address.",
+      "phone": "Please enter a valid phone number.",
+      "message": "Please enter a message (at least 10 characters).",
+      "cv": "Please provide a valid link.",
+      "generic": "Please check this field.",
+      "sendFailed": "Could not send right now. Please try again or WhatsApp us."
+    },
     "name": "Name",
     "company": "Company",
     "phone": "Phone",

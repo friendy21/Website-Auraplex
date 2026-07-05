@@ -13,6 +13,7 @@ import {
   buildMetadata,
   productSchema,
   breadcrumbSchema,
+  SITE,
 } from '@/lib/seo';
 import { formatRM, whatsappLink } from '@/lib/utils';
 import {
@@ -20,6 +21,7 @@ import {
   getMachine,
   getMachinesByCategory,
   categoryLabel,
+  machineTags,
 } from '@/lib/catalog';
 import { hasMachineModel } from '@/lib/models';
 
@@ -61,6 +63,11 @@ export default async function ProductPage({
     .slice(0, 4)
     .map((m) => ({ slug: m.slug, name: m.name, image: m.image }));
 
+  // Honest, name-derived application facets (Top / Wrap-Around / Print & Apply
+  // / Corner Press / Semi-Auto …). Answers "what is this for?" above the fold
+  // even for the ~12 machines without bespoke MACHINE_DETAILS copy.
+  const tags = machineTags(p);
+
   return (
     <>
       <script
@@ -82,9 +89,9 @@ export default async function ProductPage({
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             breadcrumbSchema([
-              { name: 'Home', url: `https://auraplex.my/${locale}` },
-              { name: 'Products', url: `https://auraplex.my/${locale}/products` },
-              { name: p.name, url: `https://auraplex.my/${locale}/products/${slug}` },
+              { name: 'Home', url: `${SITE}/${locale}` },
+              { name: 'Products', url: `${SITE}/${locale}/products` },
+              { name: p.name, url: `${SITE}/${locale}/products/${slug}` },
             ]),
           ),
         }}
@@ -134,6 +141,19 @@ export default async function ProductPage({
             {p.summary}
           </p>
 
+          {tags.length > 0 && (
+            <div className="mt-5 flex flex-wrap gap-2">
+              {tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="font-mono text-[10px] uppercase tracking-[0.15em] border border-[color:var(--color-neutral-700)] px-2.5 py-1 text-[color:var(--color-steel-soft)]"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+
           {p.specs.length > 0 ? (
             <div className="mt-10 border-y border-[color:var(--color-neutral-700)] py-2">
               <SpecTable specs={p.specs.slice(0, 6)} />
@@ -147,18 +167,29 @@ export default async function ProductPage({
           )}
 
           <div className="mt-8">
-            <div className="font-mono text-xs uppercase tracking-widest text-[color:var(--color-steel)]">
-              From
-            </div>
             {p.monthlyPrice != null ? (
-              <div className="font-display text-5xl text-[color:var(--color-signal)] split-flap">
-                {formatRM(p.monthlyPrice)}
-                <span className="text-base text-[color:var(--color-steel)]">/mo</span>
-              </div>
+              <>
+                <div className="font-mono text-xs uppercase tracking-widest text-[color:var(--color-steel)]">
+                  From
+                </div>
+                <div className="font-display text-5xl text-[color:var(--color-signal)] split-flap">
+                  {formatRM(p.monthlyPrice)}
+                  <span className="text-base text-[color:var(--color-steel)]">/mo</span>
+                </div>
+              </>
             ) : (
-              <div className="font-display text-3xl text-[color:var(--color-paper)] mt-1">
-                Quote on request
-              </div>
+              <>
+                <div className="font-mono text-xs uppercase tracking-widest text-[color:var(--color-steel)]">
+                  Pricing
+                </div>
+                <div className="font-display text-3xl text-[color:var(--color-paper)] mt-1">
+                  Quoted per line
+                </div>
+                <div className="font-mono text-xs text-[color:var(--color-steel)] mt-2">
+                  Priced for your containers and throughput — typically within
+                  1 business day.
+                </div>
+              </>
             )}
           </div>
 

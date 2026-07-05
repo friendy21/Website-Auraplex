@@ -10,7 +10,7 @@ import type { ReactNode } from 'react';
 // autolabellermalaysia.com footer HTML (canonical forms, tracking
 // params stripped). Do not add networks that aren't verified there.
 const SOCIALS = [
-  { name: 'Facebook', href: 'https://www.facebook.com/Auraplex-100352958924725/' },
+  { name: 'Facebook', href: 'https://www.facebook.com/p/Auraplex-100068561114645' },
   { name: 'Instagram', href: 'https://www.instagram.com/auraplex_/' },
   { name: 'YouTube', href: 'https://www.youtube.com/@auraplex5219' },
   { name: 'TikTok', href: 'https://www.tiktok.com/@auraplex_' },

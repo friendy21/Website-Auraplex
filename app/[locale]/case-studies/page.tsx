@@ -5,7 +5,7 @@ import { Reveal } from '@/components/motion/reveal';
 import { Button } from '@/components/primitives/button';
 import { ProofRail } from '@/components/sections/proof-rail';
 import { ClientLogoWall } from '@/components/sections/client-logo-wall';
-import { buildMetadata } from '@/lib/seo';
+import { buildMetadata, localizedMeta, ogLocale } from '@/lib/seo';
 
 // Real milestones sourced from auraplex.com.my (news/events). Images already
 // shipped in /public/exhibitions. No fabricated customer claims.
@@ -48,11 +48,12 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const meta = localizedMeta('caseStudies', locale);
   return buildMetadata({
-    title: 'Recognition & Milestones — Auraplex',
-    description:
-      'Auraplex SDN BHD — recognised as a best company for innovation at MIMF 2024, and on the floor at Malaysia International Machinery Fair and Metaltech (MITEC, Kuala Lumpur).',
+    title: meta.title,
+    description: meta.description,
     path: `/${locale}/case-studies`,
+    locale: ogLocale(locale),
   });
 }
 

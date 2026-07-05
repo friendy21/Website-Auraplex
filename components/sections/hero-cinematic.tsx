@@ -322,42 +322,24 @@ export function HeroCinematic() {
 }
 
 function HeroWord({ word, index }: { word: string; index: number }) {
+  // 3D flight entrance — each word launches from below the baseline, rotated
+  // back 75° in depth, then snaps into place. This is the page's LCP element,
+  // so the animation is CSS-driven (.hero-word) rather than JS/Framer: it lives
+  // in the server HTML and paints at first frame instead of waiting for the
+  // motion bundle to hydrate (that gate was the measured ~5.7s mobile LCP).
+  // transform + opacity only — the earlier blur() filter was dropped (not a
+  // reliably compositor-cheap property, and it delayed the contentful paint).
   return (
-    <motion.span
-      // 3D flight entrance — each word launches from below the baseline,
-      // rotated back 75° in depth, blurred, then snaps into place.
-      // transform + opacity + filter only: composited, zero layout cost,
-      // CLS-exempt (the weight stays static — animating
-      // fontVariationSettings reflows glyph widths and was measured at
-      // 0.15 CLS before being removed). Base delay stays tight at 0.1s
-      // because the H1 is the page's LCP element.
+    <span
+      className="hero-word"
       style={{
-        display: 'inline-block',
         fontVariationSettings: '"wght" 700',
         transformStyle: 'preserve-3d',
         backfaceVisibility: 'hidden',
-      }}
-      initial={{
-        opacity: 0,
-        y: 70,
-        rotateX: 75,
-        scale: 0.85,
-        filter: 'blur(10px)',
-      }}
-      animate={{
-        opacity: 1,
-        y: 0,
-        rotateX: 0,
-        scale: 1,
-        filter: 'blur(0px)',
-      }}
-      transition={{
-        duration: 0.85,
-        delay: 0.1 + index * 0.05,
-        ease: [0.16, 1, 0.3, 1],
+        animationDelay: `${0.1 + index * 0.05}s`,
       }}
     >
       {word}
-    </motion.span>
+    </span>
   );
 }

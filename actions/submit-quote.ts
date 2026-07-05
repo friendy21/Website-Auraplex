@@ -3,6 +3,7 @@
 import { z } from 'zod';
 import { Resend } from 'resend';
 import { storeLead } from '@/lib/kv';
+import { localizeFormErrors, formMessage } from '@/lib/form-errors';
 import QuoteAck from '@/emails/quote-ack';
 import NewLeadInternal from '@/emails/new-lead-internal';
 
@@ -45,8 +46,10 @@ export async function submitQuote(_prev: ActionState, formData: FormData): Promi
   if (!parsed.success) {
     return {
       ok: false,
-      error: 'Please check the highlighted fields.',
-      fieldErrors: parsed.error.flatten().fieldErrors,
+      ...(await localizeFormErrors(
+        raw.locale,
+        parsed.error.flatten().fieldErrors,
+      )),
     };
   }
 
@@ -81,6 +84,6 @@ export async function submitQuote(_prev: ActionState, formData: FormData): Promi
 
     return { ok: true, leadId };
   } catch {
-    return { ok: false, error: 'Could not send right now. Please try again or WhatsApp us.' };
+    return { ok: false, error: await formMessage(parsed.data.locale, 'sendFailed') };
   }
 }

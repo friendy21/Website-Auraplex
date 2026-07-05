@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Suspense } from 'react';
+import { MotionConfig } from 'motion/react';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -113,6 +114,11 @@ export default async function LocaleLayout({
       </head>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
+          {/* reducedMotion="user" makes ALL Framer Motion animations honour
+              prefers-reduced-motion (transform/opacity are neutralised). The
+              CSS keyframes are already gated in globals.css; this closes the
+              JS-animation half (WCAG 2.3.3) site-wide. */}
+          <MotionConfig reducedMotion="user">
           <PageLoader />
           <ScrollProgress />
           <LenisProvider>
@@ -141,6 +147,7 @@ export default async function LocaleLayout({
               <TransitionWipe />
             </AtmosphereProvider>
           </LenisProvider>
+          </MotionConfig>
         </NextIntlClientProvider>
         <SpeedInsights />
         <Analytics />

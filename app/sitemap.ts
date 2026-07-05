@@ -1,8 +1,8 @@
 import type { MetadataRoute } from 'next';
 import { locales } from '@/lib/i18n';
 import { MACHINES } from '@/lib/catalog';
-
-const SITE = 'https://auraplex.my';
+import { NEWS } from '@/lib/news';
+import { SITE } from '@/lib/seo';
 
 // Sitemap is built from the local catalog and known static routes. Case study
 // detail pages are intentionally omitted while issue 01 is in production — the
@@ -58,6 +58,35 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         url: `${SITE}/${locale}/products/${p.slug}`,
         lastModified: now,
         priority: 0.8,
+        alternates: {
+          languages: {
+            ...Object.fromEntries(
+              locales.map((l) => [
+                HREFLANG[l] ?? l,
+                `${SITE}/${l}/products/${p.slug}`,
+              ]),
+            ),
+            'x-default': `${SITE}/en/products/${p.slug}`,
+          },
+        },
+      });
+    }
+    for (const n of NEWS) {
+      urls.push({
+        url: `${SITE}/${locale}/news/${n.slug}`,
+        lastModified: new Date(n.date),
+        priority: 0.6,
+        alternates: {
+          languages: {
+            ...Object.fromEntries(
+              locales.map((l) => [
+                HREFLANG[l] ?? l,
+                `${SITE}/${l}/news/${n.slug}`,
+              ]),
+            ),
+            'x-default': `${SITE}/en/news/${n.slug}`,
+          },
+        },
       });
     }
   }

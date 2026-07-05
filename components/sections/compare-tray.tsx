@@ -10,6 +10,7 @@ type Props = {
   machines: Machine[];
   onRemove: (slug: string) => void;
   onClear: () => void;
+  locale: string;
   t: Record<string, string>;
 };
 
@@ -22,9 +23,12 @@ type Props = {
  * Motion is transform/opacity only (compositor-friendly) and disabled-safe;
  * the drawer traps nothing destructive and every column links to its machine.
  */
-export function CompareTray({ machines, onRemove, onClear, t }: Props) {
+export function CompareTray({ machines, onRemove, onClear, locale, t }: Props) {
   const [open, setOpen] = useState(false);
   const has = machines.length > 0;
+  // Carry the shortlist into the sales enquiry so the buyer who did the most
+  // decision work doesn't have to re-list the machines in the quote form.
+  const askHref = `/${locale}/contact?dept=sales`;
 
   return (
     <>
@@ -44,7 +48,8 @@ export function CompareTray({ machines, onRemove, onClear, t }: Props) {
                   <button
                     key={m.slug}
                     onClick={() => onRemove(m.slug)}
-                    title={`${t.add}: ${m.name}`}
+                    title={`${t.remove}: ${m.name}`}
+                    aria-label={`${t.remove}: ${m.name}`}
                     className="relative h-10 w-10 shrink-0 rounded-lg border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)] overflow-hidden hover:border-[color:var(--color-signal)] transition-colors"
                   >
                     {m.image ? (
@@ -93,7 +98,7 @@ export function CompareTray({ machines, onRemove, onClear, t }: Props) {
             transition={{ duration: 0.25 }}
           >
             <button
-              aria-label={t.clear}
+              aria-label={t.close}
               onClick={() => setOpen(false)}
               className="absolute inset-0 bg-[color:var(--color-ink)]/70 backdrop-blur-sm"
             />
@@ -111,14 +116,24 @@ export function CompareTray({ machines, onRemove, onClear, t }: Props) {
                 <button
                   onClick={() => setOpen(false)}
                   className="h-9 w-9 grid place-items-center rounded-full border border-[color:var(--color-neutral-700)] hover:border-[color:var(--color-signal)] transition"
-                  aria-label="Close"
+                  aria-label={t.close}
                 >
                   ✕
                 </button>
               </div>
 
               <div className="px-6 lg:px-12 py-8 overflow-x-auto">
-                <CompareTable machines={machines} t={t} />
+                <CompareTable machines={machines} locale={locale} t={t} />
+              </div>
+
+              {/* Funnel exit — turn the shortlist into a sales enquiry. */}
+              <div className="px-6 lg:px-12 pb-10 pt-2">
+                <Link
+                  href={askHref}
+                  className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] font-bold text-[color:var(--color-ink)] bg-[color:var(--color-signal)] rounded-full px-6 py-3 hover:-translate-y-px transition"
+                >
+                  {t.askEngineer} ({machines.length}) →
+                </Link>
               </div>
             </motion.div>
           </motion.div>
@@ -128,7 +143,7 @@ export function CompareTray({ machines, onRemove, onClear, t }: Props) {
   );
 }
 
-function CompareTable({ machines, t }: { machines: Machine[]; t: Record<string, string> }) {
+function CompareTable({ machines, locale, t }: { machines: Machine[]; locale: string; t: Record<string, string> }) {
   const rows: { label: string; render: (m: Machine) => React.ReactNode }[] = [
     { label: t.rowFamily, render: (m) => categoryLabel(m.category) },
     {
@@ -200,7 +215,7 @@ function CompareTable({ machines, t }: { machines: Machine[]; t: Record<string, 
       {machines.map((m) => (
         <div key={m.slug} className="p-3">
           <Link
-            href={`/products/${m.slug}`}
+            href={`/${locale}/products/${m.slug}`}
             className="font-mono text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-signal)] hover:translate-x-1 inline-block transition-transform"
           >
             {t.view} →

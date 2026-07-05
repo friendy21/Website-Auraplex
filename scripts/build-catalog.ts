@@ -10,6 +10,7 @@
  * source files. Re-run whenever new photography is added.
  */
 
+import * as crypto from 'node:crypto';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 
@@ -20,6 +21,21 @@ const MANIFEST_PATH = path.resolve(ROOT, '..', 'all_machine_images', 'manifest.j
 const OUTPUT = path.join(ROOT, 'lib', 'catalog.generated.ts');
 
 const MIN_COVER_BYTES = 30_000; // ≈ 30KB — filters out CDN micro-thumbnails
+
+// The scrape duplicated the Auraplex logo into ~22 product files (named
+// <Machine>_0.png / _1.png). Because the logo (~102KB) outweighs many real
+// webp photos, the "largest file" cover heuristic below was picking the LOGO
+// as several machines' product photo. Fingerprint the brand logo and drop any
+// product file that is a byte-identical copy of it, from both cover selection
+// and galleries. Self-correcting: reads the hash from the real logo asset.
+const LOGO_PATH = path.join(ROOT, 'public', 'brand', 'auraplex-logo.png');
+const LOGO_HASH = fs.existsSync(LOGO_PATH)
+  ? crypto.createHash('md5').update(fs.readFileSync(LOGO_PATH)).digest('hex')
+  : null;
+
+function md5File(absPath: string): string {
+  return crypto.createHash('md5').update(fs.readFileSync(absPath)).digest('hex');
+}
 
 type RawCategory = 'Labelling' | 'Packaging' | '3D_Printer';
 interface MappingMachine {
@@ -93,9 +109,15 @@ function buildOne(
   // np_25558_1702606652.png with the same size).
   const seenUrls = new Set<string>();
   const present = manifestEntry.filter((img) => {
-    const onDisk = fs.existsSync(path.join(PUBLIC_PRODUCTS, img.filename));
+    const abs = path.join(PUBLIC_PRODUCTS, img.filename);
+    const onDisk = fs.existsSync(abs);
     if (!onDisk) {
       console.warn(`  · missing on disk: ${img.filename}`);
+      return false;
+    }
+    // Drop logo-dupe files so the logo can never become a machine's photo.
+    if (LOGO_HASH && md5File(abs) === LOGO_HASH) {
+      console.warn(`  · skipping logo dupe: ${img.filename}`);
       return false;
     }
     if (seenUrls.has(img.url)) return false;

@@ -3,6 +3,7 @@
 import { z } from 'zod';
 import { Resend } from 'resend';
 import { storeLead } from '@/lib/kv';
+import { localizeFormErrors, formMessage } from '@/lib/form-errors';
 import ContactAck from '@/emails/contact-ack';
 import NewLeadInternal from '@/emails/new-lead-internal';
 
@@ -57,8 +58,10 @@ export async function submitContact(
   if (!parsed.success) {
     return {
       ok: false,
-      error: 'Please check the highlighted fields.',
-      fieldErrors: parsed.error.flatten().fieldErrors,
+      ...(await localizeFormErrors(
+        formData.get('locale'),
+        parsed.error.flatten().fieldErrors,
+      )),
     };
   }
 
@@ -96,6 +99,6 @@ export async function submitContact(
     return { ok: true };
   } catch {
     // Don't leak provider internals to the client.
-    return { ok: false, error: 'Could not send right now. Please try again or WhatsApp us.' };
+    return { ok: false, error: await formMessage(parsed.data.locale, 'sendFailed') };
   }
 }

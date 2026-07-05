@@ -45,7 +45,7 @@ export async function GET(req: Request) {
           <div style={{ fontSize: 28, color: PALETTE.neutral300, marginTop: 24, maxWidth: 900 }}>{subtitle}</div>
         </div>
         <div style={{ fontSize: 20, color: PALETTE.neutral400, letterSpacing: 2, textTransform: 'uppercase' }}>
-          Made in Malaysia · auraplex.my
+          Made in Malaysia · auraplex.com.my
         </div>
       </div>
     ),

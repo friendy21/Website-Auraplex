@@ -17,7 +17,7 @@ interface Props {
   sortItems: { key: SortKey; label: string }[];
   initialCategory?: Category;
   initialSort?: SortKey;
-  _locale: string;
+  locale: string;
   t: Record<string, string>;
   compareT: Record<string, string>;
 }
@@ -40,7 +40,7 @@ export function ProductsGrid({
   sortItems,
   initialCategory,
   initialSort = 'featured',
-  _locale,
+  locale,
   t,
   compareT,
 }: Props) {
@@ -60,15 +60,38 @@ export function ProductsGrid({
     .map((slug) => machines.find((m) => m.slug === slug))
     .filter((m): m is Machine => Boolean(m));
 
-  // Silently update URL when filters change (no full reload)
+  // Persist the compare shortlist across navigation. State is component-local,
+  // so visiting a detail page and returning previously cleared it — the buyer
+  // who did the most decision work lost it. Restore once on mount, then mirror
+  // to sessionStorage on change.
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem('auraplex:compare');
+      if (saved) setSelected(JSON.parse(saved) as string[]);
+    } catch {
+      /* storage blocked — compare just doesn't persist */
+    }
+  }, []);
+  useEffect(() => {
+    try {
+      sessionStorage.setItem('auraplex:compare', JSON.stringify(selected));
+    } catch {
+      /* ignore */
+    }
+  }, [selected]);
+
+  // Silently update URL when filters change (no full reload). Must keep the
+  // locale prefix — writing a bare `/products?…` from `/ms/products` stripped
+  // the locale, so a shared link re-entered locale detection and could land
+  // the recipient in a different language.
   useEffect(() => {
     const params = new URLSearchParams();
     if (category) params.set('category', category);
     if (sort !== 'featured') params.set('sort', sort);
     const q = params.toString();
-    const path = q ? `/products?${q}` : '/products';
-    window.history.replaceState({}, '', path);
-  }, [category, sort]);
+    const base = `/${locale}/products`;
+    window.history.replaceState({}, '', q ? `${base}?${q}` : base);
+  }, [category, sort, locale]);
 
   const filtered = category
     ? machines.filter((m) => m.category === category)
@@ -209,6 +232,9 @@ export function ProductsGrid({
                             src={p.image}
                             alt={p.name}
                             productId={p.id}
+                            /* Eager-load the first row so the LCP card image
+                               isn't lazy-loaded (Lighthouse flagged this). */
+                            priority={i < 3}
                           />
                         ) : (
                           <div className="absolute inset-0 flex items-center justify-center">
@@ -320,6 +346,7 @@ export function ProductsGrid({
         machines={selectedMachines}
         onRemove={(slug) => setSelected((s) => s.filter((x) => x !== slug))}
         onClear={() => setSelected([])}
+        locale={locale}
         t={compareT}
       />
     </>

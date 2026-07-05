@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
 import { Button } from '@/components/primitives/button';
-import { buildMetadata } from '@/lib/seo';
+import { buildMetadata, articleSchema } from '@/lib/seo';
 import { NEWS, getNewsPost } from '@/lib/news';
 
 export async function generateStaticParams() {
@@ -43,7 +43,7 @@ export default async function NewsArticlePage({
   const post = getNewsPost(slug);
   if (!post) notFound();
 
-  const formattedDate = new Date(post.date).toLocaleDateString('en-MY', {
+  const formattedDate = new Date(post.date).toLocaleDateString(`${locale}-MY`, {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -51,6 +51,21 @@ export default async function NewsArticlePage({
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            articleSchema({
+              title: post.title,
+              description: post.summary,
+              datePublished: post.date,
+              image: post.image ?? null,
+              slug,
+              locale,
+            }),
+          ),
+        }}
+      />
       {/* Hero image — full-bleed cover photo for the article */}
       {post.image && (
         <section className="pt-32">

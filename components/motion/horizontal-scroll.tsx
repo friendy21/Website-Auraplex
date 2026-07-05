@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, type ReactNode } from 'react';
+import { useRef, useState, type ReactNode } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -30,6 +30,12 @@ export function HorizontalScrollSection({
 }: Props) {
   const container = useRef<HTMLElement>(null);
   const track = useRef<HTMLDivElement>(null);
+  // Fallback = mobile OR reduced-motion. In fallback the pinned horizontal
+  // scroll is disabled and the track becomes a plain vertical stack so EVERY
+  // panel is reachable. (Previously the fallback only reset x:0 but left the
+  // track a horizontal flex row inside overflow-hidden, so panels 2..n were
+  // clipped and unreachable on phones and for reduced-motion users.)
+  const [fallback, setFallback] = useState(false);
 
   useGSAP(
     () => {
@@ -42,9 +48,11 @@ export function HorizontalScrollSection({
         window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       if (isMobile || prefersReduce) {
+        setFallback(true);
         gsap.set(track.current, { x: 0 });
         return;
       }
+      setFallback(false);
 
       const trackEl = track.current;
       const totalScroll = trackEl.scrollWidth - window.innerWidth;
@@ -69,12 +77,16 @@ export function HorizontalScrollSection({
   return (
     <section
       ref={container}
-      className={`relative overflow-hidden bg-[color:var(--color-ink)] ${className ?? ''}`}
+      className={`relative bg-[color:var(--color-ink)] ${
+        fallback ? '' : 'overflow-hidden'
+      } ${className ?? ''}`}
     >
       <div
         ref={track}
-        className="flex h-[100dvh] will-change-transform"
-        style={{ width: 'max-content' }}
+        className={`flex will-change-transform ${
+          fallback ? 'flex-col h-auto w-full' : 'h-[100dvh]'
+        }`}
+        style={{ width: fallback ? '100%' : 'max-content' }}
       >
         {children}
       </div>

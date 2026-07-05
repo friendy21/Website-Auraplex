@@ -3,7 +3,7 @@ import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
 import { InternshipForm } from '@/components/forms/internship-form';
 import { InternshipBackdrop } from '@/components/sections/internship-backdrop';
-import { buildMetadata, breadcrumbSchema } from '@/lib/seo';
+import { buildMetadata, breadcrumbSchema, SITE, localizedMeta, ogLocale } from '@/lib/seo';
 
 export async function generateMetadata({
   params,
@@ -11,11 +11,12 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const meta = localizedMeta('internship', locale);
   return buildMetadata({
-    title: 'Internship — Auraplex',
-    description:
-      'Paid internships at Auraplex Seri Kembangan — mechanical, electrical, controls, software, industrial design, and service. 3–6 months on the factory floor.',
+    title: meta.title,
+    description: meta.description,
     path: `/${locale}/internship`,
+    locale: ogLocale(locale),
   });
 }
 
@@ -55,8 +56,8 @@ export default async function InternshipPage({
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             breadcrumbSchema([
-              { name: 'Home', url: `https://auraplex.my/${locale}` },
-              { name: 'Internship', url: `https://auraplex.my/${locale}/internship` },
+              { name: 'Home', url: `${SITE}/${locale}` },
+              { name: 'Internship', url: `${SITE}/${locale}/internship` },
             ]),
           ),
         }}
@@ -90,21 +91,21 @@ export default async function InternshipPage({
         </Reveal>
       </section>
 
-      {/* ────── FLOOR PHOTO — real Auraplex factory floor ────── */}
+      {/* ────── TEAM PHOTO — the real Auraplex team at MIMF ────── */}
       <section className="mx-auto max-w-[1600px] px-6 lg:px-12 pb-16">
         <Reveal variant="up">
           <div className="relative aspect-[21/9] overflow-hidden border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)]">
             <Image
-              src="/floor/auraplex-labelling-line.jpg"
-              alt="An Auraplex labelling line running at the Seri Kembangan factory"
+              src="/exhibitions/mimf-2025.jpg"
+              alt="The Auraplex engineering team at their exhibition booth at MIMF, Kuala Lumpur"
               fill
               priority
               sizes="100vw"
-              className="object-cover"
+              className="object-cover object-[center_30%]"
             />
             <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between">
               <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-paper)] bg-[color:var(--color-ink)]/70 backdrop-blur-sm px-3 py-2">
-                Auraplex · Seri Kembangan · 2026
+                The Auraplex team · MIMF, Kuala Lumpur
               </div>
             </div>
           </div>

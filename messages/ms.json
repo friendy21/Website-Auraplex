@@ -271,7 +271,10 @@
       "pending": "Belum difoto",
       "onRequest": "Atas permintaan",
       "empty": "Pilih mesin untuk dibandingkan",
-      "max": "sehingga 4"
+      "max": "sehingga 4",
+      "askEngineer": "Tanya jurutera tentang mesin ini",
+      "remove": "Buang",
+      "close": "Tutup"
     }
   },
   "configurator": {
@@ -281,6 +284,16 @@
     "requestQuote": "Minta sebut harga dengan konfigurasi ini"
   },
   "forms": {
+    "errors": {
+      "summary": "Sila semak medan yang ditandakan.",
+      "name": "Sila masukkan nama anda (sekurang-kurangnya 2 aksara).",
+      "email": "Sila masukkan alamat e-mel yang sah.",
+      "phone": "Sila masukkan nombor telefon yang sah.",
+      "message": "Sila masukkan mesej (sekurang-kurangnya 10 aksara).",
+      "cv": "Sila berikan pautan yang sah.",
+      "generic": "Sila semak medan ini.",
+      "sendFailed": "Tidak dapat menghantar sekarang. Sila cuba lagi atau WhatsApp kami."
+    },
     "name": "Nama",
     "company": "Syarikat",
     "phone": "Telefon",

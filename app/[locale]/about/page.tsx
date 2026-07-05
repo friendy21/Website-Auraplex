@@ -6,7 +6,7 @@ import { KineticReveal } from '@/components/motion/kinetic-reveal';
 import { AboutGallery } from '@/components/sections/about-gallery';
 import { ClientLogoWall } from '@/components/sections/client-logo-wall';
 import { Button } from '@/components/primitives/button';
-import { buildMetadata } from '@/lib/seo';
+import { buildMetadata, localizedMeta, ogLocale } from '@/lib/seo';
 import { MACHINES, getFeaturedMachines } from '@/lib/catalog';
 import { whatsappLink } from '@/lib/utils';
 
@@ -16,11 +16,12 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const meta = localizedMeta('about', locale);
   return buildMetadata({
-    title: 'About — Auraplex',
-    description:
-      'Engineered in Malaysia. Built to outlast the line. Inside the Auraplex factory floor in Seri Kembangan.',
+    title: meta.title,
+    description: meta.description,
     path: `/${locale}/about`,
+    locale: ogLocale(locale),
   });
 }
 
@@ -75,12 +76,13 @@ export default async function AboutPage({
         <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--color-ink)] via-[color:var(--color-ink)]/85 to-[color:var(--color-ink)]/60" />
 
         <div className="relative z-10 mx-auto max-w-[1600px] w-full px-6 lg:px-12 pb-20 pt-40">
-          <Reveal variant="up">
+          <Reveal variant="up" immediate>
             <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6">
               — {t('eyebrow')}
             </div>
             <KineticReveal
               as="h1"
+              immediate
               className="font-display text-[clamp(3rem,9vw,8rem)] tracking-[-0.03em] leading-[0.92] max-w-5xl"
             >
               {t('h1Line1')} {t('h1Line2')}

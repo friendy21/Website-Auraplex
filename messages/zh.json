@@ -271,7 +271,10 @@
       "pending": "待拍摄",
       "onRequest": "询价",
       "empty": "选择要对比的机器",
-      "max": "最多 4 台"
+      "max": "最多 4 台",
+      "askEngineer": "就这些机器咨询工程师",
+      "remove": "移除",
+      "close": "关闭"
     }
   },
   "configurator": {
@@ -281,6 +284,16 @@
     "requestQuote": "用此配置申请报价"
   },
   "forms": {
+    "errors": {
+      "summary": "请检查标记的字段。",
+      "name": "请输入您的姓名(至少 2 个字符)。",
+      "email": "请输入有效的电子邮件地址。",
+      "phone": "请输入有效的电话号码。",
+      "message": "请输入留言(至少 10 个字符)。",
+      "cv": "请提供有效的链接。",
+      "generic": "请检查此字段。",
+      "sendFailed": "暂时无法发送。请重试或通过 WhatsApp 联系我们。"
+    },
     "name": "姓名",
     "company": "公司",
     "phone": "电话",

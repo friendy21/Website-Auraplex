@@ -1,7 +1,7 @@
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { MachineFinderChat } from '@/components/forms/machine-finder-chat';
 import { Reveal } from '@/components/motion/reveal';
-import { buildMetadata } from '@/lib/seo';
+import { buildMetadata, localizedMeta, ogLocale } from '@/lib/seo';
 
 export async function generateMetadata({
   params,
@@ -9,11 +9,12 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const meta = localizedMeta('machineFinder', locale);
   return buildMetadata({
-    title: 'Machine Finder — Auraplex',
-    description:
-      'AI-powered machine recommendation. Describe your line and we will match the right Auraplex machine.',
+    title: meta.title,
+    description: meta.description,
     path: `/${locale}/machine-finder`,
+    locale: ogLocale(locale),
   });
 }
 

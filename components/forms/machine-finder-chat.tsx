@@ -15,15 +15,37 @@ import { Button } from '@/components/primitives/button';
 
 type Msg = { role: 'user' | 'assistant'; content: string };
 
-type Recommendation = { slug: string; name: string };
+type Confidence = 'high' | 'medium' | 'low';
+type Recommendation = {
+  slug: string;
+  name: string;
+  reasons: string[];
+  confidence?: Confidence;
+};
 
-/** Pull the model's trailing ```json {recommendedSlug,...} ``` block, if any. */
-function extractRecommendedSlug(text: string): string | null {
+/**
+ * Pull the model's trailing ```json {recommendedSlug, confidence, reasons}```
+ * block. The model's *reasoning* is the whole point of an AI recommendation —
+ * the previous version parsed only the slug and discarded confidence + reasons.
+ */
+function extractRecommendation(text: string): {
+  slug: string;
+  reasons: string[];
+  confidence?: Confidence;
+} | null {
   const match = text.match(/```json\s*([\s\S]*?)```/i);
   if (!match) return null;
   try {
     const obj = JSON.parse(match[1].trim());
-    return typeof obj?.recommendedSlug === 'string' ? obj.recommendedSlug : null;
+    if (typeof obj?.recommendedSlug !== 'string') return null;
+    const reasons = Array.isArray(obj.reasons)
+      ? obj.reasons.filter((r: unknown): r is string => typeof r === 'string').slice(0, 4)
+      : [];
+    const confidence =
+      obj.confidence === 'high' || obj.confidence === 'medium' || obj.confidence === 'low'
+        ? (obj.confidence as Confidence)
+        : undefined;
+    return { slug: obj.recommendedSlug, reasons, confidence };
   } catch {
     return null;
   }
@@ -87,10 +109,15 @@ export function MachineFinderChat() {
 
       // If the model emitted a recommendation, surface it as a real CTA and
       // record the session as a lead (best-effort).
-      const slug = extractRecommendedSlug(acc);
-      const machine = slug ? getMachine(slug) : null;
-      if (machine) {
-        setRecommendation({ slug: machine.slug, name: machine.name });
+      const rec = extractRecommendation(acc);
+      const machine = rec ? getMachine(rec.slug) : null;
+      if (machine && rec) {
+        setRecommendation({
+          slug: machine.slug,
+          name: machine.name,
+          reasons: rec.reasons,
+          confidence: rec.confidence,
+        });
         void recordMachineFinderLead({
           recommendedSlug: machine.slug,
           locale,
@@ -126,6 +153,10 @@ export function MachineFinderChat() {
 
       <div
         ref={scrollRef}
+        role="log"
+        aria-live="polite"
+        aria-atomic="false"
+        aria-label={t('machineFinderAiLabel')}
         className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6 relative"
       >
         <AnimatePresence initial={false}>
@@ -183,6 +214,21 @@ export function MachineFinderChat() {
                 </Link>
               </Button>
             </div>
+            {recommendation.reasons.length > 0 && (
+              <ul className="mt-4 space-y-1.5 border-t border-[color:var(--color-signal)]/20 pt-4">
+                {recommendation.reasons.map((r, i) => (
+                  <li
+                    key={i}
+                    className="flex gap-2.5 text-sm text-[color:var(--color-steel-soft)] leading-relaxed"
+                  >
+                    <span className="text-[color:var(--color-signal)] mt-0.5 shrink-0" aria-hidden>
+                      →
+                    </span>
+                    <span>{r}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
           </motion.div>
         )}
       </div>
@@ -347,6 +393,8 @@ function ComposerInput({
         onBlur={() => setFocused(false)}
         rows={1}
         placeholder={t('machineFinderPlaceholder')}
+        aria-label={t('machineFinderPlaceholder')}
+        aria-keyshortcuts="Enter"
         disabled={disabled}
         className="w-full bg-transparent outline-none py-2 pr-2 font-body text-[color:var(--color-paper)] resize-none placeholder:text-[color:var(--color-neutral-400)] disabled:opacity-50"
       />

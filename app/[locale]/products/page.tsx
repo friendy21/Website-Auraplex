@@ -4,7 +4,7 @@ import { ProductsHero } from '@/components/sections/products-hero';
 import { ParallaxMarqueeBand } from '@/components/sections/parallax-marquee-band';
 import { FeaturedHighlights } from '@/components/sections/featured-highlights';
 import { ApplicationBrowse } from '@/components/sections/application-browse';
-import { buildMetadata, breadcrumbSchema } from '@/lib/seo';
+import { buildMetadata, breadcrumbSchema, SITE, localizedMeta, ogLocale } from '@/lib/seo';
 import {
   MACHINES,
   categoryCounts,
@@ -18,11 +18,12 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const meta = localizedMeta('products', locale);
   return buildMetadata({
-    title: 'Machines — Auraplex',
-    description:
-      'Browse the full Auraplex catalogue of labelling, packaging and custom automation machines — built in Selangor.',
+    title: meta.title,
+    description: meta.description,
     path: `/${locale}/products`,
+    locale: ogLocale(locale),
   });
 }
 
@@ -58,7 +59,7 @@ export default async function ProductsPage({
       '@type': 'ListItem',
       position: i + 1,
       name: m.name,
-      url: `https://auraplex.my/${locale}/products/${m.slug}`,
+      url: `${SITE}/${locale}/products/${m.slug}`,
     })),
   };
 
@@ -106,10 +107,10 @@ export default async function ProductsPage({
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             breadcrumbSchema([
-              { name: 'Home', url: `https://auraplex.my/${locale}` },
+              { name: 'Home', url: `${SITE}/${locale}` },
               {
                 name: 'Products',
-                url: `https://auraplex.my/${locale}/products`,
+                url: `${SITE}/${locale}/products`,
               },
             ]),
           ),
@@ -172,14 +173,14 @@ export default async function ProductsPage({
         sortItems={sortItems}
         initialCategory={category}
         initialSort={sort}
-        _locale={locale}
+        locale={locale}
         t={tDict}
         compareT={t.raw('compare') as Record<string, string>}
       />
 
       {/* ────── PARALLAX MARQUEE CLOSER BAND ────── */}
       <ParallaxMarqueeBand
-        image="/floor/workers.jpg"
+        image="/exhibitions/metaltech-2022.jpg"
         text="PRECISION · ENGINEERED · IN SELANGOR"
       />
     </>

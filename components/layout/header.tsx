@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import {
   AnimatePresence,
@@ -56,8 +57,17 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { scrollY } = useScroll();
+  const pathname = usePathname();
 
   useMotionValueEvent(scrollY, 'change', (y) => setScrolled(y > 40));
+
+  // Light-surface routes (e.g. the /2026 page opens on a paper background).
+  // The nav text/logo are paper-coloured, so over a transparent header at the
+  // top of a paper page they were invisible until the user scrolled 40px.
+  // Force the solid (ink) header backdrop on these routes so the nav is
+  // legible from first paint.
+  const lightSurface = /\/2026(\/|$)/.test(pathname ?? '');
+  const solid = scrolled || lightSurface;
 
   // Lock body scroll while the mobile menu is open so touch events don't
   // bleed through to the page underneath. Also closes the menu on Escape
@@ -94,7 +104,7 @@ export function Header() {
       transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
       className={cn(
         'fixed inset-x-0 top-0 z-50 transition-all duration-300',
-        scrolled
+        solid
           ? 'backdrop-blur-xl bg-[color:var(--color-ink)]/80 border-b border-[color:var(--color-signal)]/15'
           : 'bg-transparent',
       )}
@@ -117,7 +127,6 @@ export function Header() {
               alt=""
               fill
               sizes="32px"
-              priority
               className="object-contain object-left"
             />
           </motion.div>

@@ -7,7 +7,7 @@ import { AutoCarousel3D } from '@/components/sections/auto-carousel-3d';
 import { getMachinesWithCover } from '@/lib/catalog';
 import { Button } from '@/components/primitives/button';
 import { Magnetic } from '@/components/motion/magnetic';
-import { buildMetadata, breadcrumbSchema } from '@/lib/seo';
+import { buildMetadata, breadcrumbSchema, SITE, localizedMeta, ogLocale } from '@/lib/seo';
 import { whatsappLink } from '@/lib/utils';
 
 export async function generateMetadata({
@@ -16,11 +16,12 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const meta = localizedMeta('services', locale);
   return buildMetadata({
-    title: 'Services — Auraplex',
-    description:
-      'Installation, maintenance, training and custom automation — delivered by Auraplex engineers from Seri Kembangan.',
+    title: meta.title,
+    description: meta.description,
     path: `/${locale}/services`,
+    locale: ogLocale(locale),
   });
 }
 
@@ -62,8 +63,8 @@ export default async function ServicesPage({
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             breadcrumbSchema([
-              { name: 'Home', url: `https://auraplex.my/${locale}` },
-              { name: 'Services', url: `https://auraplex.my/${locale}/services` },
+              { name: 'Home', url: `${SITE}/${locale}` },
+              { name: 'Services', url: `${SITE}/${locale}/services` },
             ]),
           ),
         }}

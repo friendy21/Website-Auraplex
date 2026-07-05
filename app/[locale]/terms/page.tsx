@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { setRequestLocale } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
 import { Button } from '@/components/primitives/button';
-import { buildMetadata } from '@/lib/seo';
+import { buildMetadata, localizedMeta, ogLocale } from '@/lib/seo';
 
 const LAST_UPDATED = '23 June 2026';
 
@@ -12,11 +12,12 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const meta = localizedMeta('terms', locale);
   return buildMetadata({
-    title: 'Terms of Use — Auraplex',
-    description:
-      'The terms governing your use of auraplex.my and the information it provides about Auraplex SDN BHD machines and services.',
+    title: meta.title,
+    description: meta.description,
     path: `/${locale}/terms`,
+    locale: ogLocale(locale),
   });
 }
 
@@ -63,7 +64,7 @@ export default async function TermsPage({
         <Section title="1. About these terms">
           <p>
             These Terms of Use (&ldquo;Terms&rdquo;) govern your access to and
-            use of <strong>auraplex.my</strong> (the &ldquo;Site&rdquo;),
+            use of <strong>auraplex.com.my</strong> (the &ldquo;Site&rdquo;),
             operated by <strong>Auraplex SDN BHD</strong>
             (&ldquo;Auraplex&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;). By
             using the Site you agree to these Terms. If you don&apos;t agree,

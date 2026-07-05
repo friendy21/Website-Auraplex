@@ -94,7 +94,6 @@ export function PageLoader() {
                 alt=""
                 fill
                 sizes="40px"
-                priority
                 className="object-contain"
               />
             </motion.div>

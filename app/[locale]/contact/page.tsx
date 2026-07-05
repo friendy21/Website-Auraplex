@@ -2,7 +2,7 @@ import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { ContactForm } from '@/components/forms/contact-form';
 import { Reveal } from '@/components/motion/reveal';
 import { KineticReveal } from '@/components/motion/kinetic-reveal';
-import { buildMetadata } from '@/lib/seo';
+import { buildMetadata, SITE, localizedMeta, ogLocale } from '@/lib/seo';
 import { whatsappLink } from '@/lib/utils';
 
 // Contact details mirror the live auraplex.com.my / autolabellermalaysia.com:
@@ -32,11 +32,12 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const meta = localizedMeta('contact', locale);
   return buildMetadata({
-    title: 'Contact — Auraplex',
-    description:
-      'Talk to an Auraplex engineer. Quotes, factory tours, service requests, technical questions. Seri Kembangan, Selangor.',
+    title: meta.title,
+    description: meta.description,
     path: `/${locale}/contact`,
+    locale: ogLocale(locale),
   });
 }
 
@@ -61,10 +62,14 @@ export default async function ContactPage({
   const localBusinessSchema = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
+    // Shared @id so this resolves to the same entity as the Organization
+    // schema emitted in the root layout (LocalBusiness is an Organization
+    // subtype — search engines merge them into one knowledge-panel entity).
+    '@id': `${SITE}/#organization`,
     name: 'Auraplex SDN BHD',
     description:
       'Precision labelling and packaging machine manufacturer in Seri Kembangan, Selangor.',
-    url: 'https://auraplex.my',
+    url: SITE,
     telephone: '+60389407709',
     address: {
       '@type': 'PostalAddress',
@@ -110,12 +115,13 @@ export default async function ContactPage({
 
       <section className="mx-auto max-w-[1600px] px-6 lg:px-12 pt-40 pb-32 grid grid-cols-12 gap-12">
         <div className="col-span-12 md:col-span-5">
-          <Reveal variant="up">
+          <Reveal variant="up" immediate>
             <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6">
               — {t('eyebrow')}
             </div>
             <KineticReveal
               as="h1"
+              immediate
               className="font-display text-[clamp(2.5rem,6vw,5rem)] tracking-[-0.02em] leading-[0.95]"
             >
               {t('h1')}

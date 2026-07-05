@@ -11,6 +11,13 @@ type Props = {
   delay?: number;
   /** Optional className passed to the wrapping motion.div. */
   className?: string;
+  /**
+   * Above-the-fold mode. Renders visible in the server HTML with a CSS entrance
+   * (paints at first frame, before hydration) instead of the JS `useInView`
+   * path — so it never blocks LCP behind the motion bundle. Use for the first
+   * hero block on a page; leave off for scroll-into-view reveals.
+   */
+  immediate?: boolean;
 };
 
 /**
@@ -37,9 +44,21 @@ export function Reveal({
   variant = 'up',
   delay = 0,
   className,
+  immediate = false,
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '0px 0px -10% 0px' });
+
+  if (immediate) {
+    return (
+      <div
+        className={`reveal-immediate ${className ?? ''}`.trim()}
+        style={delay ? { animationDelay: `${delay / 1000}s` } : undefined}
+      >
+        {children}
+      </div>
+    );
+  }
 
   return (
     <motion.div

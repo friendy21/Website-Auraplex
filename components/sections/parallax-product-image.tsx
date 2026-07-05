@@ -10,6 +10,12 @@ type Props = {
   productId: string;
   /** sizes hint passed to next/image. */
   sizes?: string;
+  /**
+   * Eager-load this image (no lazy). Set on the first grid row so the LCP
+   * card image isn't lazy-loaded — Lighthouse flagged the first card as the
+   * /products LCP element while it was `loading="lazy"`.
+   */
+  priority?: boolean;
 };
 
 /**
@@ -29,6 +35,7 @@ export function ParallaxProductImage({
   alt,
   productId,
   sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw',
+  priority = false,
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -73,6 +80,7 @@ export function ParallaxProductImage({
         alt={alt}
         fill
         sizes={sizes}
+        priority={priority}
         className="object-contain p-4 transition-all duration-700 group-hover:scale-[1.08] [filter:brightness(0.85)] group-hover:[filter:brightness(1)]"
         style={style}
       />

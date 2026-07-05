@@ -3,11 +3,11 @@
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera, Html } from '@react-three/drei';
 import { EffectComposer, Bloom, ToneMapping } from '@react-three/postprocessing';
-import { Component, Suspense, useState, useMemo, type ReactNode } from 'react';
+import { Component, Suspense, useState, type ReactNode } from 'react';
+import Link from 'next/link';
 import { MachineModel } from './machine-model';
 import { FactoryEnvironment } from './factory-environment';
 import { Button } from '@/components/primitives/button';
-import { formatRM } from '@/lib/utils';
 import { usePerfTier } from '@/lib/hooks';
 
 /**
@@ -46,34 +46,61 @@ const DEFAULTS: Config = {
   lineIntegration: false,
 };
 
-const BASE_PRICE_MONTHLY = 1800;
-const ADD_COST = { vision: 400, rejectStation: 300, lineIntegration: 500 };
-
 export function ProductConfigurator({
   modelUrl,
   productName,
   hasModel,
+  slug,
+  locale,
 }: {
   modelUrl: string;
   productName: string;
   hasModel: boolean;
+  slug: string;
+  locale: string;
 }) {
   const [config, setConfig] = useState<Config>(DEFAULTS);
+  const [copied, setCopied] = useState(false);
   const tier = usePerfTier();
   // Bloom + tone-mapping post-processing is expensive; skip it on phone-class
   // / low-power devices and when the user prefers reduced motion.
   const heavyEffects = tier === 'full';
 
-  const monthlyPrice = useMemo(() => {
-    let p = BASE_PRICE_MONTHLY;
-    if (config.throughput > 120) p += (config.throughput - 120) * 8;
-    if (config.vision) p += ADD_COST.vision;
-    if (config.rejectStation) p += ADD_COST.rejectStation;
-    if (config.lineIntegration) p += ADD_COST.lineIntegration;
-    return Math.round(p);
-  }, [config]);
-
   const update = <K extends keyof Config>(k: K, v: Config[K]) => setConfig((c) => ({ ...c, [k]: v }));
+
+  // A one-line, human-readable summary of the requirements the buyer entered.
+  // This is a *requirements request*, not a price estimate — Auraplex quotes
+  // every line individually. The summary rides along to the product page's
+  // quote form (?spec=…) so an engineer sees the line spec with the enquiry.
+  const specSummary = [
+    `${config.containerShape} container`,
+    `${config.containerSize}mm`,
+    `${config.throughput} units/min target`,
+    config.vision && 'vision system',
+    config.rejectStation && 'reject station',
+    config.lineIntegration && 'line integration',
+  ]
+    .filter(Boolean)
+    .join(' · ');
+
+  const quoteHref = `/${locale}/products/${slug}?spec=${encodeURIComponent(
+    specSummary,
+  )}#quote`;
+
+  const shareConfig = async () => {
+    if (typeof window === 'undefined') return;
+    const url = `${window.location.origin}${window.location.pathname}?config=${encodeURIComponent(
+      JSON.stringify(config),
+    )}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard blocked (insecure context / permissions) — no-op; the button
+      // simply doesn't confirm rather than throwing.
+    }
+  };
 
   return (
     <div className="grid grid-cols-12 gap-0 h-[100dvh] bg-[color:var(--color-ink)]">
@@ -143,7 +170,7 @@ export function ProductConfigurator({
       </main>
 
       <aside className="col-span-12 md:col-span-3 border-l border-[color:var(--color-steel)]/30 p-6 overflow-y-auto flex flex-col">
-        <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-2">— Spec sheet</div>
+        <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-2">— Your line spec</div>
         <div className="space-y-3 font-mono text-sm py-4">
           <Spec k="Shape" v={config.containerShape} />
           <Spec k="Diameter" v={`${config.containerSize}mm`} />
@@ -154,12 +181,20 @@ export function ProductConfigurator({
         </div>
 
         <div className="mt-auto pt-8 border-t border-[color:var(--color-steel)]/30">
-          <div className="font-mono text-xs uppercase tracking-widest text-[color:var(--color-steel)] mb-1">Indicative</div>
-          <div className="font-display text-4xl text-[color:var(--color-signal)] mb-1">{formatRM(monthlyPrice)}</div>
-          <div className="font-mono text-xs text-[color:var(--color-steel)] mb-6">Quote on request · sales.auraplex@gmail.com</div>
+          <div className="font-mono text-xs uppercase tracking-widest text-[color:var(--color-steel)] mb-1">Pricing</div>
+          <div className="font-display text-2xl text-[color:var(--color-paper)] mb-1 leading-tight">
+            Quoted per line
+          </div>
+          <div className="font-mono text-xs text-[color:var(--color-steel)] mb-6">
+            Send your spec — an engineer prices it, typically within 1 business day.
+          </div>
 
-          <Button className="w-full mb-3">Request quote</Button>
-          <Button variant="ghost" className="w-full">Share configuration</Button>
+          <Button asChild className="w-full mb-3">
+            <Link href={quoteHref}>Send spec &amp; get a quote</Link>
+          </Button>
+          <Button variant="ghost" className="w-full" onClick={shareConfig}>
+            {copied ? 'Link copied' : 'Copy shareable link'}
+          </Button>
         </div>
       </aside>
     </div>
@@ -179,8 +214,8 @@ function ModelPlaceholder({ productName }: { productName: string }) {
         3D preview coming soon
       </div>
       <p className="max-w-xs font-mono text-xs text-[color:var(--color-steel)] leading-relaxed">
-        The interactive model for the {productName} is in production. Configure
-        your spec on the left — the indicative quote updates live.
+        The interactive model for the {productName} is in production. Describe
+        your line on the left — send the spec and an engineer will quote it.
       </p>
     </div>
   );

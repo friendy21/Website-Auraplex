@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
-import { buildMetadata } from '@/lib/seo';
+import { buildMetadata, localizedMeta, ogLocale } from '@/lib/seo';
 import {
   MACHINES,
   getFeaturedMachines,
@@ -29,11 +29,12 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const meta = localizedMeta('yearReview', locale);
   return buildMetadata({
-    title: '2026 on the floor — Auraplex',
-    description:
-      'A year in machines. The Auraplex 2026 year in review — 30 machines, 11 industries, 142 photographs from the floor in Selangor.',
+    title: meta.title,
+    description: meta.description,
     path: `/${locale}/2026`,
+    locale: ogLocale(locale),
   });
 }
 
@@ -123,14 +124,14 @@ export default async function YearInReviewPage({
 
       {/* ────── HERO ────── */}
       <section className="mx-auto max-w-[1600px] px-6 lg:px-12 pt-40 pb-24">
-        <Reveal variant="up">
+        <Reveal variant="up" immediate>
           <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-12">
             <span className="inline-block w-8 border-t border-[color:var(--color-signal)]" />
             {t('eyebrow')}
           </div>
         </Reveal>
 
-        <Reveal variant="up" delay={100}>
+        <Reveal variant="up" delay={100} immediate>
           <h1 className="font-display text-[clamp(3rem,12vw,12rem)] tracking-[-0.04em] leading-[0.88] max-w-[1400px]">
             {t('h1Line1')}
             <br />
@@ -472,7 +473,7 @@ export default async function YearInReviewPage({
         {timeline.map((q, i) => (
           <div
             key={i}
-            className="relative w-screen h-[100dvh] flex-shrink-0 flex flex-col justify-center px-6 lg:px-24"
+            className="relative w-full md:w-screen min-h-[80vh] md:h-[100dvh] flex-shrink-0 flex flex-col justify-center px-6 py-20 md:py-0 lg:px-24 border-b border-[color:var(--color-neutral-800)] md:border-b-0"
           >
             {/* Background watermark quarter number */}
             <div
@@ -495,7 +496,7 @@ export default async function YearInReviewPage({
               <h3 className="font-display text-[clamp(1.4rem,3.2vw,2.5rem)] tracking-[-0.02em] leading-[1.1] text-[color:var(--color-paper)] mb-6">
                 {q.h}
               </h3>
-              <p className="text-lg md:text-xl text-[color:var(--color-neutral-600)] leading-relaxed max-w-xl">
+              <p className="text-lg md:text-xl text-[color:var(--color-neutral-300)] leading-relaxed max-w-xl">
                 {q.note}
               </p>
 
@@ -512,7 +513,7 @@ export default async function YearInReviewPage({
                   ))}
                 </div>
                 <div className="h-px flex-1 bg-gradient-to-r from-[color:var(--color-neutral-700)] to-transparent" />
-                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-600)]">
+                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-400)]">
                   0{i + 1} / 04
                 </span>
               </div>

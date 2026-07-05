@@ -19,8 +19,11 @@ export async function generateMetadata({
   return buildMetadata({
     title: `Configure ${p?.name ?? 'machine'} — Auraplex`,
     description:
-      'Configure your machine in 3D. Adjust container, throughput, add-ons. Get a quote with your spec.',
+      'Describe your line — container, throughput, add-ons — and send the spec to an Auraplex engineer for a quote.',
     path: `/${locale}/products/${slug}/configurator`,
+    // Requirements-capture tool, not indexable content: noindex until a real
+    // 3D model + verified capability envelopes exist for the machine.
+    noindex: !hasMachineModel(slug),
   });
 }
 
@@ -46,6 +49,8 @@ export default async function ConfiguratorPage({
       modelUrl={modelUrl}
       productName={p.name}
       hasModel={hasModel}
+      slug={slug}
+      locale={locale}
     />
   );
 }

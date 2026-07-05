@@ -22,7 +22,6 @@ export const MACHINES_RAW: RawMachine[] = [
     "image": "/products/Continuous_Band_Sealing_Machine_6.png",
     "gallery": [
       "/products/Continuous_Band_Sealing_Machine_6.png",
-      "/products/Continuous_Band_Sealing_Machine_0.png",
       "/products/Continuous_Band_Sealing_Machine_3.webp",
       "/products/Continuous_Band_Sealing_Machine_2.webp"
     ]
@@ -36,7 +35,6 @@ export const MACHINES_RAW: RawMachine[] = [
     "image": "/products/Flexy_Applicator_11.png",
     "gallery": [
       "/products/Flexy_Applicator_11.png",
-      "/products/Flexy_Applicator_0.png",
       "/products/Flexy_Applicator_12.webp",
       "/products/Flexy_Applicator_2.webp",
       "/products/Flexy_Applicator_3.webp",
@@ -56,7 +54,6 @@ export const MACHINES_RAW: RawMachine[] = [
     "image": "/products/Semi_Auto_Wrap_Around_Labelling_Machine_9.png",
     "gallery": [
       "/products/Semi_Auto_Wrap_Around_Labelling_Machine_9.png",
-      "/products/Semi_Auto_Wrap_Around_Labelling_Machine_0.png",
       "/products/Semi_Auto_Wrap_Around_Labelling_Machine_10.webp",
       "/products/Semi_Auto_Wrap_Around_Labelling_Machine_11.webp",
       "/products/Semi_Auto_Wrap_Around_Labelling_Machine_2.webp",
@@ -77,7 +74,6 @@ export const MACHINES_RAW: RawMachine[] = [
     "image": "/products/Two_Side_Labelling_Machine_8.png",
     "gallery": [
       "/products/Two_Side_Labelling_Machine_8.png",
-      "/products/Two_Side_Labelling_Machine_0.png",
       "/products/Two_Side_Labelling_Machine_2.webp",
       "/products/Two_Side_Labelling_Machine_3.webp",
       "/products/Two_Side_Labelling_Machine_9.webp",
@@ -95,7 +91,6 @@ export const MACHINES_RAW: RawMachine[] = [
     "gallery": [
       "/products/Custom_Top_Labelling_Machine_with_Checking_System_8.png",
       "/products/Custom_Top_Labelling_Machine_with_Checking_System_2.webp",
-      "/products/Custom_Top_Labelling_Machine_with_Checking_System_0.png",
       "/products/Custom_Top_Labelling_Machine_with_Checking_System_3.webp",
       "/products/Custom_Top_Labelling_Machine_with_Checking_System_9.webp",
       "/products/Custom_Top_Labelling_Machine_with_Checking_System_5.webp",
@@ -114,7 +109,6 @@ export const MACHINES_RAW: RawMachine[] = [
     "image": "/products/Two_in_One_Wrap_Around_Side_Labelling_Machine_8.png",
     "gallery": [
       "/products/Two_in_One_Wrap_Around_Side_Labelling_Machine_8.png",
-      "/products/Two_in_One_Wrap_Around_Side_Labelling_Machine_0.png",
       "/products/Two_in_One_Wrap_Around_Side_Labelling_Machine_2.webp",
       "/products/Two_in_One_Wrap_Around_Side_Labelling_Machine_3.webp",
       "/products/Two_in_One_Wrap_Around_Side_Labelling_Machine_10.webp",
@@ -134,7 +128,6 @@ export const MACHINES_RAW: RawMachine[] = [
     "image": "/products/Print_Apply_Top_Labelling_Machine_10.png",
     "gallery": [
       "/products/Print_Apply_Top_Labelling_Machine_10.png",
-      "/products/Print_Apply_Top_Labelling_Machine_0.png",
       "/products/Print_Apply_Top_Labelling_Machine_11.webp",
       "/products/Print_Apply_Top_Labelling_Machine_4.webp",
       "/products/Print_Apply_Top_Labelling_Machine_14.webp",
@@ -342,9 +335,8 @@ export const MACHINES_RAW: RawMachine[] = [
     "name": "Two Side Labelling Machine With Corner Press",
     "rawName": "Two_Side_Labelling_Machine_with_Corner_Press",
     "category": "labelling",
-    "image": "/products/Two_Side_Labelling_Machine_with_Corner_Press_0.png",
+    "image": "/products/Two_Side_Labelling_Machine_with_Corner_Press_3.webp",
     "gallery": [
-      "/products/Two_Side_Labelling_Machine_with_Corner_Press_0.png",
       "/products/Two_Side_Labelling_Machine_with_Corner_Press_3.webp",
       "/products/Two_Side_Labelling_Machine_with_Corner_Press_12.webp",
       "/products/Two_Side_Labelling_Machine_with_Corner_Press_2.webp",
@@ -363,9 +355,8 @@ export const MACHINES_RAW: RawMachine[] = [
     "name": "Customized Top Labelling Machine",
     "rawName": "Customized_Top_Labelling_Machine",
     "category": "labelling",
-    "image": "/products/Customized_Top_Labelling_Machine_0.png",
+    "image": "/products/Customized_Top_Labelling_Machine_13.webp",
     "gallery": [
-      "/products/Customized_Top_Labelling_Machine_0.png",
       "/products/Customized_Top_Labelling_Machine_13.webp",
       "/products/Customized_Top_Labelling_Machine_14.webp",
       "/products/Customized_Top_Labelling_Machine_16.webp",
@@ -387,9 +378,8 @@ export const MACHINES_RAW: RawMachine[] = [
     "name": "Semi Auto Round Bottle Labelling Machine",
     "rawName": "Semi_Auto_Round_Bottle_Labelling_Machine",
     "category": "labelling",
-    "image": "/products/Semi_Auto_Round_Bottle_Labelling_Machine_0.png",
+    "image": "/products/Semi_Auto_Round_Bottle_Labelling_Machine_7.webp",
     "gallery": [
-      "/products/Semi_Auto_Round_Bottle_Labelling_Machine_0.png",
       "/products/Semi_Auto_Round_Bottle_Labelling_Machine_7.webp",
       "/products/Semi_Auto_Round_Bottle_Labelling_Machine_5.webp",
       "/products/Semi_Auto_Round_Bottle_Labelling_Machine_6.webp",
@@ -403,9 +393,8 @@ export const MACHINES_RAW: RawMachine[] = [
     "name": "Standard Top Labelling Machine",
     "rawName": "Standard_Top_Labelling_Machine",
     "category": "labelling",
-    "image": "/products/Standard_Top_Labelling_Machine_0.png",
+    "image": "/products/Standard_Top_Labelling_Machine_13.webp",
     "gallery": [
-      "/products/Standard_Top_Labelling_Machine_0.png",
       "/products/Standard_Top_Labelling_Machine_13.webp",
       "/products/Standard_Top_Labelling_Machine_16.webp",
       "/products/Standard_Top_Labelling_Machine_9.png",

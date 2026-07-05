@@ -19,11 +19,19 @@ export function KineticReveal({
   className,
   as: Tag = 'h2',
   delay = 0,
+  immediate = false,
 }: {
   children: React.ReactNode;
   className?: string;
   as?: 'h1' | 'h2' | 'h3';
   delay?: number;
+  /**
+   * Above-the-fold mode. Renders the heading visible in the server HTML with a
+   * CSS entrance (paints before hydration) rather than the per-word JS wipe —
+   * so a hero H1 never blocks LCP behind the motion bundle. Trades the per-word
+   * kinetic wipe for a single fade-up on that heading.
+   */
+  immediate?: boolean;
 }) {
   const ref = useRef<HTMLHeadingElement>(null);
   const inView = useInView(ref, { once: true, margin: '0px 0px -10% 0px' });
@@ -32,6 +40,17 @@ export function KineticReveal({
   // silently dropping them.
   const text = typeof children === 'string' ? children : null;
   const words = text ? text.split(/(\s+)/) : [];
+
+  if (immediate) {
+    return (
+      <Tag
+        className={`reveal-immediate ${className ?? ''}`.trim()}
+        style={delay ? { animationDelay: `${delay}s` } : undefined}
+      >
+        {children}
+      </Tag>
+    );
+  }
 
   if (!text) {
     return <Tag className={className}>{children}</Tag>;

@@ -72,13 +72,24 @@ export function MachineAccordion({ items }: Props) {
   }, []);
 
   useEffect(() => {
-    if (!inView || isNarrow) return;
+    const sec = sectionRef.current;
+    if (!sec || !inView || isNarrow) return;
+    // Scope arrow-key stepping to the section element (fires only when focus
+    // is INSIDE the accordion). The previous window-level listener stole
+    // ArrowLeft/Right from every keyboard/screen-reader user on the page
+    // whenever the section was merely 30% in view.
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') go(-1);
-      if (e.key === 'ArrowRight') go(1);
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        go(-1);
+      }
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        go(1);
+      }
     };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    sec.addEventListener('keydown', onKey);
+    return () => sec.removeEventListener('keydown', onKey);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView, isNarrow, items.length]);
 

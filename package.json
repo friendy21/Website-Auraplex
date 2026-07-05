@@ -15,7 +15,7 @@
     "seed": "tsx scripts/seed.ts",
     "email": "email dev --dir ./emails",
     "pagefind": "pagefind --site .next/server/app --output-path public/pagefind",
-    "postbuild": "pnpm pagefind"
+    "postbuild": "npm run pagefind"
   },
   "dependencies": {
     "next": "16.2.7",

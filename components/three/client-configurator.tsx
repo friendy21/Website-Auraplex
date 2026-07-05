@@ -25,6 +25,8 @@ export function ClientConfigurator(props: {
   modelUrl: string;
   productName: string;
   hasModel: boolean;
+  slug: string;
+  locale: string;
 }) {
   return <Configurator {...props} />;
 }

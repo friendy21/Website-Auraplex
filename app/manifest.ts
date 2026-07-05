@@ -5,13 +5,16 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'Auraplex',
     short_name: 'Auraplex',
     description: 'Precision labelling and packaging machines, engineered in Malaysia.',
-    start_url: '/',
+    // Locale middleware redirects '/' → '/en'; point install directly there.
+    start_url: '/en',
     display: 'standalone',
     background_color: '#181b20',
     theme_color: '#181b20',
-    // Icons array is intentionally empty until proper PWA icons (192/512) are
-    // exported. Browsers fall back to the favicon, which Next ships by default.
-    // Listing icons that don't exist would cause an install-time 404.
-    icons: [],
+    // Served by app/icon.png (Next also emits the <link rel="icon"> favicon
+    // from it). 'any' avoids install-time 404s while a dedicated square
+    // 192/512 export is pending.
+    icons: [
+      { src: '/icon.png', sizes: 'any', type: 'image/png' },
+    ],
   };
 }

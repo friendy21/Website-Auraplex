@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { setRequestLocale } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
 import { Button } from '@/components/primitives/button';
-import { buildMetadata } from '@/lib/seo';
+import { buildMetadata, localizedMeta, ogLocale } from '@/lib/seo';
 
 const LAST_UPDATED = '23 June 2026';
 
@@ -12,11 +12,12 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const meta = localizedMeta('privacy', locale);
   return buildMetadata({
-    title: 'Privacy Policy — Auraplex',
-    description:
-      'How Auraplex SDN BHD collects, uses and protects your personal data under Malaysia’s Personal Data Protection Act 2010 (PDPA).',
+    title: meta.title,
+    description: meta.description,
     path: `/${locale}/privacy`,
+    locale: ogLocale(locale),
   });
 }
 
@@ -62,7 +63,7 @@ export default async function PrivacyPage({
       <Reveal variant="up" delay={150} className="space-y-10">
         <Section title="1. Who we are">
           <p>
-            This site, <strong>auraplex.my</strong>, is operated by{' '}
+            This site, <strong>auraplex.com.my</strong>, is operated by{' '}
             <strong>Auraplex SDN BHD</strong> (&ldquo;Auraplex&rdquo;,
             &ldquo;we&rdquo;, &ldquo;us&rdquo;), a company registered in
             Malaysia, at No. 5, Jalan BS9/7B, Taman Bukit Serdang, Seksyen 9,
