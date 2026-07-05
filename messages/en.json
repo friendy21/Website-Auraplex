@@ -59,6 +59,17 @@
       "packaging": "Packaging Machines",
       "automation": "3D Printers & Custom Automation"
     },
+    "whatWeMake": {
+      "eyebrow": "What we make",
+      "headingLine1": "Three families,",
+      "headingLine2": "one engineering floor.",
+      "viewLabel": "View {n} machines"
+    },
+    "familySummaries": {
+      "labelling": "Self-adhesive applicators for every container — top, side, wrap-around, print-and-apply, and custom rigs.",
+      "packaging": "Continuous-band sealing built for Malaysian production lines.",
+      "automation": "AR-series 3D printing and bespoke automation for prototyping and short runs."
+    },
     "machineFinderCta": {
       "title": "Not sure which machine?",
       "body": "Describe your product and your line. We'll recommend the right machine, configuration, and lead time.",
@@ -153,7 +164,14 @@
       "closerCta": "See them all"
     },
     "testimonials": {
-      "eyebrow": "On the record · recognition"
+      "eyebrow": "On the record · recognition",
+      "items": [
+        { "quote": "Recognised as a best company for innovation.", "author": "MIMF 2024 · MITEC, Kuala Lumpur" },
+        { "quote": "Designed, built and tested in Seri Kembangan.", "author": "Auraplex SDN BHD" },
+        { "quote": "Labelling, packaging and automation — thirty machines.", "author": "The Auraplex catalogue" },
+        { "quote": "On the floor at MIMF and Metaltech, MITEC.", "author": "Exhibitions · 2022–2024" },
+        { "quote": "Local engineers, parts you can drive to, service you can call.", "author": "Built in Malaysia" }
+      ]
     },
     "zoomA": {
       "eyebrow": "Precision · engineered in Selangor",

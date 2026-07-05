@@ -59,6 +59,17 @@
       "packaging": "包装机",
       "automation": "3D 打印机与定制自动化"
     },
+    "whatWeMake": {
+      "eyebrow": "我们的产品",
+      "headingLine1": "三大系列,",
+      "headingLine2": "一个工程车间。",
+      "viewLabel": "查看 {n} 台机器"
+    },
+    "familySummaries": {
+      "labelling": "适用于各种容器的自粘贴标机 — 顶部、侧面、环绕、打印贴标及定制方案。",
+      "packaging": "专为马来西亚生产线打造的连续封口机。",
+      "automation": "AR 系列 3D 打印与定制自动化,适合原型制作与小批量生产。"
+    },
     "machineFinderCta": {
       "title": "不确定哪台机器?",
       "body": "描述您的产品和生产线。我们将推荐合适的机型、配置和交付周期。",
@@ -153,7 +164,14 @@
       "closerCta": "查看全部"
     },
     "testimonials": {
-      "eyebrow": "实绩与认可"
+      "eyebrow": "实绩与认可",
+      "items": [
+        { "quote": "荣获最佳创新企业。", "author": "MIMF 2024 · 吉隆坡 MITEC" },
+        { "quote": "在史里肯邦安设计、制造与测试。", "author": "Auraplex SDN BHD" },
+        { "quote": "贴标、包装与自动化 — 三十台机器。", "author": "Auraplex 产品目录" },
+        { "quote": "亮相 MIMF 与 Metaltech,MITEC。", "author": "展会 · 2022–2024" },
+        { "quote": "本地工程师、触手可及的零件、随叫随到的服务。", "author": "马来西亚制造" }
+      ]
     },
     "zoomA": {
       "eyebrow": "精密 · 雪兰莪制造",

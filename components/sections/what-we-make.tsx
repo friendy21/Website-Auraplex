@@ -9,7 +9,13 @@ export type Family = {
   image: string | null;
 };
 
-type Props = { families: Family[]; viewLabel: string };
+type Props = {
+  families: Family[];
+  viewLabel: string;
+  eyebrow: string;
+  headingLine1: string;
+  headingLine2: string;
+};
 
 /**
  * Per-family accent — one restrained tint each, matching the accordion's
@@ -31,18 +37,18 @@ const accentOf = (k: string) => ACCENT[k] ?? ACCENT.labelling;
  * automation) as in-system dark cards that link into the filtered catalogue.
  * Server component, zero JS; the lift + accent glow are pure CSS hover.
  */
-export function WhatWeMake({ families, viewLabel }: Props) {
+export function WhatWeMake({ families, viewLabel, eyebrow, headingLine1, headingLine2 }: Props) {
   return (
     <section className="border-y border-[color:var(--color-neutral-700)] bg-[color:var(--color-ink)] py-24 lg:py-32">
       <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
         <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-5 flex items-center gap-3">
           <span className="h-px w-12 bg-[color:var(--color-signal)]" />
-          What we make
+          {eyebrow}
         </div>
         <h2 className="font-display text-[clamp(2rem,5vw,4rem)] tracking-[-0.02em] leading-[1] max-w-3xl">
-          Three families,
+          {headingLine1}
           <br />
-          <span className="text-[color:var(--color-neutral-400)]">one engineering floor.</span>
+          <span className="text-[color:var(--color-neutral-400)]">{headingLine2}</span>
         </h2>
 
         <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">

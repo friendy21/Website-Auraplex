@@ -1,4 +1,4 @@
-import { setRequestLocale } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
 import {
   categoryCounts,
   categoryLabel,
@@ -19,15 +19,6 @@ import { MachineHyperscroll } from '@/components/sections/machine-hyperscroll';
 import { MachineAccordion } from '@/components/sections/machine-accordion';
 import { OutlineMarquee } from '@/components/sections/outline-marquee';
 
-const FAMILY_SUMMARY: Record<Category, string> = {
-  labelling:
-    'Self-adhesive applicators for every container — top, side, wrap-around, print-and-apply, and custom rigs.',
-  packaging:
-    'Continuous-band sealing built for Malaysian production lines.',
-  automation:
-    'AR-series 3D printing and bespoke automation for prototyping and short runs.',
-};
-
 export default async function Home({
   params,
 }: {
@@ -35,6 +26,7 @@ export default async function Home({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const t = await getTranslations('home');
 
   const counts = categoryCounts();
   const repImage = (cat: Category) =>
@@ -62,7 +54,7 @@ export default async function Home({
       key,
       label: categoryLabel(key),
       count: counts[key],
-      summary: FAMILY_SUMMARY[key],
+      summary: t(`familySummaries.${key}`),
       image: repImage(key),
     }),
   );
@@ -98,7 +90,13 @@ export default async function Home({
           since={2021}
           recognition="MIMF '24"
         />
-        <WhatWeMake families={families} viewLabel="View {n} machines" />
+        <WhatWeMake
+          families={families}
+          viewLabel={t('whatWeMake.viewLabel')}
+          eyebrow={t('whatWeMake.eyebrow')}
+          headingLine1={t('whatWeMake.headingLine1')}
+          headingLine2={t('whatWeMake.headingLine2')}
+        />
 
         {/* THE catalogue moment — a scroll-driven 3D flythrough of the real
             machines (Hyper Scroll). Every card links into the catalogue. */}

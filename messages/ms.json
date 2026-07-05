@@ -59,6 +59,17 @@
       "packaging": "Mesin Pembungkus",
       "automation": "Pencetak 3D & Automasi Khusus"
     },
+    "whatWeMake": {
+      "eyebrow": "Apa yang kami buat",
+      "headingLine1": "Tiga keluarga,",
+      "headingLine2": "satu lantai kejuruteraan.",
+      "viewLabel": "Lihat {n} mesin"
+    },
+    "familySummaries": {
+      "labelling": "Pengaplikasi pelekat sendiri untuk setiap bekas — atas, sisi, balut keliling, cetak-dan-tampal, dan sistem tersuai.",
+      "packaging": "Pengedap jalur berterusan yang dibina untuk barisan pengeluaran Malaysia.",
+      "automation": "Pencetakan 3D siri AR dan automasi tersuai untuk prototaip dan pengeluaran kecil."
+    },
     "machineFinderCta": {
       "title": "Tidak pasti mesin yang sesuai?",
       "body": "Terangkan produk dan barisan anda. Kami akan cadangkan mesin yang tepat, konfigurasi, dan tempoh penghantaran.",
@@ -153,7 +164,14 @@
       "closerCta": "Lihat semua"
     },
     "testimonials": {
-      "eyebrow": "Rekod rasmi · pengiktirafan"
+      "eyebrow": "Rekod rasmi · pengiktirafan",
+      "items": [
+        { "quote": "Diiktiraf sebagai syarikat terbaik untuk inovasi.", "author": "MIMF 2024 · MITEC, Kuala Lumpur" },
+        { "quote": "Direka, dibina dan diuji di Seri Kembangan.", "author": "Auraplex SDN BHD" },
+        { "quote": "Pelabelan, pembungkusan dan automasi — tiga puluh mesin.", "author": "Katalog Auraplex" },
+        { "quote": "Hadir di MIMF dan Metaltech, MITEC.", "author": "Pameran · 2022–2024" },
+        { "quote": "Jurutera tempatan, alat ganti yang boleh dicapai, servis yang boleh dihubungi.", "author": "Dibina di Malaysia" }
+      ]
     },
     "zoomA": {
       "eyebrow": "Presisi · dibina di Selangor",

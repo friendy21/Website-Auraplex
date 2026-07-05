@@ -5,30 +5,9 @@ import { useTranslations } from 'next-intl';
 
 // Real, verifiable recognition + positioning — sourced from the live site
 // (auraplex.com.my) and the committed catalogue. No fabricated customer
-// quotes; every line below is true and on the record. Keep 4+ items so the
-// two-row marquee still loops cleanly if one is removed.
-const TESTIMONIALS = [
-  {
-    quote: 'Recognised as a best company for innovation.',
-    author: 'MIMF 2024 · MITEC, Kuala Lumpur',
-  },
-  {
-    quote: 'Designed, built and tested in Seri Kembangan.',
-    author: 'Auraplex SDN BHD',
-  },
-  {
-    quote: 'Labelling, packaging and automation — thirty machines.',
-    author: 'The Auraplex catalogue',
-  },
-  {
-    quote: 'On the floor at MIMF and Metaltech, MITEC.',
-    author: 'Exhibitions · 2022–2024',
-  },
-  {
-    quote: 'Local engineers, parts you can drive to, service you can call.',
-    author: 'Built in Malaysia',
-  },
-];
+// quotes; every line is true and on the record. Content lives in
+// messages/*.json → home.testimonials.items so it translates with the locale.
+type Testimonial = { quote: string; author: string };
 
 /**
  * Two-row marquee, opposite directions. Row 1 carries the quotes in display
@@ -46,6 +25,7 @@ const TESTIMONIALS = [
  */
 export function TestimonialMarquee() {
   const t = useTranslations('home.testimonials');
+  const TESTIMONIALS = t.raw('items') as Testimonial[];
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const doubled = [...TESTIMONIALS, ...TESTIMONIALS];
 
