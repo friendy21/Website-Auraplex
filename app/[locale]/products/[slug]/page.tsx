@@ -20,9 +20,9 @@ import {
   MACHINES,
   getMachine,
   getMachinesByCategory,
-  categoryLabel,
   machineTags,
 } from '@/lib/catalog';
+import { localizeMachine, localizedCategoryLabel } from '@/lib/catalog-i18n';
 import { hasMachineModel } from '@/lib/models';
 
 export async function generateStaticParams() {
@@ -35,8 +35,9 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
-  const p = getMachine(slug);
-  if (!p) return {};
+  const raw = getMachine(slug);
+  if (!raw) return {};
+  const p = localizeMachine(raw, locale);
   return buildMetadata({
     title: `${p.name} — Auraplex`,
     description: p.summary,
@@ -54,14 +55,16 @@ export default async function ProductPage({
   setRequestLocale(locale);
   const td = await getTranslations('products.detail');
 
-  const p = getMachine(slug);
-  if (!p) notFound();
+  const raw = getMachine(slug);
+  if (!raw) notFound();
+  const p = localizeMachine(raw, locale);
 
   // Siblings in the same family — photographed first — for the compare rail.
   const related = getMachinesByCategory(p.category)
     .filter((m) => m.slug !== p.slug)
     .sort((a, b) => Number(Boolean(b.image)) - Number(Boolean(a.image)))
     .slice(0, 4)
+    .map((m) => localizeMachine(m, locale))
     .map((m) => ({ slug: m.slug, name: m.name, image: m.image }));
 
   // Honest, name-derived application facets (Top / Wrap-Around / Print & Apply
@@ -120,7 +123,7 @@ export default async function ProductPage({
                 {td('noPhotoEyebrow')}
               </div>
               <p className="max-w-sm text-sm text-[color:var(--color-steel-soft)] leading-relaxed">
-                {td('noPhotoBody', { family: categoryLabel(p.category).toLowerCase() })}
+                {td('noPhotoBody', { family: localizedCategoryLabel(p.category, locale).toLowerCase() })}
               </p>
             </div>
           )}
@@ -128,7 +131,7 @@ export default async function ProductPage({
 
         <div className="col-span-12 lg:col-span-5 lg:pl-4 flex flex-col">
           <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-4">
-            — {categoryLabel(p.category)}
+            — {localizedCategoryLabel(p.category, locale)}
             {p.speed != null && <> · {p.speed} {td('categoryEyebrowSpeedSuffix')}</>}
           </div>
 
@@ -159,7 +162,7 @@ export default async function ProductPage({
             </div>
           ) : (
             <MachineQuickSpec
-              family={categoryLabel(p.category)}
+              family={localizedCategoryLabel(p.category, locale)}
               photos={p.gallery.length}
               hasModel={hasMachineModel(slug)}
             />
@@ -235,7 +238,7 @@ export default async function ProductPage({
       )}
 
       <RelatedMachines
-        family={categoryLabel(p.category)}
+        family={localizedCategoryLabel(p.category, locale)}
         familyKey={p.category}
         items={related}
       />

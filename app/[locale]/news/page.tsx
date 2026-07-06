@@ -5,6 +5,7 @@ import { Reveal } from '@/components/motion/reveal';
 import { Button } from '@/components/primitives/button';
 import { buildMetadata, localizedMeta, ogLocale } from '@/lib/seo';
 import { getNewsByDate } from '@/lib/news';
+import { localizeNewsPosts, localizedNewsCategory } from '@/lib/news-i18n';
 
 export async function generateMetadata({
   params,
@@ -92,7 +93,7 @@ export default async function NewsPage({
               Sorted newest first. */}
       <section className="mx-auto max-w-[1600px] px-6 lg:px-12 py-24">
         <ul className="divide-y divide-[color:var(--color-neutral-700)]">
-          {getNewsByDate().map((post, i) => (
+          {localizeNewsPosts(getNewsByDate(), locale).map((post, i) => (
             <Reveal key={post.slug} variant="up" delay={i * 60}>
               <li>
                 <Link
@@ -102,7 +103,7 @@ export default async function NewsPage({
                   <div className="col-span-12 md:col-span-3 flex md:flex-col gap-4 md:gap-2 items-baseline">
                     <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] inline-flex items-center gap-2">
                       <span className="h-1 w-1 bg-[color:var(--color-signal)]" />
-                      {post.category}
+                      {localizedNewsCategory(post.category, locale)}
                     </span>
                     <time
                       dateTime={post.date}

@@ -11,6 +11,7 @@ import {
   getFeaturedMachines,
   type Category,
 } from '@/lib/catalog';
+import { localizeMachine, localizeMachines } from '@/lib/catalog-i18n';
 
 export async function generateMetadata({
   params,
@@ -43,8 +44,13 @@ export default async function ProductsPage({
 
   const counts = categoryCounts();
 
+  // Localize the display fields (name/summary/specs) for the active locale;
+  // slugs/URLs are untouched. All render surfaces below use these.
+  const localizedAll = localizeMachines(MACHINES, locale);
+
   // Hero machine for the floating visual — first featured machine with a cover.
-  const heroMachine = getFeaturedMachines()[0] ?? null;
+  const heroRaw = getFeaturedMachines()[0] ?? null;
+  const heroMachine = heroRaw ? localizeMachine(heroRaw, locale) : null;
 
   // Catalogue structured data — an ItemList of every machine, so search
   // engines can surface the full range from this single page.
@@ -52,8 +58,8 @@ export default async function ProductsPage({
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     name: 'Auraplex machine catalogue',
-    numberOfItems: MACHINES.length,
-    itemListElement: MACHINES.map((m, i) => ({
+    numberOfItems: localizedAll.length,
+    itemListElement: localizedAll.map((m, i) => ({
       '@type': 'ListItem',
       position: i + 1,
       name: m.name,
@@ -141,7 +147,7 @@ export default async function ProductsPage({
 
       {/* ────── FEATURED HIGHLIGHTS (ticker + ingredient cards) ────── */}
       <FeaturedHighlights
-        machines={getFeaturedMachines()}
+        machines={localizeMachines(getFeaturedMachines(), locale)}
         featuredLabel={t('featuredBadge')}
         viewLabel={t('viewMachine')}
         tickerWords={t.raw('tickerWords') as string[]}
@@ -157,7 +163,7 @@ export default async function ProductsPage({
 
       {/* ────── ANIMATED GRID ────── */}
       <ProductsGrid
-        machines={MACHINES}
+        machines={localizedAll}
         categories={categories}
         sortItems={sortItems}
         initialCategory={category}

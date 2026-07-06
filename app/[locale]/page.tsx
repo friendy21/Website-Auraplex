@@ -1,12 +1,12 @@
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import {
   categoryCounts,
-  categoryLabel,
   getMachinesByCategory,
   getMachinesWithCover,
   getFeaturedMachines,
   type Category,
 } from '@/lib/catalog';
+import { localizeMachines, localizedCategoryLabel } from '@/lib/catalog-i18n';
 import { HeroCinematic } from '@/components/sections/hero-cinematic';
 import { LiveDataTicker } from '@/components/sections/live-data-ticker';
 import { WhatWeMake, type Family } from '@/components/sections/what-we-make';
@@ -33,26 +33,26 @@ export default async function Home({
     getMachinesByCategory(cat).find((m) => m.image)?.image ?? null;
 
   // Real machines (with cover art) for the Hyperscroll flythrough.
-  const flythrough = getMachinesWithCover().map((m) => ({
+  const flythrough = localizeMachines(getMachinesWithCover(), locale).map((m) => ({
     image: m.image as string,
     slug: m.slug,
     name: m.name,
   }));
 
   // Featured machines for the cinematic expanding-panel accordion.
-  const showcase = getFeaturedMachines().map((m) => ({
+  const showcase = localizeMachines(getFeaturedMachines(), locale).map((m) => ({
     slug: m.slug,
     name: m.name,
     image: m.image as string,
     category: m.category,
-    label: categoryLabel(m.category),
+    label: localizedCategoryLabel(m.category, locale),
     summary: m.summary,
     photos: m.gallery.length,
   }));
   const families: Family[] = (['labelling', 'packaging', 'automation'] as Category[]).map(
     (key) => ({
       key,
-      label: categoryLabel(key),
+      label: localizedCategoryLabel(key, locale),
       count: counts[key],
       summary: t(`familySummaries.${key}`),
       image: repImage(key),

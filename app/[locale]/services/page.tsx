@@ -5,6 +5,7 @@ import { KineticReveal } from '@/components/motion/kinetic-reveal';
 import { StackingSteps } from '@/components/sections/stacking-steps';
 import { AutoCarousel3D } from '@/components/sections/auto-carousel-3d';
 import { getMachinesWithCover } from '@/lib/catalog';
+import { localizeMachines } from '@/lib/catalog-i18n';
 import { Button } from '@/components/primitives/button';
 import { Magnetic } from '@/components/motion/magnetic';
 import { buildMetadata, breadcrumbSchema, SITE, localizedMeta, ogLocale } from '@/lib/seo';
@@ -172,7 +173,7 @@ export default async function ServicesPage({
           </div>
         </div>
         <AutoCarousel3D
-          items={getMachinesWithCover()
+          items={localizeMachines(getMachinesWithCover(), locale)
             .slice(0, 10)
             .map((m) => ({ image: m.image as string, slug: m.slug, name: m.name }))}
         />

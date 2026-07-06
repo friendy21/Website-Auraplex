@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { buildMetadata } from '@/lib/seo';
 import { getMachine, MACHINES } from '@/lib/catalog';
+import { localizeMachine } from '@/lib/catalog-i18n';
 import { hasMachineModel } from '@/lib/models';
 import { ClientConfigurator } from '@/components/three/client-configurator';
 
@@ -15,7 +16,8 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
-  const p = getMachine(slug);
+  const raw = getMachine(slug);
+  const p = raw ? localizeMachine(raw, locale) : null;
   const t = await getTranslations({ locale, namespace: 'configurator' });
   return buildMetadata({
     title: t('metaTitle', { name: p?.name ?? 'machine' }),
@@ -35,8 +37,9 @@ export default async function ConfiguratorPage({
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
-  const p = getMachine(slug);
-  if (!p) notFound();
+  const raw = getMachine(slug);
+  if (!raw) notFound();
+  const p = localizeMachine(raw, locale);
 
   // Per-machine GLTF asset. `hasModel` is false until a real
   // /public/models/<slug>.glb is produced — the configurator then renders a

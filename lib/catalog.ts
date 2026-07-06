@@ -19,6 +19,10 @@ export type Category = 'labelling' | 'packaging' | 'automation';
 
 export type Machine = RawMachine & {
   featured: boolean;
+  /** Canonical English name, preserved when `name` is localized so that
+   *  name-parsing logic (machineTags, regexes) stays locale-independent.
+   *  Undefined on the canonical (English) records; set by localizeMachine. */
+  nameEn?: string;
   summary: string;
   /** Throughput (units/min). Null until real numbers are supplied. */
   speed: number | null;
@@ -184,7 +188,9 @@ export function categoryLabel(category: Category): string {
  * the 3 most-informative tags per machine to keep cards scannable.
  */
 export function machineTags(m: Machine): string[] {
-  const n = m.name.toLowerCase();
+  // Always parse the canonical English name — tag regexes match English tokens
+  // and must keep working when `m.name` has been localized.
+  const n = (m.nameEn ?? m.name).toLowerCase();
   const tags: string[] = [];
 
   // Application style (mutually-exclusive — pick the most specific match)

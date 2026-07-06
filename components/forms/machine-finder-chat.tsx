@@ -11,6 +11,7 @@ import {
   recordMachineFinderLead,
 } from '@/actions/machine-finder';
 import { getMachine } from '@/lib/catalog';
+import { localizeMachine } from '@/lib/catalog-i18n';
 import { Button } from '@/components/primitives/button';
 
 type Msg = { role: 'user' | 'assistant'; content: string };
@@ -110,7 +111,8 @@ export function MachineFinderChat() {
       // If the model emitted a recommendation, surface it as a real CTA and
       // record the session as a lead (best-effort).
       const rec = extractRecommendation(acc);
-      const machine = rec ? getMachine(rec.slug) : null;
+      const rawMachine = rec ? getMachine(rec.slug) : null;
+      const machine = rawMachine ? localizeMachine(rawMachine, locale) : null;
       if (machine && rec) {
         setRecommendation({
           slug: machine.slug,

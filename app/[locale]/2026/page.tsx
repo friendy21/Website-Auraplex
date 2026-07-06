@@ -8,8 +8,8 @@ import {
   getFeaturedMachines,
   getMachinesWithCover,
   categoryCounts,
-  categoryLabel,
 } from '@/lib/catalog';
+import { localizeMachines, localizedCategoryLabel } from '@/lib/catalog-i18n';
 import { whatsappLink } from '@/lib/utils';
 import { AnimatedNumber } from '@/components/motion/animated-number';
 import { Magnetic } from '@/components/motion/magnetic';
@@ -96,8 +96,9 @@ export default async function YearInReviewPage({
     note: string;
   }[];
 
-  const featured = getFeaturedMachines();
-  const photographed = getMachinesWithCover();
+  const featured = localizeMachines(getFeaturedMachines(), locale);
+  const photographed = localizeMachines(getMachinesWithCover(), locale);
+  const catalogue = localizeMachines(MACHINES, locale);
   const hero = featured[0];
   const supporting = featured.slice(1, 4);
   const counts = categoryCounts();
@@ -224,7 +225,7 @@ export default async function YearInReviewPage({
                 />
               )}
               <div className="absolute top-8 left-8 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-600)]">
-                {t('work.coverLabel')} · {categoryLabel(hero.category)}
+                {t('work.coverLabel')} · {localizedCategoryLabel(hero.category, locale)}
               </div>
               <div className="absolute bottom-8 left-8 right-8 flex items-end justify-between">
                 <h3 className="font-display text-3xl md:text-6xl tracking-[-0.02em] leading-[0.95] max-w-3xl">
@@ -267,7 +268,7 @@ export default async function YearInReviewPage({
                     />
                   )}
                   <div className="absolute top-6 left-6 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-600)]">
-                    0{i + 2} / {categoryLabel(m.category)}
+                    0{i + 2} / {localizedCategoryLabel(m.category, locale)}
                   </div>
                   <div className="absolute bottom-6 left-6 right-6">
                     <h3 className="font-display text-xl md:text-3xl tracking-[-0.01em] leading-[1.05]">
@@ -606,7 +607,7 @@ export default async function YearInReviewPage({
           </Reveal>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-            {MACHINES.map((m, i) => (
+            {catalogue.map((m, i) => (
               <Reveal
                 key={m.id}
                 variant="up"

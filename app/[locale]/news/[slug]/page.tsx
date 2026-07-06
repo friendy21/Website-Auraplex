@@ -6,6 +6,7 @@ import { Reveal } from '@/components/motion/reveal';
 import { Button } from '@/components/primitives/button';
 import { buildMetadata, articleSchema } from '@/lib/seo';
 import { NEWS, getNewsPost } from '@/lib/news';
+import { localizeNewsPost, localizedNewsCategory } from '@/lib/news-i18n';
 
 export async function generateStaticParams() {
   return NEWS.map((n) => ({ slug: n.slug }));
@@ -17,14 +18,15 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
-  const post = getNewsPost(slug);
-  if (!post) {
+  const raw = getNewsPost(slug);
+  if (!raw) {
     return buildMetadata({
       title: 'News — Auraplex',
       description: 'Article not found.',
       path: `/${locale}/news`,
     });
   }
+  const post = localizeNewsPost(raw, locale);
   return buildMetadata({
     title: `${post.title} — Auraplex`,
     description: post.summary,
@@ -40,8 +42,9 @@ export default async function NewsArticlePage({
   const { locale, slug } = await params;
   setRequestLocale(locale);
   const t = await getTranslations('pages.news.article');
-  const post = getNewsPost(slug);
-  if (!post) notFound();
+  const raw = getNewsPost(slug);
+  if (!raw) notFound();
+  const post = localizeNewsPost(raw, locale);
 
   const formattedDate = new Date(post.date).toLocaleDateString(`${locale}-MY`, {
     year: 'numeric',
@@ -94,7 +97,7 @@ export default async function NewsArticlePage({
         <Reveal variant="up">
           <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6 flex items-center gap-3">
             <span className="h-px w-12 bg-[color:var(--color-signal)]" />
-            {post.category} · {formattedDate}
+            {localizedNewsCategory(post.category, locale)} · {formattedDate}
           </div>
         </Reveal>
 
