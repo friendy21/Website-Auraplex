@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { setRequestLocale } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { buildMetadata } from '@/lib/seo';
 import { getMachine, MACHINES } from '@/lib/catalog';
 import { hasMachineModel } from '@/lib/models';
@@ -16,10 +16,10 @@ export async function generateMetadata({
 }) {
   const { locale, slug } = await params;
   const p = getMachine(slug);
+  const t = await getTranslations({ locale, namespace: 'configurator' });
   return buildMetadata({
-    title: `Configure ${p?.name ?? 'machine'} — Auraplex`,
-    description:
-      'Describe your line — container, throughput, add-ons — and send the spec to an Auraplex engineer for a quote.',
+    title: t('metaTitle', { name: p?.name ?? 'machine' }),
+    description: t('metaDescription'),
     path: `/${locale}/products/${slug}/configurator`,
     // Requirements-capture tool, not indexable content: noindex until a real
     // 3D model + verified capability envelopes exist for the machine.

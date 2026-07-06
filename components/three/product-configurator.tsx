@@ -5,6 +5,7 @@ import { OrbitControls, PerspectiveCamera, Html } from '@react-three/drei';
 import { EffectComposer, Bloom, ToneMapping } from '@react-three/postprocessing';
 import { Component, Suspense, useState, type ReactNode } from 'react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { MachineModel } from './machine-model';
 import { FactoryEnvironment } from './factory-environment';
 import { Button } from '@/components/primitives/button';
@@ -59,6 +60,7 @@ export function ProductConfigurator({
   slug: string;
   locale: string;
 }) {
+  const t = useTranslations('configurator');
   const [config, setConfig] = useState<Config>(DEFAULTS);
   const [copied, setCopied] = useState(false);
   const tier = usePerfTier();
@@ -68,17 +70,25 @@ export function ProductConfigurator({
 
   const update = <K extends keyof Config>(k: K, v: Config[K]) => setConfig((c) => ({ ...c, [k]: v }));
 
+  // Localized shape labels — mapped explicitly (rather than a dynamic
+  // t(`shapes.${x}`)) so the message keys stay statically checkable.
+  const shapeLabels: Record<Config['containerShape'], string> = {
+    round: t('shapes.round'),
+    oval: t('shapes.oval'),
+    square: t('shapes.square'),
+  };
+
   // A one-line, human-readable summary of the requirements the buyer entered.
   // This is a *requirements request*, not a price estimate — Auraplex quotes
   // every line individually. The summary rides along to the product page's
   // quote form (?spec=…) so an engineer sees the line spec with the enquiry.
   const specSummary = [
-    `${config.containerShape} container`,
+    t('summaryContainer', { shape: shapeLabels[config.containerShape] }),
     `${config.containerSize}mm`,
-    `${config.throughput} units/min target`,
-    config.vision && 'vision system',
-    config.rejectStation && 'reject station',
-    config.lineIntegration && 'line integration',
+    t('summaryThroughput', { n: config.throughput }),
+    config.vision && t('vision'),
+    config.rejectStation && t('reject'),
+    config.lineIntegration && t('integration'),
   ]
     .filter(Boolean)
     .join(' · ');
@@ -105,18 +115,18 @@ export function ProductConfigurator({
   return (
     <div className="grid grid-cols-12 gap-0 h-[100dvh] bg-[color:var(--color-ink)]">
       <aside className="col-span-12 md:col-span-3 border-r border-[color:var(--color-steel)]/30 p-6 overflow-y-auto">
-        <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-2">— Configure</div>
+        <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-2">— {t('eyebrowConfigure')}</div>
         <h2 className="font-display text-2xl mb-8">{productName}</h2>
 
-        <Group label="Container shape">
+        <Group label={t('containerShape')}>
           {(['round', 'oval', 'square'] as const).map((s) => (
             <Pill key={s} active={config.containerShape === s} onClick={() => update('containerShape', s)}>
-              {s}
+              {shapeLabels[s]}
             </Pill>
           ))}
         </Group>
 
-        <Group label={`Container size · ${config.containerSize}mm`}>
+        <Group label={`${t('containerSize')} · ${config.containerSize}mm`}>
           <input
             type="range"
             min={30}
@@ -127,7 +137,7 @@ export function ProductConfigurator({
           />
         </Group>
 
-        <Group label={`Throughput · ${config.throughput} units/min`}>
+        <Group label={`${t('throughput')} · ${config.throughput} ${t('unitsPerMin')}`}>
           <input
             type="range"
             min={60}
@@ -139,10 +149,10 @@ export function ProductConfigurator({
           />
         </Group>
 
-        <Group label="Add-ons">
-          <Toggle checked={config.vision} onChange={(v) => update('vision', v)}>Vision system</Toggle>
-          <Toggle checked={config.rejectStation} onChange={(v) => update('rejectStation', v)}>Reject station</Toggle>
-          <Toggle checked={config.lineIntegration} onChange={(v) => update('lineIntegration', v)}>Line integration</Toggle>
+        <Group label={t('addOns')}>
+          <Toggle checked={config.vision} onChange={(v) => update('vision', v)}>{t('vision')}</Toggle>
+          <Toggle checked={config.rejectStation} onChange={(v) => update('rejectStation', v)}>{t('reject')}</Toggle>
+          <Toggle checked={config.lineIntegration} onChange={(v) => update('lineIntegration', v)}>{t('integration')}</Toggle>
         </Group>
       </aside>
 
@@ -151,7 +161,7 @@ export function ProductConfigurator({
           <Canvas shadows dpr={heavyEffects ? [1, 2] : [1, 1.5]} gl={{ antialias: true }}>
             <PerspectiveCamera makeDefault position={[3, 2, 5]} fov={35} />
             <OrbitControls enablePan={false} minDistance={3} maxDistance={10} maxPolarAngle={Math.PI / 2} />
-            <Suspense fallback={<Html center><span className="font-mono text-sm">Loading model…</span></Html>}>
+            <Suspense fallback={<Html center><span className="font-mono text-sm">{t('loadingModel')}</span></Html>}>
               <FactoryEnvironment />
               <ModelErrorBoundary fallback={null}>
                 <MachineModel url={modelUrl} autoRotate={false} highlightPart={config.vision ? 'vision-system' : null} />
@@ -170,30 +180,30 @@ export function ProductConfigurator({
       </main>
 
       <aside className="col-span-12 md:col-span-3 border-l border-[color:var(--color-steel)]/30 p-6 overflow-y-auto flex flex-col">
-        <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-2">— Your line spec</div>
+        <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-2">— {t('eyebrowSpec')}</div>
         <div className="space-y-3 font-mono text-sm py-4">
-          <Spec k="Shape" v={config.containerShape} />
-          <Spec k="Diameter" v={`${config.containerSize}mm`} />
-          <Spec k="Throughput" v={`${config.throughput}/min`} />
-          <Spec k="Vision" v={config.vision ? 'Yes' : '—'} />
-          <Spec k="Reject" v={config.rejectStation ? 'Yes' : '—'} />
-          <Spec k="Integration" v={config.lineIntegration ? 'Yes' : '—'} />
+          <Spec k={t('specShape')} v={shapeLabels[config.containerShape]} />
+          <Spec k={t('specDiameter')} v={`${config.containerSize}mm`} />
+          <Spec k={t('specThroughput')} v={`${config.throughput}/min`} />
+          <Spec k={t('specVision')} v={config.vision ? t('yes') : '—'} />
+          <Spec k={t('specReject')} v={config.rejectStation ? t('yes') : '—'} />
+          <Spec k={t('specIntegration')} v={config.lineIntegration ? t('yes') : '—'} />
         </div>
 
         <div className="mt-auto pt-8 border-t border-[color:var(--color-steel)]/30">
-          <div className="font-mono text-xs uppercase tracking-widest text-[color:var(--color-steel)] mb-1">Pricing</div>
+          <div className="font-mono text-xs uppercase tracking-widest text-[color:var(--color-steel)] mb-1">{t('pricingLabel')}</div>
           <div className="font-display text-2xl text-[color:var(--color-paper)] mb-1 leading-tight">
-            Quoted per line
+            {t('pricingValue')}
           </div>
           <div className="font-mono text-xs text-[color:var(--color-steel)] mb-6">
-            Send your spec — an engineer prices it, typically within 1 business day.
+            {t('pricingNote')}
           </div>
 
           <Button asChild className="w-full mb-3">
-            <Link href={quoteHref}>Send spec &amp; get a quote</Link>
+            <Link href={quoteHref}>{t('sendSpec')}</Link>
           </Button>
           <Button variant="ghost" className="w-full" onClick={shareConfig}>
-            {copied ? 'Link copied' : 'Copy shareable link'}
+            {copied ? t('linkCopied') : t('copyLink')}
           </Button>
         </div>
       </aside>
@@ -202,6 +212,7 @@ export function ProductConfigurator({
 }
 
 function ModelPlaceholder({ productName }: { productName: string }) {
+  const t = useTranslations('configurator');
   return (
     <div className="h-full min-h-[50vh] md:min-h-[100dvh] flex flex-col items-center justify-center gap-4 p-8 text-center bg-[color:var(--color-neutral-800)]/30">
       <div
@@ -211,11 +222,10 @@ function ModelPlaceholder({ productName }: { productName: string }) {
         ◇
       </div>
       <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)]">
-        3D preview coming soon
+        {t('previewSoonBadge')}
       </div>
       <p className="max-w-xs font-mono text-xs text-[color:var(--color-steel)] leading-relaxed">
-        The interactive model for the {productName} is in production. Describe
-        your line on the left — send the spec and an engineer will quote it.
+        {t('previewSoonBody', { productName })}
       </p>
     </div>
   );

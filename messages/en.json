@@ -78,7 +78,14 @@
       "view": "View",
       "hudDrag": "Hyperscroll · drag down",
       "hudNodes": "{n} nodes",
-      "words": ["LABELLING", "PACKAGING", "AUTOMATION", "PRECISION", "SELANGOR", "BUILT HERE"]
+      "words": [
+        "LABELLING",
+        "PACKAGING",
+        "AUTOMATION",
+        "PRECISION",
+        "SELANGOR",
+        "BUILT HERE"
+      ]
     },
     "showcaseAccordion": {
       "eyebrow": "Launch gallery",
@@ -187,11 +194,26 @@
     "testimonials": {
       "eyebrow": "On the record · recognition",
       "items": [
-        { "quote": "Recognised as a best company for innovation.", "author": "MIMF 2024 · MITEC, Kuala Lumpur" },
-        { "quote": "Designed, built and tested in Seri Kembangan.", "author": "Auraplex SDN BHD" },
-        { "quote": "Labelling, packaging and automation — thirty machines.", "author": "The Auraplex catalogue" },
-        { "quote": "On the floor at MIMF and Metaltech, MITEC.", "author": "Exhibitions · 2022–2024" },
-        { "quote": "Local engineers, parts you can drive to, service you can call.", "author": "Built in Malaysia" }
+        {
+          "quote": "Recognised as a best company for innovation.",
+          "author": "MIMF 2024 · MITEC, Kuala Lumpur"
+        },
+        {
+          "quote": "Designed, built and tested in Seri Kembangan.",
+          "author": "Auraplex SDN BHD"
+        },
+        {
+          "quote": "Labelling, packaging and automation — thirty machines.",
+          "author": "The Auraplex catalogue"
+        },
+        {
+          "quote": "On the floor at MIMF and Metaltech, MITEC.",
+          "author": "Exhibitions · 2022–2024"
+        },
+        {
+          "quote": "Local engineers, parts you can drive to, service you can call.",
+          "author": "Built in Malaysia"
+        }
       ]
     },
     "zoomA": {
@@ -232,7 +254,16 @@
     "viewMachineLong": "View machine",
     "from": "From",
     "catalogueLine": "Catalogue / 2026 · {count} machines",
-    "tickerWords": ["Labelling", "Packaging", "Automation", "Wrap-Around", "Print & Apply", "Built in Selangor", "30 Machines", "ASEAN-ready"],
+    "tickerWords": [
+      "Labelling",
+      "Packaging",
+      "Automation",
+      "Wrap-Around",
+      "Print & Apply",
+      "Built in Selangor",
+      "30 Machines",
+      "ASEAN-ready"
+    ],
     "marqueeText": "PRECISION · ENGINEERED · IN SELANGOR",
     "categories": {
       "all": "All",
@@ -342,10 +373,41 @@
     }
   },
   "configurator": {
-    "title": "Configure your machine",
-    "save": "Save configuration",
-    "share": "Share link",
-    "requestQuote": "Request quote with this config"
+    "eyebrowConfigure": "Configure",
+    "eyebrowSpec": "Your line spec",
+    "containerShape": "Container shape",
+    "shapes": {
+      "round": "Round",
+      "oval": "Oval",
+      "square": "Square"
+    },
+    "containerSize": "Container size",
+    "throughput": "Throughput",
+    "unitsPerMin": "units/min",
+    "addOns": "Add-ons",
+    "vision": "Vision system",
+    "reject": "Reject station",
+    "integration": "Line integration",
+    "loadingModel": "Loading model…",
+    "specShape": "Shape",
+    "specDiameter": "Diameter",
+    "specThroughput": "Throughput",
+    "specVision": "Vision",
+    "specReject": "Reject",
+    "specIntegration": "Integration",
+    "yes": "Yes",
+    "pricingLabel": "Pricing",
+    "pricingValue": "Quoted per line",
+    "pricingNote": "Send your spec — an engineer prices it, typically within 1 business day.",
+    "sendSpec": "Send spec & get a quote",
+    "copyLink": "Copy shareable link",
+    "linkCopied": "Link copied",
+    "previewSoonBadge": "3D preview coming soon",
+    "previewSoonBody": "The interactive model for the {productName} is in production. Describe your line on the left — send the spec and an engineer will quote it.",
+    "summaryContainer": "{shape} container",
+    "summaryThroughput": "{n} units/min target",
+    "metaTitle": "Configure {name} — Auraplex",
+    "metaDescription": "Describe your line — container, throughput, add-ons — and send the spec to an Auraplex engineer for a quote."
   },
   "forms": {
     "errors": {
@@ -490,10 +552,22 @@
       "whereEyebrow": "Where they run"
     },
     "sphereSlides": [
-      { "title": "Engineered in Selangor", "desc": "Every machine designed, built and tested on our Seri Kembangan floor." },
-      { "title": "Thirty machines", "desc": "Labelling, packaging and automation — one catalogue, built for ASEAN lines." },
-      { "title": "Precision, repeated", "desc": "Axis-true applicators tuned to your container shapes and throughput." },
-      { "title": "Local support", "desc": "Installation, training and parts from the same engineers who build them." }
+      {
+        "title": "Engineered in Selangor",
+        "desc": "Every machine designed, built and tested on our Seri Kembangan floor."
+      },
+      {
+        "title": "Thirty machines",
+        "desc": "Labelling, packaging and automation — one catalogue, built for ASEAN lines."
+      },
+      {
+        "title": "Precision, repeated",
+        "desc": "Axis-true applicators tuned to your container shapes and throughput."
+      },
+      {
+        "title": "Local support",
+        "desc": "Installation, training and parts from the same engineers who build them."
+      }
     ],
     "h1Line1": "2026 on the floor.",
     "h1Line2": "A year in machines.",

@@ -78,7 +78,14 @@
       "view": "Lihat",
       "hudDrag": "Hyperscroll · tarik ke bawah",
       "hudNodes": "{n} nod",
-      "words": ["PELABELAN", "PEMBUNGKUSAN", "AUTOMASI", "PRESISI", "SELANGOR", "DIBINA DI SINI"]
+      "words": [
+        "PELABELAN",
+        "PEMBUNGKUSAN",
+        "AUTOMASI",
+        "PRESISI",
+        "SELANGOR",
+        "DIBINA DI SINI"
+      ]
     },
     "showcaseAccordion": {
       "eyebrow": "Galeri pameran",
@@ -187,11 +194,26 @@
     "testimonials": {
       "eyebrow": "Rekod rasmi · pengiktirafan",
       "items": [
-        { "quote": "Diiktiraf sebagai syarikat terbaik untuk inovasi.", "author": "MIMF 2024 · MITEC, Kuala Lumpur" },
-        { "quote": "Direka, dibina dan diuji di Seri Kembangan.", "author": "Auraplex SDN BHD" },
-        { "quote": "Pelabelan, pembungkusan dan automasi — tiga puluh mesin.", "author": "Katalog Auraplex" },
-        { "quote": "Hadir di MIMF dan Metaltech, MITEC.", "author": "Pameran · 2022–2024" },
-        { "quote": "Jurutera tempatan, alat ganti yang boleh dicapai, servis yang boleh dihubungi.", "author": "Dibina di Malaysia" }
+        {
+          "quote": "Diiktiraf sebagai syarikat terbaik untuk inovasi.",
+          "author": "MIMF 2024 · MITEC, Kuala Lumpur"
+        },
+        {
+          "quote": "Direka, dibina dan diuji di Seri Kembangan.",
+          "author": "Auraplex SDN BHD"
+        },
+        {
+          "quote": "Pelabelan, pembungkusan dan automasi — tiga puluh mesin.",
+          "author": "Katalog Auraplex"
+        },
+        {
+          "quote": "Hadir di MIMF dan Metaltech, MITEC.",
+          "author": "Pameran · 2022–2024"
+        },
+        {
+          "quote": "Jurutera tempatan, alat ganti yang boleh dicapai, servis yang boleh dihubungi.",
+          "author": "Dibina di Malaysia"
+        }
       ]
     },
     "zoomA": {
@@ -232,7 +254,16 @@
     "viewMachineLong": "Lihat mesin",
     "from": "Dari",
     "catalogueLine": "Katalog / 2026 · {count} mesin",
-    "tickerWords": ["Pelabelan", "Pembungkusan", "Automasi", "Balut Keliling", "Cetak & Tampal", "Dibina di Selangor", "30 Mesin", "Sedia ASEAN"],
+    "tickerWords": [
+      "Pelabelan",
+      "Pembungkusan",
+      "Automasi",
+      "Balut Keliling",
+      "Cetak & Tampal",
+      "Dibina di Selangor",
+      "30 Mesin",
+      "Sedia ASEAN"
+    ],
     "marqueeText": "PRESISI · DIREKA · DI SELANGOR",
     "categories": {
       "all": "Semua",
@@ -342,10 +373,41 @@
     }
   },
   "configurator": {
-    "title": "Konfigurasikan mesin anda",
-    "save": "Simpan konfigurasi",
-    "share": "Kongsi pautan",
-    "requestQuote": "Minta sebut harga dengan konfigurasi ini"
+    "eyebrowConfigure": "Konfigurasi",
+    "eyebrowSpec": "Spesifikasi barisan anda",
+    "containerShape": "Bentuk bekas",
+    "shapes": {
+      "round": "Bulat",
+      "oval": "Bujur",
+      "square": "Segi empat"
+    },
+    "containerSize": "Saiz bekas",
+    "throughput": "Kadar pengeluaran",
+    "unitsPerMin": "unit/min",
+    "addOns": "Tambahan",
+    "vision": "Sistem visi",
+    "reject": "Stesen tolakan",
+    "integration": "Integrasi barisan",
+    "loadingModel": "Memuatkan model…",
+    "specShape": "Bentuk",
+    "specDiameter": "Diameter",
+    "specThroughput": "Kadar",
+    "specVision": "Visi",
+    "specReject": "Tolakan",
+    "specIntegration": "Integrasi",
+    "yes": "Ya",
+    "pricingLabel": "Harga",
+    "pricingValue": "Sebut harga per barisan",
+    "pricingNote": "Hantar spesifikasi anda — jurutera akan menetapkan harga, biasanya dalam 1 hari bekerja.",
+    "sendSpec": "Hantar spesifikasi & dapatkan sebut harga",
+    "copyLink": "Salin pautan boleh kongsi",
+    "linkCopied": "Pautan disalin",
+    "previewSoonBadge": "Pratonton 3D akan datang",
+    "previewSoonBody": "Model interaktif untuk {productName} sedang dihasilkan. Terangkan barisan anda di sebelah kiri — hantar spesifikasi dan jurutera akan menyebut harganya.",
+    "summaryContainer": "bekas {shape}",
+    "summaryThroughput": "sasaran {n} unit/min",
+    "metaTitle": "Konfigurasikan {name} — Auraplex",
+    "metaDescription": "Terangkan barisan anda — bekas, kadar pengeluaran, tambahan — dan hantar spesifikasi kepada jurutera Auraplex untuk sebut harga."
   },
   "forms": {
     "errors": {
@@ -490,10 +552,22 @@
       "whereEyebrow": "Di mana ia beroperasi"
     },
     "sphereSlides": [
-      { "title": "Direka di Selangor", "desc": "Setiap mesin direka, dibina dan diuji di lantai Seri Kembangan kami." },
-      { "title": "Tiga puluh mesin", "desc": "Pelabelan, pembungkusan dan automasi — satu katalog, dibina untuk barisan ASEAN." },
-      { "title": "Kepersisan, berulang", "desc": "Pengaplikasi tepat paksi ditala kepada bentuk bekas dan hasil pengeluaran anda." },
-      { "title": "Sokongan tempatan", "desc": "Pemasangan, latihan dan alat ganti daripada jurutera yang sama yang membinanya." }
+      {
+        "title": "Direka di Selangor",
+        "desc": "Setiap mesin direka, dibina dan diuji di lantai Seri Kembangan kami."
+      },
+      {
+        "title": "Tiga puluh mesin",
+        "desc": "Pelabelan, pembungkusan dan automasi — satu katalog, dibina untuk barisan ASEAN."
+      },
+      {
+        "title": "Kepersisan, berulang",
+        "desc": "Pengaplikasi tepat paksi ditala kepada bentuk bekas dan hasil pengeluaran anda."
+      },
+      {
+        "title": "Sokongan tempatan",
+        "desc": "Pemasangan, latihan dan alat ganti daripada jurutera yang sama yang membinanya."
+      }
     ],
     "h1Line1": "2026 di lantai kilang.",
     "h1Line2": "Setahun dalam mesin.",

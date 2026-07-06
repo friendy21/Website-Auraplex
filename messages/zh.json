@@ -78,7 +78,14 @@
       "view": "查看",
       "hudDrag": "Hyperscroll · 向下拖动",
       "hudNodes": "{n} 个节点",
-      "words": ["贴标", "包装", "自动化", "精密", "雪兰莪", "本地制造"]
+      "words": [
+        "贴标",
+        "包装",
+        "自动化",
+        "精密",
+        "雪兰莪",
+        "本地制造"
+      ]
     },
     "showcaseAccordion": {
       "eyebrow": "展示廊",
@@ -187,11 +194,26 @@
     "testimonials": {
       "eyebrow": "实绩与认可",
       "items": [
-        { "quote": "荣获最佳创新企业。", "author": "MIMF 2024 · 吉隆坡 MITEC" },
-        { "quote": "在史里肯邦安设计、制造与测试。", "author": "Auraplex SDN BHD" },
-        { "quote": "贴标、包装与自动化 — 三十台机器。", "author": "Auraplex 产品目录" },
-        { "quote": "亮相 MIMF 与 Metaltech,MITEC。", "author": "展会 · 2022–2024" },
-        { "quote": "本地工程师、触手可及的零件、随叫随到的服务。", "author": "马来西亚制造" }
+        {
+          "quote": "荣获最佳创新企业。",
+          "author": "MIMF 2024 · 吉隆坡 MITEC"
+        },
+        {
+          "quote": "在史里肯邦安设计、制造与测试。",
+          "author": "Auraplex SDN BHD"
+        },
+        {
+          "quote": "贴标、包装与自动化 — 三十台机器。",
+          "author": "Auraplex 产品目录"
+        },
+        {
+          "quote": "亮相 MIMF 与 Metaltech,MITEC。",
+          "author": "展会 · 2022–2024"
+        },
+        {
+          "quote": "本地工程师、触手可及的零件、随叫随到的服务。",
+          "author": "马来西亚制造"
+        }
       ]
     },
     "zoomA": {
@@ -232,7 +254,16 @@
     "viewMachineLong": "查看机器",
     "from": "起价",
     "catalogueLine": "目录 / 2026 · {count} 台机器",
-    "tickerWords": ["贴标", "包装", "自动化", "环绕", "打印贴标", "雪兰莪制造", "30 台机器", "服务东盟"],
+    "tickerWords": [
+      "贴标",
+      "包装",
+      "自动化",
+      "环绕",
+      "打印贴标",
+      "雪兰莪制造",
+      "30 台机器",
+      "服务东盟"
+    ],
     "marqueeText": "精密 · 工程制造 · 雪兰莪",
     "categories": {
       "all": "全部",
@@ -342,10 +373,41 @@
     }
   },
   "configurator": {
-    "title": "配置您的机器",
-    "save": "保存配置",
-    "share": "分享链接",
-    "requestQuote": "用此配置申请报价"
+    "eyebrowConfigure": "配置",
+    "eyebrowSpec": "您的生产线规格",
+    "containerShape": "容器形状",
+    "shapes": {
+      "round": "圆形",
+      "oval": "椭圆形",
+      "square": "方形"
+    },
+    "containerSize": "容器尺寸",
+    "throughput": "产量",
+    "unitsPerMin": "件/分钟",
+    "addOns": "附加选项",
+    "vision": "视觉系统",
+    "reject": "剔除工位",
+    "integration": "生产线集成",
+    "loadingModel": "正在加载模型…",
+    "specShape": "形状",
+    "specDiameter": "直径",
+    "specThroughput": "产量",
+    "specVision": "视觉",
+    "specReject": "剔除",
+    "specIntegration": "集成",
+    "yes": "是",
+    "pricingLabel": "价格",
+    "pricingValue": "按生产线报价",
+    "pricingNote": "发送您的规格 — 工程师将进行报价，通常在 1 个工作日内。",
+    "sendSpec": "发送规格并获取报价",
+    "copyLink": "复制可分享链接",
+    "linkCopied": "链接已复制",
+    "previewSoonBadge": "3D 预览即将推出",
+    "previewSoonBody": "{productName} 的交互式模型正在制作中。请在左侧描述您的生产线 — 发送规格，工程师将为您报价。",
+    "summaryContainer": "{shape}容器",
+    "summaryThroughput": "目标 {n} 件/分钟",
+    "metaTitle": "配置 {name} — Auraplex",
+    "metaDescription": "描述您的生产线 — 容器、产量、附加选项 — 并将规格发送给 Auraplex 工程师以获取报价。"
   },
   "forms": {
     "errors": {
@@ -490,10 +552,22 @@
       "whereEyebrow": "分布区域"
     },
     "sphereSlides": [
-      { "title": "雪兰莪制造", "desc": "每台机器都在我们史里肯邦安的车间设计、制造与测试。" },
-      { "title": "三十台机器", "desc": "贴标、包装与自动化 — 一个目录,为东盟生产线打造。" },
-      { "title": "精准,始终如一", "desc": "轴向精准的贴标机,针对您的容器形状与产量调校。" },
-      { "title": "本地支持", "desc": "由制造它们的同一批工程师提供安装、培训与零件。" }
+      {
+        "title": "雪兰莪制造",
+        "desc": "每台机器都在我们史里肯邦安的车间设计、制造与测试。"
+      },
+      {
+        "title": "三十台机器",
+        "desc": "贴标、包装与自动化 — 一个目录,为东盟生产线打造。"
+      },
+      {
+        "title": "精准,始终如一",
+        "desc": "轴向精准的贴标机,针对您的容器形状与产量调校。"
+      },
+      {
+        "title": "本地支持",
+        "desc": "由制造它们的同一批工程师提供安装、培训与零件。"
+      }
     ],
     "h1Line1": "2026 车间纪事。",
     "h1Line2": "一年的机器。",
