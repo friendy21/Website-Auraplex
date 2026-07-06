@@ -120,7 +120,7 @@ export default async function YearInReviewPage({
   return (
     <div className="bg-[color:var(--color-paper)] text-[color:var(--color-ink)] min-h-screen">
       {/* Cinematic HUD overlay (desktop) */}
-      <ScrollHud label="AURAPLEX // 2026 REVIEW" />
+      <ScrollHud label={t('hudLabel')} />
 
       {/* ────── HERO ────── */}
       <section className="mx-auto max-w-[1600px] px-6 lg:px-12 pt-40 pb-24">
@@ -357,22 +357,22 @@ export default async function YearInReviewPage({
           <div className="col-span-12 lg:col-span-5">
             <Reveal variant="up">
               <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6">
-                — The range, 2026
+                — {t('range.eyebrow')}
               </div>
               <h2 className="font-display text-[clamp(2rem,5vw,4rem)] tracking-[-0.03em] leading-[0.95] mb-12">
-                Thirty machines,
+                {t('range.h2Line1')}
                 <br />
-                three families.
+                {t('range.h2Line2')}
               </h2>
             </Reveal>
             <Reveal variant="up" delay={100}>
               <CategoryRadial
                 total={counts.all}
-                centerLabel="machines"
+                centerLabel={t('range.centerLabel')}
                 segments={[
-                  { label: 'Labelling', value: counts.labelling, color: 'var(--color-signal)' },
-                  { label: 'Automation', value: counts.automation, color: 'var(--color-ink)' },
-                  { label: 'Packaging', value: counts.packaging, color: 'var(--color-steel)' },
+                  { label: t('range.labelling'), value: counts.labelling, color: 'var(--color-signal)' },
+                  { label: t('range.automation'), value: counts.automation, color: 'var(--color-ink)' },
+                  { label: t('range.packaging'), value: counts.packaging, color: 'var(--color-steel)' },
                 ]}
               />
             </Reveal>
@@ -380,7 +380,7 @@ export default async function YearInReviewPage({
           <div className="col-span-12 lg:col-span-7">
             <Reveal variant="up" delay={150}>
               <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6">
-                — Where they run
+                — {t('range.whereEyebrow')}
               </div>
               <CoverageMap />
             </Reveal>
@@ -395,12 +395,7 @@ export default async function YearInReviewPage({
           slug: m.slug,
           name: m.name,
         }))}
-        slides={[
-          { title: 'Engineered in Selangor', desc: 'Every machine designed, built and tested on our Seri Kembangan floor.' },
-          { title: 'Thirty machines', desc: 'Labelling, packaging and automation — one catalogue, built for ASEAN lines.' },
-          { title: 'Precision, repeated', desc: 'Axis-true applicators tuned to your container shapes and throughput.' },
-          { title: 'Local support', desc: 'Installation, training and parts from the same engineers who build them.' },
-        ]}
+        slides={t.raw('sphereSlides') as { title: string; desc: string }[]}
       />
 
       {/* ────── ENGINEERING DISCIPLINES ────── */}
@@ -487,7 +482,7 @@ export default async function YearInReviewPage({
 
             <div className="relative z-10 max-w-3xl">
               <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal-bright)] mb-4">
-                {q.q} · 2026 · the {RELEASE_NAMES[i]} release
+                {q.q} · 2026 · {t('releaseWrapper', { name: RELEASE_NAMES[i] })}
               </div>
               {/* The name it earned */}
               <div className="font-display text-[clamp(2.5rem,8vw,7rem)] tracking-[-0.04em] leading-[0.85] text-[color:var(--color-signal)] mb-4">

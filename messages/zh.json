@@ -476,6 +476,25 @@
   },
   "page2026": {
     "eyebrow": "年度回顾 · 2026",
+    "hudLabel": "AURAPLEX // 2026 回顾",
+    "releaseWrapper": "{name} 版本",
+    "coverageAria": "Auraplex 机器覆盖自雪兰莪延伸至马来西亚、东盟与亚太地区",
+    "range": {
+      "eyebrow": "阵容,2026",
+      "h2Line1": "三十台机器,",
+      "h2Line2": "三大系列。",
+      "centerLabel": "机器",
+      "labelling": "贴标",
+      "automation": "自动化",
+      "packaging": "包装",
+      "whereEyebrow": "分布区域"
+    },
+    "sphereSlides": [
+      { "title": "雪兰莪制造", "desc": "每台机器都在我们史里肯邦安的车间设计、制造与测试。" },
+      { "title": "三十台机器", "desc": "贴标、包装与自动化 — 一个目录,为东盟生产线打造。" },
+      { "title": "精准,始终如一", "desc": "轴向精准的贴标机,针对您的容器形状与产量调校。" },
+      { "title": "本地支持", "desc": "由制造它们的同一批工程师提供安装、培训与零件。" }
+    ],
     "h1Line1": "2026 车间纪事。",
     "h1Line2": "一年的机器。",
     "lede": "我们制造贴标、包装和自动化机器——目录中共三十台——在我们雪兰莪史里肯邦安的车间设计、制造和测试,并在 MIMF 与 Metaltech 等东盟展会上展出。以下是这一年,按发生的顺序。",
@@ -943,6 +962,23 @@
     "caseStudies": {
       "eyebrow": "实地报告 · 每季度",
       "h1Line1": "首期实地报告",
+      "recognition": {
+        "eyebrow": "荣誉 · MIMF 2024",
+        "h2Line1": "最佳创新",
+        "h2Line2": "企业。",
+        "body": "Auraplex SDN BHD 专注于制造贴标机、包装机、3D 打印机与定制机器 — 在马来西亚国际机械展荣获最佳创新企业。",
+        "date": "2024年12月10日 · MITEC,吉隆坡",
+        "alt": "Auraplex 在 MIMF(吉隆坡 MITEC)荣获创新认可"
+      },
+      "milestonesEyebrow": "在现场",
+      "milestonesHeading": "我们亮相过的地方。",
+      "milestoneNotes": [
+        "MITEC,吉隆坡 — 最大的设备展会之一。",
+        "MITEC,吉隆坡。",
+        "将 Auraplex 机器带到制造现场。",
+        "MITEC。",
+        "与农业加工制造商会面。"
+      ],
       "h1Line2": "正在拍摄中。",
       "subtitle": "Auraplex 实地报告内容详尽、现场拍摄、每季度发布。我们宁愿发布一篇诚实的故事,也不愿发十二篇新闻稿。",
       "divider": {

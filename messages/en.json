@@ -476,6 +476,25 @@
   },
   "page2026": {
     "eyebrow": "Year in Review · 2026",
+    "hudLabel": "AURAPLEX // 2026 REVIEW",
+    "releaseWrapper": "the {name} release",
+    "coverageAria": "Auraplex machine coverage flows from Selangor across Malaysia, ASEAN and Asia-Pacific",
+    "range": {
+      "eyebrow": "The range, 2026",
+      "h2Line1": "Thirty machines,",
+      "h2Line2": "three families.",
+      "centerLabel": "machines",
+      "labelling": "Labelling",
+      "automation": "Automation",
+      "packaging": "Packaging",
+      "whereEyebrow": "Where they run"
+    },
+    "sphereSlides": [
+      { "title": "Engineered in Selangor", "desc": "Every machine designed, built and tested on our Seri Kembangan floor." },
+      { "title": "Thirty machines", "desc": "Labelling, packaging and automation — one catalogue, built for ASEAN lines." },
+      { "title": "Precision, repeated", "desc": "Axis-true applicators tuned to your container shapes and throughput." },
+      { "title": "Local support", "desc": "Installation, training and parts from the same engineers who build them." }
+    ],
     "h1Line1": "2026 on the floor.",
     "h1Line2": "A year in machines.",
     "lede": "We build labelling, packaging and automation machines — thirty in the catalogue — designed, built and tested on our floor in Seri Kembangan, and shown across ASEAN at MIMF and Metaltech. Here's the year, in the order it happened.",
@@ -943,6 +962,23 @@
     "caseStudies": {
       "eyebrow": "Field reports · Quarterly",
       "h1Line1": "The first field report",
+      "recognition": {
+        "eyebrow": "Recognition · MIMF 2024",
+        "h2Line1": "Best company",
+        "h2Line2": "for innovation.",
+        "body": "Auraplex SDN BHD specializes in manufacturing labelling machines, packaging machines, 3D printers and customized machines — recognised at the Malaysia International Machinery Fair as a best company for innovation.",
+        "date": "10 Dec 2024 · MITEC, Kuala Lumpur",
+        "alt": "Auraplex recognised for innovation at MIMF, MITEC Kuala Lumpur"
+      },
+      "milestonesEyebrow": "On the floor",
+      "milestonesHeading": "Where we've shown up.",
+      "milestoneNotes": [
+        "MITEC, Kuala Lumpur — one of the largest equipment exhibitions.",
+        "MITEC, Kuala Lumpur.",
+        "Bringing Auraplex machines to the manufacturing floor.",
+        "MITEC.",
+        "Meeting agri-processing manufacturers."
+      ],
       "h1Line2": "is being photographed.",
       "subtitle": "Auraplex field reports are long-form, photographed on-site, and published quarterly. We'd rather ship one honest story than twelve press releases.",
       "divider": {

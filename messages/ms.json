@@ -476,6 +476,25 @@
   },
   "page2026": {
     "eyebrow": "Ulasan Tahun · 2026",
+    "hudLabel": "AURAPLEX // ULASAN 2026",
+    "releaseWrapper": "keluaran {name}",
+    "coverageAria": "Liputan mesin Auraplex mengalir dari Selangor merentasi Malaysia, ASEAN dan Asia-Pasifik",
+    "range": {
+      "eyebrow": "Rangkaian, 2026",
+      "h2Line1": "Tiga puluh mesin,",
+      "h2Line2": "tiga keluarga.",
+      "centerLabel": "mesin",
+      "labelling": "Pelabelan",
+      "automation": "Automasi",
+      "packaging": "Pembungkusan",
+      "whereEyebrow": "Di mana ia beroperasi"
+    },
+    "sphereSlides": [
+      { "title": "Direka di Selangor", "desc": "Setiap mesin direka, dibina dan diuji di lantai Seri Kembangan kami." },
+      { "title": "Tiga puluh mesin", "desc": "Pelabelan, pembungkusan dan automasi — satu katalog, dibina untuk barisan ASEAN." },
+      { "title": "Kepersisan, berulang", "desc": "Pengaplikasi tepat paksi ditala kepada bentuk bekas dan hasil pengeluaran anda." },
+      { "title": "Sokongan tempatan", "desc": "Pemasangan, latihan dan alat ganti daripada jurutera yang sama yang membinanya." }
+    ],
     "h1Line1": "2026 di lantai kilang.",
     "h1Line2": "Setahun dalam mesin.",
     "lede": "Kami membina mesin pelabelan, pembungkusan dan automasi — tiga puluh dalam katalog — direka, dibina dan diuji di lantai kilang kami di Seri Kembangan, dan dipamerkan merentas ASEAN di MIMF dan Metaltech. Inilah tahunnya, mengikut urutan ia berlaku.",
@@ -943,6 +962,23 @@
     "caseStudies": {
       "eyebrow": "Laporan lapangan · Sukuan",
       "h1Line1": "Laporan lapangan pertama",
+      "recognition": {
+        "eyebrow": "Pengiktirafan · MIMF 2024",
+        "h2Line1": "Syarikat terbaik",
+        "h2Line2": "untuk inovasi.",
+        "body": "Auraplex SDN BHD pakar dalam pembuatan mesin pelabel, mesin pembungkus, pencetak 3D dan mesin tersuai — diiktiraf di Malaysia International Machinery Fair sebagai syarikat terbaik untuk inovasi.",
+        "date": "10 Dis 2024 · MITEC, Kuala Lumpur",
+        "alt": "Auraplex diiktiraf atas inovasi di MIMF, MITEC Kuala Lumpur"
+      },
+      "milestonesEyebrow": "Di lapangan",
+      "milestonesHeading": "Di mana kami hadir.",
+      "milestoneNotes": [
+        "MITEC, Kuala Lumpur — salah satu pameran peralatan terbesar.",
+        "MITEC, Kuala Lumpur.",
+        "Membawa mesin Auraplex ke lantai pengeluaran.",
+        "MITEC.",
+        "Bertemu pengeluar pemprosesan pertanian."
+      ],
       "h1Line2": "sedang difoto.",
       "subtitle": "Laporan lapangan Auraplex adalah panjang lebar, difoto di tapak, dan diterbitkan sukuan. Kami lebih rela menerbitkan satu cerita jujur daripada dua belas siaran akhbar.",
       "divider": {

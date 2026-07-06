@@ -131,28 +131,25 @@ export default async function CaseStudiesPage({
         <div className="grid grid-cols-12 gap-8 lg:gap-6 items-center">
           <Reveal variant="up" className="col-span-12 lg:col-span-6">
             <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6">
-              — Recognition · MIMF 2024
+              — {t('recognition.eyebrow')}
             </div>
             <h2 className="font-display text-[clamp(2.5rem,6vw,5.5rem)] tracking-[-0.03em] leading-[0.92]">
-              Best company
+              {t('recognition.h2Line1')}
               <br />
-              <span className="text-[color:var(--color-signal)]">for innovation.</span>
+              <span className="text-[color:var(--color-signal)]">{t('recognition.h2Line2')}</span>
             </h2>
             <p className="mt-8 prose-editorial text-[color:var(--color-steel-soft)] max-w-xl">
-              Auraplex SDN BHD specializes in manufacturing labelling machines,
-              packaging machines, 3D printers and customized machines —
-              recognised at the Malaysia International Machinery Fair as a best
-              company for innovation.
+              {t('recognition.body')}
             </p>
             <div className="mt-6 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)]">
-              10 Dec 2024 · MITEC, Kuala Lumpur
+              {t('recognition.date')}
             </div>
           </Reveal>
           <Reveal variant="up" delay={120} className="col-span-12 lg:col-span-6">
             <div className="relative aspect-[4/3] overflow-hidden border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)]">
               <Image
                 src="/exhibitions/mimf-2024.jpg"
-                alt="Auraplex recognised for innovation at MIMF, MITEC Kuala Lumpur"
+                alt={t('recognition.alt')}
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"
@@ -166,10 +163,10 @@ export default async function CaseStudiesPage({
       <section className="border-t border-[color:var(--color-neutral-700)] mx-auto max-w-[1600px] px-6 lg:px-12 py-32">
         <Reveal variant="up">
           <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-4">
-            — On the floor
+            — {t('milestonesEyebrow')}
           </div>
           <h2 className="font-display text-[clamp(2rem,5vw,4.5rem)] tracking-[-0.02em] leading-[1] mb-16">
-            Where we&apos;ve shown up.
+            {t('milestonesHeading')}
           </h2>
         </Reveal>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -193,7 +190,7 @@ export default async function CaseStudiesPage({
                     {m.title}
                   </h3>
                   <p className="text-sm text-[color:var(--color-steel-soft)] leading-relaxed">
-                    {m.note}
+                    {(t.raw('milestoneNotes') as string[])[i] ?? m.note}
                   </p>
                 </div>
               </article>

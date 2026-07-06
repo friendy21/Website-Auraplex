@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
+import { useTranslations } from 'next-intl';
 import { useReducedMotion } from '@/lib/hooks';
 
 type Node = { label: string; x: number; y: number; tier: 1 | 2 | 3 };
@@ -41,6 +42,7 @@ export function CoverageMap() {
   const ref = useRef<SVGSVGElement>(null);
   const inView = useInView(ref, { once: true, margin: '0px 0px -20% 0px' });
   const reduced = useReducedMotion();
+  const t = useTranslations('page2026');
 
   return (
     <svg
@@ -48,7 +50,7 @@ export function CoverageMap() {
       viewBox="0 0 100 66"
       className="w-full h-auto"
       role="img"
-      aria-label="Auraplex machine coverage flows from Selangor across Malaysia, ASEAN and Asia-Pacific"
+      aria-label={t('coverageAria')}
     >
       {/* Flow lines */}
       {NODES.map((n, i) => (
