@@ -78,7 +78,7 @@ export function HorizontalScrollSection({
     <section
       ref={container}
       className={`relative bg-[color:var(--color-ink)] ${
-        fallback ? '' : 'overflow-hidden'
+        fallback ? 'overflow-x-clip' : 'overflow-hidden'
       } ${className ?? ''}`}
     >
       <div

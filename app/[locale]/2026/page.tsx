@@ -353,8 +353,8 @@ export default async function YearInReviewPage({
 
       {/* ────── THE RANGE + COVERAGE (real catalogue data) ────── */}
       <section className="border-t border-[color:var(--color-neutral-200)] mx-auto max-w-[1600px] px-6 lg:px-12 py-32 lg:py-48">
-        <div className="grid grid-cols-12 gap-12 lg:gap-6 items-center">
-          <div className="col-span-12 lg:col-span-5">
+        <div className="grid grid-cols-12 gap-x-0 gap-y-12 lg:gap-6 items-center">
+          <div className="col-span-12 lg:col-span-5 min-w-0">
             <Reveal variant="up">
               <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6">
                 — {t('range.eyebrow')}
@@ -377,7 +377,7 @@ export default async function YearInReviewPage({
               />
             </Reveal>
           </div>
-          <div className="col-span-12 lg:col-span-7">
+          <div className="col-span-12 lg:col-span-7 min-w-0">
             <Reveal variant="up" delay={150}>
               <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6">
                 — {t('range.whereEyebrow')}

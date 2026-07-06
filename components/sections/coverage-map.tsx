@@ -48,7 +48,8 @@ export function CoverageMap() {
     <svg
       ref={ref}
       viewBox="0 0 100 66"
-      className="w-full h-auto"
+      className="block w-full max-w-full"
+      style={{ aspectRatio: '100 / 66', height: 'auto' }}
       role="img"
       aria-label={t('coverageAria')}
     >

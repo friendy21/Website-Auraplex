@@ -26,7 +26,11 @@ export function WordCloud({ words, accentEvery = 4 }: Props) {
   return (
     <div
       ref={ref}
-      className="mt-20 flex flex-wrap items-center justify-center gap-x-10 gap-y-8 max-w-5xl mx-auto"
+      /* overflow-x-clip: the entrance animates each word in from a per-index
+         offset (x up to ±220px). Off-screen (before it scrolls into view) those
+         offsets would otherwise push horizontal page overflow on mobile — clip
+         so the words simply emerge from the container's edges. */
+      className="mt-20 flex flex-wrap items-center justify-center gap-x-10 gap-y-8 max-w-5xl mx-auto overflow-x-clip"
     >
       {words.map((w, i) => {
         // Deterministic "random" entry vector based on index. Keeps SSR

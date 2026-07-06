@@ -113,8 +113,8 @@ export default async function ContactPage({
         }}
       />
 
-      <section className="mx-auto max-w-[1600px] px-6 lg:px-12 pt-40 pb-32 grid grid-cols-12 gap-12">
-        <div className="col-span-12 md:col-span-5">
+      <section className="mx-auto max-w-[1600px] px-6 lg:px-12 pt-40 pb-32 grid grid-cols-12 gap-x-0 gap-y-12 md:gap-x-12">
+        <div className="col-span-12 md:col-span-5 min-w-0">
           <Reveal variant="up" immediate>
             <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6">
               — {t('eyebrow')}
@@ -173,7 +173,7 @@ export default async function ContactPage({
           </div>
         </div>
 
-        <div className="col-span-12 md:col-span-6 md:col-start-7">
+        <div className="col-span-12 md:col-span-6 md:col-start-7 min-w-0">
           {department && (
             <Reveal variant="fade">
               <div className="mb-6 border border-[color:var(--color-signal)] bg-[color:var(--color-signal)]/5 px-5 py-4 flex items-center gap-3">
