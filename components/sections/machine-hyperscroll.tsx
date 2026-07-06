@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, useScroll } from 'motion/react';
+import { useTranslations } from 'next-intl';
 import { usePerfTier } from '@/lib/hooks';
 
 type Machine = { image: string; slug: string; name: string };
@@ -57,6 +58,8 @@ export function MachineHyperscroll({ machines }: Props) {
   const starRefs = useRef<(HTMLDivElement | null)[]>([]);
   const mouse = useRef({ x: 0, y: 0 });
   const tier = usePerfTier();
+  const t = useTranslations('home.hyperscroll');
+  const words = t.raw('words') as string[];
 
   const { scrollYProgress } = useScroll({
     target: section,
@@ -154,17 +157,17 @@ export function MachineHyperscroll({ machines }: Props) {
             <div>
               <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-4 flex items-center gap-3">
                 <span className="h-px w-12 bg-[color:var(--color-signal)]" />
-                Featured machines
+                {t('eyebrow')}
               </div>
               <h2 className="font-display text-[clamp(2rem,5vw,4rem)] tracking-[-0.02em] leading-[1]">
-                The full range.
+                {t('heading')}
               </h2>
             </div>
             <Link
               href="/products"
               className="font-mono text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-steel)] hover:text-[color:var(--color-signal)] transition self-start md:self-auto"
             >
-              Browse all →
+              {t('browseAll')} →
             </Link>
           </div>
 
@@ -197,7 +200,7 @@ export function MachineHyperscroll({ machines }: Props) {
                 <div className="border-t border-[color:var(--color-neutral-700)] p-4">
                   <h3 className="font-display text-base leading-tight line-clamp-2">{m.name}</h3>
                   <span className="mt-2 inline-block font-mono text-[9px] uppercase tracking-[0.2em] text-[color:var(--color-steel)] group-hover:text-[color:var(--color-signal)] transition">
-                    View →
+                    {t('view')} →
                   </span>
                 </div>
               </Link>
@@ -245,7 +248,7 @@ export function MachineHyperscroll({ machines }: Props) {
               >
                 {it.isText ? (
                   <div className="font-display text-[clamp(4rem,12vw,11rem)] font-extrabold tracking-[-0.04em] text-transparent [-webkit-text-stroke:2px_color-mix(in_oklab,var(--color-signal)_55%,transparent)] whitespace-nowrap select-none">
-                    {it.word}
+                    {words[idx % words.length] ?? it.word}
                   </div>
                 ) : machine ? (
                   <Link
@@ -267,7 +270,7 @@ export function MachineHyperscroll({ machines }: Props) {
                     </h3>
                     <div className="absolute bottom-6 left-7 right-7 flex justify-between font-mono text-[9px] uppercase tracking-[0.2em] text-[color:var(--color-steel)]">
                       <span>Auraplex</span>
-                      <span className="text-[color:var(--color-signal)] group-hover:translate-x-1 transition-transform">View →</span>
+                      <span className="text-[color:var(--color-signal)] group-hover:translate-x-1 transition-transform">{t('view')} →</span>
                     </div>
                   </Link>
                 ) : null}
@@ -290,10 +293,10 @@ export function MachineHyperscroll({ machines }: Props) {
 
         {/* HUD */}
         <div className="pointer-events-none absolute inset-6 z-30 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel-soft)]">
-          <div className="absolute top-0 left-0 text-[color:var(--color-signal)]">— Featured machines</div>
-          <div className="absolute top-0 right-0">Hyperscroll · drag down</div>
+          <div className="absolute top-0 left-0 text-[color:var(--color-signal)]">— {t('eyebrow')}</div>
+          <div className="absolute top-0 right-0">{t('hudDrag')}</div>
           <div className="absolute bottom-0 left-0">Auraplex · Selangor</div>
-          <div className="absolute bottom-0 right-0">{ITEM_COUNT} nodes</div>
+          <div className="absolute bottom-0 right-0">{t('hudNodes', { n: ITEM_COUNT })}</div>
           <span className="absolute top-2 left-2 h-3 w-3 border-t border-l border-[color:var(--color-paper)]/30" />
           <span className="absolute top-2 right-2 h-3 w-3 border-t border-r border-[color:var(--color-paper)]/30" />
           <span className="absolute bottom-2 left-2 h-3 w-3 border-b border-l border-[color:var(--color-paper)]/30" />

@@ -70,6 +70,26 @@
       "packaging": "专为马来西亚生产线打造的连续封口机。",
       "automation": "AR 系列 3D 打印与定制自动化,适合原型制作与小批量生产。"
     },
+    "hyperscroll": {
+      "eyebrow": "精选机器",
+      "heading": "完整系列。",
+      "browseAll": "浏览全部",
+      "view": "查看",
+      "hudDrag": "Hyperscroll · 向下拖动",
+      "hudNodes": "{n} 个节点",
+      "words": ["贴标", "包装", "自动化", "精密", "雪兰莪", "本地制造"]
+    },
+    "showcaseAccordion": {
+      "eyebrow": "展示廊",
+      "heading": "五款精选。",
+      "hint": "悬停展开 · ← → 切换",
+      "origin": "雪兰莪制造",
+      "metaFamily": "系列",
+      "metaPhotos": "照片",
+      "metaSupport": "支持",
+      "supportValue": "本地",
+      "viewMachine": "查看机器"
+    },
     "machineFinderCta": {
       "title": "不确定哪台机器?",
       "body": "描述您的产品和生产线。我们将推荐合适的机型、配置和交付周期。",

@@ -70,6 +70,26 @@
       "packaging": "Continuous-band sealing built for Malaysian production lines.",
       "automation": "AR-series 3D printing and bespoke automation for prototyping and short runs."
     },
+    "hyperscroll": {
+      "eyebrow": "Featured machines",
+      "heading": "The full range.",
+      "browseAll": "Browse all",
+      "view": "View",
+      "hudDrag": "Hyperscroll · drag down",
+      "hudNodes": "{n} nodes",
+      "words": ["LABELLING", "PACKAGING", "AUTOMATION", "PRECISION", "SELANGOR", "BUILT HERE"]
+    },
+    "showcaseAccordion": {
+      "eyebrow": "Launch gallery",
+      "heading": "The featured five.",
+      "hint": "Hover to expand · ← → to step",
+      "origin": "Selangor-built",
+      "metaFamily": "Family",
+      "metaPhotos": "Photos",
+      "metaSupport": "Support",
+      "supportValue": "Local",
+      "viewMachine": "View machine"
+    },
     "machineFinderCta": {
       "title": "Not sure which machine?",
       "body": "Describe your product and your line. We'll recommend the right machine, configuration, and lead time.",

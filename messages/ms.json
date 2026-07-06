@@ -70,6 +70,26 @@
       "packaging": "Pengedap jalur berterusan yang dibina untuk barisan pengeluaran Malaysia.",
       "automation": "Pencetakan 3D siri AR dan automasi tersuai untuk prototaip dan pengeluaran kecil."
     },
+    "hyperscroll": {
+      "eyebrow": "Mesin pilihan",
+      "heading": "Rangkaian penuh.",
+      "browseAll": "Lihat semua",
+      "view": "Lihat",
+      "hudDrag": "Hyperscroll · tarik ke bawah",
+      "hudNodes": "{n} nod",
+      "words": ["PELABELAN", "PEMBUNGKUSAN", "AUTOMASI", "PRESISI", "SELANGOR", "DIBINA DI SINI"]
+    },
+    "showcaseAccordion": {
+      "eyebrow": "Galeri pameran",
+      "heading": "Lima pilihan utama.",
+      "hint": "Tuding untuk kembang · ← → untuk melangkah",
+      "origin": "Dibina di Selangor",
+      "metaFamily": "Keluarga",
+      "metaPhotos": "Foto",
+      "metaSupport": "Sokongan",
+      "supportValue": "Tempatan",
+      "viewMachine": "Lihat mesin"
+    },
     "machineFinderCta": {
       "title": "Tidak pasti mesin yang sesuai?",
       "body": "Terangkan produk dan barisan anda. Kami akan cadangkan mesin yang tepat, konfigurasi, dan tempoh penghantaran.",

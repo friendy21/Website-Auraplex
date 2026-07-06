@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { AnimatePresence, motion } from 'motion/react';
+import { useTranslations } from 'next-intl';
 import { useMediaQuery, useReducedMotion } from '@/lib/hooks';
 
 export type AccordionItem = {
@@ -52,6 +53,7 @@ const hexA = (hex: string, a: number) => {
  * shown is real catalogue data.
  */
 export function MachineAccordion({ items }: Props) {
+  const t = useTranslations('home.showcaseAccordion');
   const [active, setActive] = useState(0);
   const [inView, setInView] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -108,17 +110,17 @@ export function MachineAccordion({ items }: Props) {
           <div>
             <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-4 flex items-center gap-3">
               <span className="h-px w-12 bg-[color:var(--color-signal)]" />
-              Launch gallery
+              {t('eyebrow')}
             </div>
             <h2 className="font-display text-[clamp(2rem,5vw,4rem)] tracking-[-0.02em] leading-[1]">
-              The featured five.
+              {t('heading')}
             </h2>
           </div>
 
           {!isNarrow && (
             <div className="flex items-center gap-3">
               <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[color:var(--color-steel)] hidden lg:block">
-                Hover to expand · ← → to step
+                {t('hint')}
               </span>
               <button
                 type="button"
@@ -201,6 +203,7 @@ function Panel({
   reduced: boolean;
   onSelect: () => void;
 }) {
+  const t = useTranslations('home.showcaseAccordion');
   const imgRef = useRef<HTMLDivElement>(null);
   const ease = 'cubic-bezier(0.2,0.8,0.2,1)';
   const dur = reduced ? 1 : 720;
@@ -323,7 +326,7 @@ function Panel({
               {m.label}
             </span>
             <span className="font-mono text-[10px] uppercase tracking-[0.2em] rounded-full px-2.5 py-1 border border-[color:var(--color-neutral-700)] text-[color:var(--color-steel-soft)] bg-[color:var(--color-ink)]/40">
-              Selangor-built
+              {t('origin')}
             </span>
           </div>
         </Stagger>
@@ -342,9 +345,9 @@ function Panel({
 
         <Stagger active={active} delay={360} reduced={reduced}>
           <div className="mt-4 flex flex-wrap items-center gap-2.5">
-            <Meta k="Family" v={m.label} />
-            <Meta k="Photos" v={String(m.photos)} />
-            <Meta k="Support" v="Local" />
+            <Meta k={t('metaFamily')} v={m.label} />
+            <Meta k={t('metaPhotos')} v={String(m.photos)} />
+            <Meta k={t('metaSupport')} v={t('supportValue')} />
             <Link
               href={`/products/${m.slug}`}
               data-cursor="caliper"
@@ -352,7 +355,7 @@ function Panel({
               style={{ background: accent }}
               onClick={(e) => e.stopPropagation()}
             >
-              View machine →
+              {t('viewMachine')} →
             </Link>
           </div>
         </Stagger>
@@ -415,6 +418,7 @@ function MobileAccordion({
   setActive: (i: number) => void;
   reduced: boolean;
 }) {
+  const t = useTranslations('home.showcaseAccordion');
   return (
     <div className="space-y-3">
       {items.map((m, i) => {
@@ -486,14 +490,14 @@ function MobileAccordion({
                       {m.summary}
                     </p>
                     <div className="mt-4 flex flex-wrap items-center gap-2.5">
-                      <Meta k="Family" v={m.label} />
-                      <Meta k="Photos" v={String(m.photos)} />
+                      <Meta k={t('metaFamily')} v={m.label} />
+                      <Meta k={t('metaPhotos')} v={String(m.photos)} />
                       <Link
                         href={`/products/${m.slug}`}
                         className="ml-auto font-mono text-[10px] uppercase tracking-[0.2em] rounded-full px-4 py-2 text-[color:var(--color-ink)] font-bold"
                         style={{ background: accent }}
                       >
-                        View machine →
+                        {t('viewMachine')} →
                       </Link>
                     </div>
                   </div>
