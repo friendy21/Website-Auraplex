@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { Search } from 'lucide-react';
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from '@/components/primitives/dialog';
 
@@ -20,6 +21,7 @@ declare global {
 }
 
 export function SearchDialog() {
+  const t = useTranslations('common');
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<Result[]>([]);
@@ -71,16 +73,16 @@ export function SearchDialog() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <button
-          aria-label="Search"
+          aria-label={t('search')}
           className="flex items-center gap-2 text-[color:var(--color-steel)] hover:text-[color:var(--color-paper)] transition"
         >
           <Search className="h-4 w-4" />
-          <span className="font-mono text-xs uppercase tracking-wider">Search</span>
+          <span className="font-mono text-xs uppercase tracking-wider">{t('search')}</span>
           <kbd className="hidden md:inline-block font-mono text-[10px] border border-[color:var(--color-steel)]/30 px-1.5 py-0.5">⌘K</kbd>
         </button>
       </DialogTrigger>
       <DialogContent className="max-w-2xl p-0">
-        <DialogTitle className="sr-only">Search</DialogTitle>
+        <DialogTitle className="sr-only">{t('search')}</DialogTitle>
         <div className="flex items-center gap-3 border-b border-[color:var(--color-steel)]/30 p-4">
           <Search className="h-5 w-5 text-[color:var(--color-steel)]" />
           <input
@@ -91,7 +93,7 @@ export function SearchDialog() {
               setQuery(v);
               if (!v.trim()) setResults([]);
             }}
-            placeholder="Search machines, case studies…"
+            placeholder={t('searchPlaceholder')}
             className="flex-1 bg-transparent outline-none font-body text-lg"
           />
         </div>
@@ -108,7 +110,7 @@ export function SearchDialog() {
           ))}
           {query && !results.length && (
             <div className="px-4 py-8 font-mono text-xs uppercase tracking-widest text-[color:var(--color-steel)] text-center">
-              No matches
+              {t('searchNoMatches')}
             </div>
           )}
         </div>

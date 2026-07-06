@@ -534,7 +534,11 @@
         "role": "R&D",
         "focus": "Rig khusus, pembuatan aditif siri AR."
       }
-    ]
+    ],
+    "close": "Tutup",
+    "searchPlaceholder": "Cari mesin, kajian kes…",
+    "searchNoMatches": "Tiada padanan",
+    "loading": "Memuatkan"
   },
   "page2026": {
     "eyebrow": "Ulasan Tahun · 2026",
@@ -1126,5 +1130,18 @@
         "note": "Cadangan adalah panduan petunjuk, bukan sebut harga yang mengikat. Mesej anda digunakan untuk menjana padanan dan memaklumkan pasukan kami."
       }
     }
+  },
+  "error": {
+    "eyebrow": "Barisan berhenti",
+    "heading": "Sesuatu tersekat.",
+    "body": "Kami telah mencatatnya. Cuba lagi, atau kembali ke barisan.",
+    "refLabel": "ruj:",
+    "tryAgain": "Cuba lagi",
+    "home": "Laman utama"
+  },
+  "notFound": {
+    "heading": "Tersasar dari barisan.",
+    "body": "Halaman itu tiada di sini. Mungkin ia tidak pernah wujud, atau telah ditamatkan. Mari bawa anda kembali ke mesin yang berfungsi.",
+    "cta": "Kembali ke laman utama"
   }
 }

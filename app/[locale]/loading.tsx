@@ -1,4 +1,5 @@
 import { Skeleton, SkeletonText } from '@/components/primitives/skeleton';
+import { LoadingAnnounce } from '@/components/primitives/loading-announce';
 
 /**
  * Route-level loading UI (Next.js App Router Suspense fallback). A layout-
@@ -14,7 +15,7 @@ export default function Loading() {
       aria-busy="true"
       aria-live="polite"
     >
-      <span className="sr-only">Loading</span>
+      <LoadingAnnounce />
 
       <Skeleton rounded="sm" className="mb-6 h-3 w-40" />
       <Skeleton rounded="lg" className="mb-4 h-14 w-3/4 max-w-3xl" />

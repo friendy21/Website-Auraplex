@@ -534,7 +534,11 @@
         "role": "R&D",
         "focus": "Custom rigs, AR-series additive manufacturing."
       }
-    ]
+    ],
+    "close": "Close",
+    "searchPlaceholder": "Search machines, case studies…",
+    "searchNoMatches": "No matches",
+    "loading": "Loading"
   },
   "page2026": {
     "eyebrow": "Year in Review · 2026",
@@ -1126,5 +1130,18 @@
         "note": "Recommendations are indicative guidance, not a binding quote. Your messages are used to generate the match and brief our team."
       }
     }
+  },
+  "error": {
+    "eyebrow": "Line stop",
+    "heading": "Something jammed.",
+    "body": "We've logged it. Try again, or head back to the line.",
+    "refLabel": "ref:",
+    "tryAgain": "Try again",
+    "home": "Home"
+  },
+  "notFound": {
+    "heading": "Off the line.",
+    "body": "That page isn't here. Either it never was, or it's been retired. Let's get you back to a working machine.",
+    "cta": "Return home"
   }
 }
