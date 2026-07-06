@@ -117,12 +117,10 @@ export default async function ProductPage({
                 ◍
               </span>
               <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)]">
-                On the floor · photography pending
+                {td('noPhotoEyebrow')}
               </div>
               <p className="max-w-sm text-sm text-[color:var(--color-steel-soft)] leading-relaxed">
-                This {categoryLabel(p.category).toLowerCase()} machine is built and
-                serviced from our Seri Kembangan floor. Talk to an engineer below
-                for photos, drawings and a tailored spec.
+                {td('noPhotoBody', { family: categoryLabel(p.category).toLowerCase() })}
               </p>
             </div>
           )}

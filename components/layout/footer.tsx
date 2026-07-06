@@ -134,7 +134,7 @@ export function Footer() {
 
         <FooterCol>
           <h3 className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-5">
-            Company
+            {t('nav.company')}
           </h3>
           <ul className="space-y-3 text-sm">
             <li>

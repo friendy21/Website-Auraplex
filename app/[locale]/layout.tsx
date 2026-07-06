@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Suspense } from 'react';
 import { MotionConfig } from 'motion/react';
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, setRequestLocale } from 'next-intl/server';
+import { getMessages, setRequestLocale, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 // next/font/google self-hosts the font binaries at build time, no runtime CDN hop.
 // https://nextjs.org/docs/app/api-reference/components/font
@@ -98,6 +98,7 @@ export default async function LocaleLayout({
   const locale = raw as Locale;
   setRequestLocale(locale);
   const messages = await getMessages();
+  const tc = await getTranslations('common');
 
   return (
     <html
@@ -123,7 +124,7 @@ export default async function LocaleLayout({
           <LenisProvider>
             <AtmosphereProvider>
               <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-[color:var(--color-signal)] focus:text-[color:var(--color-ink)] focus:p-3">
-                Skip to content
+                {tc('skipToContent')}
               </a>
               {/* cacheComponents: request-scoped client components (locale hooks,
                   translations) must be wrapped in Suspense so the static shell

@@ -1,6 +1,6 @@
 'use client';
 
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
 import { locales, type Locale } from '@/lib/i18n';
 import { cn } from '@/lib/utils';
@@ -16,6 +16,7 @@ const FULL_NAME: Record<Locale, string> = {
 
 export function LanguageSwitcher() {
   const locale = useLocale();
+  const t = useTranslations('common');
   const pathname = usePathname();
   const router = useRouter();
 
@@ -29,7 +30,7 @@ export function LanguageSwitcher() {
     <div
       className="flex gap-1 font-mono text-xs"
       role="group"
-      aria-label="Language"
+      aria-label={t('language')}
     >
       {locales.map((l) => (
         <button

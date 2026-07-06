@@ -13,6 +13,7 @@
     "yearReview": "2026 年回顾",
     "internship": "实习",
     "about": "关于我们",
+    "company": "公司",
     "contact": "联系",
     "quote": "获取报价",
     "whatsapp": "WhatsApp"
@@ -258,6 +259,8 @@
     "seeAll": "查看所有机器",
     "detail": {
       "categoryEyebrowSpeedSuffix": "件/分钟",
+      "noPhotoEyebrow": "车间实拍 · 照片待补",
+      "noPhotoBody": "这台 {family} 机器在我们史里肯邦安的车间制造与维护。请在下方联系工程师,索取照片、图纸与定制规格。",
       "summaryHeading": "规格",
       "specsFallback": "本机完整规格——产量曲线、容器兼容性、尺寸、电力与气源要求——按需提供。下载上方的规格说明书,或与工程师沟通获取定制化分析。",
       "fromLabel": "起价",
@@ -429,6 +432,16 @@
   },
   "common": {
     "stickyCta": "获取报价",
+    "skipToContent": "跳至内容",
+    "step": "步骤",
+    "faq": "常见问题",
+    "prevMachine": "上一台机器",
+    "nextMachine": "下一台机器",
+    "thinking": "思考中",
+    "language": "语言",
+    "dragToSpin": "拖动旋转",
+    "dragToRotate": "拖动旋转",
+    "machinesCount": "{n} 台机器",
     "whatsapp": "WhatsApp",
     "whatsappAria": "WhatsApp 联系",
     "whatsappDefaultMsg": "您好 Auraplex,我想了解更多关于您们机器的信息。",
@@ -615,6 +628,11 @@
         "footnote": "涵盖食品、饮料、FMCG 与工业贴标——以及东盟各地的制造商。"
       },
       "eyebrow": "走进 Auraplex · 史里肯邦安",
+      "gallery": {
+        "eyebrow": "走进 Auraplex",
+        "heading": "在车间打造。",
+        "sub": "在史里肯邦安设计、制造与测试。"
+      },
       "h1Line1": "我们为所到之处的",
       "h1Line2": "工厂车间打造机器。",
       "p1": "Auraplex 是位于雪兰莪史里肯邦安的工程公司。我们为东盟各地制造商设计、制造、安装并支持自粘标签机、包装机械、3D 打印机和定制自动化方案——全在一个屋檐下,一个团队。",
@@ -643,6 +661,7 @@
     },
     "services": {
       "eyebrow": "服务",
+      "carouselEyebrow": "我们安装与维护的机器",
       "h1Line1": "我们不只交付机器。",
       "h1Line2": "我们交付能运转的产线。",
       "subtitle": "每次 Auraplex 安装都包含调试、操作员交接,以及待命的本地维修工程师。四个学科,全在史里肯邦安一个屋檐下。",
@@ -830,6 +849,8 @@
     },
     "internship": {
       "eyebrow": "实习 · Auraplex 史里肯邦安",
+      "teamCaption": "Auraplex 团队 · MIMF,吉隆坡",
+      "teamAlt": "Auraplex 工程团队在 MIMF(吉隆坡)的展位",
       "h1Line1": "亲手打造",
       "h1Line2": "您所学的机器。",
       "lede": "六个方向的带薪实习 — 机械、电气、控制、软件、工业设计、服务。三到六个月在史里肯邦安车间,与设计您所触及机器的工程师一起。",

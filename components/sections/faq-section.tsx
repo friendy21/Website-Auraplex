@@ -7,6 +7,7 @@ import { faqSchema } from '@/lib/seo';
 
 export function FaqSection() {
   const t = useTranslations('home.faq');
+  const tc = useTranslations('common');
   const items = t.raw('items') as { q: string; a: string }[];
 
   return (
@@ -15,7 +16,7 @@ export function FaqSection() {
       <div className="grid grid-cols-12 gap-6">
         <Reveal variant="up" className="col-span-12 md:col-span-4">
           <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-4">
-            — FAQ
+            — {tc('faq')}
           </div>
           <h2 className="font-display text-[clamp(2rem,5vw,4rem)] tracking-[-0.02em] leading-[1]">
             {t('title')}

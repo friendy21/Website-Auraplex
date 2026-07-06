@@ -97,7 +97,7 @@ export default async function InternshipPage({
           <div className="relative aspect-[21/9] overflow-hidden border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)]">
             <Image
               src="/exhibitions/mimf-2025.jpg"
-              alt="The Auraplex engineering team at their exhibition booth at MIMF, Kuala Lumpur"
+              alt={t('teamAlt')}
               fill
               priority
               sizes="100vw"
@@ -105,7 +105,7 @@ export default async function InternshipPage({
             />
             <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between">
               <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-paper)] bg-[color:var(--color-ink)]/70 backdrop-blur-sm px-3 py-2">
-                The Auraplex team · MIMF, Kuala Lumpur
+                {t('teamCaption')}
               </div>
             </div>
           </div>

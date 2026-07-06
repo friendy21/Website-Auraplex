@@ -13,6 +13,7 @@
     "yearReview": "2026 Review",
     "internship": "Internship",
     "about": "About",
+    "company": "Company",
     "contact": "Contact",
     "quote": "Get a quote",
     "whatsapp": "WhatsApp us"
@@ -258,6 +259,8 @@
     "seeAll": "See all machines",
     "detail": {
       "categoryEyebrowSpeedSuffix": "units/min",
+      "noPhotoEyebrow": "On the floor · photography pending",
+      "noPhotoBody": "This {family} machine is built and serviced from our Seri Kembangan floor. Talk to an engineer below for photos, drawings and a tailored spec.",
       "summaryHeading": "Specifications",
       "specsFallback": "Full specifications for this machine — throughput curves, container compatibility, dimensions, power and air requirements — are available on request. Download the spec sheet above or talk to an engineer for a tailored breakdown.",
       "fromLabel": "From",
@@ -429,6 +432,16 @@
   },
   "common": {
     "stickyCta": "Get a quote",
+    "skipToContent": "Skip to content",
+    "step": "Step",
+    "faq": "FAQ",
+    "prevMachine": "Previous machine",
+    "nextMachine": "Next machine",
+    "thinking": "Thinking",
+    "language": "Language",
+    "dragToSpin": "drag to spin",
+    "dragToRotate": "Drag to rotate",
+    "machinesCount": "{n} machines",
     "whatsapp": "WhatsApp",
     "whatsappAria": "WhatsApp us",
     "whatsappDefaultMsg": "Hi Auraplex, I'd like to learn more about your machines.",
@@ -615,6 +628,11 @@
         "footnote": "Across food, beverage, FMCG and industrial labelling — and manufacturers throughout ASEAN."
       },
       "eyebrow": "Inside Auraplex · Seri Kembangan",
+      "gallery": {
+        "eyebrow": "Inside Auraplex",
+        "heading": "Built on the floor.",
+        "sub": "Designed, built and tested in Seri Kembangan."
+      },
       "h1Line1": "We engineer machines",
       "h1Line2": "for the floors we visit.",
       "p1": "Auraplex is an engineering company in Seri Kembangan, Selangor. We design, build, install and support self-adhesive labelling machines, packaging machinery, 3D printers and custom automation for manufacturers across ASEAN — under one roof, with one team.",
@@ -643,6 +661,7 @@
     },
     "services": {
       "eyebrow": "Services",
+      "carouselEyebrow": "The machines we install & service",
       "h1Line1": "We don't ship machines.",
       "h1Line2": "We ship working lines.",
       "subtitle": "Every Auraplex install includes commissioning, operator handover, and a local service engineer on call. Four disciplines, all under one roof in Seri Kembangan.",
@@ -830,6 +849,8 @@
     },
     "internship": {
       "eyebrow": "Internship · Auraplex Seri Kembangan",
+      "teamCaption": "The Auraplex team · MIMF, Kuala Lumpur",
+      "teamAlt": "The Auraplex engineering team at their exhibition booth at MIMF, Kuala Lumpur",
       "h1Line1": "Engineer the machines",
       "h1Line2": "you study.",
       "lede": "Paid internships across six disciplines — mechanical, electrical, controls, software, industrial design, and service. Three to six months on the floor in Seri Kembangan, with the engineers who designed the machines you'll touch.",

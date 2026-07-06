@@ -31,7 +31,7 @@ export function QuoteForm({
       >
         <div className="font-mono text-xs uppercase tracking-widest text-[color:var(--color-signal)] mb-3 flex items-center gap-2">
           <span className="h-1.5 w-1.5 bg-[color:var(--color-signal)] animate-pulse" />
-          Received
+          {t('received')}
         </div>
         <p className="font-display text-2xl">{t('thanks')}</p>
       </motion.div>
@@ -74,7 +74,7 @@ export function QuoteForm({
           {pending ? (
             <span className="inline-flex items-center gap-2">
               <span className="inline-block h-2 w-2 rounded-full bg-current animate-pulse" />
-              Sending…
+              {t('sending')}
             </span>
           ) : (
             <>{t('submit')} →</>

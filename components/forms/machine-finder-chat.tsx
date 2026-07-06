@@ -336,8 +336,9 @@ function RoleLabel({ isUser }: { isUser: boolean }) {
 }
 
 function ThinkingDots() {
+  const t = useTranslations('common');
   return (
-    <div className="flex items-center gap-1.5 py-1" aria-label="Thinking">
+    <div className="flex items-center gap-1.5 py-1" aria-label={t('thinking')}>
       {[0, 1, 2].map((i) => (
         <motion.span
           key={i}

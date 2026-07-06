@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useDragRotate } from '@/components/motion/use-drag-rotate';
 
 type Face = { image: string; label: string; slug: string };
@@ -29,6 +30,7 @@ const FACE_TF = [
  * Mobile / reduced-motion: a static 6-image grid.
  */
 export function MachineCube({ faces }: Props) {
+  const t = useTranslations('common');
   const stage = useRef<HTMLDivElement>(null);
   const cube = useRef<HTMLDivElement>(null);
   const six = faces.slice(0, 6);
@@ -59,7 +61,7 @@ export function MachineCube({ faces }: Props) {
       >
         <div className="absolute top-[16%] left-1/2 -translate-x-1/2 z-10 text-center pointer-events-none">
           <div className="font-mono text-[10px] uppercase tracking-[0.4em] text-[color:var(--color-signal)]">
-            Drag to rotate · 6 machines
+            {t('dragToRotate')} · {t('machinesCount', { n: 6 })}
           </div>
         </div>
 

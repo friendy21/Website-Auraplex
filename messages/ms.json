@@ -13,6 +13,7 @@
     "yearReview": "Ulasan 2026",
     "internship": "Latihan Industri",
     "about": "Tentang Kami",
+    "company": "Syarikat",
     "contact": "Hubungi",
     "quote": "Dapatkan sebut harga",
     "whatsapp": "WhatsApp kami"
@@ -258,6 +259,8 @@
     "seeAll": "Lihat semua mesin",
     "detail": {
       "categoryEyebrowSpeedSuffix": "unit/min",
+      "noPhotoEyebrow": "Di lantai kilang · foto belum tersedia",
+      "noPhotoBody": "Mesin {family} ini dibina dan diservis dari lantai kilang kami di Seri Kembangan. Bercakap dengan jurutera di bawah untuk foto, lukisan dan spesifikasi tersuai.",
       "summaryHeading": "Spesifikasi",
       "specsFallback": "Spesifikasi penuh untuk mesin ini — lengkung kelajuan, kesesuaian bekas, dimensi, keperluan kuasa dan udara — tersedia atas permintaan. Muat turun helaian spesifikasi di atas atau berbual dengan jurutera untuk pecahan yang disesuaikan.",
       "fromLabel": "Dari",
@@ -429,6 +432,16 @@
   },
   "common": {
     "stickyCta": "Dapatkan sebut harga",
+    "skipToContent": "Langkau ke kandungan",
+    "step": "Langkah",
+    "faq": "Soalan Lazim",
+    "prevMachine": "Mesin sebelumnya",
+    "nextMachine": "Mesin seterusnya",
+    "thinking": "Sedang berfikir",
+    "language": "Bahasa",
+    "dragToSpin": "seret untuk pusing",
+    "dragToRotate": "Seret untuk putar",
+    "machinesCount": "{n} mesin",
     "whatsapp": "WhatsApp",
     "whatsappAria": "WhatsApp kami",
     "whatsappDefaultMsg": "Hi Auraplex, saya ingin mengetahui lebih lanjut tentang mesin anda.",
@@ -615,6 +628,11 @@
         "footnote": "Merentas makanan, minuman, FMCG dan pelabelan industri — serta pengeluar di seluruh ASEAN."
       },
       "eyebrow": "Tentang Auraplex · Seri Kembangan",
+      "gallery": {
+        "eyebrow": "Dalam Auraplex",
+        "heading": "Dibina di lantai kilang.",
+        "sub": "Direka, dibina dan diuji di Seri Kembangan."
+      },
       "h1Line1": "Kami mereka mesin",
       "h1Line2": "untuk lantai yang kami lawati.",
       "p1": "Auraplex ialah syarikat kejuruteraan di Seri Kembangan, Selangor. Kami mereka, membina, memasang dan menyokong mesin pelabel pelekat sendiri, mesin pembungkusan, pencetak 3D dan automasi khusus untuk pengeluar di seluruh ASEAN — di bawah satu bumbung, dengan satu pasukan.",
@@ -643,6 +661,7 @@
     },
     "services": {
       "eyebrow": "Khidmat",
+      "carouselEyebrow": "Mesin yang kami pasang & servis",
       "h1Line1": "Kami bukan sekadar menghantar mesin.",
       "h1Line2": "Kami menghantar barisan yang berfungsi.",
       "subtitle": "Setiap pemasangan Auraplex termasuk pentauliahan, serahan operator, dan jurutera servis tempatan yang sedia membantu. Empat disiplin, semuanya di bawah satu bumbung di Seri Kembangan.",
@@ -830,6 +849,8 @@
     },
     "internship": {
       "eyebrow": "Latihan Industri · Auraplex Seri Kembangan",
+      "teamCaption": "Pasukan Auraplex · MIMF, Kuala Lumpur",
+      "teamAlt": "Pasukan kejuruteraan Auraplex di gerai pameran mereka di MIMF, Kuala Lumpur",
       "h1Line1": "Jurutera mesin",
       "h1Line2": "yang anda belajar.",
       "lede": "Latihan industri bergaji merentas enam disiplin — mekanikal, elektrikal, kawalan, perisian, reka bentuk perindustrian, dan servis. Tiga hingga enam bulan di lantai kilang Seri Kembangan, bersama jurutera yang mereka mesin yang anda akan sentuh.",

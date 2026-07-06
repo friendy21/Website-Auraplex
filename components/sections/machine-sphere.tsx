@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useDragRotate } from '@/components/motion/use-drag-rotate';
 
 type Item = { image: string; slug: string; name: string };
@@ -32,6 +33,7 @@ function cardTransform(i: number): string {
  * Mobile / reduced-motion: a static photo grid (drag/3D skipped).
  */
 export function MachineSphere({ items, slides }: Props) {
+  const t = useTranslations('common');
   const stage = useRef<HTMLDivElement>(null);
   const sphere = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
@@ -81,7 +83,7 @@ export function MachineSphere({ items, slides }: Props) {
 
         <div className="absolute left-6 lg:left-[8%] top-1/2 -translate-y-1/2 z-10 max-w-xs pointer-events-none">
           <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-4">
-            — Auraplex · drag to spin
+            — Auraplex · {t('dragToSpin')}
           </div>
           <h2 className="font-display text-[clamp(2rem,3.5vw,3rem)] tracking-[-0.02em] leading-[1.02] mb-3">
             {slides[active]?.title}

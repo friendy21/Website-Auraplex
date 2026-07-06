@@ -54,6 +54,7 @@ const hexA = (hex: string, a: number) => {
  */
 export function MachineAccordion({ items }: Props) {
   const t = useTranslations('home.showcaseAccordion');
+  const tc = useTranslations('common');
   const [active, setActive] = useState(0);
   const [inView, setInView] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -125,7 +126,7 @@ export function MachineAccordion({ items }: Props) {
               <button
                 type="button"
                 onClick={() => go(-1)}
-                aria-label="Previous machine"
+                aria-label={tc('prevMachine')}
                 className="h-10 w-10 grid place-items-center rounded-full border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)] hover:border-[color:var(--color-signal)] hover:-translate-y-px transition"
               >
                 ←
@@ -133,7 +134,7 @@ export function MachineAccordion({ items }: Props) {
               <button
                 type="button"
                 onClick={() => go(1)}
-                aria-label="Next machine"
+                aria-label={tc('nextMachine')}
                 className="h-10 w-10 grid place-items-center rounded-full border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)] hover:border-[color:var(--color-signal)] hover:-translate-y-px transition"
               >
                 →

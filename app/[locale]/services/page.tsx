@@ -168,7 +168,7 @@ export default async function ServicesPage({
       <section className="border-t border-[color:var(--color-neutral-700)] bg-[color:var(--color-ink)] py-20 overflow-hidden">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12 mb-2">
           <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)]">
-            — The machines we install &amp; service
+            — {t('carouselEyebrow')}
           </div>
         </div>
         <AutoCarousel3D

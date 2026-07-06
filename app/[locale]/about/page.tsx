@@ -105,9 +105,9 @@ export default async function AboutPage({
 
       {/* ────── MACHINE GALLERY (scroll-reveal, dark band) ────── */}
       <AboutGallery
-        eyebrow="Inside Auraplex"
-        heading="Built on the floor."
-        sub="Designed, built and tested in Seri Kembangan."
+        eyebrow={t('gallery.eyebrow')}
+        heading={t('gallery.heading')}
+        sub={t('gallery.sub')}
         items={MACHINES.filter((m) => m.image).slice(0, 6).map((m) => ({
           src: m.image as string,
           alt: m.name,

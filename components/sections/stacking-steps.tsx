@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl';
+
 type Step = { num: string; name: string; summary: string };
 
 /**
@@ -11,6 +13,7 @@ type Step = { num: string; name: string; summary: string };
  * and reads cleanly top-to-bottom.
  */
 export function StackingSteps({ steps }: { steps: Step[] }) {
+  const t = useTranslations('common');
   return (
     <ol className="relative m-0 list-none border-l border-[color:var(--color-neutral-700)] p-0 pl-6 md:pl-10">
       {steps.map((step) => (
@@ -30,7 +33,7 @@ export function StackingSteps({ steps }: { steps: Step[] }) {
             </div>
             <div className="max-w-2xl">
               <div className="mb-3 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)]">
-                Step {step.num}
+                {t('step')} {step.num}
               </div>
               <h3 className="mb-4 font-display text-[clamp(1.75rem,4vw,3rem)] leading-[1.05] tracking-[-0.02em]">
                 {step.name}

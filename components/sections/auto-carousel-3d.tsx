@@ -3,6 +3,7 @@
 import { useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import { useDragRotate } from '@/components/motion/use-drag-rotate';
 
 type Item = { image: string; slug: string; name: string };
@@ -16,6 +17,7 @@ type Props = { items: Item[] };
  * machine; drags don't misfire a navigation.
  */
 export function AutoCarousel3D({ items }: Props) {
+  const t = useTranslations('common');
   const stage = useRef<HTMLDivElement>(null);
   const ring = useRef<HTMLDivElement>(null);
   const n = items.length;
@@ -34,7 +36,7 @@ export function AutoCarousel3D({ items }: Props) {
       className="acx-scene h-[58vh] min-h-[400px] w-full select-none"
       style={{ cursor: 'grab', touchAction: 'pan-y' }}
       role="list"
-      aria-label="Auraplex machines — drag to spin"
+      aria-label={`Auraplex — ${t('dragToSpin')}`}
       onClickCapture={(e) => {
         if (moved.current > 6) {
           e.preventDefault();
