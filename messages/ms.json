@@ -271,7 +271,47 @@
       "specSheetTrigger": "Muat turun helaian spesifikasi",
       "specSheetTitle": "Dapatkan helaian spesifikasi",
       "specSheetBody": "Kami akan e-mel PDF penuh — dimensi, lengkung kelajuan, carta bekas, keperluan pemasangan.",
-      "specSheetSent": "Dihantar. Semak peti masuk anda."
+      "specSheetSent": "Dihantar. Semak peti masuk anda.",
+      "pricingLabel": "Harga",
+      "pricingValue": "Sebut harga ikut barisan",
+      "pricingNote": "Diberi harga mengikut bekas dan hasil pengeluaran anda — biasanya dalam 1 hari bekerja.",
+      "quickSpec": {
+        "family": "Keluarga",
+        "origin": "Asal",
+        "originValue": "Seri Kembangan, MY",
+        "photography": "Fotografi",
+        "shots": "{n} foto",
+        "pending": "Belum ada",
+        "leadTime": "Masa penghantaran",
+        "leadTimeValue": "Atas permintaan",
+        "support": "Sokongan",
+        "supportValue": "Pemasangan & alat ganti tempatan",
+        "model": "Model 3D",
+        "modelInteractive": "Interaktif",
+        "modelOnRequest": "Atas permintaan"
+      },
+      "proofRail": {
+        "engineeredIn": "Direka di",
+        "engineeredInValue": "Seri Kembangan, Selangor",
+        "recognition": "Pengiktirafan",
+        "recognitionValue": "MIMF 2024",
+        "support": "Sokongan",
+        "supportValue": "Pemasangan, alat ganti & servis tempatan",
+        "built": "Dibina",
+        "builtValue": "Direka, dibuat & diuji sendiri",
+        "view": "Lihat"
+      },
+      "related": {
+        "moreIn": "Lagi dalam {family}",
+        "heading": "Bandingkan dalam keluarga.",
+        "viewAll": "Lihat semua",
+        "pending": "Belum difoto"
+      },
+      "gallery": {
+        "aria": "Galeri {name}",
+        "showView": "Tunjuk pandangan {n}",
+        "viewSuffix": "pandangan {n}"
+      }
     },
     "applications": {
       "title": "Layari mengikut aplikasi",

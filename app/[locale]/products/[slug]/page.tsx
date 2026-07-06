@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { setRequestLocale } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Button } from '@/components/primitives/button';
 import { QuoteForm } from '@/components/forms/quote-form';
 import { SpecSheetGate } from '@/components/forms/spec-sheet-gate';
@@ -52,6 +52,7 @@ export default async function ProductPage({
 }) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
+  const td = await getTranslations('products.detail');
 
   const p = getMachine(slug);
   if (!p) notFound();
@@ -130,7 +131,7 @@ export default async function ProductPage({
         <div className="col-span-12 lg:col-span-5 lg:pl-4 flex flex-col">
           <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-4">
             — {categoryLabel(p.category)}
-            {p.speed != null && <> · {p.speed} units/min</>}
+            {p.speed != null && <> · {p.speed} {td('categoryEyebrowSpeedSuffix')}</>}
           </div>
 
           <h1 className="font-display text-[clamp(2.5rem,6vw,5rem)] tracking-[-0.02em] leading-[0.95]">
@@ -170,7 +171,7 @@ export default async function ProductPage({
             {p.monthlyPrice != null ? (
               <>
                 <div className="font-mono text-xs uppercase tracking-widest text-[color:var(--color-steel)]">
-                  From
+                  {td('fromLabel')}
                 </div>
                 <div className="font-display text-5xl text-[color:var(--color-signal)] split-flap">
                   {formatRM(p.monthlyPrice)}
@@ -180,14 +181,13 @@ export default async function ProductPage({
             ) : (
               <>
                 <div className="font-mono text-xs uppercase tracking-widest text-[color:var(--color-steel)]">
-                  Pricing
+                  {td('pricingLabel')}
                 </div>
                 <div className="font-display text-3xl text-[color:var(--color-paper)] mt-1">
-                  Quoted per line
+                  {td('pricingValue')}
                 </div>
                 <div className="font-mono text-xs text-[color:var(--color-steel)] mt-2">
-                  Priced for your containers and throughput — typically within
-                  1 business day.
+                  {td('pricingNote')}
                 </div>
               </>
             )}
@@ -195,20 +195,20 @@ export default async function ProductPage({
 
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild>
-              <Link href="#quote">Get a quote →</Link>
+              <Link href="#quote">{td('getQuote')} →</Link>
             </Button>
             {hasMachineModel(slug) && (
               <Button asChild variant="ghost">
-                <Link href={`/products/${slug}/configurator`}>3D configurator →</Link>
+                <Link href={`/${locale}/products/${slug}/configurator`}>{td('openConfigurator')} →</Link>
               </Button>
             )}
             <Button asChild variant="ghost">
               <a
-                href={whatsappLink(`Interested in the ${p.name}`)}
+                href={whatsappLink(td('whatsappMsg', { name: p.name }))}
                 target="_blank"
                 rel="noreferrer"
               >
-                WhatsApp →
+                {td('whatsapp')} →
               </a>
             </Button>
             <SpecSheetGate productSlug={slug} locale={locale} />
@@ -221,20 +221,17 @@ export default async function ProductPage({
       {p.specs.length > 0 ? (
         <section className="mx-auto max-w-[1600px] px-6 lg:px-12 py-24 border-t border-[color:var(--color-neutral-700)]">
           <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6">
-            — Specifications
+            — {td('summaryHeading')}
           </div>
           <SpecTable specs={p.specs} />
         </section>
       ) : (
         <section className="mx-auto max-w-[1600px] px-6 lg:px-12 py-24 border-t border-[color:var(--color-neutral-700)]">
           <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6">
-            — Specifications
+            — {td('summaryHeading')}
           </div>
           <p className="prose-editorial text-[color:var(--color-steel-soft)] max-w-2xl">
-            Full specifications for this machine — throughput curves, container
-            compatibility, dimensions, power and air requirements — are available
-            on request. Download the spec sheet above or talk to an engineer for
-            a tailored breakdown.
+            {td('specsFallback')}
           </p>
         </section>
       )}
@@ -250,10 +247,10 @@ export default async function ProductPage({
         className="mx-auto max-w-3xl px-6 lg:px-12 py-32"
       >
         <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-4">
-          — Talk to an engineer
+          — {td('talkToEngineerEyebrow')}
         </div>
         <h2 className="font-display text-4xl md:text-5xl mb-12">
-          Get a detailed quote.
+          {td('getDetailedQuote')}
         </h2>
         <QuoteForm productSlug={slug} locale={locale} />
       </section>

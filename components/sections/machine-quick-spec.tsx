@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl';
+
 type Props = {
   family: string;
   photos: number;
@@ -13,13 +15,14 @@ type Props = {
  * and whether an interactive 3D model exists — in a quick, honest grid.
  */
 export function MachineQuickSpec({ family, photos, hasModel }: Props) {
+  const t = useTranslations('products.detail.quickSpec');
   const cells: { k: string; v: string }[] = [
-    { k: 'Family', v: family },
-    { k: 'Origin', v: 'Seri Kembangan, MY' },
-    { k: 'Photography', v: photos > 0 ? `${photos} shots` : 'Pending' },
-    { k: 'Lead time', v: 'On request' },
-    { k: 'Support', v: 'Local install & parts' },
-    { k: '3D model', v: hasModel ? 'Interactive' : 'On request' },
+    { k: t('family'), v: family },
+    { k: t('origin'), v: t('originValue') },
+    { k: t('photography'), v: photos > 0 ? t('shots', { n: photos }) : t('pending') },
+    { k: t('leadTime'), v: t('leadTimeValue') },
+    { k: t('support'), v: t('supportValue') },
+    { k: t('model'), v: hasModel ? t('modelInteractive') : t('modelOnRequest') },
   ];
 
   return (

@@ -271,7 +271,47 @@
       "specSheetTrigger": "Download spec sheet",
       "specSheetTitle": "Get the spec sheet",
       "specSheetBody": "We'll email the full PDF — dimensions, throughput curves, container chart, installation requirements.",
-      "specSheetSent": "Sent. Check your inbox."
+      "specSheetSent": "Sent. Check your inbox.",
+      "pricingLabel": "Pricing",
+      "pricingValue": "Quoted per line",
+      "pricingNote": "Priced for your containers and throughput — typically within 1 business day.",
+      "quickSpec": {
+        "family": "Family",
+        "origin": "Origin",
+        "originValue": "Seri Kembangan, MY",
+        "photography": "Photography",
+        "shots": "{n} shots",
+        "pending": "Pending",
+        "leadTime": "Lead time",
+        "leadTimeValue": "On request",
+        "support": "Support",
+        "supportValue": "Local install & parts",
+        "model": "3D model",
+        "modelInteractive": "Interactive",
+        "modelOnRequest": "On request"
+      },
+      "proofRail": {
+        "engineeredIn": "Engineered in",
+        "engineeredInValue": "Seri Kembangan, Selangor",
+        "recognition": "Recognition",
+        "recognitionValue": "MIMF 2024",
+        "support": "Support",
+        "supportValue": "Local install, parts & service",
+        "built": "Built",
+        "builtValue": "Designed, made & tested in-house",
+        "view": "View"
+      },
+      "related": {
+        "moreIn": "More in {family}",
+        "heading": "Compare across the family.",
+        "viewAll": "View all",
+        "pending": "Photography pending"
+      },
+      "gallery": {
+        "aria": "{name} gallery",
+        "showView": "Show view {n}",
+        "viewSuffix": "view {n}"
+      }
     },
     "applications": {
       "title": "Browse by application",

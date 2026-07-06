@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
 type RelatedItem = { slug: string; name: string; image: string | null };
 type Props = {
@@ -16,6 +17,7 @@ type Props = {
  * index. Photographed machines surface first.
  */
 export function RelatedMachines({ family, familyKey, items }: Props) {
+  const t = useTranslations('products.detail.related');
   if (!items.length) return null;
 
   return (
@@ -23,17 +25,17 @@ export function RelatedMachines({ family, familyKey, items }: Props) {
       <div className="mb-10 flex items-end justify-between gap-4">
         <div>
           <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-3">
-            — More in {family}
+            — {t('moreIn', { family })}
           </div>
           <h2 className="font-display text-3xl md:text-4xl tracking-[-0.02em]">
-            Compare across the family.
+            {t('heading')}
           </h2>
         </div>
         <Link
           href={`/products?category=${familyKey}`}
           className="shrink-0 font-mono text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-steel)] hover:text-[color:var(--color-signal)] transition"
         >
-          View all →
+          {t('viewAll')} →
         </Link>
       </div>
 
@@ -62,7 +64,7 @@ export function RelatedMachines({ family, familyKey, items }: Props) {
                 />
               ) : (
                 <div className="absolute inset-0 grid place-items-center font-mono text-[9px] uppercase tracking-[0.2em] text-[color:var(--color-neutral-400)]">
-                  Photography pending
+                  {t('pending')}
                 </div>
               )}
             </div>

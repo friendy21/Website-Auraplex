@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import { AnimatePresence, motion, useInView } from 'motion/react';
 import { CursorSpotlight } from '@/components/motion/cursor-spotlight';
 import { TiltCard } from '@/components/motion/tilt-card';
@@ -34,6 +35,7 @@ type Props = {
  *     elements never claim the same name.
  */
 export function ProductGallery({ images, alt, productId }: Props) {
+  const t = useTranslations('products.detail');
   const [active, setActive] = useState(0);
   const reduced = useReducedMotion();
 
@@ -72,7 +74,7 @@ export function ProductGallery({ images, alt, productId }: Props) {
             >
               <Image
                 src={images[active]}
-                alt={active === 0 ? alt : `${alt} — view ${active + 1}`}
+                alt={active === 0 ? alt : `${alt} — ${t('gallery.viewSuffix', { n: active + 1 })}`}
                 fill
                 sizes="(max-width: 1024px) 100vw, 60vw"
                 priority={active === 0}
@@ -107,12 +109,12 @@ export function ProductGallery({ images, alt, productId }: Props) {
       {hasThumbs && (
         <div className="mt-3 space-y-3">
           <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)]">
-            Gallery · {images.length} shots
+            {t('galleryLabel', { count: images.length })}
           </div>
           <div
             ref={stripRef}
             role="listbox"
-            aria-label={`${alt} gallery`}
+            aria-label={t('gallery.aria', { name: alt })}
             className="grid grid-cols-4 md:grid-cols-6 gap-3"
             onKeyDown={(e) => {
               if (e.key === 'ArrowRight') {
@@ -132,7 +134,7 @@ export function ProductGallery({ images, alt, productId }: Props) {
                   type="button"
                   role="option"
                   aria-selected={isActive}
-                  aria-label={`Show view ${i + 1}`}
+                  aria-label={t('gallery.showView', { n: i + 1 })}
                   onClick={() => setActive(i)}
                   initial={{ opacity: 0, y: reduced ? 0 : 14 }}
                   animate={

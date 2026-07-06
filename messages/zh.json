@@ -271,7 +271,47 @@
       "specSheetTrigger": "下载规格说明书",
       "specSheetTitle": "获取规格说明书",
       "specSheetBody": "我们会将完整 PDF 发送到您的邮箱——尺寸、产量曲线、容器对照表、安装要求。",
-      "specSheetSent": "已发送。请查收邮箱。"
+      "specSheetSent": "已发送。请查收邮箱。",
+      "pricingLabel": "价格",
+      "pricingValue": "按生产线报价",
+      "pricingNote": "根据您的容器与产量报价 — 通常在 1 个工作日内。",
+      "quickSpec": {
+        "family": "系列",
+        "origin": "产地",
+        "originValue": "Seri Kembangan, MY",
+        "photography": "拍摄",
+        "shots": "{n} 张照片",
+        "pending": "待拍摄",
+        "leadTime": "交货期",
+        "leadTimeValue": "询价",
+        "support": "支持",
+        "supportValue": "本地安装与零件",
+        "model": "3D 模型",
+        "modelInteractive": "可交互",
+        "modelOnRequest": "询价"
+      },
+      "proofRail": {
+        "engineeredIn": "设计制造于",
+        "engineeredInValue": "Seri Kembangan, Selangor",
+        "recognition": "荣誉",
+        "recognitionValue": "MIMF 2024",
+        "support": "支持",
+        "supportValue": "本地安装、零件与服务",
+        "built": "制造",
+        "builtValue": "自主设计、制造与测试",
+        "view": "查看"
+      },
+      "related": {
+        "moreIn": "更多 {family}",
+        "heading": "同系列对比。",
+        "viewAll": "查看全部",
+        "pending": "待拍摄"
+      },
+      "gallery": {
+        "aria": "{name} 图库",
+        "showView": "显示视图 {n}",
+        "viewSuffix": "视图 {n}"
+      }
     },
     "applications": {
       "title": "按应用浏览",

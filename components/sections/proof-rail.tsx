@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 type Props = { className?: string };
 
@@ -11,14 +12,14 @@ type Props = { className?: string };
  * services from Seri Kembangan, Selangor; was recognised at MIMF 2024; offers
  * local install, parts and service. No invented metrics.
  */
-const ITEMS: { k: string; v: string; href?: string }[] = [
-  { k: 'Engineered in', v: 'Seri Kembangan, Selangor' },
-  { k: 'Recognition', v: 'MIMF 2024', href: '/case-studies' },
-  { k: 'Support', v: 'Local install, parts & service' },
-  { k: 'Built', v: 'Designed, made & tested in-house' },
-];
-
 export function ProofRail({ className = '' }: Props) {
+  const t = useTranslations('products.detail.proofRail');
+  const ITEMS: { k: string; v: string; href?: string }[] = [
+    { k: t('engineeredIn'), v: t('engineeredInValue') },
+    { k: t('recognition'), v: t('recognitionValue'), href: '/case-studies' },
+    { k: t('support'), v: t('supportValue') },
+    { k: t('built'), v: t('builtValue') },
+  ];
   return (
     <section
       className={`border-y border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)]/40 ${className}`}
@@ -48,7 +49,7 @@ export function ProofRail({ className = '' }: Props) {
                   >
                     {inner}
                     <span className="mt-2 inline-block font-mono text-[9px] uppercase tracking-[0.2em] text-[color:var(--color-signal)] opacity-0 group-hover:opacity-100 transition-opacity">
-                      View →
+                      {t('view')} →
                     </span>
                   </Link>
                 ) : (
