@@ -79,8 +79,8 @@ export async function submitInternship(
 
   try {
     await resend.emails.send({
-      from: 'Auraplex <hello@auraplex.my>',
-      to: ['hello@auraplex.my'],
+      from: 'Auraplex <hello@auraplex.com.my>',
+      to: ['sales.auraplex@gmail.com'],
       replyTo: parsed.data.email,
       subject: `[INTERN] ${parsed.data.name} · ${parsed.data.university} · ${parsed.data.field}`,
       react: NewLeadInternal({
@@ -90,7 +90,7 @@ export async function submitInternship(
       }),
     });
     await resend.emails.send({
-      from: 'Auraplex <hello@auraplex.my>',
+      from: 'Auraplex <hello@auraplex.com.my>',
       to: [parsed.data.email],
       subject: 'Thanks — we received your internship application',
       react: ContactAck({ name: parsed.data.name }),

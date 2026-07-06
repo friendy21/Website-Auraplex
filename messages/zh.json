@@ -231,6 +231,8 @@
     "viewMachineLong": "查看机器",
     "from": "起价",
     "catalogueLine": "目录 / 2026 · {count} 台机器",
+    "tickerWords": ["贴标", "包装", "自动化", "环绕", "打印贴标", "雪兰莪制造", "30 台机器", "服务东盟"],
+    "marqueeText": "精密 · 工程制造 · 雪兰莪",
     "categories": {
       "all": "全部",
       "labelling": "贴标",
@@ -822,7 +824,7 @@
         "h2Line1": "毕业生或资深工程师?",
         "h2Line2": "投递您的简历。",
         "body": "不是实习申请?请将简历发送给我们,并附上一段简短说明,告诉我们您最感兴趣的学科。我们保留一份滚动候选名单 — 当我们准备招聘时,会从这份名单开始。",
-        "email": "邮件至 careers@auraplex.my",
+        "email": "邮件至 sales.auraplex@gmail.com",
         "about": "关于 Auraplex"
       }
     },

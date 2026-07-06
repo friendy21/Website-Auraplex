@@ -231,6 +231,8 @@
     "viewMachineLong": "View machine",
     "from": "From",
     "catalogueLine": "Catalogue / 2026 · {count} machines",
+    "tickerWords": ["Labelling", "Packaging", "Automation", "Wrap-Around", "Print & Apply", "Built in Selangor", "30 Machines", "ASEAN-ready"],
+    "marqueeText": "PRECISION · ENGINEERED · IN SELANGOR",
     "categories": {
       "all": "All",
       "labelling": "Labelling",
@@ -822,7 +824,7 @@
         "h2Line1": "Graduate or experienced engineer?",
         "h2Line2": "Send your CV.",
         "body": "Not an internship application? Email your CV with a short note about which discipline interests you most. We keep a rolling shortlist — when we're ready to hire, the shortlist is where we start.",
-        "email": "Email careers@auraplex.my",
+        "email": "Email sales.auraplex@gmail.com",
         "about": "About Auraplex"
       }
     },

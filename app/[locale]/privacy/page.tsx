@@ -70,7 +70,7 @@ export default async function PrivacyPage({
             43300 Seri Kembangan, Selangor. For data-protection matters we are
             the data controller responsible for your personal data, and you can
             reach us at{' '}
-            <MailLink to="privacy@auraplex.my" />.
+            <MailLink to="sales.auraplex@gmail.com" />.
           </p>
         </Section>
 
@@ -213,7 +213,7 @@ export default async function PrivacyPage({
           </ul>
           <p className="mt-3">
             To exercise any of these, email{' '}
-            <MailLink to="privacy@auraplex.my" />. We aim to respond within 21
+            <MailLink to="sales.auraplex@gmail.com" />. We aim to respond within 21
             days.
           </p>
         </Section>
@@ -237,7 +237,7 @@ export default async function PrivacyPage({
         <Section title="12. Contact us">
           <p>
             Questions about this policy or your data? Email{' '}
-            <MailLink to="privacy@auraplex.my" /> or call our hotline at{' '}
+            <MailLink to="sales.auraplex@gmail.com" /> or call our hotline at{' '}
             <strong>1700-82-6502</strong>. You may also write to us at the
             address in section 1.
           </p>

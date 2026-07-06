@@ -68,15 +68,15 @@ export async function submitQuote(_prev: ActionState, formData: FormData): Promi
 
   try {
     await resend.emails.send({
-      from: 'Auraplex <hello@auraplex.my>',
-      to: ['sales@auraplex.my'],
+      from: 'Auraplex <hello@auraplex.com.my>',
+      to: ['sales.auraplex@gmail.com'],
       replyTo: parsed.data.email,
       subject: `[Quote] ${parsed.data.company} — ${parsed.data.productSlug ?? 'general'}`,
       react: NewLeadInternal({ kind: 'quote', data: parsed.data, leadId }),
     });
 
     await resend.emails.send({
-      from: 'Auraplex <hello@auraplex.my>',
+      from: 'Auraplex <hello@auraplex.com.my>',
       to: [parsed.data.email],
       subject: 'Thanks — we received your quote request',
       react: QuoteAck({ name: parsed.data.name, productName: parsed.data.productSlug }),

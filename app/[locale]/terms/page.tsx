@@ -192,10 +192,10 @@ export default async function TermsPage({
           <p>
             Questions about these Terms? Email{' '}
             <a
-              href="mailto:hello@auraplex.my"
+              href="mailto:sales.auraplex@gmail.com"
               className="text-[color:var(--color-signal)] underline underline-offset-4 decoration-1 hover:text-[color:var(--color-signal-bright)]"
             >
-              hello@auraplex.my
+              sales.auraplex@gmail.com
             </a>{' '}
             or call <strong>1700-82-6502</strong>.
           </p>

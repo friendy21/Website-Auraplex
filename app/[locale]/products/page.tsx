@@ -144,16 +144,7 @@ export default async function ProductsPage({
         machines={getFeaturedMachines()}
         featuredLabel={t('featuredBadge')}
         viewLabel={t('viewMachine')}
-        tickerWords={[
-          'Labelling',
-          'Packaging',
-          'Automation',
-          'Wrap-Around',
-          'Print & Apply',
-          'Built in Selangor',
-          '30 Machines',
-          'ASEAN-ready',
-        ]}
+        tickerWords={t.raw('tickerWords') as string[]}
       />
 
       {/* ────── APPLICATION-FIRST BROWSE ────── */}
@@ -178,7 +169,7 @@ export default async function ProductsPage({
       {/* ────── PARALLAX MARQUEE CLOSER BAND ────── */}
       <ParallaxMarqueeBand
         image="/exhibitions/metaltech-2022.jpg"
-        text="PRECISION · ENGINEERED · IN SELANGOR"
+        text={t('marqueeText')}
       />
     </>
   );

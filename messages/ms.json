@@ -231,6 +231,8 @@
     "viewMachineLong": "Lihat mesin",
     "from": "Dari",
     "catalogueLine": "Katalog / 2026 · {count} mesin",
+    "tickerWords": ["Pelabelan", "Pembungkusan", "Automasi", "Balut Keliling", "Cetak & Tampal", "Dibina di Selangor", "30 Mesin", "Sedia ASEAN"],
+    "marqueeText": "PRESISI · DIREKA · DI SELANGOR",
     "categories": {
       "all": "Semua",
       "labelling": "Pelabel",
@@ -822,7 +824,7 @@
         "h2Line1": "Graduan atau jurutera berpengalaman?",
         "h2Line2": "Hantar CV anda.",
         "body": "Bukan permohonan latihan industri? E-mel CV anda dengan nota ringkas tentang disiplin yang paling menarik minat anda. Kami menyimpan senarai pendek bergulir — apabila tiba masa kami mengambil pekerja, senarai pendek adalah tempat kami bermula.",
-        "email": "E-mel careers@auraplex.my",
+        "email": "E-mel sales.auraplex@gmail.com",
         "about": "Tentang Auraplex"
       }
     },

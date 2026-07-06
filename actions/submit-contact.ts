@@ -80,8 +80,8 @@ export async function submitContact(
 
   try {
     await resend.emails.send({
-      from: 'Auraplex <hello@auraplex.my>',
-      to: ['hello@auraplex.my'],
+      from: 'Auraplex <hello@auraplex.com.my>',
+      to: ['sales.auraplex@gmail.com'],
       replyTo: parsed.data.email,
       subject: `${INTENT_SUBJECT[parsed.data.intent]} ${parsed.data.name}${parsed.data.company ? ` · ${parsed.data.company}` : ''}`,
       react: NewLeadInternal({
@@ -91,7 +91,7 @@ export async function submitContact(
       }),
     });
     await resend.emails.send({
-      from: 'Auraplex <hello@auraplex.my>',
+      from: 'Auraplex <hello@auraplex.com.my>',
       to: [parsed.data.email],
       subject: 'Thanks — we received your message',
       react: ContactAck({ name: parsed.data.name }),

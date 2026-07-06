@@ -43,7 +43,7 @@ export async function requestSpecSheet(_prev: ActionState, formData: FormData): 
 
   try {
     await resend.emails.send({
-      from: 'Auraplex <hello@auraplex.my>',
+      from: 'Auraplex <hello@auraplex.com.my>',
       to: [parsed.data.email],
       subject: `${product.name} — spec sheet`,
       react: SpecSheet({
