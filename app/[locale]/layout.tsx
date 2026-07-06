@@ -110,7 +110,6 @@ export default async function LocaleLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema()) }}
         />
-        <link rel="preconnect" href="https://cdn.sanity.io" />
       </head>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>

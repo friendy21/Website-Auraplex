@@ -42,8 +42,6 @@ export default async function ProductsPage({
   const t = await getTranslations('products');
 
   const counts = categoryCounts();
-  const photographed = MACHINES.filter((m) => m.image !== null).length;
-  const _pending = MACHINES.length - photographed;
 
   // Hero machine for the floating visual — first featured machine with a cover.
   const heroMachine = getFeaturedMachines()[0] ?? null;
@@ -175,7 +173,6 @@ export default async function ProductsPage({
         initialSort={sort}
         locale={locale}
         t={tDict}
-        compareT={t.raw('compare') as Record<string, string>}
       />
 
       {/* ────── PARALLAX MARQUEE CLOSER BAND ────── */}

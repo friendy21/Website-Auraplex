@@ -4,12 +4,10 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'motion/react';
 import { ParallaxProductImage } from '@/components/sections/parallax-product-image';
-import { CompareTray } from '@/components/sections/compare-tray';
 import { EmptyState } from '@/components/primitives/empty-state';
 import { machineTags, type Category, type Machine } from '@/lib/catalog';
 
 type SortKey = 'featured' | 'photographed' | 'az';
-const MAX_COMPARE = 4;
 
 interface Props {
   machines: Machine[];
@@ -19,20 +17,17 @@ interface Props {
   initialSort?: SortKey;
   locale: string;
   t: Record<string, string>;
-  compareT: Record<string, string>;
 }
 
 /**
  * ProductsGrid — client-side animated product grid with AnimatePresence.
  *
- * Filtering and sorting happen locally (no full page reload). The URL is
- * silently updated via history.pushState so shareable links still work.
+ * Filtering and sorting happen locally (no full page reload); the URL is
+ * kept in sync (locale-prefixed) so shareable links still work.
  *
  * Animations:
  *   - Category tabs: a sliding signal pill follows the active tab (layoutId).
- *   - Grid items: exit (scale 0.9, opacity 0, y 20), enter (scale 0.9,
- *     opacity 0, y -20), stagger 30ms capped at 400ms total.
- *   - Reordering: motion's layout prop smooths the shuffle.
+ *   - Grid items: staggered enter/exit; motion's `layout` smooths reordering.
  */
 export function ProductsGrid({
   machines,
@@ -42,43 +37,9 @@ export function ProductsGrid({
   initialSort = 'featured',
   locale,
   t,
-  compareT,
 }: Props) {
   const [category, setCategory] = useState<Category | undefined>(initialCategory);
   const [sort, setSort] = useState<SortKey>(initialSort);
-  const [selected, setSelected] = useState<string[]>([]);
-
-  const toggleCompare = (slug: string) =>
-    setSelected((s) =>
-      s.includes(slug)
-        ? s.filter((x) => x !== slug)
-        : s.length >= MAX_COMPARE
-          ? s
-          : [...s, slug],
-    );
-  const selectedMachines = selected
-    .map((slug) => machines.find((m) => m.slug === slug))
-    .filter((m): m is Machine => Boolean(m));
-
-  // Persist the compare shortlist across navigation. State is component-local,
-  // so visiting a detail page and returning previously cleared it — the buyer
-  // who did the most decision work lost it. Restore once on mount, then mirror
-  // to sessionStorage on change.
-  useEffect(() => {
-    try {
-      const saved = sessionStorage.getItem('auraplex:compare');
-      if (saved) setSelected(JSON.parse(saved) as string[]);
-    } catch {
-      /* storage blocked — compare just doesn't persist */
-    }
-  }, []);
-  useEffect(() => {
-    try {
-      sessionStorage.setItem('auraplex:compare', JSON.stringify(selected));
-    } catch {
-      /* ignore */
-    }
-  }, [selected]);
 
   // Silently update URL when filters change (no full reload). Must keep the
   // locale prefix — writing a bare `/products?…` from `/ms/products` stripped
@@ -101,10 +62,6 @@ export function ProductsGrid({
   const photographedCount = sorted.filter((m) => m.image !== null).length;
   const pendingCount = sorted.length - photographedCount;
 
-  const _activeCatIndex = categories.findIndex(
-    (c) => c.key === category || (!category && !c.key),
-  );
-
   return (
     <>
       {/* ── CONTROLS BAR ── */}
@@ -118,6 +75,7 @@ export function ProductsGrid({
                 <button
                   key={c.label}
                   onClick={() => setCategory(c.key)}
+                  aria-pressed={active}
                   className="relative px-3 py-1.5 flex items-center gap-2 transition-colors duration-300"
                 >
                   {active && (
@@ -152,6 +110,7 @@ export function ProductsGrid({
                 <button
                   key={s.key}
                   onClick={() => setSort(s.key)}
+                  aria-pressed={sort === s.key}
                   className={`px-2.5 py-1 transition-colors duration-300 ${
                     sort === s.key
                       ? 'text-[color:var(--color-signal)]'
@@ -207,16 +166,8 @@ export function ProductsGrid({
                   className="group"
                 >
                   <div className="mcard-parent">
-                    {/* Compare toggle — sibling of the Link so it never nests
-                        an interactive control inside the card anchor. */}
-                    <CompareToggle
-                      selected={selected.includes(p.slug)}
-                      atMax={selected.length >= MAX_COMPARE}
-                      onToggle={() => toggleCompare(p.slug)}
-                      label={selected.includes(p.slug) ? compareT.added : compareT.add}
-                    />
                     <Link
-                      href={`/products/${p.slug}`}
+                      href={`/${locale}/products/${p.slug}`}
                       data-cursor="caliper"
                       className="mcard"
                     >
@@ -332,7 +283,7 @@ export function ProductsGrid({
             title={t.noMatch}
             action={
               <Link
-                href="/products"
+                href={`/${locale}/products`}
                 className="font-mono text-sm uppercase tracking-wider text-[color:var(--color-signal)] hover:text-[color:var(--color-signal-bright)] transition"
               >
                 {t.seeAll} →
@@ -341,51 +292,7 @@ export function ProductsGrid({
           />
         )}
       </section>
-
-      <CompareTray
-        machines={selectedMachines}
-        onRemove={(slug) => setSelected((s) => s.filter((x) => x !== slug))}
-        onClear={() => setSelected([])}
-        locale={locale}
-        t={compareT}
-      />
     </>
-  );
-}
-
-/**
- * CompareToggle — a small floating corner control to add/remove a machine from
- * the compare set. Sits at the card's top-right corner, above the badges.
- */
-function CompareToggle({
-  selected,
-  atMax,
-  onToggle,
-  label,
-}: {
-  selected: boolean;
-  atMax: boolean;
-  onToggle: () => void;
-  label: string;
-}) {
-  const dimmed = atMax && !selected;
-  return (
-    <button
-      type="button"
-      onClick={onToggle}
-      disabled={dimmed}
-      aria-pressed={selected}
-      title={label}
-      className={`absolute -top-2 -right-2 z-30 h-8 w-8 grid place-items-center rounded-full border text-xs font-mono backdrop-blur-sm transition-all duration-300 ${
-        selected
-          ? 'border-[color:var(--color-signal)] bg-[color:var(--color-signal)] text-[color:var(--color-ink)] font-bold'
-          : dimmed
-            ? 'border-[color:var(--color-neutral-700)] bg-[color:var(--color-ink)]/70 text-[color:var(--color-neutral-400)] cursor-not-allowed'
-            : 'border-[color:var(--color-neutral-700)] bg-[color:var(--color-ink)]/80 text-[color:var(--color-steel-soft)] hover:border-[color:var(--color-signal)] hover:text-[color:var(--color-signal)]'
-      }`}
-    >
-      {selected ? '✓' : '+'}
-    </button>
   );
 }
 
