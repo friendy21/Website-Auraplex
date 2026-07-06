@@ -1,7 +1,7 @@
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
+import { Link } from '@/lib/navigation';
 import { useTranslations } from 'next-intl';
 import { motion } from 'motion/react';
 import type { ReactNode } from 'react';

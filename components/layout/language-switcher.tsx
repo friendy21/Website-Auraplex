@@ -1,7 +1,7 @@
 'use client';
 
 import { useLocale, useTranslations } from 'next-intl';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter } from '@/lib/navigation';
 import { locales, type Locale } from '@/lib/i18n';
 import { cn } from '@/lib/utils';
 
@@ -17,13 +17,15 @@ const FULL_NAME: Record<Locale, string> = {
 export function LanguageSwitcher() {
   const locale = useLocale();
   const t = useTranslations('common');
+  // next-intl's usePathname returns the path WITHOUT the locale prefix (e.g.
+  // "/about"); its router re-navigates to the same page in the chosen locale
+  // and persists the choice (NEXT_LOCALE cookie) so it survives page changes.
   const pathname = usePathname();
   const router = useRouter();
 
   function switchTo(next: Locale) {
-    const segments = pathname.split('/');
-    segments[1] = next;
-    router.push(segments.join('/'));
+    if (next === locale) return;
+    router.replace(pathname, { locale: next });
   }
 
   return (

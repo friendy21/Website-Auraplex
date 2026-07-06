@@ -1,12 +1,7 @@
 import createMiddleware from 'next-intl/middleware';
-import { locales, defaultLocale } from './lib/i18n';
+import { routing } from './lib/navigation';
 
-export default createMiddleware({
-  locales,
-  defaultLocale,
-  localePrefix: 'always',
-  localeDetection: true,
-});
+export default createMiddleware(routing);
 
 export const config = {
   // Exclude `studio` (Sanity Studio lives at /studio, outside the [locale]
