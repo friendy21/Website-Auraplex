@@ -18,6 +18,8 @@ const NODES: Node[] = [
   { label: 'Singapore', x: 44, y: 58, tier: 2 },
   { label: 'Thailand', x: 22, y: 12, tier: 2 },
   { label: 'Indonesia', x: 56, y: 62, tier: 2 },
+  { label: 'India', x: 7, y: 30, tier: 3 },
+  { label: 'Kazakhstan', x: 13, y: 10, tier: 3 },
   { label: 'Australia', x: 84, y: 60, tier: 3 },
   { label: 'New Zealand', x: 95, y: 64, tier: 3 },
 ];
