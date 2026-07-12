@@ -16,7 +16,7 @@ import { TestimonialMarquee } from '@/components/sections/testimonial-marquee';
 import { FaqSection } from '@/components/sections/faq-section';
 import { CloserSection } from '@/components/sections/closer-section';
 import { ScrollDrawLine } from '@/components/motion/scroll-draw-line';
-import { MachineHyperscroll } from '@/components/sections/machine-hyperscroll';
+import { MachineHyperscrollLazy } from '@/components/sections/machine-hyperscroll-lazy';
 import { MachineAccordion } from '@/components/sections/machine-accordion';
 import { OutlineMarquee } from '@/components/sections/outline-marquee';
 
@@ -116,7 +116,7 @@ export default async function Home({
 
         {/* THE catalogue moment — a scroll-driven 3D flythrough of the real
             machines (Hyper Scroll). Every card links into the catalogue. */}
-        <MachineHyperscroll machines={flythrough} />
+        <MachineHyperscrollLazy machines={flythrough} />
 
         {/* Cinematic expanding-panel accordion — click a machine to expand. */}
         <MachineAccordion items={showcase} />
