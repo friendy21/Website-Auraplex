@@ -16,10 +16,8 @@ import { Magnetic } from '@/components/motion/magnetic';
 import { ImageReveal } from '@/components/motion/image-reveal';
 import { ScanLine } from '@/components/motion/scan-line';
 import { HorizontalScrollSection } from '@/components/motion/horizontal-scroll';
-import { WordCloud } from '@/components/sections/word-cloud';
 import { CategoryRadial } from '@/components/sections/category-radial';
 import { CoverageMap } from '@/components/sections/coverage-map';
-import { MachineSphere } from '@/components/sections/machine-sphere';
 import { ScrollHud } from '@/components/sections/scroll-hud';
 
 export async function generateMetadata({
@@ -36,34 +34,6 @@ export async function generateMetadata({
     locale: ogLocale(locale),
   });
 }
-
-// ────────────────────────────────────────────────────────────────────────
-// Style configs (size + rotate per index) for the word cloud — the
-// actual label text comes from i18n. Keep these 20 entries aligned with
-// the 20 words in messages/*.json → page2026.wordCloud.words.
-// ────────────────────────────────────────────────────────────────────────
-const WORD_STYLES: { size: 'sm' | 'md' | 'lg'; rotate: number }[] = [
-  { size: 'lg', rotate: -3 },
-  { size: 'md', rotate: 2 },
-  { size: 'lg', rotate: -1 },
-  { size: 'sm', rotate: 4 },
-  { size: 'md', rotate: -2 },
-  { size: 'lg', rotate: 1 },
-  { size: 'sm', rotate: -4 },
-  { size: 'md', rotate: 3 },
-  { size: 'lg', rotate: -2 },
-  { size: 'md', rotate: 1 },
-  { size: 'sm', rotate: -3 },
-  { size: 'md', rotate: 2 },
-  { size: 'sm', rotate: -1 },
-  { size: 'lg', rotate: 3 },
-  { size: 'md', rotate: -4 },
-  { size: 'sm', rotate: 2 },
-  { size: 'md', rotate: -2 },
-  { size: 'sm', rotate: 4 },
-  { size: 'lg', rotate: -1 },
-  { size: 'md', rotate: 2 },
-];
 
 // Four real, notable machines from the catalogue for the horizontal showcase —
 // a spread across the families (labelling, 3D printing, vision-labelling,
@@ -88,7 +58,6 @@ export default async function YearInReviewPage({
   const tCommon = await getTranslations('common');
 
   const industries = t.raw('industries') as string[];
-  const words = t.raw('wordCloud.words') as string[];
   const statLabels = (t.raw('stats.items') as { label: string }[]).map(
     (s) => s.label,
   );
@@ -289,28 +258,6 @@ export default async function YearInReviewPage({
         </div>
       </section>
 
-      {/* ────── WORD CLOUD ────── */}
-      <section className="border-y border-[color:var(--color-neutral-200)] bg-[color:var(--color-neutral-100)] py-32">
-        <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
-          <Reveal variant="up">
-            <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-4 text-center">
-              {t('wordCloud.eyebrow')}
-            </div>
-            <h2 className="font-display text-[clamp(2rem,5vw,4.5rem)] tracking-[-0.03em] leading-[1] text-center max-w-3xl mx-auto">
-              {t('wordCloud.h2')}
-            </h2>
-          </Reveal>
-
-          <WordCloud
-            words={words.map((w, i) => ({
-              word: w,
-              size: WORD_STYLES[i]?.size ?? 'md',
-              rotate: WORD_STYLES[i]?.rotate ?? 0,
-            }))}
-          />
-        </div>
-      </section>
-
       {/* ────── BIG-NUMBER STATS ────── */}
       <section className="mx-auto max-w-[1600px] px-6 lg:px-12 py-32 lg:py-48">
         <div className="grid grid-cols-12 gap-6 mb-20">
@@ -395,16 +342,6 @@ export default async function YearInReviewPage({
           </div>
         </div>
       </section>
-
-      {/* ────── ROTATING MACHINE SPHERE (immersive, dark band) ────── */}
-      <MachineSphere
-        items={photographed.map((m) => ({
-          image: m.image as string,
-          slug: m.slug,
-          name: m.name,
-        }))}
-        slides={t.raw('sphereSlides') as { title: string; desc: string }[]}
-      />
 
       {/* ────── ENGINEERING DISCIPLINES ────── */}
       <section className="border-t border-[color:var(--color-neutral-200)] mx-auto max-w-[1600px] px-6 lg:px-12 py-32 lg:py-48">
