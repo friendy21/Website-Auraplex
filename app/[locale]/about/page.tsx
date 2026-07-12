@@ -46,7 +46,7 @@ export default async function AboutPage({
     <>
       <section className="relative min-h-[80dvh] w-full overflow-hidden bg-[color:var(--color-ink)] flex items-end">
         <div
-          className="absolute inset-0 grid grid-cols-4 grid-rows-3 opacity-25"
+          className="absolute inset-0 grid grid-cols-4 grid-rows-3 opacity-45"
           aria-hidden="true"
         >
           {featured
@@ -73,7 +73,7 @@ export default async function AboutPage({
             )}
         </div>
 
-        <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--color-ink)] via-[color:var(--color-ink)]/85 to-[color:var(--color-ink)]/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--color-ink)] via-[color:var(--color-ink)]/80 to-[color:var(--color-ink)]/35" />
 
         <div className="relative z-10 mx-auto max-w-[1600px] w-full px-6 lg:px-12 pb-20 pt-40">
           <Reveal variant="up" immediate>

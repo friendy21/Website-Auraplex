@@ -93,6 +93,39 @@ export default async function CaseStudiesPage({
 
       <ProofRail />
 
+      {/* ── REAL RECOGNITION (leads the page — the actual win) ── */}
+      <section className="mx-auto max-w-[1600px] px-6 lg:px-12 py-32">
+        <div className="grid grid-cols-12 gap-8 lg:gap-6 items-center">
+          <Reveal variant="up" className="col-span-12 lg:col-span-6">
+            <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6">
+              — {t('recognition.eyebrow')}
+            </div>
+            <h2 className="font-display text-[clamp(2.5rem,6vw,5.5rem)] tracking-[-0.03em] leading-[0.92]">
+              {t('recognition.h2Line1')}
+              <br />
+              <span className="text-[color:var(--color-signal)]">{t('recognition.h2Line2')}</span>
+            </h2>
+            <p className="mt-8 prose-editorial text-[color:var(--color-steel-soft)] max-w-xl">
+              {t('recognition.body')}
+            </p>
+            <div className="mt-6 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)]">
+              {t('recognition.date')}
+            </div>
+          </Reveal>
+          <Reveal variant="up" delay={120} className="col-span-12 lg:col-span-6">
+            <div className="relative aspect-[4/3] overflow-hidden border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)]">
+              <Image
+                src="/exhibitions/mimf-2024.jpg"
+                alt={t('recognition.alt')}
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+              />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       <section className="mx-auto max-w-[1600px] px-6 lg:px-12 py-16 border-y border-[color:var(--color-neutral-700)]">
         <div className="grid grid-cols-12 gap-6 items-end">
           <Reveal variant="up" className="col-span-12 md:col-span-4">
@@ -121,39 +154,6 @@ export default async function CaseStudiesPage({
             </div>
             <div className="font-display text-3xl tracking-[-0.01em]">
               {t('divider.filedValue')}
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── REAL RECOGNITION (sourced from auraplex.com.my) ── */}
-      <section className="mx-auto max-w-[1600px] px-6 lg:px-12 py-32">
-        <div className="grid grid-cols-12 gap-8 lg:gap-6 items-center">
-          <Reveal variant="up" className="col-span-12 lg:col-span-6">
-            <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-6">
-              — {t('recognition.eyebrow')}
-            </div>
-            <h2 className="font-display text-[clamp(2.5rem,6vw,5.5rem)] tracking-[-0.03em] leading-[0.92]">
-              {t('recognition.h2Line1')}
-              <br />
-              <span className="text-[color:var(--color-signal)]">{t('recognition.h2Line2')}</span>
-            </h2>
-            <p className="mt-8 prose-editorial text-[color:var(--color-steel-soft)] max-w-xl">
-              {t('recognition.body')}
-            </p>
-            <div className="mt-6 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)]">
-              {t('recognition.date')}
-            </div>
-          </Reveal>
-          <Reveal variant="up" delay={120} className="col-span-12 lg:col-span-6">
-            <div className="relative aspect-[4/3] overflow-hidden border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)]">
-              <Image
-                src="/exhibitions/mimf-2024.jpg"
-                alt={t('recognition.alt')}
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
-              />
             </div>
           </Reveal>
         </div>
