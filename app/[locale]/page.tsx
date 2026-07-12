@@ -1,4 +1,5 @@
 import { setRequestLocale, getTranslations } from 'next-intl/server';
+import { buildMetadata } from '@/lib/seo';
 import {
   categoryCounts,
   getMachinesByCategory,
@@ -18,6 +19,21 @@ import { ScrollDrawLine } from '@/components/motion/scroll-draw-line';
 import { MachineHyperscroll } from '@/components/sections/machine-hyperscroll';
 import { MachineAccordion } from '@/components/sections/machine-accordion';
 import { OutlineMarquee } from '@/components/sections/outline-marquee';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return buildMetadata({
+    title:
+      'Auraplex — Labelling, packaging & automation machines, engineered in Malaysia',
+    description:
+      'Auraplex Sdn Bhd designs, builds, installs and services self-adhesive labelling machines, packaging machinery and 3D-printing automation from Seri Kembangan, Selangor — 30 machines across three families, with local parts and support.',
+    path: `/${locale}`,
+  });
+}
 
 export default async function Home({
   params,
