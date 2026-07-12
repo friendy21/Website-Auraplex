@@ -543,7 +543,6 @@
   "page2026": {
     "eyebrow": "Ulasan Tahun · 2026",
     "hudLabel": "AURAPLEX // ULASAN 2026",
-    "releaseWrapper": "keluaran {name}",
     "coverageAria": "Liputan mesin Auraplex mengalir dari Selangor merentasi Malaysia, ASEAN dan Asia-Pasifik",
     "range": {
       "eyebrow": "Rangkaian, 2026",
@@ -664,31 +663,9 @@
       "body": "Enam disiplin kejuruteraan dalam satu lantai kilang. Setiap mesin yang keluar dari bangunan ini telah disentuh oleh kesemuanya."
     },
     "timeline": {
-      "eyebrow": "§ 05 / Suku demi suku",
-      "h2Line1": "Empat keluaran.",
-      "h2Line2": "Setiap satu mendapat namanya.",
-      "items": [
-        {
-          "q": "Q1",
-          "h": "Two-Side w/ Corner Press dihantar",
-          "note": "Pusingan ke-3 iterasi dipandu pelanggan."
-        },
-        {
-          "q": "Q2",
-          "h": "AR600 mula pengeluaran",
-          "note": "Aditif berkapasiti tinggi untuk pemasangan dalaman."
-        },
-        {
-          "q": "Q3",
-          "h": "Custom Top w/ Checking System",
-          "note": "Barisan reject berintegrasi penglihatan untuk farmaseutikal."
-        },
-        {
-          "q": "Q4",
-          "h": "Kit retrofit Continuous Band v2",
-          "note": "Laluan naik taraf serta-merta untuk v1 asal."
-        }
-      ]
+      "eyebrow": "§ 05 / Mesin demi mesin",
+      "h2Line1": "Empat mesin.",
+      "h2Line2": "Dibina di sini, mengikut pesanan."
     },
     "founder": {
       "eyebrow": "§ 06 / Nota dari lantai kilang",

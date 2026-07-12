@@ -543,7 +543,6 @@
   "page2026": {
     "eyebrow": "Year in Review · 2026",
     "hudLabel": "AURAPLEX // 2026 REVIEW",
-    "releaseWrapper": "the {name} release",
     "coverageAria": "Auraplex machine coverage flows from Selangor across Malaysia, ASEAN and Asia-Pacific",
     "range": {
       "eyebrow": "The range, 2026",
@@ -664,31 +663,9 @@
       "body": "Six engineering disciplines on one floor. Every machine that leaves the building has been touched by all of them."
     },
     "timeline": {
-      "eyebrow": "§ 05 / Quarter by quarter",
-      "h2Line1": "Four releases.",
-      "h2Line2": "Each one earned a name.",
-      "items": [
-        {
-          "q": "Q1",
-          "h": "Two-Side w/ Corner Press shipped",
-          "note": "Round 3 of customer-led iteration."
-        },
-        {
-          "q": "Q2",
-          "h": "AR600 enters production",
-          "note": "High-capacity additive for in-house fixturing."
-        },
-        {
-          "q": "Q3",
-          "h": "Custom Top w/ Checking System",
-          "note": "Vision-integrated reject line for pharma."
-        },
-        {
-          "q": "Q4",
-          "h": "Continuous Band v2 retrofit kits",
-          "note": "Drop-in upgrade path for the original v1."
-        }
-      ]
+      "eyebrow": "§ 05 / Machine by machine",
+      "h2Line1": "Four machines.",
+      "h2Line2": "Built here, to order."
     },
     "founder": {
       "eyebrow": "§ 06 / A note from the floor",

@@ -66,10 +66,17 @@ const WORD_STYLES: { size: 'sm' | 'md' | 'lg'; rotate: number }[] = [
   { size: 'md', rotate: 2 },
 ];
 
-// The "name" each of the four quarterly releases earned — surfaced as the
-// hero of each timeline panel so the section delivers on its headline
-// ("Four releases. Each one earned a name."). Codenames, in release order.
-const RELEASE_NAMES = ['Cornerstone', 'Atlas', 'Argus', 'Encore'];
+// Four real, notable machines from the catalogue for the horizontal showcase —
+// a spread across the families (labelling, 3D printing, vision-labelling,
+// packaging). Real names + real descriptions; no invented "release" codenames
+// or quarterly ship dates (Auraplex builds to order, it doesn't do named
+// quarterly software-style releases).
+const SHOWCASE_SLUGS = [
+  'two-side-labelling-machine-with-corner-press',
+  'ar600-3d-printer',
+  'custom-top-labelling-machine-with-checking-system',
+  'continuous-band-sealing-machine-v2',
+];
 
 export default async function YearInReviewPage({
   params,
@@ -90,11 +97,12 @@ export default async function YearInReviewPage({
     role: string;
     focus: string;
   }[];
-  const timeline = t.raw('timeline.items') as {
-    q: string;
-    h: string;
-    note: string;
-  }[];
+  const showcase = localizeMachines(
+    SHOWCASE_SLUGS.map((s) => MACHINES.find((m) => m.slug === s)).filter(
+      Boolean,
+    ) as typeof MACHINES,
+    locale,
+  );
 
   const featured = localizeMachines(getFeaturedMachines(), locale);
   const photographed = localizeMachines(getMachinesWithCover(), locale);
@@ -466,34 +474,33 @@ export default async function YearInReviewPage({
       </section>
 
       <HorizontalScrollSection overscroll={1.4}>
-        {timeline.map((q, i) => (
+        {showcase.map((m, i) => (
           <div
-            key={i}
+            key={m.slug}
             className="relative w-full md:w-screen min-h-[80vh] md:h-[100dvh] flex-shrink-0 flex flex-col justify-center px-6 py-20 md:py-0 lg:px-24 border-b border-[color:var(--color-neutral-800)] md:border-b-0"
           >
-            {/* Background watermark quarter number */}
+            {/* Background watermark index number */}
             <div
               className="absolute inset-0 flex items-center justify-end pr-12 lg:pr-24 pointer-events-none select-none"
               aria-hidden="true"
             >
               <span className="font-display text-[35vw] leading-none tracking-[-0.04em] text-[color:var(--color-neutral-800)] opacity-30">
-                {q.q.replace('Q', '')}
+                {i + 1}
               </span>
             </div>
 
             <div className="relative z-10 max-w-3xl">
               <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal-bright)] mb-4">
-                {q.q} · 2026 · {t('releaseWrapper', { name: RELEASE_NAMES[i] })}
+                Auraplex · {localizedCategoryLabel(m.category, locale)}
               </div>
-              {/* The name it earned */}
-              <div className="font-display text-[clamp(2.5rem,8vw,7rem)] tracking-[-0.04em] leading-[0.85] text-[color:var(--color-signal)] mb-4">
-                {RELEASE_NAMES[i]}
-              </div>
-              <h3 className="font-display text-[clamp(1.4rem,3.2vw,2.5rem)] tracking-[-0.02em] leading-[1.1] text-[color:var(--color-paper)] mb-6">
-                {q.h}
-              </h3>
+              {/* Real machine name (links into the catalogue) */}
+              <Link href={`/products/${m.slug}`} className="group inline-block">
+                <h3 className="font-display text-[clamp(1.9rem,5vw,4.2rem)] tracking-[-0.03em] leading-[1.02] text-[color:var(--color-signal)] mb-5 max-w-2xl group-hover:opacity-90 transition-opacity">
+                  {m.name}
+                </h3>
+              </Link>
               <p className="text-lg md:text-xl text-[color:var(--color-neutral-300)] leading-relaxed max-w-xl">
-                {q.note}
+                {m.summary}
               </p>
 
               {/* Signal dots + divider */}
@@ -510,7 +517,7 @@ export default async function YearInReviewPage({
                 </div>
                 <div className="h-px flex-1 bg-gradient-to-r from-[color:var(--color-neutral-700)] to-transparent" />
                 <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-400)]">
-                  0{i + 1} / 04
+                  0{i + 1} / 0{showcase.length}
                 </span>
               </div>
             </div>
