@@ -175,6 +175,10 @@ const REAL_IMAGES: Record<string, string> = {
   'top-labelling-machine-v2': '/products/real/top-labelling-machine-v2.webp',
   'custom-top-labelling-machine-with-checking-system':
     '/products/real/custom-top-labelling-machine-with-checking-system.webp',
+  // Front & back = a dual-head two-sided labeller (the "LEGACY" render).
+  'front-back-labelling-machine': '/products/real/front-back-labelling-machine.webp',
+  // v2 is the same machine as the original Continuous Band Sealing — reuse its photo.
+  'continuous-band-sealing-machine-v2': '/products/Continuous_Band_Sealing_Machine_6.png',
 };
 
 export const MACHINES: Machine[] = MACHINES_RAW.map((m) => {
