@@ -56,55 +56,74 @@ export function FeaturedHighlights({
         </div>
       </div>
 
-      {/* Ingredient-card row */}
-      <div className="mx-auto max-w-[1600px] px-6 lg:px-12 pt-24 pb-16">
-        <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-12">
-          — {featuredLabel}
+      {/* Featured billboard — machine tiles auto-scroll continuously (pause on
+          hover); the list is duplicated so the loop is seamless. */}
+      <div className="pt-14 pb-16">
+        <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
+          <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-8">
+            — {featuredLabel}
+          </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-24">
-          {machines.map((m, i) => {
-            const tags = machineTags(m);
-            return (
-              <Link
-                key={m.id}
-                href={`/products/${m.slug}`}
-                data-cursor="caliper"
-                className="ax-ing group relative block bg-[color:var(--color-neutral-800)] px-7 pt-20 pb-8 transition-colors duration-300 hover:bg-[color:var(--color-neutral-700)]/60"
-              >
-                {/* Photo popping out of the top */}
-                <div className="pointer-events-none absolute -top-14 left-6 h-28 w-28">
-                  {m.image && (
-                    <Image
-                      src={m.image}
-                      alt={m.name}
-                      fill
-                      sizes="112px"
-                      className="object-contain [filter:drop-shadow(0_-4px_18px_rgba(0,0,0,0.55))] transition-transform duration-500 ease-out group-hover:-translate-y-2 group-hover:scale-[1.18] group-hover:-rotate-6"
+
+        <div className="ax-billboard-mask overflow-hidden">
+          <div className="ax-billboard-track flex w-max gap-6 px-6 lg:px-12">
+            {[0, 1].map((dup) =>
+              machines.map((m, i) => {
+                const tags = machineTags(m);
+                return (
+                  <Link
+                    key={`${dup}-${m.id}`}
+                    href={`/products/${m.slug}`}
+                    data-cursor="caliper"
+                    aria-hidden={dup === 1 ? true : undefined}
+                    tabIndex={dup === 1 ? -1 : undefined}
+                    className="group/card relative flex w-[280px] shrink-0 flex-col overflow-hidden rounded-2xl border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)] transition-colors duration-300 hover:border-[color:var(--color-signal)]"
+                  >
+                    <div
+                      className="relative aspect-[4/3]"
+                      style={{
+                        background:
+                          'radial-gradient(120% 80% at 50% 0%, color-mix(in oklab, var(--color-signal) 12%, transparent), transparent 60%)',
+                      }}
+                    >
+                      {m.image && (
+                        <Image
+                          src={m.image}
+                          alt={m.name}
+                          fill
+                          sizes="280px"
+                          className="object-contain p-6 transition-transform duration-500 ease-out group-hover/card:scale-[1.06]"
+                        />
+                      )}
+                      <span className="absolute top-3 left-3 font-mono text-[10px] uppercase tracking-[0.25em] text-[color:var(--color-steel)]">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                    </div>
+
+                    <div className="flex flex-1 flex-col border-t border-[color:var(--color-neutral-700)] p-5">
+                      <h3 className="font-display text-xl tracking-[-0.01em] leading-tight line-clamp-2">
+                        {m.name}
+                      </h3>
+                      {tags.length > 0 && (
+                        <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.15em] text-[color:var(--color-steel-soft)] line-clamp-1">
+                          {tags.join(' · ')}
+                        </p>
+                      )}
+                      <span className="mt-4 font-mono text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-steel)] group-hover/card:text-[color:var(--color-signal)] group-hover/card:translate-x-1 transition-all duration-300">
+                        {viewLabel} →
+                      </span>
+                    </div>
+
+                    {/* Accent bar */}
+                    <span
+                      className="absolute bottom-0 left-0 h-0.5 w-0 group-hover/card:w-full transition-[width] duration-500 ease-out"
+                      style={{ background: ACCENTS[i % ACCENTS.length] }}
                     />
-                  )}
-                </div>
-
-                <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-400)] mb-2">
-                  {String(i + 1).padStart(2, '0')}
-                </div>
-                <h3 className="font-display text-3xl tracking-[-0.01em] leading-none mb-3">
-                  {m.name}
-                </h3>
-                <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-[color:var(--color-steel-soft)] mb-6">
-                  {tags.join(' · ')}
-                </p>
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-steel)] group-hover:text-[color:var(--color-signal)] transition-colors">
-                  {viewLabel} →
-                </span>
-
-                {/* Accent underline drawing across on hover */}
-                <span
-                  className="absolute bottom-0 left-0 h-0.5 w-0 group-hover:w-full transition-[width] duration-500 ease-out"
-                  style={{ background: ACCENTS[i % ACCENTS.length] }}
-                />
-              </Link>
-            );
-          })}
+                  </Link>
+                );
+              }),
+            )}
+          </div>
         </div>
       </div>
     </section>
