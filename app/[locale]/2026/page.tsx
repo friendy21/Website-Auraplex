@@ -20,7 +20,6 @@ import { WordCloud } from '@/components/sections/word-cloud';
 import { CategoryRadial } from '@/components/sections/category-radial';
 import { CoverageMap } from '@/components/sections/coverage-map';
 import { MachineSphere } from '@/components/sections/machine-sphere';
-import { MachineCube } from '@/components/sections/machine-cube';
 import { ScrollHud } from '@/components/sections/scroll-hud';
 
 export async function generateMetadata({
@@ -579,15 +578,6 @@ export default async function YearInReviewPage({
           </div>
         </Reveal>
       </section>
-
-      {/* ────── SIX-FACE MACHINE CUBE (immersive, dark band) ────── */}
-      <MachineCube
-        faces={photographed.slice(0, 6).map((m) => ({
-          image: m.image as string,
-          label: m.name,
-          slug: m.slug,
-        }))}
-      />
 
       {/* ────── FULL CATALOGUE GRID ────── */}
       <section className="border-t border-[color:var(--color-neutral-200)] bg-[color:var(--color-neutral-100)] py-32 lg:py-48">

@@ -146,14 +146,50 @@ const MACHINE_DETAILS: Record<
   },
 };
 
-export const MACHINES: Machine[] = MACHINES_RAW.map((m) => ({
-  ...m,
-  featured: FEATURED_SLUGS.has(m.slug),
-  summary: MACHINE_DETAILS[m.slug]?.summary ?? CATEGORY_SUMMARY[m.category],
-  speed: null,
-  monthlyPrice: null,
-  specs: MACHINE_DETAILS[m.slug]?.specs ?? [],
-}));
+/**
+ * Clean cover renders imported from the original Auraplex CAD/render archive
+ * (D:\WORK\Auraplex → public/products/real, via scripts/import-workimages.mjs).
+ * These are watermark-free and higher quality than the scraped site images, so
+ * where present they OVERRIDE both the cover and the gallery. Two of these
+ * slugs (vertical-wrap-around, top-labelling-machine-v2,
+ * custom-top-...-checking-system) previously had NO photo — this promotes them
+ * out of the "photography pending" state. Only machines confidently identified
+ * from the renders are listed; the rest keep their existing images / pending
+ * state (no mismatched photos).
+ */
+const REAL_IMAGES: Record<string, string> = {
+  'flexy-applicator': '/products/real/flexy-applicator.webp',
+  'two-side-labelling-machine': '/products/real/two-side-labelling-machine.webp',
+  'two-in-one-wrap-around-side-labelling-machine':
+    '/products/real/two-in-one-wrap-around-side-labelling-machine.webp',
+  'ar600-3d-printer': '/products/real/ar600-3d-printer.webp',
+  'ar320-3d-printer': '/products/real/ar320-3d-printer.webp',
+  'ar220-3d-printer': '/products/real/ar220-3d-printer.webp',
+  'bottom-labelling-machine': '/products/real/bottom-labelling-machine.webp',
+  'standard-top-labelling-machine': '/products/real/standard-top-labelling-machine.webp',
+  'semi-auto-round-bottle-labelling-machine':
+    '/products/real/semi-auto-round-bottle-labelling-machine.webp',
+  'top-labelling-machine': '/products/real/top-labelling-machine.webp',
+  'vertical-wrap-around-labelling-machine':
+    '/products/real/vertical-wrap-around-labelling-machine.webp',
+  'top-labelling-machine-v2': '/products/real/top-labelling-machine-v2.webp',
+  'custom-top-labelling-machine-with-checking-system':
+    '/products/real/custom-top-labelling-machine-with-checking-system.webp',
+};
+
+export const MACHINES: Machine[] = MACHINES_RAW.map((m) => {
+  const real = REAL_IMAGES[m.slug];
+  return {
+    ...m,
+    image: real ?? m.image,
+    gallery: real ? [real] : m.gallery,
+    featured: FEATURED_SLUGS.has(m.slug),
+    summary: MACHINE_DETAILS[m.slug]?.summary ?? CATEGORY_SUMMARY[m.category],
+    speed: null,
+    monthlyPrice: null,
+    specs: MACHINE_DETAILS[m.slug]?.specs ?? [],
+  };
+});
 
 export function getMachine(slug: string): Machine | null {
   return MACHINES.find((m) => m.slug === slug) ?? null;
