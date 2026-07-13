@@ -145,13 +145,8 @@ export default async function ProductsPage({
         </section>
       )}
 
-      {/* ────── FEATURED HIGHLIGHTS (ticker + ingredient cards) ────── */}
-      <FeaturedHighlights
-        machines={localizeMachines(getFeaturedMachines(), locale)}
-        featuredLabel={t('featuredBadge')}
-        viewLabel={t('viewMachine')}
-        tickerWords={t.raw('tickerWords') as string[]}
-      />
+      {/* ────── INFINITE KEYWORD TICKER ────── */}
+      <FeaturedHighlights tickerWords={t.raw('tickerWords') as string[]} />
 
       {/* ────── APPLICATION-FIRST BROWSE ────── */}
       <ApplicationBrowse

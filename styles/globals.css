@@ -550,23 +550,6 @@ html.cursor-custom body { cursor: none; }
   will-change: transform;
 }
 
-/* Featured billboard — a row of machine tiles scrolls continuously like a
-   billboard. Transform-only (composited), pauses on hover, frozen under
-   reduced-motion. Content is duplicated so the -50% loop is seamless. */
-@keyframes ax-billboard {
-  to { transform: translateX(-50%); }
-}
-.ax-billboard-track {
-  animation: ax-billboard 55s linear infinite;
-  will-change: transform;
-}
-.ax-billboard-mask:hover .ax-billboard-track {
-  animation-play-state: paused;
-}
-@media (prefers-reduced-motion: reduce) {
-  .ax-billboard-track { animation: none; transform: none; }
-}
-
 /* Skeleton shimmer — a light band sweeps across loading placeholders.
    Compositor-only transform (translateX); the block itself carries the base
    muted colour so it still communicates layout when the shimmer is off. */
