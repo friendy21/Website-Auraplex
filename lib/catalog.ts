@@ -179,6 +179,11 @@ const REAL_IMAGES: Record<string, string> = {
   'front-back-labelling-machine': '/products/real/front-back-labelling-machine.webp',
   // v2 is the same machine as the original Continuous Band Sealing — reuse its photo.
   'continuous-band-sealing-machine-v2': '/products/Continuous_Band_Sealing_Machine_6.png',
+  // Representative real renders for the last three (closest archive match).
+  'three-side-labelling-machine': '/products/real/three-side-labelling-machine.webp',
+  'top-labelling-machine-with-corner-press-device':
+    '/products/real/top-labelling-machine-with-corner-press-device.webp',
+  'body-neck-labelling-machine': '/products/real/body-neck-labelling-machine.webp',
 };
 
 export const MACHINES: Machine[] = MACHINES_RAW.map((m) => {
