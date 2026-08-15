@@ -53,9 +53,11 @@
   --font-body:    var(--font-inter), system-ui, sans-serif;
   --font-mono:    var(--font-jetbrains-mono), 'Berkeley Mono', 'IBM Plex Mono', ui-monospace, monospace;
 
-  --text-display: clamp(3rem, 8vw, 7.5rem);
-  --text-h2:      clamp(2rem, 5vw, 4.5rem);
-  --text-h3:      clamp(1.5rem, 3vw, 2.5rem);
+  /* Display scale bumped ~40% for the "one signature" edit — headlines
+     should dominate the viewport the way the reference sites do. */
+  --text-display: clamp(3.5rem, 12vw, 11rem);
+  --text-h2:      clamp(2.5rem, 7vw, 6.5rem);
+  --text-h3:      clamp(1.75rem, 4vw, 3.5rem);
   --text-body:    clamp(1rem, 1.1vw, 1.125rem);
   --text-small:   clamp(0.875rem, 0.9vw, 1rem);
   --text-mono:    clamp(0.75rem, 0.85vw, 0.875rem);
@@ -204,20 +206,74 @@ body {
    bundle hydrated → measured 5s+ LCP on mobile. These CSS animations are
    present in the server HTML and start at first paint, before React, so the
    text paints immediately while still animating in. transform/opacity only. */
+/* RULE ZERO: no opacity channel here. This is the LCP element — Chrome does
+   not accept a zero-opacity element as painted, so the old
+   `from { opacity: 0 }` + `fill: both` + per-word delay held the last word
+   invisible until ~1.79s and put a network-independent floor under LCP.
+   Transform-only means the text is an LCP candidate from the FIRST frame
+   while still animating in. The line wrapper clips the lift. */
 @keyframes hero-word-in {
-  from { opacity: 0; transform: translateY(70px) rotateX(75deg) scale(0.85); }
-  to   { opacity: 1; transform: translateY(0) rotateX(0deg) scale(1); }
+  from { transform: translateY(0.42em) rotateX(58deg) scale(0.94); }
+  to   { transform: translateY(0) rotateX(0deg) scale(1); }
+}
+.hero-line {
+  display: block;
+  overflow: hidden;
+}
+
+/* Hero body entrance (subtitle, CTA row, eyebrow). TRANSFORM ONLY, on purpose:
+   the subtitle is physically LARGER than the H1 on mobile (46,656px² vs
+   35,037px²), so it — not the headline — is the LCP element. It previously ran
+   `initial={{opacity:0}}` + 1.3s delay through framer-motion, which meant LCP
+   could not fire until hydration finished: measured 6,772ms. Rising from a
+   visible state keeps it an LCP candidate from the first frame. */
+@keyframes hero-rise {
+  from { transform: translateY(0.55em); }
+  to   { transform: translateY(0); }
+}
+.hero-rise {
+  animation: hero-rise 0.85s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1)) both;
+  will-change: transform;
+}
+.hero-rise-2 { animation-delay: 0.13s; }
+.hero-rise-3 { animation-delay: 0.22s; }
+
+/* ── SIGNAL SWEEP ────────────────────────────────────────────────────────────
+   The site's punctuation mark: a cerulean hairline that fires horizontally
+   across a boundary. Used under headings, on the hero eyebrow, and (via
+   ::view-transition) on route change. One gesture, one weight, always
+   horizontal, always fast — because it is the same everywhere, it reads as a
+   system rather than as an effect. Pure scaleX: composited, no layout. */
+@keyframes signal-sweep {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.signal-sweep {
+  transform-origin: 0 50%;
+  animation: signal-sweep var(--dur-sweep, 280ms) var(--ease-mech, cubic-bezier(0.76, 0, 0.24, 1)) both;
+  animation-delay: 0.1s;
+}
+/* Scroll-linked variant: the sweep draws as the heading enters the viewport.
+   NOTE: no `animation-duration` here on purpose — see authoring trap (c). */
+.signal-sweep-scroll {
+  transform-origin: 0 50%;
+  animation-name: signal-sweep;
+  animation-fill-mode: both;
+  animation-timing-function: linear;
+  animation-timeline: view();
+  animation-range: entry 15% entry 55%;
 }
 .hero-word {
   display: inline-block;
-  animation: hero-word-in 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: 50% 100%;
+  animation: hero-word-in 0.8s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1)) both;
 }
 @keyframes reveal-immediate-kf {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 .reveal-immediate {
-  animation: reveal-immediate-kf 0.7s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: reveal-immediate-kf 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
@@ -237,6 +293,12 @@ body {
  * users keep the native cursor — no risk of a "missing pointer" bug.
  * ────────────────────────────────────────────────────────────────────────── */
 html.cursor-custom body { cursor: none; }
+
+/* Sound toggle equaliser bars */
+@keyframes eq-bar {
+  from { height: 3px; }
+  to   { height: 14px; }
+}
 
 /* ──────────────────────────────────────────────────────────────────────────
  * Scroll-velocity blur (driven by Lenis)
@@ -868,15 +930,86 @@ html.cursor-custom body { cursor: none; }
  * ────────────────────────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
+    /* Time-based animations: collapse to instant. */
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+    /* SCROLL-DRIVEN animations: `animation-duration` is IGNORED when a
+       progress timeline supplies the clock, so the rule above does nothing
+       for them — they would keep scrubbing under reduced-motion (WCAG 2.3.3
+       violation). Detaching the timeline is what actually stops them; with
+       no timeline the animation falls back to a 0.01ms time-based run and
+       `fill: both` snaps it to its end (visible) state. */
+    animation-timeline: auto !important;
   }
-  .reveal, .reveal-up, .reveal-scale { opacity: 1; transform: none; }
-  .hero-word, .reveal-immediate { opacity: 1; transform: none; animation: none; }
+  /* `animation: none` (not `opacity: 1`) is what defeats a running animation:
+     animation-origin values outrank normal declarations in the cascade. */
+  .reveal, .reveal-up, .reveal-scale, .reveal-clip,
+  .reveal-weight, .reveal-blur, .reveal-slam,
+  .hero-word, .reveal-immediate {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+  }
   ::view-transition-old(root),
   ::view-transition-new(root) {
     animation: none;
   }
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+ * MOTION TOKENS — the two clocks.
+ *
+ * 1. THE SCROLL CLOCK. Anything tied to page position uses
+ *    `animation-timeline: view()` / `scroll()` and moves in lockstep with the
+ *    user's thumb. No easing, no lag — the scrollbar is the transport.
+ * 2. THE INPUT CLOCK (--dur-input). Anything triggered by pointer, focus or
+ *    route change runs on --ease-spring. Never longer than 420ms.
+ *
+ * ── THREE AUTHORING TRAPS (all have bitten this codebase) ──
+ * (a) `animation-delay` is a TIME value and is spec-ignored on a progress
+ *     timeline. Stagger with `animation-range` offsets keyed off `--i`, never
+ *     with a delay. (This is why the original CSS reveal system was abandoned.)
+ * (b) The `animation` SHORTHAND resets `animation-timeline` to `auto`. If you
+ *     use both, the shorthand must come FIRST and the timeline after it.
+ * (c) NEVER set an explicit `animation-duration` on a rule that also sets
+ *     `animation-timeline`. With no duration, browsers without scroll-driven
+ *     support drop the timeline, duration computes to 0s and `fill: both`
+ *     snaps straight to the visible end state — that is our whole fallback
+ *     story. Add a duration and those users get every animation on the page
+ *     auto-playing at once on load.
+ *
+ * Rule zero: NEVER animate `opacity` on an above-the-fold LCP candidate —
+ * Chrome does not accept a zero-opacity element as painted, so an entrance
+ * fade on the hero directly inflates LCP.
+ * ────────────────────────────────────────────────────────────────────────── */
+@theme {
+  /* cubic-bezier fallbacks are declared first: an unparseable linear() would
+     invalidate the whole declaration in browsers that lack it. */
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-mech: cubic-bezier(0.76, 0, 0.24, 1);
+  --dur-input: 420ms;
+  --dur-sweep: 280ms;
+}
+@supports (animation-timing-function: linear(0, 1)) {
+  :root {
+    /* Ported from the framer spring configs this replaces (stiffness ~280,
+       damping ~24) so interaction motion keeps its settle, not a flat ease. */
+    --ease-spring: linear(
+      0, 0.0063 1.95%, 0.0242 3.9%, 0.0946 7.9%, 0.5001 21.6%, 0.7099 29.5%,
+      0.8482 36.6%, 0.9299 43.1%, 0.9781 50.2%, 1.0016 57.7%, 1.0092 65.8%,
+      1.0031 84.5%, 1
+    );
+  }
+}
+
+/* Stagger contract: a parent sets `--i` per child (inline style or
+   :nth-child), and the child offsets its own animation-range by that index.
+   Time-based delays do not work on scroll timelines — see trap (a). */
+.stagger-item {
+  --i: 0;
+  animation-range: entry calc(10% + (var(--i) * 6%)) entry calc(60% + (var(--i) * 6%));
 }

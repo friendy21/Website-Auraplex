@@ -15,6 +15,7 @@ import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/primitives/button';
 import { LanguageSwitcher } from './language-switcher';
 import { SearchDialog } from '@/components/search/search-dialog';
+import { SoundToggle } from './sound-toggle';
 import { cn } from '@/lib/utils';
 
 type NavKey =
@@ -144,6 +145,7 @@ export function Header() {
         </nav>
 
         <div className="hidden lg:flex items-center gap-5">
+          <SoundToggle />
           <SearchDialog />
           <LanguageSwitcher />
           <Button asChild size="sm">
