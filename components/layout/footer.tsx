@@ -1,10 +1,9 @@
-'use client';
-
 import Image from 'next/image';
 import { Link } from '@/lib/navigation';
 import { useTranslations } from 'next-intl';
-import { motion } from 'motion/react';
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
+
+import '@/styles/motion/footer.css';
 
 // Real Auraplex social profiles, extracted from the live
 // autolabellermalaysia.com footer HTML (canonical forms, tracking
@@ -21,10 +20,14 @@ const SOCIALS = [
 /**
  * Global footer — animated reveals + cerulean underline on every link.
  *
- * Section animates in via Motion's whileInView (once, 15% margin). Columns
- * stagger with cascade. Every link has a left-anchored underline that
- * scaleX-draws on hover. Bottom band has a pulsing signal dot next to the
- * "Made in Malaysia" mark.
+ * Columns reveal on a scroll-driven cascade (see styles/motion/footer.css);
+ * the footer is below the fold on every page, so the scroll clock — not a
+ * wall clock — is the correct transport. Every link has a left-anchored
+ * underline that scaleX-draws on hover. Bottom band has a pulsing signal dot
+ * next to the "Made in Malaysia" mark.
+ *
+ * Server Component: this renders on every route, and nothing here needs
+ * state, effects or handlers. next-intl's useTranslations is server-safe.
  */
 export function Footer() {
   const t = useTranslations();
@@ -34,28 +37,18 @@ export function Footer() {
       {/* Signal gradient hairline at top */}
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--color-signal)]/50 to-transparent" />
 
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: '0px 0px -10% 0px' }}
-        variants={{
-          hidden: {},
-          visible: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
-        }}
-        className="mx-auto max-w-[1600px] px-6 py-16 lg:px-12 grid grid-cols-2 md:grid-cols-4 gap-12"
-      >
+      {/* The Motion stagger orchestrator that used to wrap this grid is gone:
+          each column now carries its own scroll-driven reveal, offset by
+          --footer-col-i. */}
+      <div className="mx-auto max-w-[1600px] px-6 py-16 lg:px-12 grid grid-cols-2 md:grid-cols-4 gap-12">
         {/* Brand block */}
-        <FooterCol className="col-span-2">
+        <FooterCol index={0} className="col-span-2">
           <Link
             href="/"
-            className="group inline-flex items-center gap-3"
+            className="footer-brand group inline-flex items-center gap-3"
             aria-label="Auraplex — home"
           >
-            <motion.div
-              whileHover={{ rotate: -8 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-              className="relative h-10 w-9 shrink-0"
-            >
+            <div className="footer-logo-mark relative h-10 w-9 shrink-0">
               <Image
                 src="/brand/auraplex-logo.png"
                 alt=""
@@ -63,7 +56,7 @@ export function Footer() {
                 sizes="40px"
                 className="object-contain object-left"
               />
-            </motion.div>
+            </div>
             <span className="font-mono uppercase tracking-[0.2em] relative">
               Auraplex
               <span className="absolute -bottom-0.5 left-0 right-0 h-px bg-[color:var(--color-signal)] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)]" />
@@ -106,7 +99,7 @@ export function Footer() {
           </div>
         </FooterCol>
 
-        <FooterCol>
+        <FooterCol index={1}>
           <h3 className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-5">
             {t('nav.products')}
           </h3>
@@ -132,7 +125,7 @@ export function Footer() {
           </ul>
         </FooterCol>
 
-        <FooterCol>
+        <FooterCol index={2}>
           <h3 className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-5">
             {t('nav.company')}
           </h3>
@@ -160,16 +153,10 @@ export function Footer() {
             </li>
           </ul>
         </FooterCol>
-      </motion.div>
+      </div>
 
       {/* Bottom rights band */}
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.4 }}
-        className="mx-auto max-w-[1600px] px-6 lg:px-12 flex justify-between flex-wrap gap-4 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)] pt-6 border-t border-[color:var(--color-neutral-800)]"
-      >
+      <div className="footer-band-in mx-auto max-w-[1600px] px-6 lg:px-12 flex justify-between flex-wrap gap-4 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)] pt-6 border-t border-[color:var(--color-neutral-800)]">
         <span className="flex items-center gap-6 flex-wrap">
           <span>{t('footer.rights')}</span>
           <span className="flex items-center gap-4">
@@ -194,32 +181,33 @@ export function Footer() {
           </span>
           {t('footer.made')}
         </span>
-      </motion.div>
+      </div>
     </footer>
   );
 }
 
+/**
+ * One footer column. `index` is the cascade position: it feeds
+ * --footer-col-i, which offsets the column's `animation-range` start inside
+ * the entry phase. That offset IS the stagger — `animation-delay` is a time
+ * value and is ignored on a scroll progress timeline.
+ */
 function FooterCol({
   children,
   className,
+  index,
 }: {
   children: ReactNode;
   className?: string;
+  index: number;
 }) {
   return (
-    <motion.div
-      variants={{
-        hidden: { opacity: 0, y: 20 },
-        visible: {
-          opacity: 1,
-          y: 0,
-          transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] },
-        },
-      }}
-      className={`footer-col-rule ${className ?? ''}`.trim()}
+    <div
+      className={`footer-col-rule footer-col-in ${className ?? ''}`.trim()}
+      style={{ '--footer-col-i': index } as CSSProperties}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 

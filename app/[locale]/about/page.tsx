@@ -5,6 +5,9 @@ import { Reveal } from '@/components/motion/reveal';
 import { KineticReveal } from '@/components/motion/kinetic-reveal';
 import { AboutGallery } from '@/components/sections/about-gallery';
 import { ClientLogoWall } from '@/components/sections/client-logo-wall';
+import { ValuePropGrid } from '@/components/sections/value-prop-grid';
+import { TestimonialMarquee } from '@/components/sections/testimonial-marquee';
+import { PageHud } from '@/components/layout/page-hud';
 import { Button } from '@/components/primitives/button';
 import { buildMetadata, localizedMeta, ogLocale } from '@/lib/seo';
 import { MACHINES, getFeaturedMachines } from '@/lib/catalog';
@@ -44,6 +47,7 @@ export default async function AboutPage({
 
   return (
     <>
+      <PageHud sector="COMPANY" />
       <section className="relative min-h-[80dvh] w-full overflow-hidden bg-[color:var(--color-ink)] flex items-end">
         <div
           className="absolute inset-0 grid grid-cols-4 grid-rows-3 opacity-45"
@@ -209,6 +213,13 @@ export default async function AboutPage({
           </Reveal>
         </div>
       </section>
+
+      {/* ── Why Auraplex (re-homed from the homepage during the "one
+             signature" edit) ── */}
+      <ValuePropGrid />
+
+      {/* ── Recognition from the floor ── */}
+      <TestimonialMarquee />
     </>
   );
 }

@@ -1,40 +1,30 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { useEffect } from 'react';
-import { motion, useMotionValue, animate } from 'motion/react';
+
+import '@/styles/motion/transition-wipe.css';
 
 /**
  * TransitionWipe — a 2px signal-cerulean line that sweeps across the
- * viewport on every route change. Pairs with the View Transitions API
- * "power-on" clip animation in globals.css so navigations read as a
- * machine state change rather than a fade.
+ * viewport on every route change. The "power-on" punctuation: a hard
+ * mechanical left-to-right pass, no crossfade, no softness, so navigations
+ * read as a machine state change rather than a fade.
  *
- * Hooks into Next's App Router via `usePathname()` — fires after the
- * new route mounts. The line scales from x=0 to x=100% over 500ms with
- * a soft signal glow trailing behind it.
+ * Hooks into Next's App Router via `usePathname()` — fires after the new
+ * route mounts. `key={pathname}` is the whole mechanism: React tears down the
+ * old node and mounts a fresh one on every navigation, and a freshly mounted
+ * element runs its CSS animation from the top. No motion library, no state,
+ * no effect, no cleanup to get wrong.
  *
- * Reduced-motion: the line is rendered but the animation is skipped
- * (motion handles this implicitly via prefers-reduced-motion respect
- *  on `animate`).
+ * The 500ms sweep and its `--ease-mech` curve live in
+ * styles/motion/transition-wipe.css, which also documents why the bar can
+ * never be left parked over the page.
+ *
+ * Reduced motion: handled globally in globals.css, which collapses the
+ * animation to 0.01ms; `fill: both` lands it on its off-screen end state.
  */
 export function TransitionWipe() {
   const pathname = usePathname();
-  const x = useMotionValue('-2px');
 
-  useEffect(() => {
-    const controls = animate(x, ['-2px', '100vw'], {
-      duration: 0.5,
-      ease: [0.76, 0, 0.24, 1],
-    });
-    return () => controls.stop();
-  }, [pathname, x]);
-
-  return (
-    <motion.div
-      aria-hidden
-      style={{ x }}
-      className="fixed inset-y-0 left-0 w-0.5 z-[200] pointer-events-none bg-[color:var(--color-signal)] shadow-[0_0_18px_color-mix(in_oklab,var(--color-signal)_80%,transparent)]"
-    />
-  );
+  return <div key={pathname} aria-hidden className="transition-wipe" />;
 }

@@ -26,7 +26,11 @@
   --color-neutral-100:    #e7eaee;
   --color-neutral-200:    #d2d6db;
   --color-neutral-300:    #b2b8bf;
-  --color-neutral-400:    #8d949d;
+  /* a11y: was #8d949d, which measured 4.28:1 on --color-neutral-800 (#2c3138)
+     and failed WCAG AA for normal text (needs 4.5:1). Lightened by the smallest
+     step that clears the bar — 4.51:1 — so secondary text stays legible on cheap
+     panels and in bright ambient light without altering the palette's character. */
+  --color-neutral-400:    #9298a1;
   --color-neutral-500:    #6e757f;
   --color-neutral-600:    #545b65;
   --color-neutral-700:    #3e444d;

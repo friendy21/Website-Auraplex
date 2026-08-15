@@ -4,21 +4,16 @@ import {
   categoryCounts,
   getMachinesByCategory,
   getMachinesWithCover,
-  getFeaturedMachines,
   type Category,
 } from '@/lib/catalog';
 import { localizeMachines, localizedCategoryLabel } from '@/lib/catalog-i18n';
 import { HeroCinematic } from '@/components/sections/hero-cinematic';
 import { LiveDataTicker } from '@/components/sections/live-data-ticker';
 import { WhatWeMake, type Family } from '@/components/sections/what-we-make';
-import { ValuePropGrid } from '@/components/sections/value-prop-grid';
-import { TestimonialMarquee } from '@/components/sections/testimonial-marquee';
 import { FaqSection } from '@/components/sections/faq-section';
 import { CloserSection } from '@/components/sections/closer-section';
 import { ScrollDrawLine } from '@/components/motion/scroll-draw-line';
 import { MachineHyperscrollLazy } from '@/components/sections/machine-hyperscroll-lazy';
-import { MachineAccordion } from '@/components/sections/machine-accordion';
-import { OutlineMarquee } from '@/components/sections/outline-marquee';
 
 export async function generateMetadata({
   params,
@@ -55,16 +50,6 @@ export default async function Home({
     name: m.name,
   }));
 
-  // Featured machines for the cinematic expanding-panel accordion.
-  const showcase = localizeMachines(getFeaturedMachines(), locale).map((m) => ({
-    slug: m.slug,
-    name: m.name,
-    image: m.image as string,
-    category: m.category,
-    label: localizedCategoryLabel(m.category, locale),
-    summary: m.summary,
-    photos: m.gallery.length,
-  }));
   const families: Family[] = (['labelling', 'packaging', 'automation'] as Category[]).map(
     (key) => ({
       key,
@@ -76,29 +61,30 @@ export default async function Home({
   );
 
   /* ──────────────────────────────────────────────────────────────────
-   * REDESIGNED HOME ARC — decluttered, machine-first (hero untouched):
+   * HOME ARC — "Edit to one signature". Five deliberate beats built around
+   * the MachineHyperscroll flythrough as THE moment:
    *
-   *   1. Hero            — untouched
-   *   2. OutlineMarquee  — brand band, bridges hero into the body
-   *   3. LiveDataTicker  — positioning / proof, in honest numbers
-   *   4. WhatWeMake      — the three families → into the catalogue
-   *   5. MachineCarousel — featured machines (drag-to-spin ring)
-   *   6. ValuePropGrid   — why Auraplex
-   *   7. Testimonials    — recognition
-   *   8. FAQ             — the questions
-   *   9. Closer          — the invitation
+   *   1. Overture — the PageLoader (staged brand entrance, global)
+   *   2. Hero     — bespoke tunnel that flows straight INTO the flythrough
+   *   3. SIGNATURE — MachineHyperscroll (3D machine dive) — the centrepiece
+   *   4. Proof    — LiveDataTicker → WhatWeMake (numbers, then the families)
+   *   5. Closer   — FAQ → the invitation
    *
-   * Cut in the redesign: Manifesto, the cinematic ZoomTransition, and the
-   * pinned ScrollNarrative — abstract/decorative/heavy interludes that
-   * diluted the machine-first flow.
+   * Demoted OFF the homepage to keep the arc undiluted (re-homed, not
+   * deleted): MachineAccordion → /products, ValuePropGrid → /about,
+   * TestimonialMarquee → /about, OutlineMarquee removed so hero → Hyperscroll
+   * is one continuous dive.
    * ────────────────────────────────────────────────────────────────── */
   return (
     <>
+      {/* Beat 2 — hero flows into the flythrough with no interruption. */}
       <HeroCinematic />
-      <OutlineMarquee />
-      {/* The cerulean rope threads from just below the hero to the end
-          of the FAQ — Closer stays outside so the line never reaches
-          the finale or footer. */}
+
+      {/* Beat 3 — THE signature: scroll-driven 3D flythrough of real machines. */}
+      <MachineHyperscrollLazy machines={flythrough} />
+
+      {/* Beats 4–5 — proof then invitation. The cerulean rope threads this
+          block; Closer stays outside so the line never reaches the finale. */}
       <ScrollDrawLine>
         <LiveDataTicker
           machines={counts.all}
@@ -113,16 +99,6 @@ export default async function Home({
           headingLine1={t('whatWeMake.headingLine1')}
           headingLine2={t('whatWeMake.headingLine2')}
         />
-
-        {/* THE catalogue moment — a scroll-driven 3D flythrough of the real
-            machines (Hyper Scroll). Every card links into the catalogue. */}
-        <MachineHyperscrollLazy machines={flythrough} />
-
-        {/* Cinematic expanding-panel accordion — click a machine to expand. */}
-        <MachineAccordion items={showcase} />
-
-        <ValuePropGrid />
-        <TestimonialMarquee />
         <FaqSection />
       </ScrollDrawLine>
       <CloserSection />

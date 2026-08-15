@@ -67,9 +67,11 @@ export function Reveal({
       animate={inView ? 'visible' : 'hidden'}
       variants={VARIANTS[variant]}
       transition={{
-        duration: 0.7,
+        // Cinematic settle — heavier, more confident than the old 0.7s
+        // ease-out. Unifies secondary-page reveals with the homepage arc.
+        duration: 0.9,
         delay: delay / 1000,
-        ease: [0.4, 0, 0.2, 1],
+        ease: [0.16, 1, 0.3, 1],
       }}
       className={className}
     >

@@ -4,6 +4,7 @@ import { Reveal } from '@/components/motion/reveal';
 import { KineticReveal } from '@/components/motion/kinetic-reveal';
 import { StackingSteps } from '@/components/sections/stacking-steps';
 import { AutoCarousel3D } from '@/components/sections/auto-carousel-3d';
+import { PageHud } from '@/components/layout/page-hud';
 import { getMachinesWithCover } from '@/lib/catalog';
 import { localizeMachines } from '@/lib/catalog-i18n';
 import { Button } from '@/components/primitives/button';
@@ -59,6 +60,7 @@ export default async function ServicesPage({
 
   return (
     <>
+      <PageHud sector="SERVICE" />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

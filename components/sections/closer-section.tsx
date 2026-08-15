@@ -40,6 +40,9 @@ export function CloserSection() {
         gsap.set('.c-eyebrow', { opacity: 1, scaleX: 1 });
         gsap.set('.c-word', { opacity: 1, clipPath: 'inset(0 0% 0 0)', fontVariationSettings: '"wght" 700' });
         gsap.set('.c-buttons', { opacity: 1, y: 0, scale: 1 });
+        gsap.set('.c-hud', { opacity: 0.9 });
+        const depthEl = container.current.querySelector('.c-depth');
+        if (depthEl) depthEl.textContent = '0000';
         return;
       }
 
@@ -97,13 +100,42 @@ export function CloserSection() {
           { opacity: 0, y: 40, scale: 0.92 },
           { opacity: 1, y: 0, scale: 1, duration: 0.2, ease: 'power2.out' },
           '+=0.05',
+        );
+
+      // HUD "exit the system" — depth counts DOWN to 0000 across the whole
+      // scrub, mirroring the hero console. Runs on its own tween so it spans
+      // the full timeline rather than a single beat.
+      const depthObj = { v: 4096 };
+      const depthEl = container.current.querySelector('.c-depth');
+      tl.fromTo(
+        '.c-hud',
+        { opacity: 0 },
+        { opacity: 0.9, duration: 0.15, ease: 'power2.out' },
+        0.05,
+      )
+        .to(
+          depthObj,
+          {
+            v: 0,
+            duration: 0.7,
+            ease: 'none',
+            onUpdate: () => {
+              if (depthEl) {
+                depthEl.textContent = String(Math.round(depthObj.v)).padStart(4, '0');
+              }
+            },
+          },
+          0.1,
         )
-        // Beat 4 — exit drift
+        // console powers to STANDBY near the end
+        .to('.c-hud-state', { opacity: 0.4, duration: 0.1 }, 0.72)
+        // Beat 4 — exit drift + HUD power-down
         .to(
           '.c-cluster',
           { y: -80, opacity: 0, duration: 0.25, ease: 'power2.in' },
-          '+=0.2',
-        );
+          0.8,
+        )
+        .to('.c-hud', { opacity: 0, duration: 0.15, ease: 'power2.in' }, 0.85);
     },
     { scope: container },
   );
@@ -174,6 +206,24 @@ export function CloserSection() {
             </Button>
           </Magnetic>
         </div>
+      </div>
+
+      {/* Corner HUD — "exit the system". Mirrors the hero console: DEPTH
+          counts back down to 0000 and the state flips to STANDBY as the
+          finale drifts away. Closes the arc symmetrically. */}
+      <div
+        className="c-hud pointer-events-none absolute inset-6 z-20 hidden font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)] opacity-0 lg:block"
+        aria-hidden="true"
+      >
+        <div className="absolute top-0 right-0 text-right leading-relaxed">
+          <div className="c-hud-state text-[color:var(--color-signal)]">SYS / STANDBY</div>
+          <div>
+            DEPTH <span className="c-depth">4096</span>
+          </div>
+        </div>
+        <div className="absolute bottom-0 right-0">MY · 03.1189 N · 101.6869 E</div>
+        <span className="absolute top-2 right-2 h-3 w-3 border-t border-r border-[color:var(--color-paper)]/25" />
+        <span className="absolute bottom-2 right-2 h-3 w-3 border-b border-r border-[color:var(--color-paper)]/25" />
       </div>
 
       {/* Bottom signal hairline */}

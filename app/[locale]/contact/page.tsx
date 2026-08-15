@@ -2,6 +2,7 @@ import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { ContactForm } from '@/components/forms/contact-form';
 import { Reveal } from '@/components/motion/reveal';
 import { KineticReveal } from '@/components/motion/kinetic-reveal';
+import { PageHud } from '@/components/layout/page-hud';
 import { buildMetadata, SITE, localizedMeta, ogLocale } from '@/lib/seo';
 import { whatsappLink } from '@/lib/utils';
 
@@ -106,6 +107,7 @@ export default async function ContactPage({
 
   return (
     <>
+      <PageHud sector="CONTACT" />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

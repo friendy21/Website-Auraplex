@@ -19,7 +19,7 @@ import { WhatsAppButton } from '@/components/layout/whatsapp-button';
 // `body { cursor: none }` rule in styles/globals.css.
 import { CustomCursor } from '@/components/motion/custom-cursor';
 import { TransitionWipe } from '@/components/layout/transition-wipe';
-import { LenisProvider } from '@/components/providers/lenis-provider';
+import { LeanProvider } from '@/components/providers/lean-provider';
 import { AtmosphereProvider } from '@/components/providers/atmosphere-provider';
 import { ScrollProgress } from '@/components/layout/scroll-progress';
 import { StickyCta } from '@/components/layout/sticky-cta';
@@ -143,7 +143,7 @@ export default async function LocaleLayout({
               paints from server HTML) and in the POWER-ON route transition. */}
           <MotionConfig reducedMotion="user">
           <ScrollProgress />
-          <LenisProvider>
+          <LeanProvider>
             <AtmosphereProvider>
               <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-[color:var(--color-signal)] focus:text-[color:var(--color-ink)] focus:p-3">
                 {tc('skipToContent')}
@@ -168,7 +168,7 @@ export default async function LocaleLayout({
               <CustomCursor />
               <TransitionWipe />
             </AtmosphereProvider>
-          </LenisProvider>
+          </LeanProvider>
           </MotionConfig>
         </NextIntlClientProvider>
         <SpeedInsights />

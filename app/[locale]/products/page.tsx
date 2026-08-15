@@ -4,6 +4,8 @@ import { ProductsHero } from '@/components/sections/products-hero';
 import { ParallaxMarqueeBand } from '@/components/sections/parallax-marquee-band';
 import { FeaturedHighlights } from '@/components/sections/featured-highlights';
 import { ApplicationBrowse } from '@/components/sections/application-browse';
+import { MachineAccordion } from '@/components/sections/machine-accordion';
+import { PageHud } from '@/components/layout/page-hud';
 import { buildMetadata, breadcrumbSchema, SITE, localizedMeta, ogLocale } from '@/lib/seo';
 import {
   MACHINES,
@@ -11,7 +13,7 @@ import {
   getFeaturedMachines,
   type Category,
 } from '@/lib/catalog';
-import { localizeMachine, localizeMachines } from '@/lib/catalog-i18n';
+import { localizeMachine, localizeMachines, localizedCategoryLabel } from '@/lib/catalog-i18n';
 
 export async function generateMetadata({
   params,
@@ -51,6 +53,18 @@ export default async function ProductsPage({
   // Hero machine for the floating visual — first featured machine with a cover.
   const heroRaw = getFeaturedMachines()[0] ?? null;
   const heroMachine = heroRaw ? localizeMachine(heroRaw, locale) : null;
+
+  // Featured machines for the cinematic expanding-panel accordion (re-homed
+  // here from the homepage during the "one signature" edit).
+  const showcase = localizeMachines(getFeaturedMachines(), locale).map((m) => ({
+    slug: m.slug,
+    name: m.name,
+    image: m.image as string,
+    category: m.category,
+    label: localizedCategoryLabel(m.category, locale),
+    summary: m.summary,
+    photos: m.gallery.length,
+  }));
 
   // Catalogue structured data — an ItemList of every machine, so search
   // engines can surface the full range from this single page.
@@ -106,6 +120,7 @@ export default async function ProductsPage({
 
   return (
     <>
+      <PageHud sector="CATALOGUE" />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -166,6 +181,9 @@ export default async function ProductsPage({
         locale={locale}
         t={tDict}
       />
+
+      {/* ────── FEATURED SHOWCASE (expanding-panel accordion) ────── */}
+      {showcase.length > 0 && <MachineAccordion items={showcase} />}
 
       {/* ────── PARALLAX MARQUEE CLOSER BAND ────── */}
       <ParallaxMarqueeBand

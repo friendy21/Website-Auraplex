@@ -20,12 +20,15 @@ type Props = { items: AccordionItem[] };
 
 // Family accents — drawn from the brand palette (cerulean signal + two
 // tasteful companions), one per engineering family.
+// a11y: these are used as TEXT on an accent-tinted panel, so they must clear
+// 4.5:1 there. The originals measured 3.95 (cerulean) and 3.24 (violet) and
+// failed WCAG AA; each is lightened by the smallest step that passes.
 const ACCENT: Record<string, string> = {
-  labelling: '#3FA9E0',
+  labelling: '#5AB5E4',
   packaging: '#E0A23F',
-  automation: '#8B7DF0',
+  automation: '#A89EF4',
 };
-const accentOf = (cat: string) => ACCENT[cat] ?? '#3FA9E0';
+const accentOf = (cat: string) => ACCENT[cat] ?? ACCENT.labelling;
 const hexA = (hex: string, a: number) => {
   const n = parseInt(hex.slice(1), 16);
   return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${a})`;

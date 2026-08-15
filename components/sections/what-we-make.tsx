@@ -25,10 +25,12 @@ type Props = {
  * language; the accent is rationed to a top rail, the index chip and the
  * arrow — everything else is the system's paper/steel text (AA on ink).
  */
+// a11y: used as TEXT on an accent-tinted panel, so each must clear 4.5:1 there.
+// Originals measured 3.95 (cerulean) / 3.24 (violet) and failed WCAG AA.
 const ACCENT: Record<string, string> = {
-  labelling: '#3FA9E0',
+  labelling: '#5AB5E4',
   packaging: '#E0A23F',
-  automation: '#8B7DF0',
+  automation: '#A89EF4',
 };
 const accentOf = (k: string) => ACCENT[k] ?? ACCENT.labelling;
 
