@@ -1,26 +1,30 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
-import { motion, useMotionValue, useSpring } from 'motion/react';
+import { useEffect, useRef } from 'react';
 
 type Props = {
-  /** Halo size in pixels. */
   size?: number;
-  /** Halo color (CSS color). Defaults to brand signal. */
   color?: string;
-  /** Opacity at the center of the halo. */
   intensity?: number;
 };
 
 /**
- * Cursor-following radial spotlight. Renders a single absolutely-positioned
- * div that scales with springed lag behind the cursor. Pure visual layer —
- * pointer-events: none, doesn't replace the cursor, doesn't intercept clicks.
+ * CursorSpotlight — a soft signal-coloured halo that follows the pointer inside
+ * its parent. Purely decorative; pointer-events: none, never intercepts clicks.
  *
- * Drop into any section with `position: relative` and the spotlight scopes
- * itself to that container's bounds.
+ * Drop into any section with `position: relative` and it scopes itself to that
+ * container's bounds.
  *
- * Skips on touch + reduced-motion automatically.
+ * MECHANISM: was two framer springs (useMotionValue + useSpring). It is rendered
+ * by HeroCinematic, i.e. on the homepage's above-the-fold path, so it was the
+ * last thing keeping the framer-motion bundle on the LCP surface. It now follows
+ * the CALIPER pattern used by custom-cursor.tsx and magnetic.tsx: a passive
+ * listener writes the position into CSS custom properties and CSS does the
+ * moving, with the spring settle coming from the shared --ease-spring token
+ * (a linear() port of the framer config it replaces).
+ *
+ * Skips entirely on touch/coarse-pointer and under reduced-motion: no listener
+ * is attached and nothing is rendered, so mobile pays nothing at all.
  */
 export function CursorSpotlight({
   size = 360,
@@ -28,53 +32,64 @@ export function CursorSpotlight({
   intensity = 0.18,
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(-9999);
-  const y = useMotionValue(-9999);
-  const sx = useSpring(x, { stiffness: 200, damping: 28, mass: 0.5 });
-  const sy = useSpring(y, { stiffness: 200, damping: 28, mass: 0.5 });
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (window.matchMedia('(pointer: coarse)').matches) return;
+    if (!window.matchMedia('(pointer: fine)').matches) return;
 
-    const parent = ref.current?.parentElement;
-    if (!parent) return;
+    const el = ref.current;
+    const parent = el?.parentElement;
+    if (!el || !parent) return;
 
-    function onMove(e: PointerEvent) {
-      const rect = parent!.getBoundingClientRect();
-      x.set(e.clientX - rect.left);
-      y.set(e.clientY - rect.top);
-    }
-    function onLeave() {
-      x.set(-9999);
-      y.set(-9999);
-    }
+    let raf = 0;
+    let px = 0;
+    let py = 0;
+    let dirty = false;
 
-    parent.addEventListener('pointermove', onMove);
-    parent.addEventListener('pointerleave', onLeave);
+    const flush = () => {
+      raf = 0;
+      el.style.setProperty('--spot-x', `${px}px`);
+      el.style.setProperty('--spot-y', `${py}px`);
+      dirty = false;
+    };
+
+    const onMove = (e: PointerEvent) => {
+      if (e.pointerType === 'touch') return;
+      const rect = parent.getBoundingClientRect();
+      px = e.clientX - rect.left;
+      py = e.clientY - rect.top;
+      el.style.setProperty('--spot-o', '1');
+      if (!dirty) {
+        dirty = true;
+        raf = requestAnimationFrame(flush);
+      }
+    };
+    const onLeave = () => {
+      el.style.setProperty('--spot-o', '0');
+    };
+
+    parent.addEventListener('pointermove', onMove, { passive: true });
+    parent.addEventListener('pointerleave', onLeave, { passive: true });
     return () => {
       parent.removeEventListener('pointermove', onMove);
       parent.removeEventListener('pointerleave', onLeave);
+      if (raf) cancelAnimationFrame(raf);
     };
-  }, [x, y]);
+  }, []);
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      style={{
-        x: sx,
-        y: sy,
-        width: size,
-        height: size,
-        translateX: '-50%',
-        translateY: '-50%',
-        background: `radial-gradient(circle, ${color} 0%, transparent 70%)`,
-        opacity: intensity,
-        pointerEvents: 'none',
-      }}
-      className="absolute left-0 top-0 z-[1] mix-blend-screen"
+      className="cursor-spotlight"
       aria-hidden="true"
+      style={
+        {
+          '--spot-size': `${size}px`,
+          '--spot-color': color,
+          '--spot-intensity': String(intensity),
+        } as React.CSSProperties
+      }
     />
   );
 }

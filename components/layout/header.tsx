@@ -10,7 +10,6 @@ import { Button } from '@/components/primitives/button';
 import { LanguageSwitcher } from './language-switcher';
 import { SearchDialog } from '@/components/search/search-dialog';
 import { SoundToggle } from './sound-toggle';
-import '@/styles/motion/header.css';
 
 type NavKey =
   | 'products'

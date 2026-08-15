@@ -1,15 +1,13 @@
-'use client';
+import type { ReactNode } from 'react';
 
-import { motion, useScroll, useTransform } from 'motion/react';
-import { useRef } from 'react';
 
 /**
  * ScrollDrawLine — wraps the post-hero portion of a page and renders a
  * cerulean rope that draws itself as the visitor scrolls.
  *
- * Architecture (third revision — the first two kept losing the line):
+ * Architecture (fourth revision — CSS scroll-driven, no framer-motion):
  *
- *   Previous attempts placed the SVG INSIDE the wrapper at z-30 with
+ *   Earlier attempts placed the SVG INSIDE the wrapper at z-30 with
  *   mix-blend-mode: screen. That broke for two reasons:
  *
  *     1. Several wrapped sections (ProductShowcase, ScrollNarrative,
@@ -22,149 +20,76 @@ import { useRef } from 'react';
  *        fails entirely against any section whose composited background
  *        isn't dark — the cerulean just disappears.
  *
- *   This version uses a position:fixed layer at z-[40] that lives OUTSIDE
- *   any wrapped section's stacking context. The rope is always visible
- *   on every device, regardless of what's pinned or what theme any given
- *   section uses. No mix-blend-mode — straight cerulean at 0.7 opacity
- *   so it reads everywhere without dominating text.
+ *   So the rope lives in a position:fixed layer at z-[40], outside any
+ *   wrapped section's stacking context. The SVG is 300vh tall and travels
+ *   from y=0 to y=-200vh across the wrapped block, so the rope appears to
+ *   pass through the viewport top-to-bottom. The stroke reveals
+ *   progressively and completes at 55% of scroll, leaving the full rope
+ *   visible before the fade.
  *
- *   The SVG is 300vh tall. We translate it from y=0vh to y=-200vh as the
- *   visitor scrolls through the wrapped block, so the rope appears to
- *   pass through their viewport from top to bottom — the "follow me"
- *   feeling the page-anchored version was supposed to deliver. pathLength
- *   reveals the path progressively and completes at 70% of scroll so the
- *   full rope is visible for the final third of the page.
+ *   This revision replaces framer's useScroll/useTransform with a named
+ *   CSS view timeline (see styles/motion/scroll-rope.css). Consequences:
  *
- * Reduced motion: Motion's useTransform respects prefers-reduced-motion
- * on style-driven outputs — the path snaps to fully drawn and stops
- * translating for those users.
+ *     - No 'use client'. With no hooks left, this is a Server Component;
+ *       it ships zero JS and no longer hydrates.
+ *     - mix-blend-mode is gone from the fixed layer. On a full-viewport
+ *       fixed element it forced the compositor to re-blend the entire page
+ *       on every scroll frame.
+ *     - Reduced-motion users now get no rope at all instead of a scrubbing
+ *       one (framer's useTransform does not honour the media query on
+ *       scroll-driven outputs, despite what the old comment here claimed).
+ *
+ *   Public API is unchanged — app/[locale]/page.tsx needs no edit.
  */
-export function ScrollDrawLine({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
 
-  // 'start start' → scrollYProgress = 0 until the wrapper top reaches
-  // the top of viewport (i.e. the hero has fully scrolled out). Below
-  // that the value is clamped, so pathLength stays 0 and the line is
-  // fully invisible while the visitor is still looking at the hero.
-  // 'end end' → completes at the very end of the wrapped block.
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start start', 'end end'],
-  });
+/* Shared by both strokes: a wide translucent halo under a bright hairline.
+   Cheaper than the feGaussianBlur this replaced, which forced SVG-filter
+   rasterisation on every tick of the draw. */
+const ROPE_PATH = `
+  M 640,0
+  C 1140,375 140,750 640,1125
+  C 1140,1500 140,1875 640,2250
+  C 880,2500 880,2750 640,3000
+`;
 
-  // pathLength STARTS at 0 (fully invisible during hero) and completes
-  // at 55% of wrapper scroll — the rope finishes drawing well before
-  // the visitor reaches the end of the wrapped block so there's a
-  // generous "rope fully drawn" window before the opacity fade.
-  const pathLength = useTransform(scrollYProgress, [0, 0.55, 1], [0, 1, 1]);
-
-  // Vertical translation — the 300vh-tall SVG slides upward through the
-  // 100vh fixed window so the rope appears to scroll through view.
-  const y = useTransform(scrollYProgress, [0, 1], ['0vh', '-200vh']);
-
-  // Fade the overlay out aggressively in the back half of scroll. The
-  // rope is fully drawn by 55% — from 70% onward we drive opacity to 0
-  // so by the time the visitor reaches the end of the wrapped block
-  // (FaqSection bottom on the home page) the line is already gone.
-  // The CloserSection that follows is a sibling of the wrapper, not a
-  // child, so the line cannot reach it structurally either.
-  //
-  // Peak opacity is intentionally low (0.45) so the rope reads as
-  // atmospheric background texture rather than a foreground UI element.
-  // Combined with mix-blend-mode: screen below, this gives the
-  // on.energy / Adelt feel — the line is part of the environment, not
-  // crossing over text.
-  // Peak dropped 0.45 → 0.28: at 0.45 the rope read as a foreground
-  // element slicing through machine photography. At 0.28 it reads as
-  // the atmospheric thread it's meant to be. Sections with dense
-  // imagery (carousel, scroll-narrative) additionally sit at z-[45],
-  // above this overlay entirely.
-  const opacity = useTransform(
-    scrollYProgress,
-    [0, 0.7, 0.88],
-    [0.28, 0.28, 0],
-  );
-
+export function ScrollDrawLine({ children }: { children: ReactNode }) {
   return (
-    <div ref={ref} className="relative">
+    <div className="scroll-rope">
       {/* Fixed overlay — three guards stack to keep the rope strictly
           inside its lane:
-            1. top-20  clips the top so it never crosses the header.
-            2. CSS mask gradient hard-fades the bottom 25% of the
-               overlay to transparent at ALL times — the rope
-               physically cannot render where the footer enters view
-               from below, no matter what scrollYProgress reports.
-            3. opacity drives to 0 in the last ~12% of wrapper scroll
-               as a belt-and-suspenders fallback. */}
-      <motion.div
-        className="fixed top-20 bottom-0 inset-x-0 pointer-events-none z-[40] overflow-hidden"
-        style={{
-          opacity,
-          // mix-blend: screen composites the cerulean against whatever
-          // is underneath — on dark sections it reads as a glowing
-          // wire, on lighter content it dims. Perceptually pushes the
-          // rope BEHIND content even though z-index keeps it in front.
-          mixBlendMode: 'screen',
-          WebkitMaskImage:
-            'linear-gradient(to bottom, black 0%, black 70%, transparent 100%)',
-          maskImage:
-            'linear-gradient(to bottom, black 0%, black 70%, transparent 100%)',
-        }}
+            1. top-20 clips the top so it never crosses the header.
+            2. A CSS mask gradient hard-fades the bottom 30% of the overlay
+               to transparent at ALL times, so the rope physically cannot
+               render where the footer enters view from below.
+            3. The fade animation drives opacity to 0 over the last ~12% of
+               wrapper scroll as a belt-and-suspenders fallback.
+          Guards 2 and 3 live in scroll-rope.css. */}
+      <div
+        className="scroll-rope__layer fixed top-20 bottom-0 inset-x-0 pointer-events-none z-[40] overflow-hidden"
         aria-hidden="true"
       >
-        <motion.svg
+        <svg
+          className="scroll-rope__svg"
           viewBox="0 0 1280 3000"
           preserveAspectRatio="none"
-          style={{
-            y,
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '300vh',
-          }}
         >
-          {/* Two strokes — single bright inner line + outer wider stroke
-              at lower opacity for a glow halo. Cheaper than the previous
-              feGaussianBlur filter which forced SVG-filter rasterization
-              on every pathLength tick. */}
-          <motion.path
-            d="
-              M 640,0
-              C 1140,375 140,750 640,1125
-              C 1140,1500 140,1875 640,2250
-              C 880,2500 880,2750 640,3000
-            "
-            fill="none"
-            stroke="#2796df"
-            strokeWidth={10}
-            strokeOpacity={0.35}
-            strokeLinecap="round"
-            strokeLinejoin="round"
+          {/* pathLength={1} normalises the geometry so the CSS dash offset
+              animation runs in 0→1 progress units regardless of the path's
+              real length or the non-uniform viewBox scaling. */}
+          <path
+            className="scroll-rope__path scroll-rope__path--halo"
+            d={ROPE_PATH}
+            pathLength={1}
             vectorEffect="non-scaling-stroke"
-            style={{ pathLength }}
           />
-          <motion.path
-            d="
-              M 640,0
-              C 1140,375 140,750 640,1125
-              C 1140,1500 140,1875 640,2250
-              C 880,2500 880,2750 640,3000
-            "
-            fill="none"
-            stroke="#4eaae9"
-            strokeWidth={1.5}
-            strokeLinecap="round"
-            strokeLinejoin="round"
+          <path
+            className="scroll-rope__path scroll-rope__path--core"
+            d={ROPE_PATH}
+            pathLength={1}
             vectorEffect="non-scaling-stroke"
-            style={{ pathLength }}
           />
-        </motion.svg>
-      </motion.div>
+        </svg>
+      </div>
 
       {children}
     </div>

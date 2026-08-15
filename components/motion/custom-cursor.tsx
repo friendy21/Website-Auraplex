@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import '@/styles/motion/caliper.css';
 
 type Mode = 'default' | 'link' | 'caliper' | 'button' | 'text';
 

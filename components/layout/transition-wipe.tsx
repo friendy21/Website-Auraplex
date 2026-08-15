@@ -2,7 +2,6 @@
 
 import { usePathname } from 'next/navigation';
 
-import '@/styles/motion/transition-wipe.css';
 
 /**
  * TransitionWipe — a 2px signal-cerulean line that sweeps across the

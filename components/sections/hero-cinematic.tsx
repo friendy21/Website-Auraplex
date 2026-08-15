@@ -1,8 +1,6 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'motion/react';
 import { Link } from '@/lib/navigation';
-import { useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/primitives/button';
 import { Magnetic } from '@/components/motion/magnetic';
@@ -25,37 +23,32 @@ import { whatsappLink } from '@/lib/utils';
  *
  * Scroll-driven (0 → 100vh): headline scales down + lifts, tunnel and copy
  * fade, ink floods so the Hyperscroll's first frame emerges from the centre.
+ *
+ * MECHANISM: that whole choreography used to be seven framer `useTransform`s
+ * hanging off one `useScroll`, which meant nothing moved until the motion
+ * bundle had hydrated — on the LCP surface of the site. It is now native CSS
+ * scroll-driven animation on a single named view timeline (`--hero-dive`,
+ * declared by `.hero-stage` below), so it runs on the compositor and is live
+ * from the first paint of the server HTML. All of it lives in
+ * styles/motion/hero.css, which documents the range mapping, the inverted
+ * fallback story and the reduced-motion override.
  */
 export function HeroCinematic() {
   const t = useTranslations('home');
-
-  const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start start', 'end start'],
-  });
-
-  const h1Scale = useTransform(scrollYProgress, [0, 1], [1, 0.82]);
-  const h1Y = useTransform(scrollYProgress, [0, 1], [0, -80]);
-  const tunnelOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-  const tunnelScale = useTransform(scrollYProgress, [0, 1], [1, 1.4]);
-  const inkOverlayOpacity = useTransform(scrollYProgress, [0.2, 0.9], [0, 1]);
-  const copyOpacity = useTransform(scrollYProgress, [0, 0.45], [1, 0]);
-  const signalLineScaleX = useTransform(scrollYProgress, [0, 0.5], [0.1, 1]);
 
   const headline = t('heroH1');
   const words = headline.split(/(\s+)/);
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative h-[100dvh] w-full overflow-hidden bg-[color:var(--color-ink)]"
-    >
-      {/* ── Bespoke tunnel background (single element) ── */}
-      <motion.div
-        style={{ opacity: tunnelOpacity, scale: tunnelScale }}
-        className="absolute inset-0"
-      >
+    // .hero-stage names the view timeline every scroll-linked child rides. It
+    // has to live here rather than on the children: this section is
+    // `overflow-hidden`, which makes it a scroll container, so an anonymous
+    // `view()` written on a descendant would bind to this non-scrolling box
+    // instead of the document and never advance.
+    <section className="hero-stage relative h-[100dvh] w-full overflow-hidden bg-[color:var(--color-ink)]">
+      {/* ── Bespoke tunnel background (single element) ──
+          Was style={{ opacity: tunnelOpacity, scale: tunnelScale }}. */}
+      <div className="hero-tunnel-dive absolute inset-0">
         {/* Static gradient shows through on minimal tier / before mount */}
         <div
           className="absolute inset-0"
@@ -65,28 +58,29 @@ export function HeroCinematic() {
           }}
         />
         <HeroTunnel />
-      </motion.div>
+      </div>
 
       {/* Cursor spotlight halo */}
       <CursorSpotlight size={460} intensity={0.16} />
 
-      {/* Ink flood — the Hyperscroll below emerges from this centre as we scroll */}
-      <motion.div
-        style={{ opacity: inkOverlayOpacity }}
-        className="pointer-events-none absolute inset-0"
-      >
+      {/* Ink flood — the Hyperscroll below emerges from this centre as we
+          scroll. Was style={{ opacity: inkOverlayOpacity }}; the base style is
+          opacity 0 so a browser without scroll-driven animations never floods
+          the hero. */}
+      <div className="hero-ink-flood pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[color:var(--color-ink)]" />
-      </motion.div>
+      </div>
 
       {/* Edge vignette so the corridor fades into the frame */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--color-ink)]/60 via-transparent to-[color:var(--color-ink)]" />
       <div className="pointer-events-none absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-[color:var(--color-ink)] via-[color:var(--color-ink)]/40 to-transparent" />
 
-      {/* ── Content ── */}
-      <motion.div
-        style={{ scale: h1Scale, y: h1Y, opacity: copyOpacity }}
-        className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-center px-6 lg:px-12"
-      >
+      {/* ── Content ──
+          Was style={{ scale: h1Scale, y: h1Y, opacity: copyOpacity }}. This is
+          the ancestor of the LCP element, so its opacity is an EXIT only: it is
+          exactly 1 at scroll position 0 and holds 1 through the first 5% of the
+          hero's scroll range. See RULE ZERO in styles/motion/hero.css. */}
+      <div className="hero-copy relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-center px-6 lg:px-12">
         {/* Eyebrow — SIGNAL SWEEP. CSS-driven so it paints from server HTML.
             The old version animated `letterSpacing`, which is a LAYOUT property:
             it reflowed the eyebrow row on every frame and was a measured CLS
@@ -134,44 +128,47 @@ export function HeroCinematic() {
             </Button>
           </Magnetic>
         </div>
-      </motion.div>
+      </div>
 
       {/* Corner HUD — rhymes with the MachineHyperscroll HUD so the hero reads
-          as the entrance to the same system. Fades out as we dive in. */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.9, duration: 0.8 }}
-        style={{ opacity: copyOpacity }}
-        className="pointer-events-none absolute inset-6 z-20 hidden font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)] lg:block"
+          as the entrance to the same system. Fades out as we dive in.
+          Two opacity sources (a delayed entrance fade AND the scroll-linked
+          copyOpacity) were stacked on one framer element; CSS can only run one
+          opacity animation per element, so they are split across this wrapper
+          pair — outer = scroll exit, inner = timed entrance. The two opacities
+          multiply, which is how framer composed them. The inner box is
+          `inset-0` of the outer, so it is the same rectangle and the absolutely
+          positioned corner marks land exactly where they did. */}
+      <div
+        className="hero-hud pointer-events-none absolute inset-6 z-20 hidden font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)] lg:block"
         aria-hidden="true"
       >
-        <div className="absolute top-0 right-0 text-right leading-relaxed">
-          <div className="text-[color:var(--color-signal)]">SYS / READY</div>
-          <div>DEPTH 0000</div>
+        <div className="hero-hud-in absolute inset-0">
+          <div className="absolute top-0 right-0 text-right leading-relaxed">
+            <div className="text-[color:var(--color-signal)]">SYS / READY</div>
+            <div>DEPTH 0000</div>
+          </div>
+          <div className="absolute bottom-0 right-0">MY · 03.1189 N · 101.6869 E</div>
+          <span className="absolute top-2 right-2 h-3 w-3 border-t border-r border-[color:var(--color-paper)]/25" />
+          <span className="absolute bottom-2 right-2 h-3 w-3 border-b border-r border-[color:var(--color-paper)]/25" />
         </div>
-        <div className="absolute bottom-0 right-0">MY · 03.1189 N · 101.6869 E</div>
-        <span className="absolute top-2 right-2 h-3 w-3 border-t border-r border-[color:var(--color-paper)]/25" />
-        <span className="absolute bottom-2 right-2 h-3 w-3 border-b border-r border-[color:var(--color-paper)]/25" />
-      </motion.div>
+      </div>
 
-      {/* Bottom signal line */}
-      <motion.div
-        style={{ scaleX: signalLineScaleX, originX: 0 }}
-        className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[color:var(--color-signal)] via-[color:var(--color-signal-bright)] to-[color:var(--color-signal)]/0"
-      />
+      {/* Bottom signal line — was style={{ scaleX: signalLineScaleX,
+          originX: 0 }}, which starts at 0.1, not 1. */}
+      <div className="hero-signal-line absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[color:var(--color-signal)] via-[color:var(--color-signal-bright)] to-[color:var(--color-signal)]/0" />
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2.2, duration: 0.6 }}
-        style={{ opacity: copyOpacity }}
-        className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-2 font-mono text-xs uppercase tracking-widest text-[color:var(--color-steel)] pointer-events-none"
-      >
-        <span>{t('heroScrollLabel')}</span>
-        <div className="scroll-spark h-8 w-px bg-gradient-to-b from-[color:var(--color-steel)] via-[color:var(--color-signal)]/60 to-transparent" />
-      </motion.div>
+      {/* Scroll indicator — same outer/inner split as the HUD above. The
+          `-translate-x-1/2` centring stays on the outer element (the animations
+          here touch opacity only, so nothing competes for `transform`), and the
+          flex column moves inward; the outer is still shrink-to-fit around the
+          same content, so the centring is unchanged. */}
+      <div className="hero-scroll-cue pointer-events-none absolute bottom-6 left-1/2 z-20 -translate-x-1/2 font-mono text-xs uppercase tracking-widest text-[color:var(--color-steel)]">
+        <div className="hero-scroll-cue-in flex flex-col items-center gap-2">
+          <span>{t('heroScrollLabel')}</span>
+          <div className="scroll-spark h-8 w-px bg-gradient-to-b from-[color:var(--color-steel)] via-[color:var(--color-signal)]/60 to-transparent" />
+        </div>
+      </div>
     </section>
   );
 }

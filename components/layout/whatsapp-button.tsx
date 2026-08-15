@@ -2,7 +2,6 @@ import { MessageCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { whatsappLink } from '@/lib/utils';
 
-import '@/styles/motion/whatsapp-button.css';
 
 /**
  * Floating WhatsApp FAB.

@@ -3,7 +3,6 @@ import { Link } from '@/lib/navigation';
 import { useTranslations } from 'next-intl';
 import type { CSSProperties, ReactNode } from 'react';
 
-import '@/styles/motion/footer.css';
 
 // Real Auraplex social profiles, extracted from the live
 // autolabellermalaysia.com footer HTML (canonical forms, tracking

@@ -1,4 +1,3 @@
-import '@/styles/motion/scroll-progress.css';
 
 /**
  * 2px progress bar at the top of the viewport, tracking total document

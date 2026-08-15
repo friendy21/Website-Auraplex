@@ -1,5 +1,20 @@
 @import 'tailwindcss';
 @import './fonts.css';
+/* Component motion stylesheets are imported HERE, not from each component.
+   Importing them per-component split the CSS into 4 render-blocking
+   stylesheets; each extra one costs a full RTT on throttled mobile and
+   regressed FCP by ~450ms. One stylesheet, one round trip. */
+@import './motion/caliper.css';
+@import './motion/cursor-spotlight.css';
+@import './motion/footer.css';
+@import './motion/header.css';
+@import './motion/hero.css';
+@import './motion/magnetic.css';
+@import './motion/scroll-progress.css';
+@import './motion/scroll-rope.css';
+@import './motion/sticky-cta.css';
+@import './motion/transition-wipe.css';
+@import './motion/whatsapp-button.css';
 
 /* ──────────────────────────────────────────────────────────────────────────
  * Auraplex — design tokens

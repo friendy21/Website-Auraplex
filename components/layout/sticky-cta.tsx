@@ -4,7 +4,6 @@ import { Link } from '@/lib/navigation';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
-import '@/styles/motion/sticky-cta.css';
 
 /**
  * Floating "Get a quote" pill — appears once the user scrolls past the hero
