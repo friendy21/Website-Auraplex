@@ -1,7 +1,6 @@
 'use client';
 
 import { useActionState, useState } from 'react';
-import { motion } from 'motion/react';
 import { useTranslations } from 'next-intl';
 import { submitContact, type ActionState } from '@/actions/submit-contact';
 import { Button } from '@/components/primitives/button';
@@ -37,18 +36,13 @@ export function ContactForm({
 
   if (state.ok) {
     return (
-      <motion.div
-        initial={{ opacity: 0, y: 20, scale: 0.98 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.5, ease: [0.65, 0, 0.35, 1] }}
-        className="p-12 border border-[color:var(--color-signal)] bg-[color:var(--color-signal)]/5"
-      >
+      <div className="ap-form-success p-12 border border-[color:var(--color-signal)] bg-[color:var(--color-signal)]/5">
         <div className="font-mono text-xs uppercase tracking-widest text-[color:var(--color-signal)] mb-3 flex items-center gap-2">
           <span className="h-1.5 w-1.5 bg-[color:var(--color-signal)] animate-pulse" />
           {t('received')}
         </div>
         <p className="font-display text-2xl">{t('thanks')}</p>
-      </motion.div>
+      </div>
     );
   }
 
@@ -107,14 +101,9 @@ export function ContactForm({
       />
 
       {state.error && (
-        <motion.p
-          initial={{ opacity: 0, x: -8 }}
-          animate={{ opacity: 1, x: [0, -4, 4, -4, 4, 0] }}
-          transition={{ x: { duration: 0.4 } }}
-          className="text-[color:var(--color-alert)] font-mono text-sm pt-2"
-        >
+        <p className="ap-form-error text-[color:var(--color-alert)] font-mono text-sm pt-2">
           {state.error}
-        </motion.p>
+        </p>
       )}
 
       <div className="pt-6">

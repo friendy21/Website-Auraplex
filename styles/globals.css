@@ -15,6 +15,18 @@
 @import './motion/sticky-cta.css';
 @import './motion/transition-wipe.css';
 @import './motion/whatsapp-button.css';
+@import './motion/closer.css';
+@import './motion/horizontal-scroll.css';
+@import './motion/parallax-marquee.css';
+@import './motion/chat.css';
+@import './motion/data-viz.css';
+@import './motion/forms.css';
+@import './motion/numbers.css';
+@import './motion/products.css';
+@import './motion/reveal-family.css';
+@import './motion/sections.css';
+@import './motion/tilt-card.css';
+@import './motion/transitions.css';
 
 /* ──────────────────────────────────────────────────────────────────────────
  * Auraplex — design tokens
@@ -287,9 +299,13 @@ body {
   transform-origin: 50% 100%;
   animation: hero-word-in 0.8s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1)) both;
 }
+/* RULE ZERO: transform-only. This class is used with <Reveal immediate> to
+   wrap ABOVE-THE-FOLD headings (e.g. /contact's H1 + subtitle), and an
+   opacity-0 start makes Chrome refuse the element as an LCP candidate until
+   the animation completes — the exact bug that cost 4.2s on the homepage. */
 @keyframes reveal-immediate-kf {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { transform: translateY(24px); }
+  to   { transform: translateY(0); }
 }
 .reveal-immediate {
   animation: reveal-immediate-kf 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;

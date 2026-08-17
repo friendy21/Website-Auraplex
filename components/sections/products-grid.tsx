@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type CSSProperties } from 'react';
 import Link from 'next/link';
-import { AnimatePresence, motion } from 'motion/react';
 import { ParallaxProductImage } from '@/components/sections/parallax-product-image';
 import { EmptyState } from '@/components/primitives/empty-state';
 import { machineTags, type Category, type Machine } from '@/lib/catalog';
@@ -20,14 +19,31 @@ interface Props {
 }
 
 /**
- * ProductsGrid — client-side animated product grid with AnimatePresence.
+ * ProductsGrid — client-side filtered/sorted product grid.
  *
  * Filtering and sorting happen locally (no full page reload); the URL is
  * kept in sync (locale-prefixed) so shareable links still work.
  *
- * Animations:
- *   - Category tabs: a sliding signal pill follows the active tab (layoutId).
- *   - Grid items: staggered enter/exit; motion's `layout` smooths reordering.
+ * MECHANISM: this was the heaviest framer surface on the site — AnimatePresence
+ * around every card, `layout` on the grid and on each item, and a `layoutId`
+ * pill on the category tabs. All of it is native CSS now
+ * (styles/motion/products.css), and two behaviours were deliberately dropped
+ * rather than kept alive on framer:
+ *
+ *   1. The FLIP reorder. `layout` animated cards gliding to new grid slots
+ *      when the sort changed. That is a true shared-layout animation — it
+ *      needs measured before/after rects — and CSS cannot express it without
+ *      animating layout properties. Cards now simply reflow into their new
+ *      positions. (Per brief: prefer dropping the reorder over keeping framer.)
+ *   2. The exit animation. React unmounts a filtered-out card immediately, so
+ *      there is no node left to animate; `@starting-style` +
+ *      `transition-behavior: allow-discrete` only covers the enter half.
+ *      Filtered-out cards disappear at once.
+ *
+ * What is preserved exactly: the category filter, the sort, the URL sync, the
+ * result counters, `aria-pressed` on both tab groups, the empty state, and the
+ * card entrance (staggered, now transform-only per RULE ZERO — the first card
+ * has been an LCP candidate on this route).
  */
 export function ProductsGrid({
   machines,
@@ -67,7 +83,9 @@ export function ProductsGrid({
       {/* ── CONTROLS BAR ── */}
       <section className="sticky top-14 z-30 bg-[color:var(--color-ink)]/90 backdrop-blur-xl border-b border-[color:var(--color-neutral-700)]">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12 py-4 flex items-center justify-between gap-6 flex-wrap">
-          {/* Category tabs with sliding signal pill */}
+          {/* Category tabs with a signal pill on the active tab. The pill is
+              rendered in EVERY tab and driven off `aria-pressed`, so the wipe
+              is pure CSS — see the FLIP note in styles/motion/products.css. */}
           <div className="flex flex-wrap gap-2 font-mono text-[11px] uppercase tracking-[0.15em]">
             {categories.map((c) => {
               const active = category === c.key || (!category && !c.key);
@@ -76,15 +94,12 @@ export function ProductsGrid({
                   key={c.label}
                   onClick={() => setCategory(c.key)}
                   aria-pressed={active}
-                  className="relative px-3 py-1.5 flex items-center gap-2 transition-colors duration-300"
+                  className="cat-tab relative px-3 py-1.5 flex items-center gap-2 transition-colors duration-300"
                 >
-                  {active && (
-                    <motion.div
-                      layoutId="active-cat-pill"
-                      className="absolute inset-0 border border-[color:var(--color-signal)] bg-[color:var(--color-signal)]/10"
-                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                    />
-                  )}
+                  <span
+                    aria-hidden="true"
+                    className="cat-tab__pill absolute inset-0 border border-[color:var(--color-signal)] bg-[color:var(--color-signal)]/10"
+                  />
                   <span className="relative z-10 text-[color:var(--color-paper)]">
                     {c.label}
                   </span>
@@ -146,135 +161,126 @@ export function ProductsGrid({
 
       {/* ── ANIMATED GRID ── */}
       <section className="mx-auto max-w-[1600px] px-6 lg:px-12 pb-32">
-        <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" layout>
-          <AnimatePresence mode="popLayout">
-            {sorted.map((p, i) => {
-              const tags = machineTags(p);
-              return (
-                <motion.div
-                  key={p.id}
-                  layout
-                  initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -20, scale: 0.9 }}
-                  transition={{
-                    duration: 0.4,
-                    delay: Math.min(i * 0.03, 0.4),
-                    ease: [0.4, 0, 0.2, 1],
-                    layout: { duration: 0.35, ease: [0.4, 0, 0.2, 1] },
-                  }}
-                  className="group"
-                >
-                  <div className="mcard-parent">
-                    <Link
-                      href={`/${locale}/products/${p.slug}`}
-                      data-cursor="caliper"
-                      className="mcard"
-                    >
-                      {/* Floating glass rim (decorative) */}
-                      <span className="mcard__glass" aria-hidden="true" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {sorted.map((p, i) => {
+            const tags = machineTags(p);
+            return (
+              <div
+                key={p.id}
+                /* `--i` drives the entrance stagger in products.css. Capped at
+                   13 to reproduce framer's Math.min(i * 0.03, 0.4) delay. */
+                style={{ '--i': Math.min(i, 13) } as CSSProperties}
+                className="pgrid-card group"
+              >
+                <div className="mcard-parent">
+                  <Link
+                    href={`/${locale}/products/${p.slug}`}
+                    data-cursor="caliper"
+                    className="mcard"
+                  >
+                    {/* Floating glass rim (decorative) */}
+                    <span className="mcard__glass" aria-hidden="true" />
 
-                      {/* Image layer */}
-                      <div className="mcard__media aspect-[4/3] rounded-t-[18px] overflow-hidden">
-                        <div className="absolute inset-0 z-[5] bg-gradient-to-t from-[color:var(--color-ink)]/70 via-[color:var(--color-ink)]/15 to-transparent pointer-events-none transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:-translate-y-full" />
+                    {/* Image layer */}
+                    <div className="mcard__media aspect-[4/3] rounded-t-[18px] overflow-hidden">
+                      <div className="absolute inset-0 z-[5] bg-gradient-to-t from-[color:var(--color-ink)]/70 via-[color:var(--color-ink)]/15 to-transparent pointer-events-none transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:-translate-y-full" />
 
-                        {p.image ? (
-                          <ParallaxProductImage
-                            src={p.image}
-                            alt={p.name}
-                            productId={p.id}
-                            /* Eager-load the first row so the LCP card image
-                               isn't lazy-loaded (Lighthouse flagged this). */
-                            priority={i < 3}
-                          />
-                        ) : (
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-400)] text-center leading-relaxed">
-                              {t.photographyPending}
-                            </div>
+                      {p.image ? (
+                        <ParallaxProductImage
+                          src={p.image}
+                          alt={p.name}
+                          productId={p.id}
+                          /* Eager-load the first row so the LCP card image
+                             isn't lazy-loaded (Lighthouse flagged this). */
+                          priority={i < 3}
+                        />
+                      ) : (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-[color:var(--color-neutral-400)] text-center leading-relaxed">
+                            {t.photographyPending}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Top meta row */}
+                      <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2 z-10">
+                        <div className="font-mono text-[9px] uppercase tracking-[0.25em] bg-[color:var(--color-ink)]/70 backdrop-blur-sm px-2 py-1 text-[color:var(--color-signal)] group-hover:text-[color:var(--color-ink)] group-hover:bg-[color:var(--color-signal)] transition-colors duration-500">
+                          {t[`cat_${p.category}`]}
+                        </div>
+                        {p.featured && (
+                          <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-[color:var(--color-ink)] bg-[color:var(--color-signal)] px-2 py-1 animate-pulse">
+                            {t.featuredBadge}
                           </div>
                         )}
+                      </div>
 
-                        {/* Top meta row */}
-                        <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2 z-10">
-                          <div className="font-mono text-[9px] uppercase tracking-[0.25em] bg-[color:var(--color-ink)]/70 backdrop-blur-sm px-2 py-1 text-[color:var(--color-signal)] group-hover:text-[color:var(--color-ink)] group-hover:bg-[color:var(--color-signal)] transition-colors duration-500">
-                            {t[`cat_${p.category}`]}
-                          </div>
-                          {p.featured && (
-                            <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-[color:var(--color-ink)] bg-[color:var(--color-signal)] px-2 py-1 animate-pulse">
-                              {t.featuredBadge}
-                            </div>
+                      {/* Gallery indicator */}
+                      {p.image && p.gallery.length > 1 && (
+                        <div className="absolute bottom-3 right-3 font-mono text-[9px] uppercase tracking-[0.25em] text-[color:var(--color-steel-soft)] bg-[color:var(--color-ink)]/70 backdrop-blur-sm px-2 py-1 z-10 transition-opacity duration-300 group-hover:opacity-0">
+                          ◇ {t.shotsLabel?.replace('{n}', String(p.gallery.length))}
+                        </div>
+                      )}
+
+                      {/* Hover overlay */}
+                      <div className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] bg-gradient-to-t from-[color:var(--color-ink)] via-[color:var(--color-ink)]/90 to-transparent pt-16 pb-5 px-5 z-10">
+                        <div className="flex items-center justify-between gap-3">
+                          <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[color:var(--color-signal)]">
+                            {t.viewMachineLong}
+                          </span>
+                          <span className="font-mono text-sm text-[color:var(--color-signal)] -translate-x-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-500 delay-150">
+                            ⟶
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Content layer */}
+                    <div className="mcard__content p-5 border-t border-[color:var(--color-neutral-700)]">
+                      <h3 className="font-display text-xl tracking-[-0.01em] leading-[1.15] mb-3 min-h-[3.5rem]">
+                        {p.name}
+                      </h3>
+
+                      {tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 mb-4">
+                          {tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="font-mono text-[9px] uppercase tracking-[0.15em] text-[color:var(--color-steel-soft)] border border-[color:var(--color-neutral-700)] px-2 py-1"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      <div className="flex items-end justify-between gap-2 pt-3 border-t border-[color:var(--color-neutral-700)]">
+                        <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-neutral-400)] leading-relaxed">
+                          {p.monthlyPrice != null ? (
+                            <>
+                              {t.from}
+                              <br />
+                              <span className="text-[color:var(--color-signal)] text-sm tracking-normal normal-case">
+                                RM {p.monthlyPrice.toLocaleString()}
+                                {t.perMonth}
+                              </span>
+                            </>
+                          ) : (
+                            <span className="text-[color:var(--color-paper)] text-sm tracking-normal normal-case">
+                              {t.priceOnRequest}
+                            </span>
                           )}
                         </div>
-
-                        {/* Gallery indicator */}
-                        {p.image && p.gallery.length > 1 && (
-                          <div className="absolute bottom-3 right-3 font-mono text-[9px] uppercase tracking-[0.25em] text-[color:var(--color-steel-soft)] bg-[color:var(--color-ink)]/70 backdrop-blur-sm px-2 py-1 z-10 transition-opacity duration-300 group-hover:opacity-0">
-                            ◇ {t.shotsLabel?.replace('{n}', String(p.gallery.length))}
-                          </div>
-                        )}
-
-                        {/* Hover overlay */}
-                        <div className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] bg-gradient-to-t from-[color:var(--color-ink)] via-[color:var(--color-ink)]/90 to-transparent pt-16 pb-5 px-5 z-10">
-                          <div className="flex items-center justify-between gap-3">
-                            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[color:var(--color-signal)]">
-                              {t.viewMachineLong}
-                            </span>
-                            <span className="font-mono text-sm text-[color:var(--color-signal)] -translate-x-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-500 delay-150">
-                              ⟶
-                            </span>
-                          </div>
+                        <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-steel)] group-hover:text-[color:var(--color-signal)] group-hover:translate-x-1 transition-all duration-300">
+                          {t.viewMachine} →
                         </div>
                       </div>
-
-                      {/* Content layer */}
-                      <div className="mcard__content p-5 border-t border-[color:var(--color-neutral-700)]">
-                        <h3 className="font-display text-xl tracking-[-0.01em] leading-[1.15] mb-3 min-h-[3.5rem]">
-                          {p.name}
-                        </h3>
-
-                        {tags.length > 0 && (
-                          <div className="flex flex-wrap gap-1.5 mb-4">
-                            {tags.map((tag) => (
-                              <span
-                                key={tag}
-                                className="font-mono text-[9px] uppercase tracking-[0.15em] text-[color:var(--color-steel-soft)] border border-[color:var(--color-neutral-700)] px-2 py-1"
-                              >
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-
-                        <div className="flex items-end justify-between gap-2 pt-3 border-t border-[color:var(--color-neutral-700)]">
-                          <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-neutral-400)] leading-relaxed">
-                            {p.monthlyPrice != null ? (
-                              <>
-                                {t.from}
-                                <br />
-                                <span className="text-[color:var(--color-signal)] text-sm tracking-normal normal-case">
-                                  RM {p.monthlyPrice.toLocaleString()}
-                                  {t.perMonth}
-                                </span>
-                              </>
-                            ) : (
-                              <span className="text-[color:var(--color-paper)] text-sm tracking-normal normal-case">
-                                {t.priceOnRequest}
-                              </span>
-                            )}
-                          </div>
-                          <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-steel)] group-hover:text-[color:var(--color-signal)] group-hover:translate-x-1 transition-all duration-300">
-                            {t.viewMachine} →
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </AnimatePresence>
-        </motion.div>
+                    </div>
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
+        </div>
 
         {/* Empty state — shared EmptyState primitive */}
         {sorted.length === 0 && (

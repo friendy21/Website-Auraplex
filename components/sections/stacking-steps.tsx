@@ -1,9 +1,5 @@
-'use client';
-
-import { useRef } from 'react';
-import { motion, useScroll, useTransform, type MotionValue } from 'motion/react';
+import type { CSSProperties } from 'react';
 import { useTranslations } from 'next-intl';
-import { useReducedMotion } from '@/lib/hooks';
 
 type Step = { num: string; name: string; summary: string };
 
@@ -11,6 +7,13 @@ type Step = { num: string; name: string; summary: string };
  * StackingSteps — the "how we build" journey as sticky stacking cards: each
  * card pins near the top and, as the next scrolls up over it, recedes (scales
  * down + dims) to build a fanned deck.
+ *
+ * Motion lives in styles/motion/sections.css as a native scroll-driven
+ * animation on a named view timeline (`--steps-deck`, declared on this <ol>).
+ * It replaces useScroll({ offset: ['start start', 'end end'] }) + two
+ * useTransform outputs per card; `contain 0% → 100%` on a subject taller than
+ * the scrollport is that offset pair exactly. Because nothing here needs a
+ * hook any more, the component is a Server Component and ships no JS.
  *
  * Correctness notes (this replaced a version that overlapped illegibly on
  * short/laptop viewports):
@@ -22,26 +25,14 @@ type Step = { num: string; name: string; summary: string };
  *  - Depth uses scale + a dim overlay ONLY. The previous 3D `rotateX` tilt
  *    reordered sibling paint in the 3D context and let the covered card's title
  *    bleed through the covering card — removed.
- *  - transform/opacity only; reduced-motion keeps the cards flat + opaque
+ *  - transform/opacity only; reduced motion keeps the cards flat + opaque
  *    (coverage alone still reads as a clean stack).
  */
 export function StackingSteps({ steps }: { steps: Step[] }) {
-  const container = useRef<HTMLOListElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: container,
-    offset: ['start start', 'end end'],
-  });
-
   return (
-    <ol ref={container} className="relative list-none p-0 m-0">
+    <ol className="steps-deck relative list-none p-0 m-0">
       {steps.map((step, i) => (
-        <StepCard
-          key={step.num}
-          step={step}
-          index={i}
-          total={steps.length}
-          progress={scrollYProgress}
-        />
+        <StepCard key={step.num} step={step} index={i} total={steps.length} />
       ))}
     </ol>
   );
@@ -51,33 +42,32 @@ function StepCard({
   step,
   index,
   total,
-  progress,
 }: {
   step: Step;
   index: number;
   total: number;
-  progress: MotionValue<number>;
 }) {
   const t = useTranslations('common');
-  const reduced = useReducedMotion();
-
-  // Card starts receding once the scroll passes its slot.
-  const start = index / total;
-  const targetScale = reduced ? 1 : 1 - (total - index) * 0.04;
-  const scale = useTransform(progress, [start, 1], [1, targetScale]);
-  const dim = useTransform(progress, [start, 1], [0, reduced ? 0 : 0.5]);
 
   return (
     <li
       className="sticky"
-      // Each card sticks ~2.6rem lower than the previous, so stacked cards peek
-      // their header row. 10vh base leaves the fixed header clear.
-      style={{ top: `calc(10vh + ${index * 2.6}rem)` }}
+      // `top`: each card sticks ~2.6rem lower than the previous, so stacked
+      // cards peek their header row. 10vh base leaves the fixed header clear.
+      //
+      // `--step-start` / `--step-scale` are the former useTransform arguments,
+      // handed to CSS: the card starts receding once the deck's scroll passes
+      // its own slot (index / total) and lands on 1 - (total - index) * 0.04.
+      // Both inherit down to .steps-card / .steps-dim.
+      style={
+        {
+          top: `calc(10vh + ${index * 2.6}rem)`,
+          '--step-start': `${((index / total) * 100).toFixed(4)}%`,
+          '--step-scale': (1 - (total - index) * 0.04).toFixed(4),
+        } as CSSProperties
+      }
     >
-      <motion.div
-        style={{ scale, transformOrigin: '50% 0%' }}
-        className="relative mb-6 flex min-h-[300px] flex-col justify-start overflow-hidden rounded-3xl border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)] p-8 md:h-[52vh] md:p-14 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.7)]"
-      >
+      <div className="steps-card relative mb-6 flex min-h-[300px] flex-col justify-start overflow-hidden rounded-3xl border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)] p-8 md:h-[52vh] md:p-14 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.7)]">
         {/* Signal top edge */}
         <span className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-[color:var(--color-signal)] via-[color:var(--color-signal-bright)] to-transparent" />
 
@@ -102,12 +92,11 @@ function StepCard({
         </div>
 
         {/* Dim overlay as the card gets covered */}
-        <motion.span
+        <span
           aria-hidden="true"
-          style={{ opacity: dim }}
-          className="pointer-events-none absolute inset-0 bg-[color:var(--color-ink)]"
+          className="steps-dim pointer-events-none absolute inset-0 bg-[color:var(--color-ink)]"
         />
-      </motion.div>
+      </div>
     </li>
   );
 }

@@ -1,7 +1,4 @@
-'use client';
-
-import { useRef, type ReactNode } from 'react';
-import { motion, useInView, type Variants } from 'motion/react';
+import type { CSSProperties, ReactNode } from 'react';
 
 type Props = {
   children: ReactNode;
@@ -9,35 +6,36 @@ type Props = {
   variant?: 'fade' | 'up' | 'scale';
   /** Milliseconds to wait before the animation starts after entering view. */
   delay?: number;
-  /** Optional className passed to the wrapping motion.div. */
+  /** Optional className passed to the wrapping div. */
   className?: string;
   /**
-   * Above-the-fold mode. Renders visible in the server HTML with a CSS entrance
-   * (paints at first frame, before hydration) instead of the JS `useInView`
-   * path — so it never blocks LCP behind the motion bundle. Use for the first
-   * hero block on a page; leave off for scroll-into-view reveals.
+   * Above-the-fold mode. Renders visible in the server HTML with a time-based
+   * CSS entrance (paints at first frame) instead of the scroll-driven path.
+   * Use for the first hero block on a page; leave off for scroll-into-view
+   * reveals.
    */
   immediate?: boolean;
 };
 
 /**
- * Scroll-into-view reveal — Motion-based.
+ * Scroll-into-view reveal — CSS scroll-driven.
  *
- * The previous version applied a CSS `animation-timeline: view()` scroll-
- * driven animation and tried to stagger via `animation-delay` (a time value).
- * That combination is undefined behavior across browsers — sometimes the
- * element animated normally, sometimes it never started, sometimes it got
- * stuck at an intermediate state. Symptom: "sometimes pops, sometimes
- * doesn't."
+ * Was `useInView` + `motion.div`. That had a hard floor: `initial="hidden"`
+ * pinned the element at `opacity: 0` until the motion bundle hydrated and the
+ * IntersectionObserver fired, so above-the-fold call sites could not become
+ * LCP candidates until JS landed.
  *
- * This version uses Motion's `useInView` + time-based animation. Same look,
- * but `delay` actually works and the entrance is consistent regardless of
- * scroll position at page load, smooth scroll engine, or browser.
+ * This version rides `animation-timeline: view()` (the reveal system already
+ * present in globals.css). The behavioural difference that matters: an element
+ * already inside the viewport at scroll offset 0 is PAST the end of its
+ * `entry` range, so `animation-fill-mode: both` paints it at the end state on
+ * the first frame with no JS involved. Below-the-fold elements still start
+ * hidden and scrub in as they enter.
  *
- * - Triggers when element is ~10% inside the viewport (margin tuned to feel
- *   responsive without firing while still below the fold).
- * - Animates exactly once per page lifecycle.
- * - Respects `prefers-reduced-motion: reduce` automatically via Motion.
+ * No state and no effects, so this is a Server Component — the ~100 call sites
+ * no longer drag a client boundary (or the motion bundle) along with them.
+ *
+ * `prefers-reduced-motion` is handled by the global block in globals.css.
  */
 export function Reveal({
   children,
@@ -46,10 +44,10 @@ export function Reveal({
   className,
   immediate = false,
 }: Props) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '0px 0px -10% 0px' });
-
   if (immediate) {
+    // Deliberately time-based and timeline-free, so a real `animation-delay`
+    // is the correct mechanism here (trap (a) applies only to progress
+    // timelines). Unchanged from the previous implementation.
     return (
       <div
         className={`reveal-immediate ${className ?? ''}`.trim()}
@@ -60,41 +58,36 @@ export function Reveal({
     );
   }
 
+  // `delay` (ms) is spent as an animation-range OFFSET, never as a delay —
+  // animation-delay is spec-ignored on a progress timeline. 100ms = one unit
+  // of `--i` = a 6% shift down the entry range.
+  //
+  // The clamp is load-bearing: several call sites compute `delay={i * 100}`
+  // inside a `.map()`, and an unbounded index would push the range END past
+  // `entry 100%`, where it can never be reached — stranding late items
+  // permanently half-faded. Capping at 5 holds the worst case at entry 30% →
+  // entry 80%, comfortably inside the phase.
+  const stagger = Math.min(Math.max(delay, 0) / 100, 5);
+
   return (
-    <motion.div
-      ref={ref}
-      initial="hidden"
-      animate={inView ? 'visible' : 'hidden'}
-      variants={VARIANTS[variant]}
-      transition={{
-        // Cinematic settle — heavier, more confident than the old 0.7s
-        // ease-out. Unifies secondary-page reveals with the homepage arc.
-        duration: 0.9,
-        delay: delay / 1000,
-        ease: [0.16, 1, 0.3, 1],
-      }}
-      className={className}
+    <div
+      className={[VARIANT_CLASS[variant], stagger ? 'reveal-stagger' : null, className]
+        .filter(Boolean)
+        .join(' ')}
+      style={stagger ? ({ '--i': stagger } as CSSProperties) : undefined}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 
-// Matches the visual shapes the previous CSS keyframes produced:
-//   fade  → opacity + small lift (40px)
-//   up    → opacity + strong lift (80px)
-//   scale → opacity + scale-in
-const VARIANTS: Record<NonNullable<Props['variant']>, Variants> = {
-  fade: {
-    hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0 },
-  },
-  up: {
-    hidden: { opacity: 0, y: 80 },
-    visible: { opacity: 1, y: 0 },
-  },
-  scale: {
-    hidden: { opacity: 0, scale: 0.96 },
-    visible: { opacity: 1, scale: 1 },
-  },
+// The scroll-driven classes in globals.css, whose keyframes reproduce the
+// shapes the framer variants produced:
+//   fade  → opacity + small lift (40px)   → .reveal
+//   up    → opacity + strong lift (80px)  → .reveal-up
+//   scale → opacity + scale-in            → .reveal-scale
+const VARIANT_CLASS: Record<NonNullable<Props['variant']>, string> = {
+  fade: 'reveal',
+  up: 'reveal-up',
+  scale: 'reveal-scale',
 };

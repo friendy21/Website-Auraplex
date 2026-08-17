@@ -1,6 +1,6 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { useState, type CSSProperties } from 'react';
 
 type Props = {
   value: number | string;
@@ -15,17 +15,27 @@ type Props = {
  * Split-flap board for a number or short string.
  *
  * Each character lives in its own slot that rotates X -90° → 0° when the
- * underlying value changes. A separate per-position stagger (default 30ms)
- * gives the airport-board cascade.
+ * underlying value changes. A per-position stagger (default 30ms) gives the
+ * airport-board cascade. All of that now lives in styles/motion/numbers.css —
+ * see that file for the keyframes and the framer archaeology.
  *
- * Hydration-safe: always renders the same DOM structure (motion span wrapper
- * + per-char slots) on server and client. Reduced-motion is respected via
- * `useReducedMotion` inside each FlipSlot — when active, the transition
- * duration drops to 0 (the flip happens instantly), so the structure stays
- * the same but the animation is suppressed.
+ * ── WHAT CHANGED ──────────────────────────────────────────────────────────
+ * The framer version mounted an <AnimatePresence> plus a <motion.span> per
+ * character. It also never animated: `AnimatePresence initial={false}`
+ * suppresses the `initial` state for children present on its first render, and
+ * because the character was part of the FlipSlot `key`, every character change
+ * remounted the slot and handed its AnimatePresence a fresh first render. The
+ * `exit` variant was likewise unreachable — nothing wrapped the slots in an
+ * AnimatePresence, so they unmounted instantly.
  *
- * Previously branched the DOM via a lazy `useState` reading window.matchMedia
- * which produced different trees on SSR vs CSR for users with reduced motion.
+ * So this conversion keeps the first paint byte-for-byte as it ships today —
+ * static, fully opaque, no animation — and makes the flip fire on an actual
+ * value change, which is what the per-position stagger was written for. The
+ * only current call site (LiveDataTicker) passes constants, so nothing on the
+ * live site moves that did not move before.
+ *
+ * Hydration-safe: `gen` is 0 on the server and on the first client render, so
+ * the markup matches exactly and no animation class is emitted.
  */
 export function FlipDigits({
   value,
@@ -36,59 +46,46 @@ export function FlipDigits({
   const str = String(value);
   const chars = str.split('');
 
+  // `gen` bumps once per value change and is folded into the slot keys, so a
+  // change remounts every slot — a fresh element runs its CSS animation on
+  // mount, which is the whole trigger mechanism. While `gen` is 0 (first
+  // render, and every render until the value first changes) no animation class
+  // is applied, reproducing today's static board.
+  //
+  // This is React's sanctioned "adjust state during render" pattern rather
+  // than an effect: it re-runs this component before the commit, so a value
+  // change never paints an un-animated intermediate frame.
+  const [board, setBoard] = useState({ seen: str, gen: 0 });
+  if (board.seen !== str) {
+    setBoard((b) => ({ seen: str, gen: b.gen + 1 }));
+  }
+  const { gen } = board;
+
   return (
     <span
-      className={`inline-flex items-baseline ${className ?? ''}`}
-      style={{ perspective: 400 }}
+      className={`flip-digits inline-flex items-baseline ${className ?? ''}`}
+      style={
+        {
+          '--flip-dur': `${flipMs}ms`,
+          '--flip-stagger': `${staggerMs}ms`,
+        } as CSSProperties
+      }
     >
       {chars.map((ch, i) => (
-        <FlipSlot
-          key={`${i}-${ch}`}
-          ch={ch}
-          delayMs={i * staggerMs}
-          flipMs={flipMs}
-        />
+        // `relative inline-block` stay as utilities so the box model survives
+        // even if the motion stylesheet is absent; .flip-slot adds the
+        // min-width reservation.
+        <span key={`${gen}-${i}-${ch}`} className="relative inline-block flip-slot">
+          <span
+            className={`inline-block font-mono tabular-nums flip-char${
+              gen === 0 ? '' : ' flip-char--in'
+            }`}
+            style={{ '--flip-i': i } as CSSProperties}
+          >
+            {ch}
+          </span>
+        </span>
       ))}
-    </span>
-  );
-}
-
-function FlipSlot({
-  ch,
-  delayMs,
-  flipMs,
-}: {
-  ch: string;
-  delayMs: number;
-  flipMs: number;
-}) {
-  // `useReducedMotion` is hydration-safe — returns null on SSR and the first
-  // client paint, then resolves to true|false after mount. We use it to
-  // collapse the flip duration to 0 when the user prefers reduced motion,
-  // without ever changing the rendered DOM structure.
-  const shouldReduce = useReducedMotion();
-  const duration = shouldReduce ? 0 : flipMs / 1000;
-  const delay = shouldReduce ? 0 : delayMs / 1000;
-
-  return (
-    <span className="relative inline-block" style={{ minWidth: '0.55em' }}>
-      <AnimatePresence mode="popLayout" initial={false}>
-        <motion.span
-          key={ch}
-          initial={{ rotateX: -90, opacity: 0 }}
-          animate={{ rotateX: 0, opacity: 1 }}
-          exit={{ rotateX: 90, opacity: 0 }}
-          transition={{
-            duration,
-            delay,
-            ease: [0.65, 0, 0.35, 1],
-          }}
-          style={{ display: 'inline-block', transformOrigin: 'center' }}
-          className="font-mono tabular-nums"
-        >
-          {ch}
-        </motion.span>
-      </AnimatePresence>
     </span>
   );
 }

@@ -1,9 +1,5 @@
-'use client';
-
-import { useRef } from 'react';
-import { motion, useInView } from 'motion/react';
+import type { CSSProperties } from 'react';
 import { useTranslations } from 'next-intl';
-import { useReducedMotion } from '@/lib/hooks';
 
 type Node = { label: string; x: number; y: number; tier: 1 | 2 | 3 };
 
@@ -38,57 +34,56 @@ function flowPath(n: Node): string {
  * Asia-Pacific), nodes pulse in on scroll. Faithful in spirit to the
  * amCharts map+Sankey reference (origin→destination flows), but as a
  * lightweight inline-SVG reach map — no mapping library, no fabricated
- * deployment counts. Flow dashes are CSS-animated (frozen by reduced-motion).
+ * deployment counts.
+ *
+ * Motion lives entirely in styles/motion/data-viz.css: the <svg> declares a
+ * named view timeline (`--cov-map`) and its children stagger off it via `--i`.
+ * With the framer hooks gone there is no client state left, so this is a
+ * Server Component and ships no JS at all.
  */
 export function CoverageMap() {
-  const ref = useRef<SVGSVGElement>(null);
-  const inView = useInView(ref, { once: true, margin: '0px 0px -20% 0px' });
-  const reduced = useReducedMotion();
   const t = useTranslations('page2026');
 
   return (
     <svg
-      ref={ref}
       viewBox="0 0 100 66"
-      className="block w-full max-w-full"
+      className="cov-map block w-full max-w-full"
       style={{ aspectRatio: '100 / 66', height: 'auto' }}
       role="img"
       aria-label={t('coverageAria')}
     >
-      {/* Flow lines */}
+      {/* Flow lines — marching dashes + a staggered scroll-driven fade in */}
       {NODES.map((n, i) => (
-        <motion.path
+        <path
           key={`p-${n.label}`}
           d={flowPath(n)}
           fill="none"
           stroke="var(--color-signal)"
           strokeWidth="0.5"
-          className={reduced ? undefined : 'ax-flow'}
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: TIER_OPACITY[n.tier] } : { opacity: 0 }}
-          transition={{ duration: reduced ? 0 : 0.6, delay: i * 0.08 }}
+          className="cov-flow"
+          style={
+            {
+              '--i': i,
+              '--tier-op': TIER_OPACITY[n.tier],
+            } as CSSProperties
+          }
         />
       ))}
 
       {/* Region nodes */}
       {NODES.map((n, i) => (
-        <motion.g
-          key={`n-${n.label}`}
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.4, delay: 0.3 + i * 0.07 }}
-        >
-          {!reduced && (
-            <motion.circle
-              cx={n.x}
-              cy={n.y}
-              r="1"
-              fill="var(--color-signal)"
-              fillOpacity="0.4"
-              animate={{ r: [1, 3, 1], opacity: [0.4, 0, 0.4] }}
-              transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut', delay: i * 0.2 }}
-            />
-          )}
+        <g key={`n-${n.label}`} className="cov-node" style={{ '--i': i } as CSSProperties}>
+          {/* Pulse halo. Scales instead of animating `r`; --ox/--oy give it a
+              transform-origin at the node centre in viewBox units. */}
+          <circle
+            cx={n.x}
+            cy={n.y}
+            r="1"
+            fill="var(--color-signal)"
+            fillOpacity="0.4"
+            className="cov-pulse"
+            style={{ '--ox': `${n.x}px`, '--oy': `${n.y}px` } as CSSProperties}
+          />
           <circle cx={n.x} cy={n.y} r="1" fill="var(--color-signal)" />
           <text
             x={n.x}
@@ -99,7 +94,7 @@ export function CoverageMap() {
           >
             {n.label}
           </text>
-        </motion.g>
+        </g>
       ))}
 
       {/* HQ origin */}

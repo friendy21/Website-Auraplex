@@ -1,11 +1,4 @@
-'use client';
-
-import { useRef, useState, type ReactNode } from 'react';
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { Children, type CSSProperties, type ReactNode } from 'react';
 
 interface Props {
   children: ReactNode;
@@ -15,80 +8,54 @@ interface Props {
 }
 
 /**
- * HorizontalScrollSection — pinned, scrub-driven horizontal scroll.
+ * HorizontalScrollSection — pinned, scroll-driven horizontal runway.
  *
- * The container pins at `top top`. As the user scrolls vertically, the
- * inner track translates horizontally. Each direct child becomes a panel
- * that occupies the full viewport width.
+ * A tall runway pins an inner `position: sticky` viewport at `top: 0`; as the
+ * user scrolls vertically the inner track translates horizontally. Each direct
+ * child becomes a panel that occupies the full viewport width.
  *
- * Mobile (< 768px) and reduced-motion fall back to a normal vertical stack.
+ * All of that now lives in styles/motion/horizontal-scroll.css on a native
+ * view progress timeline — there is no JS here at all, so this renders as a
+ * server component and the pan is live from the first paint of the server
+ * HTML. The old GSAP ScrollTrigger version had to measure `track.scrollWidth`
+ * on mount (a forced reflow) and re-measure on every `refresh()`; the CSS
+ * derives the same geometry from two custom properties published below.
+ *
+ * Mobile (< 768px), reduced-motion, and engines without scroll-driven
+ * animations fall back to a normal vertical stack so every panel stays
+ * reachable. That fallback used to be React state initialised to `false`,
+ * which meant phones painted a clipped horizontal row until hydration; it is
+ * a media query now and is correct in the first frame.
+ *
+ * NOTE ON `overscroll`: it lengthens the RUNWAY only — the distance you must
+ * scroll to get through the section — which is what its name and this
+ * docstring have always described. The GSAP version also multiplied the
+ * track's x distance by it, over-travelling past the last panel into empty
+ * background (120vw of nothing on /2026 at overscroll 1.4). The track now
+ * travels exactly one viewport per panel gap and lands flush.
  */
 export function HorizontalScrollSection({
   children,
   overscroll = 1.2,
   className,
 }: Props) {
-  const container = useRef<HTMLElement>(null);
-  const track = useRef<HTMLDivElement>(null);
-  // Fallback = mobile OR reduced-motion. In fallback the pinned horizontal
-  // scroll is disabled and the track becomes a plain vertical stack so EVERY
-  // panel is reachable. (Previously the fallback only reset x:0 but left the
-  // track a horizontal flex row inside overflow-hidden, so panels 2..n were
-  // clipped and unreachable on phones and for reduced-motion users.)
-  const [fallback, setFallback] = useState(false);
-
-  useGSAP(
-    () => {
-      if (!container.current || !track.current) return;
-
-      const isMobile =
-        typeof window !== 'undefined' && window.innerWidth < 768;
-      const prefersReduce =
-        typeof window !== 'undefined' &&
-        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      if (isMobile || prefersReduce) {
-        setFallback(true);
-        gsap.set(track.current, { x: 0 });
-        return;
-      }
-      setFallback(false);
-
-      const trackEl = track.current;
-      const totalScroll = trackEl.scrollWidth - window.innerWidth;
-
-      gsap.to(trackEl, {
-        x: -totalScroll * overscroll,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: container.current,
-          start: 'top top',
-          end: () => `+=${totalScroll * overscroll}`,
-          pin: true,
-          scrub: 0.8,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        },
-      });
-    },
-    { scope: container },
-  );
+  // Every panel is one viewport wide, so the track's width — and therefore
+  // the scroll distance ScrollTrigger used to measure at runtime — is fully
+  // determined by the child count at render time.
+  const panels = Children.count(children);
 
   return (
     <section
-      ref={container}
-      className={`relative bg-[color:var(--color-ink)] ${
-        fallback ? 'overflow-x-clip' : 'overflow-hidden'
-      } ${className ?? ''}`}
+      className={`hs-runway bg-[color:var(--color-ink)] ${className ?? ''}`}
+      style={
+        {
+          '--hs-panels': String(panels),
+          '--hs-overscroll': String(overscroll),
+        } as CSSProperties
+      }
     >
-      <div
-        ref={track}
-        className={`flex will-change-transform ${
-          fallback ? 'flex-col h-auto w-full' : 'h-[100dvh]'
-        }`}
-        style={{ width: fallback ? '100%' : 'max-content' }}
-      >
-        {children}
+      <div className="hs-viewport">
+        <div className="hs-track">{children}</div>
       </div>
     </section>
   );

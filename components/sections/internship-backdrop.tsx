@@ -1,13 +1,10 @@
-'use client';
-
-import { motion, useScroll, useTransform } from 'motion/react';
-import { usePerfTier } from '@/lib/hooks';
+import type { CSSProperties } from 'react';
 
 const WORDS = [
-  { text: 'BUILD', top: '6%', side: 'left' as const },
-  { text: 'ENGINEER', top: '32%', side: 'right' as const },
-  { text: 'INTERN', top: '58%', side: 'left' as const },
-  { text: 'AURAPLEX', top: '82%', side: 'right' as const },
+  { text: 'BUILD', top: '6%', side: 'left' as const, drift: '-160px' },
+  { text: 'ENGINEER', top: '32%', side: 'right' as const, drift: '200px' },
+  { text: 'INTERN', top: '58%', side: 'left' as const, drift: '-130px' },
+  { text: 'AURAPLEX', top: '82%', side: 'right' as const, drift: '230px' },
 ];
 
 /**
@@ -16,44 +13,44 @@ const WORDS = [
  * sense of depth and motion "behind" the content.
  *
  * Sits in an `absolute inset-0` layer behind the page (content is z-10).
- * Decorative + aria-hidden. transform-only (compositor-friendly). On the
- * 'minimal' perf tier (reduced motion) every layer is frozen.
+ * Decorative + aria-hidden. transform-only (compositor-friendly).
+ *
+ * Motion lives in styles/motion/sections.css as a native scroll-driven
+ * animation on `scroll(root block)` — the document scroller, which is exactly
+ * what the argument-less useScroll() this replaces measured. Each layer's
+ * distance is handed to CSS as `--drift`, one per former useTransform.
+ *
+ * No JS at all now: the component dropped 'use client' along with framer-motion
+ * and usePerfTier(). The `tier === 'minimal'` freeze was, by definition,
+ * `prefers-reduced-motion`, and the stylesheet gates the whole animation on
+ * that media query instead. Devices on the 'lite' tier kept the drift before
+ * and still do.
  */
 export function InternshipBackdrop() {
-  const tier = usePerfTier();
-  const still = tier === 'minimal';
-  const { scrollYProgress } = useScroll();
-
-  // Explicit per-layer transforms (constant count keeps hooks order stable).
-  const y0 = useTransform(scrollYProgress, [0, 1], [0, still ? 0 : -160]);
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, still ? 0 : 200]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, still ? 0 : -130]);
-  const y3 = useTransform(scrollYProgress, [0, 1], [0, still ? 0 : 230]);
-  const gridY = useTransform(scrollYProgress, [0, 1], [0, still ? 0 : 140]);
-  const ys = [y0, y1, y2, y3];
-
   return (
     <div
       aria-hidden="true"
       className="absolute inset-0 overflow-hidden pointer-events-none"
     >
       {/* Drifting blueprint grid */}
-      <motion.div
-        style={{
-          y: gridY,
-          backgroundImage:
-            'linear-gradient(color-mix(in oklab, var(--color-signal) 30%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in oklab, var(--color-signal) 30%, transparent) 1px, transparent 1px)',
-          backgroundSize: '64px 64px',
-        }}
-        className="absolute inset-[-15%] opacity-[0.05]"
+      <div
+        style={
+          {
+            '--drift': '140px',
+            backgroundImage:
+              'linear-gradient(color-mix(in oklab, var(--color-signal) 30%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in oklab, var(--color-signal) 30%, transparent) 1px, transparent 1px)',
+            backgroundSize: '64px 64px',
+          } as CSSProperties
+        }
+        className="ib-layer absolute inset-[-15%] opacity-[0.05]"
       />
 
       {/* Giant outlined words */}
-      {WORDS.map((w, i) => (
-        <motion.div
+      {WORDS.map((w) => (
+        <div
           key={w.text}
-          style={{ y: ys[i], top: w.top }}
-          className={`absolute ${
+          style={{ top: w.top, '--drift': w.drift } as CSSProperties}
+          className={`ib-layer absolute ${
             w.side === 'left' ? 'left-[-1%]' : 'right-[-1%]'
           } font-display leading-none select-none`}
         >
@@ -66,7 +63,7 @@ export function InternshipBackdrop() {
           >
             {w.text}
           </span>
-        </motion.div>
+        </div>
       ))}
     </div>
   );

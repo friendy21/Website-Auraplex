@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { AnimatePresence, motion } from 'motion/react';
 import { readStreamableValue } from 'ai/rsc';
 import { ArrowRight, Send } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
@@ -66,6 +65,9 @@ function stripJsonBlock(text: string): string {
  *   - Input has cerulean focus underline + glow halo on focus
  *   - Auto-scroll to bottom on new message
  *   - Enter to send · Shift+Enter for newline
+ *
+ * All of the above is CSS — see styles/motion/chat.css (wired centrally from
+ * globals.css). This component holds no animation library.
  */
 export function MachineFinderChat() {
   const t = useTranslations('forms');
@@ -84,6 +86,26 @@ export function MachineFinderChat() {
   );
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  /**
+   * How many messages existed on the very first render (the seed welcome
+   * message). Anything at or past this index mounted later and therefore gets
+   * an entrance animation; index 0 does not.
+   *
+   * This is the CSS equivalent of the old `<AnimatePresence initial={false}>`:
+   * framer skipped the entrance for children already present at mount, and the
+   * welcome bubble must stay un-animated so the server-rendered transcript is
+   * painted at full opacity on first frame.
+   *
+   * `messages` only ever grows (send() appends; the error path appends too),
+   * so an index is a stable identity here — same assumption the `key={i}`
+   * below already makes.
+   *
+   * Held in state with a lazy initialiser rather than a ref: the value IS used
+   * for rendering, and reading `ref.current` during render is a lint error
+   * (react-hooks/refs). The setter is discarded — it never changes.
+   */
+  const [seedCount] = useState(() => messages.length);
 
   // Auto-scroll to latest message
   useEffect(() => {
@@ -161,17 +183,19 @@ export function MachineFinderChat() {
         aria-label={t('machineFinderAiLabel')}
         className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6 relative"
       >
-        <AnimatePresence initial={false}>
-          {messages.map((m, i) => (
-            <MessageBubble
-              key={i}
-              role={m.role}
-              content={m.role === 'assistant' ? stripJsonBlock(m.content) : m.content}
-              isLast={i === messages.length - 1}
-              streaming={streaming && i === messages.length - 1}
-            />
-          ))}
-        </AnimatePresence>
+        {/* No <AnimatePresence>: messages are only ever appended, never
+            removed, and no bubble ever had an `exit` prop — so the wrapper was
+            only supplying `initial={false}`, which `animateIn` now covers. */}
+        {messages.map((m, i) => (
+          <MessageBubble
+            key={i}
+            role={m.role}
+            content={m.role === 'assistant' ? stripJsonBlock(m.content) : m.content}
+            isLast={i === messages.length - 1}
+            streaming={streaming && i === messages.length - 1}
+            animateIn={i >= seedCount}
+          />
+        ))}
 
         {/* Starter prompts — concrete examples so users know what to say. */}
         {messages.length === 1 && !streaming && starters.length > 0 && (
@@ -196,12 +220,7 @@ export function MachineFinderChat() {
         )}
 
         {recommendation && !streaming && (
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="border border-[color:var(--color-signal)]/40 bg-[color:var(--color-signal)]/5 p-5"
-          >
+          <div className="chat-rec border border-[color:var(--color-signal)]/40 bg-[color:var(--color-signal)]/5 p-5">
             <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-2">
               {t('machineFinderRecommendation')}
             </div>
@@ -231,7 +250,7 @@ export function MachineFinderChat() {
                 ))}
               </ul>
             )}
-          </motion.div>
+          </div>
         )}
       </div>
 
@@ -266,34 +285,30 @@ function MessageBubble({
   content,
   isLast,
   streaming,
+  animateIn,
 }: {
   role: 'user' | 'assistant';
   content: string;
   isLast: boolean;
   streaming: boolean;
+  /** False for messages present at first render — see `seedCount` above. */
+  animateIn: boolean;
 }) {
   const isUser = role === 'user';
   const empty = content === '';
 
+  // The entrance is a one-shot CSS keyframe applied at mount (user: spring
+  // slide from the right; assistant: clip-path wipe, top → bottom). It runs
+  // once per mounted bubble, exactly like the old `initial`/`animate` pair —
+  // content updates during streaming do not restart it.
+  const enter = animateIn
+    ? isUser
+      ? 'chat-msg--enter-user'
+      : 'chat-msg--enter-ai'
+    : '';
+
   return (
-    <motion.div
-      initial={
-        isUser
-          ? { opacity: 0, x: 40 }
-          : { opacity: 0, clipPath: 'inset(0 0 100% 0)' }
-      }
-      animate={
-        isUser
-          ? { opacity: 1, x: 0 }
-          : { opacity: 1, clipPath: 'inset(0 0 0% 0)' }
-      }
-      transition={
-        isUser
-          ? { type: 'spring', stiffness: 280, damping: 24 }
-          : { duration: 0.6, ease: [0.65, 0, 0.35, 1] }
-      }
-      className={isUser ? 'text-right' : ''}
-    >
+    <div className={`${isUser ? 'text-right ' : ''}${enter}`.trim()}>
       <RoleLabel isUser={isUser} />
 
       <div
@@ -314,7 +329,7 @@ function MessageBubble({
           </div>
         )}
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -341,17 +356,13 @@ function ThinkingDots() {
   const t = useTranslations('common');
   return (
     <div className="flex items-center gap-1.5 py-1" aria-label={t('thinking')}>
+      {/* Infinite bounce + fade, staggered 150ms apart. Both the loop and the
+          stagger live in styles/motion/chat.css — `animation-delay` is valid
+          there because this is a wall-clock animation, not a scroll timeline. */}
       {[0, 1, 2].map((i) => (
-        <motion.span
+        <span
           key={i}
-          animate={{ y: [0, -6, 0], opacity: [0.4, 1, 0.4] }}
-          transition={{
-            duration: 1.0,
-            repeat: Infinity,
-            delay: i * 0.15,
-            ease: 'easeInOut',
-          }}
-          className="inline-block h-1.5 w-1.5 rounded-full bg-[color:var(--color-signal)]"
+          className="chat-dot inline-block h-1.5 w-1.5 rounded-full bg-[color:var(--color-signal)]"
         />
       ))}
     </div>
@@ -376,7 +387,6 @@ function ComposerInput({
   inputRef: React.RefObject<HTMLTextAreaElement | null>;
 }) {
   const t = useTranslations('forms');
-  const [focused, setFocused] = useState(false);
 
   function onKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -385,38 +395,37 @@ function ComposerInput({
     }
   }
 
+  // Focus is read straight off the textarea in CSS (`:focus ~ …`), so the old
+  // `focused` state and its onFocus/onBlur handlers are gone — that is two
+  // fewer renders of this subtree per focus change. The two decorations MUST
+  // stay after the textarea in source order for the sibling combinator to
+  // reach them.
   return (
-    <div className="relative flex-1">
+    <div className="chat-composer relative flex-1">
       <textarea
         ref={inputRef}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={onKeyDown}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
         rows={1}
         placeholder={t('machineFinderPlaceholder')}
         aria-label={t('machineFinderPlaceholder')}
         aria-keyshortcuts="Enter"
         disabled={disabled}
-        className="w-full bg-transparent outline-none py-2 pr-2 font-body text-[color:var(--color-paper)] resize-none placeholder:text-[color:var(--color-neutral-400)] disabled:opacity-50"
+        className="chat-composer__field w-full bg-transparent outline-none py-2 pr-2 font-body text-[color:var(--color-paper)] resize-none placeholder:text-[color:var(--color-neutral-400)] disabled:opacity-50"
       />
 
       {/* Static base border */}
       <div className="absolute left-0 right-0 bottom-0 h-px bg-[color:var(--color-neutral-700)]" />
       {/* Active border — draws in on focus */}
-      <motion.div
-        initial={false}
-        animate={{ scaleX: focused ? 1 : 0 }}
-        transition={{ duration: 0.35, ease: [0.65, 0, 0.35, 1] }}
-        style={{ originX: 0 }}
-        className="absolute left-0 right-0 bottom-0 h-px bg-[color:var(--color-signal)]"
+      <div
+        className="chat-composer__rule absolute left-0 right-0 bottom-0 h-px bg-[color:var(--color-signal)]"
+        aria-hidden
       />
       {/* Soft glow halo on focus */}
-      <motion.div
-        initial={false}
-        animate={{ opacity: focused ? 0.25 : 0 }}
-        className="absolute inset-x-0 -bottom-2 h-3 bg-[color:var(--color-signal)] blur-md pointer-events-none"
+      <div
+        className="chat-composer__glow absolute inset-x-0 -bottom-2 h-3 bg-[color:var(--color-signal)] blur-md pointer-events-none"
+        aria-hidden
       />
     </div>
   );

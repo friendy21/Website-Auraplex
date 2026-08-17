@@ -1,39 +1,20 @@
-'use client';
-
-import { useRef, type ReactNode } from 'react';
-import { motion, useInView } from 'motion/react';
+import type { CSSProperties, ReactNode } from 'react';
 
 type Props = {
   children: ReactNode;
   /** Direction of the wipe. 'up' is the default editorial pattern. */
   direction?: 'up' | 'down' | 'left' | 'right';
-  /** Animation duration in seconds. */
+  /**
+   * Reveal length. Was an animation duration in seconds; now that the wipe is
+   * driven by scroll position rather than wall-clock it is spent as scroll
+   * distance instead — a larger value = a longer throw. The default (1.1)
+   * maps to the same 55% of the entry phase the rest of the family uses, so
+   * existing call sites are unaffected.
+   */
   duration?: number;
-  /** Delay before the reveal kicks off. */
+  /** Delay before the reveal kicks off, in seconds. */
   delay?: number;
   className?: string;
-};
-
-const VARIANTS: Record<
-  NonNullable<Props['direction']>,
-  { initial: string; final: string }
-> = {
-  up: {
-    initial: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)',
-    final: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
-  },
-  down: {
-    initial: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)',
-    final: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
-  },
-  left: {
-    initial: 'polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)',
-    final: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
-  },
-  right: {
-    initial: 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)',
-    final: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
-  },
 };
 
 /**
@@ -41,6 +22,13 @@ const VARIANTS: Record<
  * it from a chosen edge when the element scrolls into view. The image stays
  * static; only the clip mask animates. Crisper than a simple opacity fade
  * and very recognisable as a signature editorial-site move.
+ *
+ * Was `useInView` + `motion.div`. Now `animation-timeline: view()`; the
+ * polygon geometry in styles/motion/reveal-family.css is a literal
+ * transcription of the framer VARIANTS map, so the wipe is unchanged.
+ *
+ * No state and no effects, so this is a Server Component.
+ * `prefers-reduced-motion` is handled by the global block in globals.css.
  */
 export function ImageReveal({
   children,
@@ -49,19 +37,26 @@ export function ImageReveal({
   delay = 0,
   className,
 }: Props) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '0px 0px -15% 0px' });
-  const v = VARIANTS[direction];
+  // `duration` (s) → scroll span. 1.1s is the default and yields 55%, matching
+  // the family's baseline. Clamped so an extreme value cannot collapse the
+  // wipe to nothing or run past the end of the entry phase.
+  const span = Math.min(Math.max(duration * 50, 25), 70);
+  // `delay` (s) → animation-range offset. animation-delay is spec-ignored on a
+  // progress timeline, so it must be spent as range, not time.
+  const stagger = Math.min(Math.max(delay, 0) / 0.1, 5);
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ clipPath: v.initial }}
-      animate={{ clipPath: inView ? v.final : v.initial }}
-      transition={{ duration, delay, ease: [0.65, 0, 0.35, 1] }}
-      className={className}
+    <div
+      data-direction={direction}
+      className={`image-reveal ${className ?? ''}`.trim()}
+      style={
+        {
+          '--reveal-span': `${span}%`,
+          ...(stagger ? { '--i': stagger } : null),
+        } as CSSProperties
+      }
     >
       {children}
-    </motion.div>
+    </div>
   );
 }

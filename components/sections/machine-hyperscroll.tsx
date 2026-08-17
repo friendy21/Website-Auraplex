@@ -3,7 +3,6 @@
 import { useEffect, useRef } from 'react';
 import { Link } from '@/lib/navigation';
 import Image from 'next/image';
-import { motion, useScroll } from 'motion/react';
 import { useTranslations } from 'next-intl';
 import { usePerfTier } from '@/lib/hooks';
 
@@ -45,8 +44,9 @@ const STARS_GEO = Array.from({ length: STAR_COUNT }, (_, i) => ({
  * flies the camera forward, items fade/scale by depth, with mouse parallax
  * tilt, a velocity FOV warp and a HUD + scanline/vignette overlay. Rebranded
  * to Auraplex ink + cerulean (no neon, no feTurbulence noise per the perf
- * rules) and scoped to its OWN scroll range via useScroll — no page-wide
- * scroll hijack, so it never fights the site's global Lenis. Cards link out.
+ * rules) and scoped to its OWN scroll range — progress is derived from the
+ * section's own rect inside the rAF, so there is no page-wide scroll hijack
+ * and it never fights the site's global smooth scroll. Cards link out.
  *
  * Mobile / reduced-motion: a static clickable grid (no 3D / rAF).
  */
@@ -56,15 +56,11 @@ export function MachineHyperscroll({ machines }: Props) {
   const world = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const starRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const bar = useRef<HTMLDivElement>(null);
   const mouse = useRef({ x: 0, y: 0 });
   const tier = usePerfTier();
   const t = useTranslations('home.hyperscroll');
   const words = t.raw('words') as string[];
-
-  const { scrollYProgress } = useScroll({
-    target: section,
-    offset: ['start start', 'end end'],
-  });
 
   useEffect(() => {
     if (tier !== 'full') return;
@@ -72,10 +68,31 @@ export function MachineHyperscroll({ machines }: Props) {
     const wl = world.current;
     const sec = section.current;
     if (!vp || !wl || !sec) return;
+    // Non-essential: a missing bar must never kill the flythrough.
+    const barEl = bar.current;
 
     let running = false;
     let lastP = 0;
     let raf = 0;
+
+    /**
+     * Section-local scroll progress — the exact range framer's
+     * `useScroll({ target: section, offset: ['start start', 'end end'] })`
+     * produced: 0 when the section's top meets the viewport top, 1 when its
+     * bottom meets the viewport bottom, clamped (framer clamps by default).
+     *
+     * Read from the live rect rather than a cached offsetTop so it stays
+     * correct across resizes, font swaps and images loading above the section.
+     * Called once per frame at the TOP of the rAF callback, before any style
+     * write — at that point the previous frame is already laid out and painted,
+     * so this reuses committed layout instead of forcing a reflow.
+     */
+    const progress = () => {
+      const rect = sec.getBoundingClientRect();
+      const span = rect.height - window.innerHeight;
+      if (span <= 0) return 0;
+      return Math.max(0, Math.min(1, -rect.top / span));
+    };
 
     const onMove = (e: PointerEvent) => {
       mouse.current.x = (e.clientX / window.innerWidth - 0.5) * 2;
@@ -85,13 +102,17 @@ export function MachineHyperscroll({ machines }: Props) {
 
     const frame = () => {
       if (!running) return;
-      const p = scrollYProgress.get();
+      const p = progress();
       const vel = p - lastP;
       lastP = p;
       const cameraZ = p * (RANGE + 1400);
 
       wl.style.transform = `rotateX(${(mouse.current.y * 4).toFixed(2)}deg) rotateY(${(mouse.current.x * 4).toFixed(2)}deg)`;
       vp.style.perspective = `${1000 - Math.min(Math.abs(vel) * 9000, 520)}px`;
+      // Scroll-progress hairline — same value the camera runs on, so it can
+      // never drift out of sync with the flythrough. Replaces the framer
+      // `style={{ scaleX: scrollYProgress }}` binding.
+      if (barEl) barEl.style.transform = `scaleX(${p.toFixed(4)})`;
 
       ITEMS_GEO.forEach((it, idx) => {
         const el = itemRefs.current[idx];
@@ -141,7 +162,7 @@ export function MachineHyperscroll({ machines }: Props) {
       io.disconnect();
       window.removeEventListener('pointermove', onMove);
     };
-  }, [tier, scrollYProgress]);
+  }, [tier]);
 
   if (!machines.length) return null;
 
@@ -303,9 +324,15 @@ export function MachineHyperscroll({ machines }: Props) {
           <span className="absolute bottom-2 right-2 h-3 w-3 border-b border-r border-[color:var(--color-paper)]/30" />
         </div>
 
-        {/* Scroll-progress bar */}
-        <motion.div
-          style={{ scaleX: scrollYProgress, originX: 0 }}
+        {/* Scroll-progress bar. Driven imperatively from the rAF above (the
+            loop already computes the exact value). The at-rest scaleX(0) is
+            declared here so the hairline starts empty rather than flashing
+            full for one frame before the loop's first write — framer's
+            MotionValue binding did the same. transform-origin 0 50% is
+            framer's `originX: 0`. */}
+        <div
+          ref={bar}
+          style={{ transform: 'scaleX(0)', transformOrigin: '0 50%' }}
           className="absolute top-0 left-0 right-0 z-30 h-px bg-[color:var(--color-signal)]"
         />
       </div>

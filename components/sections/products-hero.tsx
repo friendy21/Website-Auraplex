@@ -1,9 +1,4 @@
-'use client';
-
 import Image from 'next/image';
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
-import { usePerfTier } from '@/lib/hooks';
 
 type Props = {
   eyebrow: string;
@@ -14,41 +9,40 @@ type Props = {
 };
 
 /**
- * Catalogue hero — replaces the previous static one-time fade with a living
- * header: a large machine image levitates on the right behind a cerulean
- * halo and a slow-spinning precision ring, parallaxing as you scroll while
- * the headline stays anchored.
+ * Catalogue hero — a large machine image levitates on the right behind a
+ * cerulean halo and a slow-spinning precision ring, parallaxing as you scroll
+ * while the headline stays anchored.
+ *
+ * MECHANISM: this used `useScroll` + two `useTransform`s from motion/react,
+ * which meant the /products header could not move (and the headline could not
+ * even appear — it was gated behind `initial={{ opacity: 0 }}`) until the
+ * framer bundle had downloaded, parsed and hydrated. It is now native CSS:
+ * a named view timeline for the parallax, wall-clock keyframes for the
+ * levitation and the copy entrance. See styles/motion/products.css, which
+ * documents the range mapping, the inverted-fallback @supports gate and the
+ * RULE ZERO decision behind the transform-only headline entrance.
+ *
+ * Because nothing here needs state, refs or event handlers any more, the
+ * component has also dropped `'use client'` — it renders entirely on the
+ * server and ships zero JS to the /products route.
  *
  * Performance / a11y:
  *   - The whole visual is desktop-only (`hidden lg:block`) — phones never
- *     pay for it.
- *   - On reduced-motion (perf tier 'minimal') the levitation and scroll
- *     parallax are switched off; the image sits still.
- *   - Only transform/opacity animate (compositor-friendly). The decorative
- *     halo + ring are aria-hidden.
+ *     pay for it — and is aria-hidden, being purely decorative.
+ *   - Reduced motion is handled in products.css: it stops the levitation AND
+ *     the scroll parallax outright (framer used to keep scrubbing the opacity
+ *     even under reduced motion) and leaves the machine at rest, visible.
+ *   - Only transform / opacity animate.
  */
 export function ProductsHero({ eyebrow, title, subtitle, imageSrc, imageAlt }: Props) {
-  const ref = useRef<HTMLElement>(null);
-  const tier = usePerfTier();
-  const still = tier === 'minimal';
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start start', 'end start'],
-  });
-  const imgY = useTransform(scrollYProgress, [0, 1], [0, still ? 0 : -90]);
-  const imgOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
-
   return (
-    <section
-      ref={ref}
-      className="relative mx-auto max-w-[1600px] px-6 lg:px-12 pt-32 pb-12 overflow-hidden"
-    >
-      {/* ── Floating machine (desktop only, decorative) ── */}
-      <motion.div
+    <section className="products-hero relative mx-auto max-w-[1600px] px-6 lg:px-12 pt-32 pb-12 overflow-hidden">
+      {/* ── Floating machine (desktop only, decorative) ──
+          Scroll parallax + exit fade ride --products-hero, the view timeline
+          named on the section above. */}
+      <div
         aria-hidden="true"
-        style={{ y: imgY, opacity: imgOpacity }}
-        className="pointer-events-none absolute right-0 lg:right-8 -top-2 hidden lg:block w-[42vw] max-w-[600px] aspect-square"
+        className="products-hero__visual pointer-events-none absolute right-0 lg:right-8 -top-2 hidden lg:block w-[42vw] max-w-[600px] aspect-square"
       >
         {/* Cerulean halo */}
         <div
@@ -68,12 +62,10 @@ export function ProductsHero({ eyebrow, title, subtitle, imageSrc, imageAlt }: P
           <circle cx="100" cy="100" r="74" fill="none" stroke="var(--color-signal-bright)" strokeWidth="0.3" strokeDasharray="2 12" />
         </svg>
 
-        {/* The levitating machine */}
-        <motion.div
-          animate={still ? undefined : { y: [0, -20, 0] }}
-          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-          className="relative h-full w-full"
-        >
+        {/* The levitating machine. Its own wrapper so the 7s loop composes
+            with the parallax on the ancestor, exactly as the two nested
+            motion.divs did. */}
+        <div className="products-hero__float relative h-full w-full">
           <Image
             src={imageSrc}
             alt={imageAlt}
@@ -82,16 +74,14 @@ export function ProductsHero({ eyebrow, title, subtitle, imageSrc, imageAlt }: P
             priority
             className="object-contain p-10 [filter:drop-shadow(0_28px_50px_color-mix(in_oklab,var(--color-signal)_22%,transparent))]"
           />
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
 
-      {/* ── Headline (anchored, fades up once) ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
-        className="relative z-10"
-      >
+      {/* ── Headline (anchored, rises once) ──
+          RULE ZERO: transform-only entrance, no opacity channel — this block
+          holds the h1 and the subtitle, one of which is the LCP element on
+          mobile where the machine visual never renders. */}
+      <div className="products-hero__copy relative z-10">
         <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-4">
           — {eyebrow}
         </div>
@@ -103,7 +93,7 @@ export function ProductsHero({ eyebrow, title, subtitle, imageSrc, imageAlt }: P
             {subtitle}
           </p>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

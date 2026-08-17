@@ -1,153 +1,39 @@
-'use client';
-
-import { useRef } from 'react';
+import type { CSSProperties } from 'react';
 import { Link } from '@/lib/navigation';
 import { useTranslations } from 'next-intl';
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Magnetic } from '@/components/motion/magnetic';
 import { Button } from '@/components/primitives/button';
 import { whatsappLink } from '@/lib/utils';
 
-gsap.registerPlugin(ScrollTrigger);
-
 /**
- * CloserSection — pinned, full-viewport cinematic finale for the home page.
+ * CloserSection — full-viewport cinematic finale for the home page.
  *
- * Scene (scrub-driven, +=2400px):
- *   0–25%  Massive "AURAPLEX" watermark scales from 1.2→1 + fades to 4% opacity.
- *   25–50% Eyebrow draws in. Headline words clip-wipe with weight sweep.
+ * Scene (scroll-scrubbed across the 2400px runway below the sticky viewport):
+ *   0–25%  Massive "AURAPLEX" watermark scales from 1.15→1 + fades to 4%.
+ *   25–50% Eyebrow draws in. Headline words clip-wipe with a weight sweep.
  *   50–75% Buttons spring-scale in with magnetic hover states.
- *   75–100% Entire scene drifts upward, ink floods, handing off to footer.
+ *   75–100% Entire cluster drifts upward, HUD powers down, handing off to
+ *           the footer.
+ *
+ * No pin: the section is a static 100dvh + 2400px runway with a CSS `sticky`
+ * viewport inside it, so no pin-spacer is injected at runtime and the section's
+ * height is known to the layout engine on the first frame (the CLS rationale
+ * this section has always carried).
+ *
+ * Motion lives in styles/motion/closer.css, wired centrally from globals.css.
+ * It replaces a GSAP timeline + ScrollTrigger scrub with a single named view
+ * timeline (`--closer-run`), which is why this component no longer needs
+ * 'use client': the choreography is live from the first paint of the server
+ * HTML instead of waiting on hydration.
  */
 export function CloserSection() {
-  const container = useRef<HTMLElement>(null);
   const t = useTranslations('home.ctaFooter');
-
-  useGSAP(
-    () => {
-      if (!container.current) return;
-
-      const isMobile =
-        typeof window !== 'undefined' && window.innerWidth < 768;
-      const prefersReduce =
-        typeof window !== 'undefined' &&
-        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      if (isMobile || prefersReduce) {
-        gsap.set('.c-watermark', { opacity: 0.04, scale: 1 });
-        gsap.set('.c-eyebrow', { opacity: 1, scaleX: 1 });
-        gsap.set('.c-word', { opacity: 1, clipPath: 'inset(0 0% 0 0)', fontVariationSettings: '"wght" 700' });
-        gsap.set('.c-buttons', { opacity: 1, y: 0, scale: 1 });
-        gsap.set('.c-hud', { opacity: 0.9 });
-        const depthEl = container.current.querySelector('.c-depth');
-        if (depthEl) depthEl.textContent = '0000';
-        return;
-      }
-
-      // No pin — static 100dvh+2400px runway + CSS sticky (see
-      // manifesto-section.tsx for the CLS rationale).
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: container.current,
-          start: 'top top',
-          end: 'bottom bottom',
-          scrub: 0.7,
-        },
-        defaults: { ease: 'none' },
-      });
-
-      // Beat 1 — watermark settles
-      tl.fromTo(
-        '.c-watermark',
-        { scale: 1.15, opacity: 0 },
-        { scale: 1, opacity: 0.04, duration: 0.25, ease: 'power2.out' },
-      )
-        // Beat 2 — eyebrow + headline
-        .fromTo(
-          '.c-eyebrow-line',
-          { scaleX: 0 },
-          { scaleX: 1, duration: 0.15, ease: 'power2.out' },
-          '+=0.05',
-        )
-        .fromTo(
-          '.c-eyebrow-text',
-          { opacity: 0, y: 10 },
-          { opacity: 1, y: 0, duration: 0.15 },
-          '<0.05',
-        )
-        .fromTo(
-          '.c-word',
-          {
-            opacity: 0,
-            clipPath: 'inset(0 100% 0 0)',
-            fontVariationSettings: '"wght" 200',
-          },
-          {
-            opacity: 1,
-            clipPath: 'inset(0 0% 0 0)',
-            fontVariationSettings: '"wght" 700',
-            duration: 0.35,
-            stagger: 0.035,
-            ease: 'power3.out',
-          },
-          '<0.05',
-        )
-        // Beat 3 — buttons
-        .fromTo(
-          '.c-buttons',
-          { opacity: 0, y: 40, scale: 0.92 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.2, ease: 'power2.out' },
-          '+=0.05',
-        );
-
-      // HUD "exit the system" — depth counts DOWN to 0000 across the whole
-      // scrub, mirroring the hero console. Runs on its own tween so it spans
-      // the full timeline rather than a single beat.
-      const depthObj = { v: 4096 };
-      const depthEl = container.current.querySelector('.c-depth');
-      tl.fromTo(
-        '.c-hud',
-        { opacity: 0 },
-        { opacity: 0.9, duration: 0.15, ease: 'power2.out' },
-        0.05,
-      )
-        .to(
-          depthObj,
-          {
-            v: 0,
-            duration: 0.7,
-            ease: 'none',
-            onUpdate: () => {
-              if (depthEl) {
-                depthEl.textContent = String(Math.round(depthObj.v)).padStart(4, '0');
-              }
-            },
-          },
-          0.1,
-        )
-        // console powers to STANDBY near the end
-        .to('.c-hud-state', { opacity: 0.4, duration: 0.1 }, 0.72)
-        // Beat 4 — exit drift + HUD power-down
-        .to(
-          '.c-cluster',
-          { y: -80, opacity: 0, duration: 0.25, ease: 'power2.in' },
-          0.8,
-        )
-        .to('.c-hud', { opacity: 0, duration: 0.15, ease: 'power2.in' }, 0.85);
-    },
-    { scope: container },
-  );
 
   // Split translated title into tokens for the clip-wipe stagger.
   const words = t('title').split(/\s+/).filter(Boolean);
 
   return (
-    <section
-      ref={container}
-      className="relative bg-[color:var(--color-ink)] h-[100dvh] md:h-[calc(100dvh+2400px)] motion-reduce:h-[100dvh]!"
-    >
+    <section className="closer-stage relative bg-[color:var(--color-ink)] h-[100dvh] md:h-[calc(100dvh+2400px)] motion-reduce:h-[100dvh]!">
       <div className="sticky top-0 h-[100dvh] overflow-hidden flex items-center">
       {/* Watermark */}
       <div
@@ -169,13 +55,16 @@ export function CloserSection() {
           </span>
         </div>
 
-        {/* Headline */}
+        {/* Headline. `--i` drives the per-word stagger through animation-range
+            offsets (a time-based animation-delay is ignored on a progress
+            timeline). Clamped so a long translation cannot push a word's range
+            past the end of the run. */}
         <h2 className="font-display text-[clamp(3rem,9vw,8rem)] tracking-[-0.03em] leading-[0.92] max-w-5xl">
           {words.map((w, i) => (
             <span
               key={i}
               className="c-word inline-block whitespace-pre"
-              style={{ fontVariationSettings: '"wght" 700' }}
+              style={{ '--i': Math.min(i, 6) } as CSSProperties}
             >
               {w}{' '}
             </span>
@@ -210,15 +99,18 @@ export function CloserSection() {
 
       {/* Corner HUD — "exit the system". Mirrors the hero console: DEPTH
           counts back down to 0000 and the state flips to STANDBY as the
-          finale drifts away. Closes the arc symmetrically. */}
+          finale drifts away. Closes the arc symmetrically.
+          The DEPTH digits are generated content driven by an animated
+          registered custom property (see closer.css) — the span is empty on
+          purpose, and the whole HUD is aria-hidden decoration. */}
       <div
-        className="c-hud pointer-events-none absolute inset-6 z-20 hidden font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)] opacity-0 lg:block"
+        className="c-hud pointer-events-none absolute inset-6 z-20 hidden font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)] lg:block"
         aria-hidden="true"
       >
         <div className="absolute top-0 right-0 text-right leading-relaxed">
           <div className="c-hud-state text-[color:var(--color-signal)]">SYS / STANDBY</div>
           <div>
-            DEPTH <span className="c-depth">4096</span>
+            DEPTH <span className="c-depth" />
           </div>
         </div>
         <div className="absolute bottom-0 right-0">MY · 03.1189 N · 101.6869 E</div>

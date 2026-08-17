@@ -1,12 +1,10 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { AnimatePresence, motion, useInView } from 'motion/react';
 import { CursorSpotlight } from '@/components/motion/cursor-spotlight';
 import { TiltCard } from '@/components/motion/tilt-card';
-import { useReducedMotion } from '@/lib/hooks';
 
 type Props = {
   /** Gallery images — index 0 is the cover. */
@@ -16,77 +14,119 @@ type Props = {
 };
 
 /**
- * ProductGallery — interactive, animated product-detail gallery.
+ * ProductGallery — the product-detail hero gallery.
  *
- * Replaces the previous static cover + non-clickable thumbnail strip.
- * Clicking (or keyboard-selecting) a thumbnail swaps the hero with a
- * focus-pull crossfade (blur + scale + opacity), the same camera-racking
- * aesthetic the single hero used on mount. The active thumbnail is tracked
- * with a shared-layout ring (`layoutId`) that glides between thumbnails.
+ * MECHANISM: this was an <AnimatePresence> crossfade — one absolutely
+ * positioned <motion.div> per `active` index, swapped on every thumbnail
+ * click — plus a `useInView` gate on the thumbnail strip and a `layoutId`
+ * ring that glided between thumbnails. All of it lived on motion/react, on
+ * the LCP surface of every /products/[slug] page.
  *
- * Performance / a11y:
- *   - Crossfade and entrance are reduced-motion aware (instant swap, no
- *     entrance offset) via `useReducedMotion`.
- *   - TiltCard and CursorSpotlight already self-disable on coarse pointers
- *     and reduced-motion, so the hero stays cheap on phones.
- *   - Only transform/opacity/filter animate — all compositor-friendly.
- *   - The cover keeps its `viewTransitionName` so the grid→detail morph
- *     still works; it's applied only while the cover is active so two
- *     elements never claim the same name.
+ * It is now a NATIVE SCROLL-SNAP CARRIAGE (styles/motion/products.css). Every
+ * view is a slide in a `scroll-snap-type: x mandatory` track; the thumbnails
+ * scroll it, the scroll position feeds `active` back. That is a strict upgrade
+ * on the buyer-facing surface:
+ *   - touch users can now SWIPE the gallery, which was impossible before;
+ *   - the snap, momentum and rubber-band are compositor-driven, so paging
+ *     through six machine shots costs the main thread nothing;
+ *   - only the cover is `priority`; the remaining slides sit outside the
+ *     viewport horizontally, so the browser's own lazy-loading defers them
+ *     (a stacked crossfade would have had to download every full-size shot).
+ *
+ * Two framer behaviours were deliberately dropped rather than kept alive:
+ *   1. The dissolve between shots. It is now a horizontal slide — which is
+ *      what scroll-snap gives for free, and what a swipe gesture implies.
+ *   2. The gliding active-thumbnail ring (`layoutId`). That is a true FLIP
+ *      between two different boxes; CSS can only express it by animating
+ *      layout properties. The ring now springs open in place on the selected
+ *      thumbnail. See the note in styles/motion/products.css.
+ *
+ * Preserved exactly: the `role="listbox"` / `role="option"` strip with its
+ * `aria-selected` and per-thumbnail `aria-label`s, the ArrowLeft/ArrowRight
+ * handler and its wrap-around, the shot counter, the X-Ray chip, the
+ * `priority` on the cover, and the `viewTransitionName` on the cover while it
+ * is the active view (so the grid→detail morph still works and no two elements
+ * ever claim the same name).
+ *
+ * Reduced motion needs no JS branch any more: the smooth scroll comes from the
+ * CSS `scroll-behavior` on the track, and the global block in globals.css
+ * already forces `scroll-behavior: auto !important`.
  */
 export function ProductGallery({ images, alt, productId }: Props) {
   const t = useTranslations('products.detail');
   const [active, setActive] = useState(0);
-  const reduced = useReducedMotion();
 
-  const stripRef = useRef<HTMLDivElement>(null);
-  const stripInView = useInView(stripRef, { once: true, margin: '0px 0px -10% 0px' });
+  const trackRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef(0);
 
   const hasThumbs = images.length > 1;
-  const swap = reduced ? 0 : 0.5;
+  const count = images.length;
 
-  function selectRelative(delta: number) {
-    setActive((i) => (i + delta + images.length) % images.length);
-  }
+  /**
+   * Scroll position → active index. rAF-coalesced so a flick doesn't queue a
+   * setState per scroll event, and it bails out when the index is unchanged,
+   * so a whole swipe costs at most one render.
+   */
+  const onScroll = useCallback(() => {
+    if (rafRef.current) return;
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = 0;
+      const el = trackRef.current;
+      if (!el || el.clientWidth === 0) return;
+      const i = Math.round(el.scrollLeft / el.clientWidth);
+      const next = Math.min(Math.max(i, 0), count - 1);
+      setActive((prev) => (prev === next ? prev : next));
+    });
+  }, [count]);
+
+  useEffect(
+    () => () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    },
+    [],
+  );
+
+  /** Scroll the track to a slide. `scroll-behavior: smooth` lives in CSS so
+   *  reduced-motion users get an instant jump via the global override. */
+  const goTo = useCallback(
+    (index: number) => {
+      const next = ((index % count) + count) % count;
+      setActive(next);
+      const el = trackRef.current;
+      if (el) el.scrollTo({ left: next * el.clientWidth });
+    },
+    [count],
+  );
 
   return (
     <div>
       <TiltCard intensity={3}>
-        <motion.div
-          initial={{ filter: 'blur(8px)', scale: 1.05, opacity: 0 }}
-          animate={{ filter: 'blur(0px)', scale: 1, opacity: 1 }}
-          transition={{ duration: reduced ? 0 : 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="group relative aspect-[4/3] overflow-hidden border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)]"
+        <div
+          className="pgal-frame group relative aspect-[4/3] overflow-hidden border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)]"
           data-cursor="caliper"
         >
           <CursorSpotlight size={420} intensity={0.18} />
 
-          {/* Crossfading hero — both images overlap briefly for a true
-              dissolve rather than a flash of background. */}
-          <AnimatePresence initial={false}>
-            <motion.div
-              key={active}
-              initial={{ opacity: 0, scale: reduced ? 1 : 1.04, filter: reduced ? 'blur(0px)' : 'blur(6px)' }}
-              animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: swap, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute inset-0"
-            >
-              <Image
-                src={images[active]}
-                alt={active === 0 ? alt : `${alt} — ${t('gallery.viewSuffix', { n: active + 1 })}`}
-                fill
-                sizes="(max-width: 1024px) 100vw, 60vw"
-                priority={active === 0}
-                className="object-contain p-12 transition-[filter] duration-500 ease-out group-hover:[filter:invert(0.92)_hue-rotate(180deg)_grayscale(0.25)_contrast(1.05)]"
-                style={
-                  active === 0
-                    ? ({ viewTransitionName: `product-${productId}` } as React.CSSProperties)
-                    : undefined
-                }
-              />
-            </motion.div>
-          </AnimatePresence>
+          {/* Snap track — one slide per view. */}
+          <div ref={trackRef} onScroll={onScroll} className="pgal-track absolute inset-0 flex">
+            {images.map((src, i) => (
+              <div key={src} className="pgal-slide relative h-full w-full shrink-0">
+                <Image
+                  src={src}
+                  alt={i === 0 ? alt : `${alt} — ${t('gallery.viewSuffix', { n: i + 1 })}`}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 60vw"
+                  priority={i === 0}
+                  className="object-contain p-12 transition-[filter] duration-500 ease-out group-hover:[filter:invert(0.92)_hue-rotate(180deg)_grayscale(0.25)_contrast(1.05)]"
+                  style={
+                    i === 0 && active === 0
+                      ? ({ viewTransitionName: `product-${productId}` } as CSSProperties)
+                      : undefined
+                  }
+                />
+              </div>
+            ))}
+          </div>
 
           {/* X-RAY chip */}
           <div
@@ -102,7 +142,7 @@ export function ProductGallery({ images, alt, productId }: Props) {
               {active + 1} / {images.length}
             </div>
           )}
-        </motion.div>
+        </div>
       </TiltCard>
 
       {/* Thumbnail strip */}
@@ -112,42 +152,33 @@ export function ProductGallery({ images, alt, productId }: Props) {
             {t('galleryLabel', { count: images.length })}
           </div>
           <div
-            ref={stripRef}
             role="listbox"
             aria-label={t('gallery.aria', { name: alt })}
             className="grid grid-cols-4 md:grid-cols-6 gap-3"
             onKeyDown={(e) => {
               if (e.key === 'ArrowRight') {
                 e.preventDefault();
-                selectRelative(1);
+                goTo(active + 1);
               } else if (e.key === 'ArrowLeft') {
                 e.preventDefault();
-                selectRelative(-1);
+                goTo(active - 1);
               }
             }}
           >
             {images.map((src, i) => {
               const isActive = i === active;
               return (
-                <motion.button
+                <button
                   key={src}
                   type="button"
                   role="option"
                   aria-selected={isActive}
                   aria-label={t('gallery.showView', { n: i + 1 })}
-                  onClick={() => setActive(i)}
-                  initial={{ opacity: 0, y: reduced ? 0 : 14 }}
-                  animate={
-                    stripInView
-                      ? { opacity: 1, y: 0 }
-                      : { opacity: 0, y: reduced ? 0 : 14 }
-                  }
-                  transition={{
-                    duration: reduced ? 0 : 0.45,
-                    delay: reduced ? 0 : Math.min(i * 0.05, 0.5),
-                    ease: [0.4, 0, 0.2, 1],
-                  }}
-                  className="relative aspect-square border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)] cursor-pointer overflow-hidden transition-colors duration-300 hover:border-[color:var(--color-signal)]/60 focus-visible:outline-2 focus-visible:outline-[color:var(--color-signal)] focus-visible:outline-offset-2"
+                  onClick={() => goTo(i)}
+                  /* `--i` drives the entrance stagger in products.css. Capped
+                     at 10 to reproduce framer's Math.min(i * 0.05, 0.5). */
+                  style={{ '--i': Math.min(i, 10) } as CSSProperties}
+                  className="pgal-thumb relative aspect-square border border-[color:var(--color-neutral-700)] bg-[color:var(--color-neutral-800)] cursor-pointer overflow-hidden transition-colors duration-300 hover:border-[color:var(--color-signal)]/60 focus-visible:outline-2 focus-visible:outline-[color:var(--color-signal)] focus-visible:outline-offset-2"
                 >
                   <Image
                     src={src}
@@ -158,14 +189,11 @@ export function ProductGallery({ images, alt, productId }: Props) {
                       isActive ? 'opacity-100' : 'opacity-60 hover:opacity-100 hover:scale-[1.05]'
                     }`}
                   />
-                  {isActive && (
-                    <motion.div
-                      layoutId={`gallery-active-${productId}`}
-                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                      className="absolute inset-0 border-2 border-[color:var(--color-signal)] pointer-events-none"
-                    />
-                  )}
-                </motion.button>
+                  <span
+                    aria-hidden="true"
+                    className="pgal-thumb__ring absolute inset-0 border-2 border-[color:var(--color-signal)] pointer-events-none"
+                  />
+                </button>
               );
             })}
           </div>

@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from '@/lib/navigation';
 import Image from 'next/image';
-import { AnimatePresence, motion } from 'motion/react';
 import { useTranslations } from 'next-intl';
 import { useMediaQuery, useReducedMotion } from '@/lib/hooks';
 
@@ -147,12 +146,7 @@ export function MachineAccordion({ items }: Props) {
         </div>
 
         {isNarrow ? (
-          <MobileAccordion
-            items={items}
-            active={active}
-            setActive={setActive}
-            reduced={reduced}
-          />
+          <MobileAccordion items={items} active={active} setActive={setActive} />
         ) : (
           <div className="relative rounded-2xl overflow-hidden border border-[color:var(--color-neutral-700)] shadow-[0_30px_80px_rgba(0,0,0,0.5)]">
             {/* Status bar */}
@@ -410,21 +404,32 @@ function Meta({ k, v }: { k: string; v: string }) {
  * expands it to reveal the machine image, summary, honest meta and CTA; the
  * previously open row collapses. Height/opacity reveal is a one-shot tap
  * animation (not per-frame scroll) and is instant under reduced-motion.
+ *
+ * This was the file's only framer-motion usage: <AnimatePresence> existed
+ * purely to defer React's unmount so the closing panel could animate out, which
+ * CSS cannot do for an element that is already gone. Every panel therefore
+ * stays mounted and `data-open` drives a two-way CSS transition instead
+ * (styles/motion/sections.css, .macc-detail). Two consequences handled here:
+ *  - Closed panels are `inert`, so their link and text leave the tab order and
+ *    the accessibility tree exactly as unmounting used to guarantee.
+ *  - No layout shift on load: `active` starts at 0, so the open panel is open
+ *    on its first rendered frame and no transition runs at mount — the same
+ *    thing <AnimatePresence initial={false}> was there to promise.
+ * Reduced motion needs no prop any more; the global block in globals.css
+ * collapses these transitions to 0.01ms.
  */
 function MobileAccordion({
   items,
   active,
   setActive,
-  reduced,
 }: {
   items: AccordionItem[];
   active: number;
   setActive: (i: number) => void;
-  reduced: boolean;
 }) {
   const t = useTranslations('home.showcaseAccordion');
   return (
-    <div className="space-y-3">
+    <div className="macc-list space-y-3">
       {items.map((m, i) => {
         const open = i === active;
         const accent = accentOf(m.category);
@@ -466,48 +471,38 @@ function MobileAccordion({
             </button>
 
             {/* Expanding detail */}
-            <AnimatePresence initial={false}>
-              {open && (
-                <motion.div
-                  initial={reduced ? false : { height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={reduced ? { opacity: 0 } : { height: 0, opacity: 0 }}
-                  transition={{ duration: reduced ? 0 : 0.4, ease: [0.2, 0.8, 0.2, 1] }}
-                  className="overflow-hidden"
+            <div className="macc-detail" data-open={open} inert={!open}>
+              <div className="p-4 pt-0">
+                <div
+                  className="relative aspect-[16/10] rounded-xl overflow-hidden border border-[color:var(--color-neutral-700)]"
+                  style={{
+                    background: `radial-gradient(120% 80% at 50% 0%, ${hexA(accent, 0.16)}, transparent 60%)`,
+                  }}
                 >
-                  <div className="p-4 pt-0">
-                    <div
-                      className="relative aspect-[16/10] rounded-xl overflow-hidden border border-[color:var(--color-neutral-700)]"
-                      style={{
-                        background: `radial-gradient(120% 80% at 50% 0%, ${hexA(accent, 0.16)}, transparent 60%)`,
-                      }}
-                    >
-                      <Image
-                        src={m.image}
-                        alt={m.name}
-                        fill
-                        sizes="100vw"
-                        className="object-contain p-5"
-                      />
-                    </div>
-                    <p className="mt-4 text-sm leading-relaxed text-[color:var(--color-steel-soft)]">
-                      {m.summary}
-                    </p>
-                    <div className="mt-4 flex flex-wrap items-center gap-2.5">
-                      <Meta k={t('metaFamily')} v={m.label} />
-                      <Meta k={t('metaPhotos')} v={String(m.photos)} />
-                      <Link
-                        href={`/products/${m.slug}`}
-                        className="ml-auto font-mono text-[10px] uppercase tracking-[0.2em] rounded-full px-4 py-2 text-[color:var(--color-ink)] font-bold"
-                        style={{ background: accent }}
-                      >
-                        {t('viewMachine')} →
-                      </Link>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                  <Image
+                    src={m.image}
+                    alt={m.name}
+                    fill
+                    sizes="100vw"
+                    className="object-contain p-5"
+                  />
+                </div>
+                <p className="mt-4 text-sm leading-relaxed text-[color:var(--color-steel-soft)]">
+                  {m.summary}
+                </p>
+                <div className="mt-4 flex flex-wrap items-center gap-2.5">
+                  <Meta k={t('metaFamily')} v={m.label} />
+                  <Meta k={t('metaPhotos')} v={String(m.photos)} />
+                  <Link
+                    href={`/products/${m.slug}`}
+                    className="ml-auto font-mono text-[10px] uppercase tracking-[0.2em] rounded-full px-4 py-2 text-[color:var(--color-ink)] font-bold"
+                    style={{ background: accent }}
+                  >
+                    {t('viewMachine')} →
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         );
       })}

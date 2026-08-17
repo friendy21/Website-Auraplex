@@ -1,7 +1,6 @@
 'use client';
 
 import { useId, useState, type ReactNode } from 'react';
-import { motion } from 'motion/react';
 
 type Props = {
   label: string;
@@ -26,6 +25,12 @@ type Props = {
  * - Subtle scale on the wrapping label for tactile feedback.
  *
  * Used by quote / contact / spec-sheet forms.
+ *
+ * MOTION: this component owns the state, `styles/motion/forms.css` owns the
+ * movement. `floated` and `focused` are published as data attributes on the
+ * wrapper and CSS transitions transform/colour off them — no framer-motion.
+ * The float is a `scale()` about the label's top-left corner rather than an
+ * animated `fontSize`/`top`, so focusing a field no longer triggers layout.
  */
 export function Field({
   label,
@@ -64,27 +69,20 @@ export function Field({
   };
 
   return (
-    <div className="relative pt-6 pb-3">
-      <motion.label
+    <div
+      className="ap-field relative pt-6 pb-3"
+      data-floated={floated ? 'true' : 'false'}
+      data-focused={focused ? 'true' : 'false'}
+    >
+      <label
         htmlFor={id}
-        animate={{
-          y: floated ? 0 : 28,
-          fontSize: floated ? 10 : 16,
-          letterSpacing: floated ? '0.15em' : '0',
-          color: floated
-            ? focused
-              ? 'var(--color-signal)'
-              : 'var(--color-steel)'
-            : 'var(--color-steel-soft)',
-        }}
-        transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-        className="absolute left-0 top-0 font-mono uppercase pointer-events-none origin-left"
+        className="ap-field-label absolute left-0 top-0 font-mono uppercase pointer-events-none"
       >
         {label}
         {required && (
           <span className="text-[color:var(--color-signal)] ml-1">*</span>
         )}
-      </motion.label>
+      </label>
 
       {as === 'textarea' ? (
         <textarea
@@ -112,13 +110,9 @@ export function Field({
         }`}
       />
 
-      {/* Active bottom border — draws in on focus */}
-      <motion.div
-        initial={false}
-        animate={{ scaleX: focused ? 1 : 0 }}
-        transition={{ duration: 0.35, ease: [0.65, 0, 0.35, 1] }}
-        style={{ originX: 0 }}
-        className={`absolute left-0 right-0 bottom-2 h-px ${
+      {/* Active bottom border — draws in on focus (scaleX, see forms.css) */}
+      <div
+        className={`ap-field-underline absolute left-0 right-0 bottom-2 h-px ${
           error ? 'bg-[color:var(--color-alert)]' : 'bg-[color:var(--color-signal)]'
         }`}
       />
@@ -127,7 +121,7 @@ export function Field({
         <p
           id={errorId}
           role="alert"
-          className="mt-2 font-mono text-[10px] uppercase tracking-widest text-[color:var(--color-alert)]"
+          className="ap-field-error mt-2 font-mono text-[10px] uppercase tracking-widest text-[color:var(--color-alert)]"
         >
           {error}
         </p>

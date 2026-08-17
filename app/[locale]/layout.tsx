@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next';
 import { Suspense } from 'react';
-import { MotionConfig } from 'motion/react';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -130,10 +129,6 @@ export default async function LocaleLayout({
       </head>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          {/* reducedMotion="user" makes ALL Framer Motion animations honour
-              prefers-reduced-motion (transform/opacity are neutralised). The
-              CSS keyframes are already gated in globals.css; this closes the
-              JS-animation half (WCAG 2.3.3) site-wide. */}
           {/* v2 perf: the PageLoader "overture" was removed. It server-rendered
               an opaque `fixed inset-0 z-[100]` panel OVER the hero H1 that could
               only be dismissed by a useEffect — i.e. after the whole bundle had
@@ -141,8 +136,7 @@ export default async function LocaleLayout({
               interaction was the mechanical cause of the FCP 1.2s → LCP 5.3s gap.
               The brand entrance now lives in the hero's own CSS arrival (which
               paints from server HTML) and in the POWER-ON route transition. */}
-          <MotionConfig reducedMotion="user">
-          <ScrollProgress />
+                    <ScrollProgress />
           <LeanProvider>
             <AtmosphereProvider>
               <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-[color:var(--color-signal)] focus:text-[color:var(--color-ink)] focus:p-3">
@@ -169,7 +163,6 @@ export default async function LocaleLayout({
               <TransitionWipe />
             </AtmosphereProvider>
           </LeanProvider>
-          </MotionConfig>
         </NextIntlClientProvider>
         <SpeedInsights />
         <Analytics />

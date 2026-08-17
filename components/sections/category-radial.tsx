@@ -1,8 +1,4 @@
-'use client';
-
-import { useRef } from 'react';
-import { motion, useInView } from 'motion/react';
-import { useReducedMotion } from '@/lib/hooks';
+import type { CSSProperties } from 'react';
 
 type Segment = { label: string; value: number; color: string };
 
@@ -17,15 +13,20 @@ const C = 2 * Math.PI * R;
 
 /**
  * CategoryRadial — animated donut of the real catalogue split. Each segment
- * draws in (strokeDasharray 0 → its arc length) when the chart scrolls into
- * view; the center counts the total. Light-theme friendly.
+ * draws in (strokeDasharray 0 → its arc length) as the chart scrolls into
+ * view; the center shows the total. Light-theme friendly.
  *
- * Reduced-motion: segments render fully without the draw animation.
+ * The draw is a scroll-driven CSS animation (see styles/motion/data-viz.css).
+ * The wrapper div declares the `--radial-draw` view timeline and each segment
+ * rides it, carrying its own arc geometry as custom properties.
+ *
+ * Reduced-motion (and any engine without scroll-driven animations): segments
+ * render fully drawn, without the draw animation — the base style and the
+ * `fill: both` end state are the same fully-drawn donut.
+ *
+ * No hooks, no client state — this is a Server Component.
  */
 export function CategoryRadial({ total, centerLabel, segments }: Props) {
-  const ref = useRef<SVGSVGElement>(null);
-  const inView = useInView(ref, { once: true, margin: '0px 0px -20% 0px' });
-  const reduced = useReducedMotion();
   const safeTotal = total || 1;
 
   // Precompute each segment's arc length + start rotation without mutating
@@ -41,8 +42,8 @@ export function CategoryRadial({ total, centerLabel, segments }: Props) {
 
   return (
     <div className="flex flex-col md:flex-row items-center gap-12">
-      <div className="relative shrink-0">
-        <svg ref={ref} viewBox="0 0 200 200" className="h-56 w-56 -rotate-90">
+      <div className="radial-chart relative shrink-0">
+        <svg viewBox="0 0 200 200" className="h-56 w-56 -rotate-90">
           {/* Track */}
           <circle
             cx="100"
@@ -53,7 +54,7 @@ export function CategoryRadial({ total, centerLabel, segments }: Props) {
             strokeWidth="14"
           />
           {computed.map((s) => (
-            <motion.circle
+            <circle
               key={s.label}
               cx="100"
               cy="100"
@@ -62,14 +63,17 @@ export function CategoryRadial({ total, centerLabel, segments }: Props) {
               stroke={s.color}
               strokeWidth="14"
               strokeLinecap="butt"
-              style={{ transformOrigin: '100px 100px', rotate: `${s.rotation}deg` }}
-              initial={{ strokeDasharray: `0 ${C}` }}
-              animate={
-                inView || reduced
-                  ? { strokeDasharray: `${s.arc} ${C - s.arc}` }
-                  : { strokeDasharray: `0 ${C}` }
+              className="radial-seg"
+              style={
+                {
+                  transformBox: 'view-box',
+                  transformOrigin: '100px 100px',
+                  transform: `rotate(${s.rotation}deg)`,
+                  '--arc': s.arc,
+                  '--rest': C - s.arc,
+                  '--c': C,
+                } as CSSProperties
               }
-              transition={{ duration: reduced ? 0 : 1, ease: [0.16, 1, 0.3, 1] }}
             />
           ))}
         </svg>
