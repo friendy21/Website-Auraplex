@@ -83,9 +83,14 @@ export function HeroCinematic() {
         <div className="absolute inset-0 bg-[color:var(--color-ink)]" />
       </div>
 
-      {/* Edge vignette so the corridor fades into the frame */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[color:var(--color-ink)]/60 via-transparent to-[color:var(--color-ink)]" />
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-[color:var(--color-ink)] via-[color:var(--color-ink)]/40 to-transparent" />
+      {/* Vignette stack — see styles/motion/hero.css.
+          The video is real footage, so a bright frame used to wash out the
+          header nav sitting over it. These make legibility a property of the
+          layout instead of a property of whatever frame is playing. */}
+      <div className="hero-vignette" aria-hidden="true" />
+      <div className="hero-scrim-top" aria-hidden="true" />
+      {/* Bottom fade — hands the hero off into the section below. */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-b from-transparent to-[color:var(--color-ink)]" />
 
       {/* ── Content ──
           Was style={{ scale: h1Scale, y: h1Y, opacity: copyOpacity }}. This is
