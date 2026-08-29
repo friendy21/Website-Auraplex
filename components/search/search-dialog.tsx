@@ -77,8 +77,8 @@ export function SearchDialog() {
           className="flex items-center gap-2 text-[color:var(--color-steel)] hover:text-[color:var(--color-paper)] transition"
         >
           <Search className="h-4 w-4" />
-          <span className="font-mono text-xs uppercase tracking-wider">{t('search')}</span>
-          <kbd className="hidden md:inline-block font-mono text-[10px] border border-[color:var(--color-steel)]/30 px-1.5 py-0.5">⌘K</kbd>
+          <span className="hidden 2xl:inline font-mono text-xs uppercase tracking-wider">{t('search')}</span>
+          <kbd className="hidden 2xl:inline-block font-mono text-[10px] border border-[color:var(--color-steel)]/30 px-1.5 py-0.5">⌘K</kbd>
         </button>
       </DialogTrigger>
       <DialogContent className="max-w-2xl p-0">

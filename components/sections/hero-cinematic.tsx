@@ -6,7 +6,11 @@ import { Button } from '@/components/primitives/button';
 import { Magnetic } from '@/components/motion/magnetic';
 import { CursorSpotlight } from '@/components/motion/cursor-spotlight';
 import { HeroTunnel } from '@/components/sections/hero-tunnel';
+import { YoutubeHeroBgLazy } from '@/components/sections/youtube-hero-bg-lazy';
 import { whatsappLink } from '@/lib/utils';
+
+/** Auraplex factory-floor footage used as the hero background. */
+const HERO_VIDEO_ID = 'vqv4IKY30BU';
 
 /**
  * Hero — the runway INTO the MachineHyperscroll signature.
@@ -58,6 +62,14 @@ export function HeroCinematic() {
           }}
         />
         <HeroTunnel />
+
+        {/* Real Auraplex factory footage, layered OVER the generative tunnel so
+            that when the embed plays it is the dominant visual. Lazy-loaded
+            (ssr:false) so YouTube's ~100KB IFrame API never touches the LCP
+            path, and self-hiding: if the embed is blocked (bot wall, region
+            lock, embed disabled) it fades to 0 and the tunnel carries the hero.
+            HERO_VIDEO_ID lives here so it is trivial to swap. */}
+        <YoutubeHeroBgLazy id={HERO_VIDEO_ID} title="Auraplex factory floor" />
       </div>
 
       {/* Cursor spotlight halo */}
@@ -80,7 +92,7 @@ export function HeroCinematic() {
           the ancestor of the LCP element, so its opacity is an EXIT only: it is
           exactly 1 at scroll position 0 and holds 1 through the first 5% of the
           hero's scroll range. See RULE ZERO in styles/motion/hero.css. */}
-      <div className="hero-copy relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-center px-6 lg:px-12">
+      <div className="hero-copy relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-center px-6 pt-24 lg:px-12">
         {/* Eyebrow — SIGNAL SWEEP. CSS-driven so it paints from server HTML.
             The old version animated `letterSpacing`, which is a LAYOUT property:
             it reflowed the eyebrow row on every frame and was a measured CLS
@@ -93,7 +105,7 @@ export function HeroCinematic() {
 
         {/* H1 — loud, CSS-driven LCP flight */}
         <h1
-          className="font-display tracking-[-0.03em] leading-[0.86] text-[clamp(3.25rem,12vw,11rem)] max-w-[15ch]"
+          className="font-display tracking-[-0.03em] leading-[0.86] text-[clamp(3.25rem,10.2vw,11rem)] max-w-[15ch]"
           style={{ perspective: 900 }}
         >
           {words.map((word, i) => {
@@ -140,7 +152,7 @@ export function HeroCinematic() {
           `inset-0` of the outer, so it is the same rectangle and the absolutely
           positioned corner marks land exactly where they did. */}
       <div
-        className="hero-hud pointer-events-none absolute inset-6 z-20 hidden font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)] lg:block"
+        className="hero-hud pointer-events-none absolute inset-x-6 bottom-6 top-24 z-20 hidden font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)] lg:block"
         aria-hidden="true"
       >
         <div className="hero-hud-in absolute inset-0">

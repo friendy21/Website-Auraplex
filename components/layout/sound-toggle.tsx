@@ -124,7 +124,7 @@ export function SoundToggle() {
           />
         ))}
       </span>
-      <span className="hidden md:inline font-mono text-[10px] uppercase tracking-[0.2em]">
+      <span className="hidden 2xl:inline font-mono text-[10px] uppercase tracking-[0.2em]">
         {on ? 'Sound' : 'Silent'}
       </span>
     </button>

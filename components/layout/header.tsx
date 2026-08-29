@@ -138,7 +138,7 @@ export function Header() {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') closeMenu();
     };
-    const lgMq = window.matchMedia('(min-width: 1024px)');
+    const lgMq = window.matchMedia('(min-width: 1280px)');
     const onMq = (e: MediaQueryListEvent) => {
       if (e.matches) closeMenu();
     };
@@ -173,7 +173,7 @@ export function Header() {
           {/* Logo */}
           <Link
             href="/"
-            className="ap-hdr-logo flex items-center gap-3"
+            className="ap-hdr-logo flex items-center gap-3 shrink-0"
             aria-label="Auraplex — home"
           >
             <div className="ap-hdr-logo-mark relative h-8 w-7 shrink-0">
@@ -192,18 +192,18 @@ export function Header() {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-8 font-mono text-sm uppercase">
+          <nav className="ap-hdr-nav hidden xl:flex items-center gap-5 font-mono text-sm uppercase">
             {NAV.map(({ key, href }) => (
               <NavLink key={key} href={href} label={t(key)} />
             ))}
           </nav>
 
-          <div className="hidden lg:flex items-center gap-5">
+          <div className="hidden xl:flex items-center gap-4 shrink-0">
             <SoundToggle />
             <SearchDialog />
             <LanguageSwitcher />
             <Button asChild size="sm">
-              <Link href="/contact">{t('quote')}</Link>
+              <Link href="/contact" className="whitespace-nowrap">{t('quote')}</Link>
             </Button>
           </div>
 
@@ -230,7 +230,7 @@ export function Header() {
       <button
         ref={toggleRef}
         type="button"
-        className="ap-hdr-toggle lg:hidden fixed top-5 right-5 h-10 w-10 z-[70] flex items-center justify-center text-[color:var(--color-paper)] focus-visible:outline-2 focus-visible:outline-[color:var(--color-signal)] focus-visible:outline-offset-2"
+        className="ap-hdr-toggle xl:hidden fixed top-5 right-5 h-10 w-10 z-[70] flex items-center justify-center text-[color:var(--color-paper)] focus-visible:outline-2 focus-visible:outline-[color:var(--color-signal)] focus-visible:outline-offset-2"
         onClick={() => (open ? closeMenu() : setOpen(true))}
         aria-label={tCommon('menuToggle')}
         aria-expanded={open}
@@ -252,7 +252,7 @@ export function Header() {
         ref={panelRef}
         inert={!open}
         data-open={open ? 'true' : 'false'}
-        className="ap-hdr-panel lg:hidden fixed inset-0 top-0 bg-[color:var(--color-ink)] z-[55] flex flex-col"
+        className="ap-hdr-panel xl:hidden fixed inset-0 top-0 bg-[color:var(--color-ink)] z-[55] flex flex-col"
       >
         {/* Spacer so the close button is reachable */}
         <div className="h-20" aria-hidden />
@@ -311,7 +311,7 @@ function NavLink({ href, label }: { href: string; label: string }) {
   return (
     <Link
       href={href}
-      className="ap-hdr-link relative py-2 tracking-[0.15em] text-[color:var(--color-paper)]"
+      className="ap-hdr-link relative whitespace-nowrap py-2 tracking-[0.12em] text-[color:var(--color-paper)]"
     >
       {label}
       <span className="ap-hdr-sweep bottom-0" aria-hidden />
