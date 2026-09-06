@@ -5,6 +5,10 @@ const withNextIntl = createNextIntlPlugin('./lib/i18n.ts');
 
 const config: NextConfig = {
   reactStrictMode: true,
+  // Emits .next/standalone with a self-contained server.js + a minimal
+  // node_modules subset, so the site runs as a plain Node container under
+  // Nomad instead of on Vercel's build output.
+  output: 'standalone',
   // Next 16.2.7: cacheComponents promoted out of experimental.
   // https://nextjs.org/docs/app/api-reference/config/next-config-js/cacheComponents
   cacheComponents: true,

@@ -6,13 +6,12 @@ import { notFound } from 'next/navigation';
 // next/font/google self-hosts the font binaries at build time, no runtime CDN hop.
 // https://nextjs.org/docs/app/api-reference/components/font
 import { Fraunces, Inter, JetBrains_Mono } from 'next/font/google';
-import { SpeedInsights } from '@vercel/speed-insights/next';
-import { Analytics } from '@vercel/analytics/next';
 import { locales, type Locale } from '@/lib/i18n';
 import { buildMetadata, organizationSchema } from '@/lib/seo';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { WhatsAppButton } from '@/components/layout/whatsapp-button';
+import { AuraplexFaqChat } from '@/components/forms/auraplex-faq-chat';
 // CustomCursor is wired as a VISUAL OVERLAY only — native cursor stays
 // visible underneath. To switch to full-replacement mode, uncomment the
 // `body { cursor: none }` rule in styles/globals.css.
@@ -159,13 +158,14 @@ export default async function LocaleLayout({
               <Suspense fallback={null}>
                 <StickyCta />
               </Suspense>
+              <Suspense fallback={null}>
+                <AuraplexFaqChat />
+              </Suspense>
               <CustomCursor />
               <TransitionWipe />
             </AtmosphereProvider>
           </LeanProvider>
         </NextIntlClientProvider>
-        <SpeedInsights />
-        <Analytics />
       </body>
     </html>
   );

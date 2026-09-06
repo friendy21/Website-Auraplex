@@ -1120,5 +1120,20 @@
     "heading": "偏离生产线。",
     "body": "该页面不存在。它或许从未存在，或已下线。让我们带您回到正常运作的机器。",
     "cta": "返回首页"
+  },
+  "faqChat": {
+    "title": "Auraplex 客户支持",
+    "subtitle": "咨询我们的产品",
+    "welcome": "你好！我是 Auraplex 客户支持助手。请询问我们的贴标机、包装机、3D 打印机、软件或服务。",
+    "placeholder": "输入您的问题...",
+    "send": "发送",
+    "openAria": "打开支持聊天",
+    "closeAria": "关闭支持聊天",
+    "userLabel": "您",
+    "assistantLabel": "Auraplex AI",
+    "thinking": "思考中",
+    "sources": "来源",
+    "errorGeneric": "抱歉，出错了。请重试。",
+    "errorConnection": "连接错误。请检查网络后重试。"
   }
 }
