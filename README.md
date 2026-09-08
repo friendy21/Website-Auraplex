@@ -69,9 +69,24 @@ homepage ticker stats, testimonials/client logos, case studies, legal review).
 
 ## Deploy
 
-Vercel. Region: `sin1` (Singapore). Set env vars from `.env.example`. The build
-runs `pnpm catalog` (prebuild) and tolerates missing keys; configure
-KV + Sanity + Resend + Anthropic to enable the corresponding features.
+Self-hosted on HashiCorp Nomad, fronted by Apache APISIX and Cloudflare Tunnel.
+See `deploy/website.nomad.hcl` for the job spec. Build the image on the Nomad
+host, tag as `auraplex.local/website:v1`, then `nomad job run`.
+
+```bash
+docker build -t auraplex-website:latest .
+docker tag auraplex-website:latest auraplex.local/website:v1
+nomad job run deploy/website.nomad.hcl
+```
+
+`next.config.ts` sets `output: 'standalone'`, so the image runs `node server.js`
+with a self-contained `node_modules` subset. The build runs `npm run catalog`
+(prebuild) and `pagefind` (postbuild), and tolerates missing keys; configure
+Sanity + Resend + Anthropic to enable the corresponding features.
+
+`NEXT_PUBLIC_*` values are inlined at build time — set them when building the
+image, not only in the Nomad job. Lead persistence (`lib/kv.ts`) is a no-op
+stub since the move off Vercel KV; leads are delivered by Resend email.
 
 ## Performance budget
 

@@ -1120,5 +1120,20 @@
     "heading": "Off the line.",
     "body": "That page isn't here. Either it never was, or it's been retired. Let's get you back to a working machine.",
     "cta": "Return home"
+  },
+  "faqChat": {
+    "title": "Auraplex Support",
+    "subtitle": "Ask about our products",
+    "welcome": "Hi! I'm the Auraplex support assistant. Ask me about our labelling machines, packaging machines, 3D printers, software, or services.",
+    "placeholder": "Ask a question...",
+    "send": "Send",
+    "openAria": "Open support chat",
+    "closeAria": "Close support chat",
+    "userLabel": "You",
+    "assistantLabel": "Auraplex AI",
+    "thinking": "Thinking",
+    "sources": "Sources",
+    "errorGeneric": "Sorry, something went wrong. Please try again.",
+    "errorConnection": "Connection error. Please check your internet and try again."
   }
 }

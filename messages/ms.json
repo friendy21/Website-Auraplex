@@ -1120,5 +1120,20 @@
     "heading": "Tersasar dari barisan.",
     "body": "Halaman itu tiada di sini. Mungkin ia tidak pernah wujud, atau telah ditamatkan. Mari bawa anda kembali ke mesin yang berfungsi.",
     "cta": "Kembali ke laman utama"
+  },
+  "faqChat": {
+    "title": "Sokongan Auraplex",
+    "subtitle": "Bertanya tentang produk kami",
+    "welcome": "Hai! Saya pembantu sokongan Auraplex. Tanyakan saya tentang mesin pelabel, mesin pembungkusan, pencetak 3D, perisian, atau perkhidmatan kami.",
+    "placeholder": "Tanyakan soalan...",
+    "send": "Hantar",
+    "openAria": "Buka sembang sokongan",
+    "closeAria": "Tutup sembang sokongan",
+    "userLabel": "Anda",
+    "assistantLabel": "Auraplex AI",
+    "thinking": "Sedang berfikir",
+    "sources": "Sumber",
+    "errorGeneric": "Maaf, ada masalah. Sila cuba lagi.",
+    "errorConnection": "Ralat sambungan. Sila semak internet anda dan cuba lagi."
   }
 }
