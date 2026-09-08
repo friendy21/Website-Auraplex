@@ -1,85 +1,126 @@
 'use server';
 
-import { streamText } from 'ai';
-import { anthropic } from '@ai-sdk/anthropic';
-import { createStreamableValue } from 'ai/rsc';
-import { MACHINES, machineTags } from '@/lib/catalog';
+import { MACHINES, machineTags, type Machine } from '@/lib/catalog';
 import { storeLead } from '@/lib/kv';
 
-const SYSTEM_PROMPT = `You are the Auraplex Machine Finder — a senior application engineer helping ASEAN manufacturers choose the right labelling or packaging machine.
+/**
+ * Machine Finder — self-hosted rewrite.
+ *
+ * Previously used Anthropic Claude via streamText. Now calls the self-hosted
+ * qwen3 recommender at ${CHAT_API_URL}/recommend. Single-shot (not streaming):
+ * send full conversation history + catalog + locale, receive { reply,
+ * recommendation }.
+ *
+ * URL note: this is a Server Action, so the fetch happens INSIDE the Nomad
+ * container, not from the browser. That's why CHAT_API_URL is NOT prefixed
+ * with NEXT_PUBLIC_ — no need to inline at build time, and the default
+ * `http://127.0.0.1:8091` reaches the sibling chat container directly via
+ * host networking. Set CHAT_API_URL to the public HTTPS URL only if the
+ * website is deployed somewhere that can't reach the chat service on loopback.
+ */
 
-Your job: ask 3–5 sharp diagnostic questions, then recommend ONE primary machine. Be concrete: cite label type, container shape, surface, and the customer's stated production line constraints. Speak plainly, no marketing fluff. Do not quote prices — pricing is handled by the sales team via direct quote.
+const CHAT_API_URL =
+  process.env.CHAT_API_URL ?? 'http://127.0.0.1:8091';
 
-You answer in the user's language (English / Bahasa Malaysia / Mandarin). Default to English.
+type Role = 'user' | 'assistant';
 
-When you have enough info, end your final response with a JSON block:
-\`\`\`json
-{ "recommendedSlug": "...", "confidence": "high|medium|low", "reasons": ["..."] }
-\`\`\`
-The recommendedSlug MUST be one of the slugs listed below.
-
-Catalog (use these slugs):`;
+export type MachineFinderResult =
+  | {
+      ok: true;
+      reply: string;
+      recommendation: {
+        recommendedSlug: string;
+        confidence?: 'high' | 'medium' | 'low';
+        reasons: string[];
+      } | null;
+    }
+  | { ok: false; error: string };
 
 /**
- * Build the catalog context from the committed source of truth
- * (`lib/catalog.ts`) rather than Sanity. The previous implementation called
- * `sanityFetch`, which *throws* when Sanity isn't configured — taking the
- * whole finder down in the default/pre-launch state. Names + auto-derived
- * tags give the model enough to differentiate machines (per-machine specs
- * aren't published yet).
+ * Build the trimmed catalog payload sent to the backend. The backend cares
+ * about slug/name/category/tags/summary — not images, generated fields or
+ * per-locale copy. Keeping this small keeps the prompt fast.
+ *
+ * IMPORTANT: `machineTags(m)` reads `m.nameEn ?? m.name` internally, so we
+ * MUST pass the un-localized Machine object here (which is what MACHINES holds).
+ * The `name` we send to the backend uses the same fallback so the recommender
+ * sees a stable English name regardless of the caller's locale.
  */
-function catalogContext(): string {
-  return MACHINES.map((m) => {
+function buildCatalogPayload(machines: readonly Machine[]) {
+  return machines.map((m) => {
     const tags = machineTags(m);
-    const tagStr = tags.length ? ` [${tags.join(', ')}]` : '';
-    return `- ${m.slug}: ${m.name}${tagStr} (${m.category})`;
-  }).join('\n');
+    return {
+      slug: m.slug,
+      name: m.nameEn ?? m.name,
+      category: m.category,
+      tags: tags.length ? tags : undefined,
+      summary: m.summary || undefined,
+    };
+  });
 }
 
-export async function machineFinderStream(
-  history: { role: 'user' | 'assistant'; content: string }[],
-) {
-  const stream = createStreamableValue('');
-
-  // Guard the key up front so a missing/unconfigured key surfaces as a clean
-  // client-side error (the chat's catch shows the i18n error) instead of an
-  // unhandled rejection inside a detached async task.
-  if (!process.env.ANTHROPIC_API_KEY) {
-    stream.error(new Error('Machine Finder is not configured'));
-    return { output: stream.value };
+export async function machineFinderRecommend(
+  history: { role: Role; content: string }[],
+  locale: 'en' | 'ms' | 'zh' = 'en',
+): Promise<MachineFinderResult> {
+  if (history.length === 0) {
+    return { ok: false, error: 'History cannot be empty' };
   }
 
-  const system = `${SYSTEM_PROMPT}\n${catalogContext()}`;
+  try {
+    const res = await fetch(`${CHAT_API_URL}/recommend`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        history,
+        catalog: buildCatalogPayload(MACHINES),
+        locale,
+      }),
+      // Recommender: ~15-30s cold, 3-10s warm. Guard against proxy trims.
+      signal: AbortSignal.timeout(90_000),
+    });
 
-  (async () => {
-    try {
-      const { textStream } = await streamText({
-        model: anthropic('claude-opus-4-8'),
-        system,
-        messages: history,
-        temperature: 0.4,
-      });
-      for await (const chunk of textStream) stream.update(chunk);
-      stream.done();
-    } catch (err) {
-      // Surface to the client's `for await` loop so its catch fires and the
-      // stream is properly terminated (never left hanging).
-      stream.error(err instanceof Error ? err : new Error('AI request failed'));
+    if (res.status === 429) {
+      const j = (await res.json().catch(() => ({}))) as { detail?: string };
+      return { ok: false, error: j.detail ?? 'Rate limit exceeded' };
     }
-  })();
 
-  return { output: stream.value };
+    if (!res.ok) {
+      return { ok: false, error: `Backend error (${res.status})` };
+    }
+
+    const data = (await res.json()) as {
+      reply: string;
+      recommendation:
+        | {
+            recommendedSlug: string;
+            confidence?: 'high' | 'medium' | 'low';
+            reasons: string[];
+          }
+        | null;
+    };
+
+    return {
+      ok: true,
+      reply: data.reply ?? '',
+      recommendation: data.recommendation ?? null,
+    };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Unknown error';
+    return { ok: false, error: message };
+  }
 }
 
 /**
- * Persist a completed machine-finder session as a lead once the model has
- * produced a recommendation. Best-effort: if KV isn't configured this
- * no-ops so the recommendation UX still works in dev/pre-launch.
+ * Persist a completed machine-finder session as a lead once a recommendation
+ * has been produced. Best-effort: `lib/kv` is a stub that discards the lead
+ * (see the README §Runtime data). Wire this to Resend in a follow-up commit
+ * if these leads become commercially important.
  */
 export async function recordMachineFinderLead(input: {
   recommendedSlug: string;
   locale: string;
-  transcript: { role: 'user' | 'assistant'; content: string }[];
+  transcript: { role: Role; content: string }[];
 }): Promise<void> {
   try {
     await storeLead({

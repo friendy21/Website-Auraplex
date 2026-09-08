@@ -434,6 +434,7 @@
     "machineFinderError": "— 连接中断。请重试,或通过 WhatsApp 联系我们。",
     "machineFinderAiLabel": "Auraplex AI",
     "machineFinderUserLabel": "您",
+    "machineFinderRecommendationIntro": "根据您的需求，以下是我的推荐：",
     "machineFinderRecommendation": "推荐机器",
     "machineFinderViewMachine": "查看机器",
     "specSheetCta": "把 PDF 发给我",
