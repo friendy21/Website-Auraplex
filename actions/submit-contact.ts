@@ -1,13 +1,11 @@
 'use server';
 
 import { z } from 'zod';
-import { Resend } from 'resend';
 import { storeLead } from '@/lib/kv';
 import { localizeFormErrors, formMessage } from '@/lib/form-errors';
+import { sendMail, LEADS_INBOX } from '@/lib/mail';
 import ContactAck from '@/emails/contact-ack';
 import NewLeadInternal from '@/emails/new-lead-internal';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Intent values map to internal routing — the inbox the email is
 // dispatched to changes based on what the visitor said they need.
@@ -79,9 +77,8 @@ export async function submitContact(
   }
 
   try {
-    await resend.emails.send({
-      from: 'Auraplex <hello@auraplex.com.my>',
-      to: ['sales.auraplex@gmail.com'],
+    await sendMail({
+      to: [LEADS_INBOX],
       replyTo: parsed.data.email,
       subject: `${INTENT_SUBJECT[parsed.data.intent]} ${parsed.data.name}${parsed.data.company ? ` · ${parsed.data.company}` : ''}`,
       react: NewLeadInternal({
@@ -90,15 +87,21 @@ export async function submitContact(
         leadId,
       }),
     });
-    await resend.emails.send({
-      from: 'Auraplex <hello@auraplex.com.my>',
-      to: [parsed.data.email],
-      subject: 'Thanks — we received your message',
-      react: ContactAck({ name: parsed.data.name }),
-    });
-    return { ok: true };
   } catch {
     // Don't leak provider internals to the client.
     return { ok: false, error: await formMessage(parsed.data.locale, 'sendFailed') };
   }
+
+  // The lead has reached the team — a failed acknowledgement must not show
+  // an error that prompts the visitor to resubmit.
+  try {
+    await sendMail({
+      to: [parsed.data.email],
+      subject: 'Thanks — we received your message',
+      react: ContactAck({ name: parsed.data.name }),
+    });
+  } catch {
+    // logged in sendMail
+  }
+  return { ok: true };
 }

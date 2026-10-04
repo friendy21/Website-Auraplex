@@ -1,13 +1,11 @@
 'use server';
 
 import { z } from 'zod';
-import { Resend } from 'resend';
 import { storeLead } from '@/lib/kv';
 import { localizeFormErrors, formMessage } from '@/lib/form-errors';
+import { sendMail, LEADS_INBOX } from '@/lib/mail';
 import QuoteAck from '@/emails/quote-ack';
 import NewLeadInternal from '@/emails/new-lead-internal';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const QuoteSchema = z.object({
   name: z.string().min(2).max(120),
@@ -67,23 +65,26 @@ export async function submitQuote(_prev: ActionState, formData: FormData): Promi
   }
 
   try {
-    await resend.emails.send({
-      from: 'Auraplex <hello@auraplex.com.my>',
-      to: ['sales.auraplex@gmail.com'],
+    await sendMail({
+      to: [LEADS_INBOX],
       replyTo: parsed.data.email,
       subject: `[Quote] ${parsed.data.company} — ${parsed.data.productSlug ?? 'general'}`,
       react: NewLeadInternal({ kind: 'quote', data: parsed.data, leadId }),
     });
+  } catch {
+    return { ok: false, error: await formMessage(parsed.data.locale, 'sendFailed') };
+  }
 
-    await resend.emails.send({
-      from: 'Auraplex <hello@auraplex.com.my>',
+  // The request is with sales — a failed acknowledgement must not prompt
+  // a duplicate submission.
+  try {
+    await sendMail({
       to: [parsed.data.email],
       subject: 'Thanks — we received your quote request',
       react: QuoteAck({ name: parsed.data.name, productName: parsed.data.productSlug }),
     });
-
-    return { ok: true, leadId };
   } catch {
-    return { ok: false, error: await formMessage(parsed.data.locale, 'sendFailed') };
+    // logged in sendMail
   }
+  return { ok: true, leadId };
 }

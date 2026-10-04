@@ -1,14 +1,13 @@
 'use server';
 
 import { z } from 'zod';
-import { Resend } from 'resend';
 import { storeLead } from '@/lib/kv';
 import { getMachine } from '@/lib/catalog';
 import { SITE } from '@/lib/seo';
 import { formMessage } from '@/lib/form-errors';
+import { sendMail, LEADS_INBOX } from '@/lib/mail';
 import SpecSheet from '@/emails/spec-sheet';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+import NewLeadInternal from '@/emails/new-lead-internal';
 
 export const SpecSheetSchema = z.object({
   name: z.string().min(2).max(120),
@@ -35,15 +34,23 @@ export async function requestSpecSheet(_prev: ActionState, formData: FormData): 
 
   // Persist the lead, but don't let a KV outage block the acknowledgement
   // email — store and send are independent concerns.
+  let leadId = 'unstored';
   try {
-    await storeLead({ kind: 'spec-sheet', locale: parsed.data.locale, data: parsed.data });
+    const lead = await storeLead({ kind: 'spec-sheet', locale: parsed.data.locale, data: parsed.data });
+    leadId = lead.id;
   } catch {
     // KV unconfigured / unreachable — non-fatal; continue to email.
   }
 
   try {
-    await resend.emails.send({
-      from: 'Auraplex <hello@auraplex.com.my>',
+    // KV is a stub, so this notification is the only record of the lead.
+    await sendMail({
+      to: [LEADS_INBOX],
+      replyTo: parsed.data.email,
+      subject: `[Spec sheet] ${parsed.data.company} — ${product.name}`,
+      react: NewLeadInternal({ kind: 'spec-sheet', data: parsed.data, leadId }),
+    });
+    await sendMail({
       to: [parsed.data.email],
       subject: `${product.name} — spec sheet`,
       react: SpecSheet({

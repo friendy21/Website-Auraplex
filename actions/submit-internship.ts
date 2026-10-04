@@ -1,13 +1,11 @@
 'use server';
 
 import { z } from 'zod';
-import { Resend } from 'resend';
 import { storeLead } from '@/lib/kv';
 import { localizeFormErrors, formMessage } from '@/lib/form-errors';
+import { sendMail, LEADS_INBOX } from '@/lib/mail';
 import ContactAck from '@/emails/contact-ack';
 import NewLeadInternal from '@/emails/new-lead-internal';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Internship application schema — captures everything the recruiting
 // team needs to prioritise a CV review without a follow-up email.
@@ -78,9 +76,8 @@ export async function submitInternship(
   }
 
   try {
-    await resend.emails.send({
-      from: 'Auraplex <hello@auraplex.com.my>',
-      to: ['sales.auraplex@gmail.com'],
+    await sendMail({
+      to: [LEADS_INBOX],
       replyTo: parsed.data.email,
       subject: `[INTERN] ${parsed.data.name} · ${parsed.data.university} · ${parsed.data.field}`,
       react: NewLeadInternal({
@@ -89,14 +86,20 @@ export async function submitInternship(
         leadId,
       }),
     });
-    await resend.emails.send({
-      from: 'Auraplex <hello@auraplex.com.my>',
+  } catch {
+    return { ok: false, error: await formMessage(parsed.data.locale, 'sendFailed') };
+  }
+
+  // Application is with the team — a failed acknowledgement must not
+  // prompt a duplicate submission.
+  try {
+    await sendMail({
       to: [parsed.data.email],
       subject: 'Thanks — we received your internship application',
       react: ContactAck({ name: parsed.data.name }),
     });
-    return { ok: true };
   } catch {
-    return { ok: false, error: await formMessage(parsed.data.locale, 'sendFailed') };
+    // logged in sendMail
   }
+  return { ok: true };
 }
