@@ -70,12 +70,27 @@ homepage ticker stats, testimonials/client logos, case studies, legal review).
 ## Deploy
 
 Self-hosted on HashiCorp Nomad, fronted by Apache APISIX and Cloudflare Tunnel.
-See `deploy/website.nomad.hcl` for the job spec. Build the image on the Nomad
-host, tag as `auraplex.local/website:v1`, then `nomad job run`.
+See `deploy/website.nomad.hcl` for the job spec.
+
+**Automatic:** every push to `main` runs `.github/workflows/deploy.yml` —
+typecheck + lint on GitHub, then a self-hosted runner on the Nomad host
+(labels `self-hosted`, `nomad`) builds `auraplex.local/website:<sha>` and runs
+`nomad job run -var image=...`. A rollout that fails the `/en` health check is
+reverted automatically. Runner prerequisites: Docker, the `nomad` CLI, and
+optionally `NOMAD_ADDR` (repo variable, default `http://127.0.0.1:4646`) and
+`NOMAD_TOKEN` (repo secret, if ACLs are on).
+
+**Secrets** (Resend, Sanity, Anthropic) live in the Nomad variable
+`nomad/jobs/website` and are injected as env vars by the job's template:
 
 ```bash
-docker build -t auraplex-website:latest .
-docker tag auraplex-website:latest auraplex.local/website:v1
+nomad var put nomad/jobs/website RESEND_API_KEY=re_...
+```
+
+**Manual:**
+
+```bash
+docker build -t auraplex.local/website:v1 .
 nomad job run deploy/website.nomad.hcl
 ```
 

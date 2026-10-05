@@ -1,3 +1,11 @@
+# CI (.github/workflows/deploy.yml) builds the image on the Nomad host with a
+# per-commit tag and passes it in via `-var image=...`, so every push to main
+# rolls out a new allocation. Manual runs without -var keep the old tag.
+variable "image" {
+  type    = string
+  default = "auraplex.local/website:v1"
+}
+
 job "website" {
   datacenters = ["dmz"]
   type        = "service"
@@ -17,11 +25,23 @@ job "website" {
       mode     = "delay"
     }
 
+    # Host networking pins port 3000, so old and new allocations can't run
+    # side by side: the old one stops, the new one must pass the healthz
+    # check, and a failed rollout reverts to the last healthy version.
+    update {
+      max_parallel      = 1
+      health_check      = "checks"
+      min_healthy_time  = "20s"
+      healthy_deadline  = "4m"
+      progress_deadline = "6m"
+      auto_revert       = true
+    }
+
     task "next" {
       driver = "docker"
 
       config {
-        image        = "auraplex.local/website:v1"
+        image        = var.image
         network_mode = "host"
       }
 
@@ -29,10 +49,27 @@ job "website" {
         NODE_ENV                     = "production"
         PORT                         = "3000"
         HOSTNAME                     = "0.0.0.0"
-        NEXT_PUBLIC_SITE_URL         = "https://auraplex.info"
+        NEXT_PUBLIC_SITE_URL         = "https://www.auraplex.info"
         NEXT_PUBLIC_CHAT_API_URL     = "https://chat-api.auraplex.info"
         NEXT_PUBLIC_PLAUSIBLE_DOMAIN = "auraplex.info"
-        # Sanity / Resend / Anthropic keys added by ops via templates + nomadVar.
+      }
+
+      # Runtime secrets from the Nomad variable at nomad/jobs/website, e.g.
+      #   nomad var put nomad/jobs/website RESEND_API_KEY=re_...
+      # Without the variable the site still runs; the forms report "send failed".
+      template {
+        destination = "secrets/app.env"
+        env         = true
+        change_mode = "restart"
+        data        = <<-EOT
+          {{- if nomadVarExists "nomad/jobs/website" -}}
+          {{- with nomadVar "nomad/jobs/website" -}}
+          {{- range .Tuples }}
+          {{ .K }}={{ .V | toJSON }}
+          {{- end }}
+          {{- end -}}
+          {{- end }}
+        EOT
       }
 
       resources {

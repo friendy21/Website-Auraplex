@@ -1,0 +1,72 @@
+# Push to main → typecheck + lint on GitHub → build the image and roll it out
+# on the Nomad host.
+#
+# The deploy job runs on a self-hosted runner installed on the Nomad host
+# (labels: self-hosted, nomad). That host builds the image locally — there is
+# no registry, matching the `auraplex.local/...` tag in the job — and talks to
+# Nomad on loopback, so nothing on the DMZ is exposed to GitHub.
+#
+# This repo is public: never add `pull_request` triggers here, or fork PRs
+# could execute code on the Nomad host.
+name: Deploy website
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# One rollout at a time; a newer push waits rather than cancelling a rollout
+# halfway through.
+concurrency:
+  group: deploy-website
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+
+  deploy:
+    needs: check
+    runs-on: [self-hosted, nomad]
+    environment: production
+    env:
+      NOMAD_ADDR: ${{ vars.NOMAD_ADDR || 'http://127.0.0.1:4646' }}
+      NOMAD_TOKEN: ${{ secrets.NOMAD_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        run: |
+          IMAGE="auraplex.local/website:${GITHUB_SHA::12}"
+          echo "IMAGE=$IMAGE" >> "$GITHUB_ENV"
+          docker build --pull -t "$IMAGE" -t auraplex.local/website:latest .
+
+      - name: Validate job
+        run: nomad job validate -var "image=$IMAGE" deploy/website.nomad.hcl
+
+      # `nomad job run` follows the deployment and exits non-zero if the new
+      # allocation never passes its healthz check (auto_revert rolls it back).
+      - name: Roll out
+        run: nomad job run -var "image=$IMAGE" deploy/website.nomad.hcl
+
+      # Keep the five newest builds so a manual rollback stays a one-liner;
+      # `|| true` because the running image can't be removed.
+      - name: Prune old images
+        if: always()
+        run: |
+          docker image ls auraplex.local/website --format '{{.CreatedAt}}\t{{.Repository}}:{{.Tag}}' \
+            | grep -v -e ':latest$' -e ':v1$' | sort -r | tail -n +6 | cut -f2 \
+            | xargs -r docker image rm || true
+          docker image prune -f
