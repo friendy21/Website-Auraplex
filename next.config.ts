@@ -21,6 +21,18 @@ const config: NextConfig = {
       { protocol: 'https', hostname: 'cdn.sanity.io' },
     ],
   },
+  // One canonical host: the bare domain served a full duplicate of the site.
+  // A 308 consolidates ranking signals on www (the canonical in lib/seo.ts).
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'auraplex.info' }],
+        destination: 'https://www.auraplex.info/:path*',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

@@ -1,12 +1,27 @@
 import Image from 'next/image';
 import { Link } from '@/lib/navigation';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { getMachine } from '@/lib/catalog';
+import { localizeMachine } from '@/lib/catalog-i18n';
 import type { CSSProperties, ReactNode } from 'react';
 
 
 // Real Auraplex social profiles, extracted from the live
 // autolabellermalaysia.com footer HTML (canonical forms, tracking
 // params stripped). Do not add networks that aren't verified there.
+// Keyword-named internal links to the highest-demand machines — gives every
+// page a crawlable path (and descriptive anchor text) to the money pages.
+const POPULAR_SLUGS = [
+  'standard-top-labelling-machine',
+  'semi-auto-round-bottle-labelling-machine',
+  'vertical-wrap-around-labelling-machine',
+  'two-side-labelling-machine',
+  'front-back-labelling-machine',
+  'print-apply-top-labelling-machine',
+  'bottom-labelling-machine',
+  'continuous-band-sealing-machine',
+] as const;
+
 const SOCIALS = [
   { name: 'Facebook', href: 'https://www.facebook.com/p/Auraplex-100068561114645' },
   { name: 'Instagram', href: 'https://www.instagram.com/auraplex_/' },
@@ -30,6 +45,11 @@ const SOCIALS = [
  */
 export function Footer() {
   const t = useTranslations();
+  const locale = useLocale();
+  const popular = POPULAR_SLUGS.flatMap((slug) => {
+    const m = getMachine(slug);
+    return m ? [localizeMachine(m, locale)] : [];
+  });
 
   return (
     <footer className="relative mt-32 pb-8 overflow-hidden">
@@ -153,6 +173,28 @@ export function Footer() {
           </ul>
         </FooterCol>
       </div>
+
+      {/* Plain-language summary of what we make and where we serve — the
+          visible copy search engines weigh for "labelling machine <place>". */}
+      <section className="mx-auto max-w-[1600px] px-6 lg:px-12 pb-10 text-xs text-[color:var(--color-steel)] space-y-3">
+        <h2 className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)]">
+          {t('footer.seoTitle')}
+        </h2>
+        <p className="max-w-4xl leading-relaxed">{t('footer.seoBody')}</p>
+        <p className="max-w-4xl leading-relaxed">{t('footer.seoAreas')}</p>
+        <nav aria-label={t('footer.popular')} className="flex flex-wrap gap-x-4 gap-y-1 pt-1">
+          <span className="text-[color:var(--color-steel-soft)]">{t('footer.popular')}:</span>
+          {popular.map((m) => (
+            <Link
+              key={m.slug}
+              href={`/products/${m.slug}`}
+              className="hover:text-[color:var(--color-paper)] transition-colors"
+            >
+              {m.name}
+            </Link>
+          ))}
+        </nav>
+      </section>
 
       {/* Bottom rights band */}
       <div className="footer-band-in mx-auto max-w-[1600px] px-6 lg:px-12 flex justify-between flex-wrap gap-4 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-steel)] pt-6 border-t border-[color:var(--color-neutral-800)]">

@@ -11,6 +11,8 @@ import { MachineQuickSpec } from '@/components/sections/machine-quick-spec';
 import { RelatedMachines } from '@/components/sections/related-machines';
 import {
   buildMetadata,
+  machineKeywords,
+  ogLocale,
   productSchema,
   breadcrumbSchema,
   SITE,
@@ -38,11 +40,18 @@ export async function generateMetadata({
   const raw = getMachine(slug);
   if (!raw) return {};
   const p = localizeMachine(raw, locale);
+  const suffix: Record<string, string> = {
+    en: 'Built in Selangor by Auraplex — installation, spare parts and service across Malaysia. Get a quote.',
+    ms: 'Dibina di Selangor oleh Auraplex — pemasangan, alat ganti dan servis di seluruh Malaysia. Dapatkan sebut harga.',
+    zh: 'Auraplex 雪兰莪制造 — 全马安装、零件与售后服务。立即询价。',
+  };
   return buildMetadata({
-    title: `${p.name} — Auraplex`,
-    description: p.summary,
+    title: `${p.name} Malaysia | Auraplex`,
+    description: `${p.summary} ${suffix[locale] ?? suffix.en}`,
     path: `/${locale}/products/${slug}`,
     image: p.image ?? undefined,
+    locale: ogLocale(locale),
+    keywords: machineKeywords(raw.name, locale),
   });
 }
 
@@ -84,6 +93,8 @@ export default async function ProductPage({
               image: p.image,
               monthlyPrice: p.monthlyPrice,
               slug,
+              locale,
+              category: localizedCategoryLabel(p.category, locale),
             }),
           ),
         }}

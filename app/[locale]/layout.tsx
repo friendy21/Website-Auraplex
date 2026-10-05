@@ -7,7 +7,7 @@ import { notFound } from 'next/navigation';
 // https://nextjs.org/docs/app/api-reference/components/font
 import { Fraunces, Inter, JetBrains_Mono } from 'next/font/google';
 import { locales, type Locale } from '@/lib/i18n';
-import { buildMetadata, organizationSchema } from '@/lib/seo';
+import { buildMetadata, localizedMeta, organizationSchema, websiteSchema } from '@/lib/seo';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { WhatsAppButton } from '@/components/layout/whatsapp-button';
@@ -82,19 +82,10 @@ export async function generateMetadata({
 }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: raw } = await params;
   const locale = asLocale(raw);
-  const titles: Record<Locale, string> = {
-    en: 'Auraplex — Precision labelling machines, engineered in Malaysia',
-    ms: 'Auraplex — Mesin pelabel presisi, direka di Malaysia',
-    zh: 'Auraplex — 马来西亚精密贴标机',
-  };
-  const descriptions: Record<Locale, string> = {
-    en: 'Self-adhesive labelling machines, packaging machinery, 3D printing and custom automation — engineered in Seri Kembangan, Selangor.',
-    ms: 'Mesin pelabel pelekat sendiri, mesin pembungkusan, cetakan 3D dan automasi khusus — direka di Seri Kembangan, Selangor.',
-    zh: '自粘标签机、包装机械、3D 打印与定制自动化 — 马来西亚雪兰莪史里肯邦安设计制造。',
-  };
+  const { title, description } = localizedMeta('home', locale);
   return buildMetadata({
-    title: titles[locale],
-    description: descriptions[locale],
+    title,
+    description,
     locale: locale === 'en' ? 'en_MY' : locale === 'ms' ? 'ms_MY' : 'zh_MY',
     path: `/${locale}`,
   });
@@ -124,6 +115,10 @@ export default async function LocaleLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema()) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema(locale)) }}
         />
       </head>
       <body>

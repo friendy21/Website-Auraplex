@@ -18,25 +18,30 @@ type MetaLocale = 'en' | 'ms' | 'zh';
 type MetaText = { title: string; description: string };
 
 const PAGE_META: Record<string, Record<MetaLocale, MetaText>> = {
+  home: {
+    en: { title: 'Labelling Machine Manufacturer Malaysia | Auraplex Selangor', description: 'Auraplex Sdn Bhd (Auto Labeller Malaysia) builds automatic & semi-auto labelling machines, sticker label applicators, packaging and band sealing machines in Seri Kembangan, Selangor. Installation, spare parts and service across Malaysia — KL, Penang, Johor & beyond.' },
+    ms: { title: 'Pengeluar Mesin Pelabel Malaysia | Auraplex Selangor', description: 'Auraplex Sdn Bhd mengeluarkan mesin pelabel automatik & separa automatik, aplikator label pelekat, mesin pembungkusan dan pengedap di Seri Kembangan, Selangor. Pemasangan, alat ganti dan servis di seluruh Malaysia.' },
+    zh: { title: '马来西亚贴标机制造商 | Auraplex 雪兰莪', description: 'Auraplex Sdn Bhd 在雪兰莪史里肯邦安设计制造全自动/半自动贴标机、不干胶贴标机、包装机与封口机。提供全马安装、零件与售后服务 — 吉隆坡、槟城、柔佛等地。' },
+  },
   products: {
-    en: { title: 'Machines — Auraplex', description: 'Browse the full Auraplex catalogue of labelling, packaging and custom automation machines — built in Selangor.' },
-    ms: { title: 'Mesin — Auraplex', description: 'Layari katalog penuh mesin pelabel, pembungkusan dan automasi tersuai Auraplex — dibina di Selangor.' },
-    zh: { title: '机器 — Auraplex', description: '浏览 Auraplex 完整的贴标机、包装机与定制自动化设备目录 — 雪兰莪制造。' },
+    en: { title: 'Labelling Machines & Packaging Machines Malaysia | Auraplex', description: 'Top, side, wrap-around, round bottle, front & back, bottom and print & apply labelling machines, plus band sealers and 3D printers — 30 machines built in Selangor, Malaysia. Get a quote.' },
+    ms: { title: 'Mesin Pelabel & Mesin Pembungkusan Malaysia | Auraplex', description: 'Mesin pelabel atas, sisi, balut keliling, botol bulat, depan & belakang, bawah serta cetak & lekat, pengedap jalur dan pencetak 3D — 30 mesin dibina di Selangor, Malaysia.' },
+    zh: { title: '马来西亚贴标机与包装机 | Auraplex', description: '平面、侧面、圆瓶缠绕、正反面、底部与打印贴标机,以及连续封口机与 3D 打印机 — 30 款机器,马来西亚雪兰莪制造。立即询价。' },
   },
   about: {
-    en: { title: 'About — Auraplex', description: 'Engineered in Malaysia. Built to outlast the line. Inside the Auraplex factory floor in Seri Kembangan.' },
-    ms: { title: 'Tentang — Auraplex', description: 'Direka di Malaysia. Dibina untuk bertahan. Menyelami lantai kilang Auraplex di Seri Kembangan.' },
-    zh: { title: '关于 — Auraplex', description: '马来西亚设计制造,经久耐用。走进 Auraplex 位于史里肯邦安的工厂车间。' },
+    en: { title: 'About Auraplex — Malaysian Labelling Machine Maker, Selangor', description: 'Engineered in Malaysia, built to outlast the line. Auraplex designs and builds labelling and packaging machines on its own factory floor in Seri Kembangan, Selangor, with local parts and engineers.' },
+    ms: { title: 'Tentang Auraplex — Pembuat Mesin Pelabel Malaysia', description: 'Direka di Malaysia, dibina untuk bertahan. Auraplex mereka dan membina mesin pelabel dan pembungkusan di kilangnya sendiri di Seri Kembangan, Selangor.' },
+    zh: { title: '关于 Auraplex — 马来西亚本土贴标机制造商', description: '马来西亚设计制造,经久耐用。Auraplex 在雪兰莪史里肯邦安自有工厂设计并制造贴标机与包装机,本地零件与工程师支持。' },
   },
   contact: {
-    en: { title: 'Contact — Auraplex', description: 'Talk to an Auraplex engineer. Quotes, factory tours, service requests, technical questions. Seri Kembangan, Selangor.' },
-    ms: { title: 'Hubungi — Auraplex', description: 'Bercakap dengan jurutera Auraplex. Sebut harga, lawatan kilang, permintaan servis, soalan teknikal. Seri Kembangan, Selangor.' },
-    zh: { title: '联系 — Auraplex', description: '与 Auraplex 工程师洽谈。报价、工厂参观、服务需求、技术咨询。雪兰莪史里肯邦安。' },
+    en: { title: 'Contact Auraplex — Labelling Machine Quote Malaysia', description: 'Get a labelling machine quote, book a factory tour or request service. Auraplex, Seri Kembangan, Selangor — near Kuala Lumpur, Puchong and Putrajaya. Call 1700-82-6502.' },
+    ms: { title: 'Hubungi Auraplex — Sebut Harga Mesin Pelabel Malaysia', description: 'Dapatkan sebut harga mesin pelabel, tempah lawatan kilang atau minta servis. Auraplex, Seri Kembangan, Selangor — berhampiran Kuala Lumpur dan Puchong. Hubungi 1700-82-6502.' },
+    zh: { title: '联系 Auraplex — 马来西亚贴标机报价', description: '获取贴标机报价、预约工厂参观或申请维修服务。Auraplex 位于雪兰莪史里肯邦安,邻近吉隆坡、蒲种与布城。热线 1700-82-6502。' },
   },
   services: {
-    en: { title: 'Services — Auraplex', description: 'Installation, maintenance, training and custom automation — delivered by Auraplex engineers from Seri Kembangan.' },
-    ms: { title: 'Perkhidmatan — Auraplex', description: 'Pemasangan, penyelenggaraan, latihan dan automasi tersuai — disampaikan oleh jurutera Auraplex dari Seri Kembangan.' },
-    zh: { title: '服务 — Auraplex', description: '安装、维护、培训与定制自动化 — 由史里肯邦安的 Auraplex 工程师提供。' },
+    en: { title: 'Labelling Machine Service, Repair & Installation Malaysia | Auraplex', description: 'Installation, maintenance, repair, spare parts, operator training and custom automation for labelling and packaging machines — Auraplex engineers across Malaysia.' },
+    ms: { title: 'Servis, Pembaikan & Pemasangan Mesin Pelabel Malaysia | Auraplex', description: 'Pemasangan, penyelenggaraan, pembaikan, alat ganti, latihan operator dan automasi tersuai untuk mesin pelabel dan pembungkusan — jurutera Auraplex di seluruh Malaysia.' },
+    zh: { title: '马来西亚贴标机维修、安装与保养 | Auraplex', description: '贴标机与包装机的安装、保养、维修、零件、操作培训与定制自动化 — Auraplex 工程师服务全马。' },
   },
   machineFinder: {
     en: { title: 'Machine Finder — Auraplex', description: 'AI-powered machine recommendation. Describe your line and we will match the right Auraplex machine.' },
@@ -75,6 +80,80 @@ const PAGE_META: Record<string, Record<MetaLocale, MetaText>> = {
   },
 };
 
+// ── Search keywords ──────────────────────────────────────────────────────
+// What Malaysian buyers actually type: machine type × "Malaysia"/state/city,
+// in all three site languages. Emitted as <meta name="keywords"> on every
+// page (Bing/Baidu still read it) and reused for visible copy and JSON-LD.
+const PLACES = [
+  'Malaysia', 'Selangor', 'Kuala Lumpur', 'KL', 'Seri Kembangan', 'Puchong',
+  'Shah Alam', 'Klang', 'Petaling Jaya', 'Subang Jaya', 'Putrajaya', 'Cyberjaya',
+  'Penang', 'Johor Bahru', 'Ipoh', 'Melaka', 'Seremban', 'Kuantan',
+  'Kuching', 'Kota Kinabalu', 'Sabah', 'Sarawak',
+] as const;
+
+/** Cities/states listed in the visible "areas we serve" copy and areaServed. */
+export const SERVICE_AREAS = [
+  'Selangor', 'Kuala Lumpur', 'Putrajaya', 'Negeri Sembilan', 'Melaka', 'Johor',
+  'Penang', 'Perak', 'Kedah', 'Perlis', 'Pahang', 'Terengganu', 'Kelantan',
+  'Sabah', 'Sarawak', 'Labuan',
+] as const;
+
+const KEYWORDS: Record<MetaLocale, string[]> = {
+  en: [
+    'labelling machine Malaysia', 'labeling machine Malaysia', 'labelling machine manufacturer Malaysia',
+    'labelling machine supplier Malaysia', 'label machine Malaysia', 'labeller Malaysia',
+    'auto labeller Malaysia', 'automatic labelling machine', 'semi automatic labelling machine',
+    'sticker labelling machine', 'self-adhesive labelling machine', 'label applicator',
+    'bottle labelling machine', 'round bottle labelling machine', 'top labelling machine',
+    'side labelling machine', 'two side labelling machine', 'three side labelling machine',
+    'wrap around labelling machine', 'front and back labelling machine', 'bottom labelling machine',
+    'flat labelling machine', 'print and apply labelling machine', 'egg tray labelling machine',
+    'custom labelling machine', 'labelling machine price Malaysia', 'labelling machine rental Malaysia',
+    'food labelling machine', 'beverage labelling machine', 'pharmaceutical labelling machine',
+    'cosmetic labelling machine', 'packaging machine Malaysia', 'packaging machinery supplier Malaysia',
+    'band sealing machine Malaysia', 'continuous band sealer', 'industrial 3D printer Malaysia',
+    'factory automation Malaysia', 'labelling machine repair Malaysia',
+    ...PLACES.filter((p) => p !== 'Malaysia').map((p) => `labelling machine ${p}`),
+    'Auraplex', 'Auraplex Sdn Bhd', 'Auto Labeller Malaysia',
+  ],
+  ms: [
+    'mesin pelabel Malaysia', 'mesin label Malaysia', 'mesin pelabel automatik',
+    'mesin pelabel separa automatik', 'mesin label pelekat', 'mesin pelekat label',
+    'mesin pelabel botol', 'mesin pelabel botol bulat', 'mesin pelabel atas', 'mesin pelabel sisi',
+    'mesin pelabel balut keliling', 'pengeluar mesin pelabel Malaysia', 'pembekal mesin pelabel',
+    'harga mesin pelabel', 'sewa mesin pelabel', 'mesin pembungkusan Malaysia',
+    'mesin pengedap', 'mesin pengedap jalur', 'pencetak 3D industri', 'automasi kilang',
+    'mesin pelabel Selangor', 'mesin pelabel Kuala Lumpur', 'mesin pelabel Johor', 'mesin pelabel Pulau Pinang',
+    'Auraplex', 'Auraplex Sdn Bhd',
+  ],
+  zh: [
+    '马来西亚贴标机', '贴标机', '贴标机厂家', '贴标机制造商', '自动贴标机', '半自动贴标机',
+    '不干胶贴标机', '圆瓶贴标机', '平面贴标机', '侧面贴标机', '双面贴标机', '缠绕贴标机',
+    '打印贴标机', '贴标机价格', '贴标机租赁', '马来西亚包装机', '包装机械', '封口机', '连续封口机',
+    '工业 3D 打印机', '工厂自动化', '雪兰莪贴标机', '吉隆坡贴标机', '槟城贴标机', '柔佛贴标机',
+    'labelling machine Malaysia', 'Auraplex',
+  ],
+};
+
+/** Base keyword set for a locale, plus page-specific extras first. */
+export function seoKeywords(locale: string, extra: string[] = []): string[] {
+  const loc: MetaLocale = locale === 'ms' || locale === 'zh' ? locale : 'en';
+  return [...new Set([...extra, ...KEYWORDS[loc]])];
+}
+
+/** Product-page keywords: the machine name crossed with "Malaysia" + key places. */
+export function machineKeywords(name: string, locale: string): string[] {
+  const n = name.toLowerCase();
+  return seoKeywords(locale, [
+    name,
+    `${n} Malaysia`,
+    `${n} price Malaysia`,
+    `${n} supplier`,
+    `${n} Selangor`,
+    `${n} Kuala Lumpur`,
+  ]);
+}
+
 /** OG locale tag (en_MY / ms_MY / zh_MY) for a given app locale. */
 export function ogLocale(locale: string): string {
   return locale === 'ms' ? 'ms_MY' : locale === 'zh' ? 'zh_MY' : 'en_MY';
@@ -95,6 +174,8 @@ export function buildMetadata(opts: {
   locale?: string;
   /** Set for thin/unfinished pages that should not be indexed (still crawled). */
   noindex?: boolean;
+  /** Page-specific keywords; defaults to the locale's base set. */
+  keywords?: string[];
 }): Metadata {
   const path = opts.path ?? '';
   const url = `${SITE}${path}`;
@@ -106,6 +187,17 @@ export function buildMetadata(opts: {
     metadataBase: new URL(SITE),
     title: opts.title,
     description: opts.description,
+    keywords: opts.keywords ?? seoKeywords(path.match(/^\/(ms|zh)(?=\/|$)/)?.[1] ?? 'en'),
+    applicationName: 'Auraplex',
+    authors: [{ name: 'Auraplex Sdn Bhd', url: SITE }],
+    creator: 'Auraplex Sdn Bhd',
+    publisher: 'Auraplex Sdn Bhd',
+    category: 'Industrial machinery',
+    formatDetection: { telephone: true, address: true, email: true },
+    other: {
+      'geo.region': 'MY-10',
+      'geo.placename': 'Seri Kembangan, Selangor, Malaysia',
+    },
     alternates: {
       canonical: url,
       languages: {
@@ -157,8 +249,33 @@ export function organizationSchema() {
     '@id': `${SITE}/#organization`,
     name: 'Auraplex SDN BHD',
     legalName: 'Auraplex Sdn Bhd',
+    alternateName: ['Auraplex', 'Auto Labeller Malaysia', 'Auraplex Labelling Machine'],
+    description:
+      'Malaysian manufacturer of automatic and semi-automatic labelling machines, sticker label applicators, packaging and band sealing machines, based in Seri Kembangan, Selangor.',
+    slogan: 'Your factory automation solution. Engineered in Selangor.',
     url: SITE,
+    email: 'sales.auraplex@gmail.com',
     logo: `${SITE}/brand/auraplex-logo.png`,
+    image: `${SITE}/brand/auraplex-logo.png`,
+    areaServed: [
+      { '@type': 'Country', name: 'Malaysia' },
+      ...SERVICE_AREAS.map((name) => ({ '@type': 'State', name })),
+      { '@type': 'Country', name: 'Singapore' },
+      { '@type': 'Country', name: 'Brunei' },
+    ],
+    knowsAbout: [
+      'Labelling machines', 'Self-adhesive label applicators', 'Bottle labelling',
+      'Wrap-around labelling', 'Print and apply labelling', 'Packaging machinery',
+      'Band sealing machines', 'Industrial 3D printing', 'Factory automation',
+    ],
+    makesOffer: {
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: 'Labelling machine design, installation, servicing and spare parts',
+        areaServed: { '@type': 'Country', name: 'Malaysia' },
+      },
+    },
     foundingDate: '2021-05-12',
     // Companies Commission of Malaysia (SSM) registration number.
     identifier: {
@@ -196,18 +313,42 @@ export function organizationSchema() {
   };
 }
 
+/** WebSite entity — lets search engines tie the brand name to this domain. */
+export function websiteSchema(locale: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${SITE}/#website`,
+    url: SITE,
+    name: 'Auraplex',
+    alternateName: ['Auraplex Sdn Bhd', 'Auto Labeller Malaysia'],
+    inLanguage: locale === 'ms' ? 'ms-MY' : locale === 'zh' ? 'zh-MY' : 'en-MY',
+    publisher: { '@id': `${SITE}/#organization` },
+  };
+}
+
 export function productSchema(p: {
   name: string;
   description: string;
   image: string | null;
   monthlyPrice: number | null;
   slug: string;
+  locale?: string;
+  category?: string;
 }) {
+  const url = `${SITE}/${p.locale ?? 'en'}/products/${p.slug}`;
   const schema: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'Product',
+    '@id': `${url}#product`,
+    url,
+    sku: p.slug,
+    mpn: p.slug,
     name: p.name,
     description: p.description,
+    category: p.category,
+    countryOfOrigin: { '@type': 'Country', name: 'Malaysia' },
+    manufacturer: { '@id': `${SITE}/#organization` },
     // Absolute URL. Falls back to the dynamic OG image (there is no static
     // /og/default.png) for machines without photography.
     image: p.image
@@ -222,7 +363,7 @@ export function productSchema(p: {
   if (p.monthlyPrice != null && p.monthlyPrice > 0) {
     schema.offers = {
       '@type': 'Offer',
-      url: `${SITE}/products/${p.slug}`,
+      url,
       priceCurrency: 'MYR',
       price: p.monthlyPrice,
       priceSpecification: {

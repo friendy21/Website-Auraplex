@@ -1,5 +1,5 @@
 import { setRequestLocale, getTranslations } from 'next-intl/server';
-import { buildMetadata } from '@/lib/seo';
+import { buildMetadata, localizedMeta, ogLocale } from '@/lib/seo';
 import {
   categoryCounts,
   getMachinesByCategory,
@@ -21,11 +21,11 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const { title, description } = localizedMeta('home', locale);
   return buildMetadata({
-    title:
-      'Auraplex — Labelling, packaging & automation machines, engineered in Malaysia',
-    description:
-      'Auraplex Sdn Bhd designs, builds, installs and services self-adhesive labelling machines, packaging machinery and 3D-printing automation from Seri Kembangan, Selangor — 30 machines across three families, with local parts and support.',
+    title,
+    description,
+    locale: ogLocale(locale),
     path: `/${locale}`,
   });
 }
