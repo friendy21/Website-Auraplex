@@ -18,6 +18,7 @@ import { AuraplexFaqChat } from '@/components/forms/auraplex-faq-chat';
 import { CustomCursor } from '@/components/motion/custom-cursor';
 import { TransitionWipe } from '@/components/layout/transition-wipe';
 import { LeanProvider } from '@/components/providers/lean-provider';
+import { SmoothScroll } from '@/components/providers/smooth-scroll';
 import { AtmosphereProvider } from '@/components/providers/atmosphere-provider';
 import { ScrollProgress } from '@/components/layout/scroll-progress';
 import { StickyCta } from '@/components/layout/sticky-cta';
@@ -131,6 +132,7 @@ export default async function LocaleLayout({
               The brand entrance now lives in the hero's own CSS arrival (which
               paints from server HTML) and in the POWER-ON route transition. */}
                     <ScrollProgress />
+          <SmoothScroll />
           <LeanProvider>
             <AtmosphereProvider>
               <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-[color:var(--color-signal)] focus:text-[color:var(--color-ink)] focus:p-3">

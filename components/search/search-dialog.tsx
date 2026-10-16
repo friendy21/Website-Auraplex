@@ -97,7 +97,7 @@ export function SearchDialog() {
             className="flex-1 bg-transparent outline-none font-body text-lg"
           />
         </div>
-        <div className="max-h-[60vh] overflow-y-auto">
+        <div className="max-h-[60vh] overflow-y-auto" data-lenis-prevent>
           {results.map((r) => (
             <a
               key={r.id}

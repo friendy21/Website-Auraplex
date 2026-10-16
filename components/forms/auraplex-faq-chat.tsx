@@ -215,7 +215,7 @@ export function AuraplexFaqChat() {
             role="log"
             aria-live="polite"
             aria-atomic="false"
-            className="relative flex-1 space-y-4 overflow-y-auto p-4"
+            className="relative flex-1 space-y-4 overflow-y-auto p-4" data-lenis-prevent
           >
             {messages.map((m, i) => (
               <MessageBubble key={i} msg={m} sourcesLabel={t('sources')} />

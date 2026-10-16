@@ -17,7 +17,9 @@ import { usePathname } from '@/lib/navigation';
  */
 export function PageHud({ sector }: { sector: string }) {
   const pathname = usePathname();
-  const [depth, setDepth] = useState(0);
+  // Written straight to the DOM — a React re-render per scroll frame was
+  // pure overhead for a four-digit readout.
+  const depthRef = useRef<HTMLSpanElement>(null);
   const [shown, setShown] = useState(false);
   const raf = useRef<number>(0);
 
@@ -32,7 +34,8 @@ export function PageHud({ sector }: { sector: string }) {
         const doc = document.documentElement;
         const max = doc.scrollHeight - doc.clientHeight;
         const p = max > 0 ? window.scrollY / max : 0;
-        setDepth(Math.round(p * 9999));
+        if (depthRef.current)
+          depthRef.current.textContent = String(Math.round(p * 9999)).padStart(4, '0');
         ticking = false;
       });
     };
@@ -60,7 +63,7 @@ export function PageHud({ sector }: { sector: string }) {
       <div className="absolute top-1/2 right-0 -translate-y-1/2 text-right leading-relaxed">
         <div className="text-[color:var(--color-signal)]">SECTOR / {sector}</div>
         <div>
-          DEPTH <span className="tabular-nums">{String(depth).padStart(4, '0')}</span>
+          DEPTH <span ref={depthRef} className="tabular-nums">0000</span>
         </div>
         <div className="text-[color:var(--color-neutral-500)]">NODE ID-{nodeId}</div>
       </div>

@@ -109,7 +109,7 @@ export function HeroTunnel() {
         ctx!.fill();
       }
 
-      rafRef.current = requestAnimationFrame(frame);
+      if (running) rafRef.current = requestAnimationFrame(frame);
     }
 
     function onMove(e: PointerEvent) {
@@ -117,14 +117,51 @@ export function HeroTunnel() {
       mouse.current.ty = e.clientY / window.innerHeight - 0.5;
     }
 
+    // Only draw while it can actually be seen: on screen, tab visible, and
+    // not covered by the hero video once that is playing. A full-viewport
+    // canvas at 2x DPR redrawn every frame for the whole session was the
+    // single biggest source of scroll jank.
+    let onScreen = true;
+    let videoCovering = false;
+    let running = false;
+    const sync = () => {
+      const want = onScreen && !videoCovering && document.visibilityState === 'visible';
+      if (want && !running) {
+        running = true;
+        t0 = performance.now();
+        rafRef.current = requestAnimationFrame(frame);
+      } else if (!want && running) {
+        running = false;
+        cancelAnimationFrame(rafRef.current);
+      }
+    };
+
+    const io = new IntersectionObserver(([e]) => {
+      onScreen = e.isIntersecting;
+      sync();
+    });
+    io.observe(canvas);
+
+    const hero = canvas.closest('section') ?? document.body;
+    const videoObserver = new MutationObserver(() => {
+      videoCovering = !!hero.querySelector('[data-yt-status="playing"]');
+      sync();
+    });
+    videoObserver.observe(hero, { subtree: true, attributes: true, attributeFilter: ['data-yt-status'] });
+
     resize();
     window.addEventListener('resize', resize);
-    if (parallax) window.addEventListener('pointermove', onMove);
-    rafRef.current = requestAnimationFrame(frame);
+    document.addEventListener('visibilitychange', sync);
+    if (parallax) window.addEventListener('pointermove', onMove, { passive: true });
+    sync();
 
     return () => {
+      running = false;
       cancelAnimationFrame(rafRef.current);
+      io.disconnect();
+      videoObserver.disconnect();
       window.removeEventListener('resize', resize);
+      document.removeEventListener('visibilitychange', sync);
       window.removeEventListener('pointermove', onMove);
     };
   }, []);

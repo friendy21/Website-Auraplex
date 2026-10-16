@@ -1048,3 +1048,19 @@ html.cursor-custom body { cursor: none; }
   --i: 0;
   animation-range: entry calc(10% + (var(--i) * 6%)) entry calc(60% + (var(--i) * 6%));
 }
+
+/* ── Lenis smooth scroll (components/providers/smooth-scroll.tsx) ──────────
+   Lenis owns wheel scrolling on desktop; these are its required rules. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}

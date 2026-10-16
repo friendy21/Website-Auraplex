@@ -72,7 +72,11 @@ export function MachineHyperscroll({ machines }: Props) {
     const barEl = bar.current;
 
     let running = false;
+    let inView = false;
     let lastP = 0;
+    let lastMx = NaN;
+    let lastMy = NaN;
+    let still = 0;
     let raf = 0;
 
     /**
@@ -97,8 +101,9 @@ export function MachineHyperscroll({ machines }: Props) {
     const onMove = (e: PointerEvent) => {
       mouse.current.x = (e.clientX / window.innerWidth - 0.5) * 2;
       mouse.current.y = (e.clientY / window.innerHeight - 0.5) * 2;
+      start();
     };
-    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointermove', onMove, { passive: true });
 
     const frame = () => {
       if (!running) return;
@@ -140,19 +145,42 @@ export function MachineHyperscroll({ machines }: Props) {
         el.style.opacity = z < -3200 ? '0' : '0.7';
       });
 
+      // Park once scroll and pointer have both settled — the scene is static
+      // then, and re-writing ~60 transforms + the perspective every frame
+      // forced a full 3D re-composite for nothing. Scroll/pointer wake it.
+      const mx = mouse.current.x;
+      const my = mouse.current.y;
+      if (Math.abs(vel) < 1e-6 && mx === lastMx && my === lastMy) {
+        if (++still > 20) {
+          running = false;
+          return;
+        }
+      } else {
+        still = 0;
+      }
+      lastMx = mx;
+      lastMy = my;
+
       raf = requestAnimationFrame(frame);
     };
     const start = () => {
-      if (running) return;
+      if (running || !inView) return;
       running = true;
+      still = 0;
       raf = requestAnimationFrame(frame);
     };
+    const wake = () => start();
+    window.addEventListener('scroll', wake, { passive: true });
     const stop = () => {
       running = false;
       cancelAnimationFrame(raf);
     };
 
-    const io = new IntersectionObserver(([e]) => (e.isIntersecting ? start() : stop()), {
+    const io = new IntersectionObserver(([e]) => {
+      inView = e.isIntersecting;
+      if (inView) start();
+      else stop();
+    }, {
       threshold: 0,
     });
     io.observe(sec);
@@ -161,6 +189,7 @@ export function MachineHyperscroll({ machines }: Props) {
       stop();
       io.disconnect();
       window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('scroll', wake);
     };
   }, [tier]);
 

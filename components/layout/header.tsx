@@ -258,7 +258,7 @@ export function Header() {
         <div className="h-20" aria-hidden />
 
         {/* Mobile nav links — staggered clip-path reveal */}
-        <nav className="flex-1 px-8 py-12 flex flex-col gap-6 overflow-y-auto">
+        <nav className="flex-1 px-8 py-12 flex flex-col gap-6 overflow-y-auto" data-lenis-prevent>
           {MOBILE_NAV.map(([k, href], i) => (
             <div
               key={k}

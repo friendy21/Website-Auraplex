@@ -138,6 +138,8 @@ export function YoutubeHeroBg({
               if (e.data === 1 && !cancelled) {
                 if (watchdog) clearTimeout(watchdog);
                 setStatus('playing');
+                // Scrolled away while it was booting — healthy, but park it.
+                if (!inView) e.target.pauseVideo();
               }
             },
             onError: () => {
@@ -165,6 +167,34 @@ export function YoutubeHeroBg({
       'wheel',
     ] as const;
 
+    // Visibility gate: the player is only booted while the hero is on screen
+    // (booting it mid-scroll put ~1.4MB of JS on the main thread exactly as
+    // the visitor started scrolling), and it pauses whenever the hero leaves
+    // the viewport so a full-bleed video isn't decoded behind the rest of
+    // the page.
+    let inView = true;
+    let wantsBoot = false;
+    let booted = false;
+    let idleId = 0;
+    const tryBoot = () => {
+      if (!wantsBoot || booted || !inView || cancelled) return;
+      booted = true;
+      const ric = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 200));
+      idleId = ric(begin, { timeout: 1500 });
+    };
+    const io = new IntersectionObserver(([e]) => {
+      inView = e.isIntersecting;
+      const player = playerRef.current;
+      try {
+        if (player && inView) player.playVideo();
+        else if (player) player.pauseVideo();
+      } catch {
+        /* player not ready yet — it autoplays on ready */
+      }
+      tryBoot();
+    });
+    if (mountRef.current) io.observe(mountRef.current);
+
     let started = false;
     const onFirstInteraction = () => {
       if (started || cancelled) return;
@@ -172,7 +202,8 @@ export function YoutubeHeroBg({
       INTERACTION_EVENTS.forEach((ev) =>
         window.removeEventListener(ev, onFirstInteraction),
       );
-      begin();
+      wantsBoot = true;
+      tryBoot();
     };
     INTERACTION_EVENTS.forEach((ev) =>
       window.addEventListener(ev, onFirstInteraction, {
@@ -183,6 +214,8 @@ export function YoutubeHeroBg({
 
     return () => {
       cancelled = true;
+      io.disconnect();
+      if (idleId) (window.cancelIdleCallback ?? window.clearTimeout)(idleId);
       if (watchdog) clearTimeout(watchdog);
       INTERACTION_EVENTS.forEach((ev) =>
         window.removeEventListener(ev, onFirstInteraction),
@@ -326,6 +359,7 @@ declare global {
     interface Player {
       destroy(): void;
       playVideo(): void;
+      pauseVideo(): void;
       mute(): void;
     }
     interface PlayerEvent {

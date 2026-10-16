@@ -114,7 +114,7 @@ export function ProductConfigurator({
 
   return (
     <div className="grid grid-cols-12 gap-0 h-[100dvh] bg-[color:var(--color-ink)]">
-      <aside className="col-span-12 md:col-span-3 border-r border-[color:var(--color-steel)]/30 p-6 overflow-y-auto">
+      <aside className="col-span-12 md:col-span-3 border-r border-[color:var(--color-steel)]/30 p-6 overflow-y-auto" data-lenis-prevent>
         <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-2">— {t('eyebrowConfigure')}</div>
         <h2 className="font-display text-2xl mb-8">{productName}</h2>
 
@@ -179,7 +179,7 @@ export function ProductConfigurator({
         )}
       </main>
 
-      <aside className="col-span-12 md:col-span-3 border-l border-[color:var(--color-steel)]/30 p-6 overflow-y-auto flex flex-col">
+      <aside className="col-span-12 md:col-span-3 border-l border-[color:var(--color-steel)]/30 p-6 overflow-y-auto flex flex-col" data-lenis-prevent>
         <div className="font-mono text-xs uppercase tracking-[0.3em] text-[color:var(--color-signal)] mb-2">— {t('eyebrowSpec')}</div>
         <div className="space-y-3 font-mono text-sm py-4">
           <Spec k={t('specShape')} v={shapeLabels[config.containerShape]} />

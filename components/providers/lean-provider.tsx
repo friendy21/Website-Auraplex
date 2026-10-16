@@ -31,7 +31,11 @@ export function LeanProvider({ children }: { children: React.ReactNode }) {
     // Nothing to drive if no surface opted in.
     if (!document.querySelector('.lean')) return;
 
-    const root = document.documentElement;
+    // Write the variable on the .lean surfaces themselves, not on <html>:
+    // a custom property changed on the root invalidates style for every
+    // element in the document, every frame, for the whole scroll.
+    const setSkew = (v: string) =>
+      document.querySelectorAll<HTMLElement>('.lean').forEach((el) => el.style.setProperty('--scroll-skew', v));
     let last = window.scrollY;
     let velocity = 0;
     let skew = 0;
@@ -51,7 +55,7 @@ export function LeanProvider({ children }: { children: React.ReactNode }) {
         // Park the loop once the surface is level and the user has stopped —
         // no permanent every-frame work when nothing is moving.
         if (++idle > 20) {
-          root.style.setProperty('--scroll-skew', '0deg');
+          setSkew('0deg');
           raf = 0;
           return;
         }
@@ -59,7 +63,7 @@ export function LeanProvider({ children }: { children: React.ReactNode }) {
         idle = 0;
       }
 
-      root.style.setProperty('--scroll-skew', `${skew.toFixed(3)}deg`);
+      setSkew(`${skew.toFixed(3)}deg`);
       raf = requestAnimationFrame(frame);
     };
 
@@ -72,7 +76,7 @@ export function LeanProvider({ children }: { children: React.ReactNode }) {
     return () => {
       window.removeEventListener('scroll', wake);
       if (raf) cancelAnimationFrame(raf);
-      root.style.removeProperty('--scroll-skew');
+      document.querySelectorAll<HTMLElement>('.lean').forEach((el) => el.style.removeProperty('--scroll-skew'));
     };
   }, []);
 

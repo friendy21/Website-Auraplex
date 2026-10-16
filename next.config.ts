@@ -43,6 +43,15 @@ const config: NextConfig = {
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
         ],
       },
+      // Photography and logos: a week fresh, then served stale while
+      // revalidating — lets Cloudflare and browsers keep them instead of
+      // re-fetching from the origin every 4 hours.
+      {
+        source: '/:dir(brand|clients|exhibitions|products)/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=604800, stale-while-revalidate=2592000' },
+        ],
+      },
       {
         source: '/fonts/(.*)',
         headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
