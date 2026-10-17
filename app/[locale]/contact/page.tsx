@@ -1,5 +1,5 @@
 import { setRequestLocale, getTranslations } from 'next-intl/server';
-import { ContactForm } from '@/components/forms/contact-form';
+import { ContactRouting } from '@/components/forms/contact-routing';
 import { Reveal } from '@/components/motion/reveal';
 import { KineticReveal } from '@/components/motion/kinetic-reveal';
 import { PageHud } from '@/components/layout/page-hud';
@@ -24,9 +24,6 @@ const PEOPLE = [
 const STREET_ADDRESS =
   'No 5, Jalan BS9/7B, Taman Bukit Serdang, Seksyen 9, 43300 Seri Kembangan, Selangor';
 
-const DEPARTMENT_KEYS = ['sales', 'service', 'tour', 'engineering'] as const;
-type DepartmentKey = (typeof DEPARTMENT_KEYS)[number];
-
 export async function generateMetadata({
   params,
 }: {
@@ -44,21 +41,12 @@ export async function generateMetadata({
 
 export default async function ContactPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ dept?: string }>;
 }) {
   const { locale } = await params;
-  const { dept } = await searchParams;
   setRequestLocale(locale);
   const t = await getTranslations('pages.contact');
-
-  // Normalize ?dept= input against the allowlist — never trust the client.
-  const department =
-    dept && (DEPARTMENT_KEYS as readonly string[]).includes(dept)
-      ? (dept as DepartmentKey)
-      : undefined;
 
   const localBusinessSchema = {
     '@context': 'https://schema.org',
@@ -176,17 +164,9 @@ export default async function ContactPage({
         </div>
 
         <div className="col-span-12 md:col-span-6 md:col-start-7 min-w-0">
-          {department && (
-            <Reveal variant="fade">
-              <div className="mb-6 border border-[color:var(--color-signal)] bg-[color:var(--color-signal)]/5 px-5 py-4 flex items-center gap-3">
-                <span className="h-1.5 w-1.5 bg-[color:var(--color-signal)] rounded-full animate-pulse" />
-                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-signal)]">
-                  {t('routing', { team: t(`departments.${department}`) })}
-                </span>
-              </div>
-            </Reveal>
-          )}
-          <ContactForm locale={locale} department={department} />
+          {/* ?dept= is read client-side inside ContactRouting — see there for
+              why this page must not await searchParams. */}
+          <ContactRouting locale={locale} />
         </div>
       </section>
 
