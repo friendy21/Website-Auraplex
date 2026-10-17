@@ -182,13 +182,14 @@ export function Footer() {
         </h2>
         <p className="max-w-4xl leading-relaxed">{t('footer.seoBody')}</p>
         <p className="max-w-4xl leading-relaxed">{t('footer.seoAreas')}</p>
-        <nav aria-label={t('footer.popular')} className="flex flex-wrap gap-x-4 gap-y-1 pt-1">
+        {/* py-1 on each link lifts the tap target to 24px (WCAG 2.5.8). */}
+        <nav aria-label={t('footer.popular')} className="flex flex-wrap items-center gap-x-4">
           <span className="text-[color:var(--color-steel-soft)]">{t('footer.popular')}:</span>
           {popular.map((m) => (
             <Link
               key={m.slug}
               href={`/products/${m.slug}`}
-              className="hover:text-[color:var(--color-paper)] transition-colors"
+              className="inline-block py-1 hover:text-[color:var(--color-paper)] transition-colors"
             >
               {m.name}
             </Link>

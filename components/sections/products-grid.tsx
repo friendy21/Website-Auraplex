@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect, type CSSProperties } from 'react';
-import Link from 'next/link';
+import { useSyncExternalStore, type CSSProperties } from 'react';
+import { PlainLink as Link } from '@/lib/navigation';
 import { ParallaxProductImage } from '@/components/sections/parallax-product-image';
 import { EmptyState } from '@/components/primitives/empty-state';
 import { machineTags, type Category, type Machine } from '@/lib/catalog';
@@ -12,8 +12,6 @@ interface Props {
   machines: Machine[];
   categories: { key?: Category; label: string; count: number }[];
   sortItems: { key: SortKey; label: string }[];
-  initialCategory?: Category;
-  initialSort?: SortKey;
   locale: string;
   t: Record<string, string>;
 }
@@ -40,35 +38,73 @@ interface Props {
  *      `transition-behavior: allow-discrete` only covers the enter half.
  *      Filtered-out cards disappear at once.
  *
+ * ?category= / ?sort= are read from the URL after hydration, not passed in
+ * from the page's `searchParams`: awaiting those on the server turned the
+ * route into a request-time PPR hole (slower, and the resume path that broke
+ * hydration on /contact). The server renders the default view — every
+ * machine, featured order — which is also what crawlers should index. The
+ * filter state lives in the URL alone (see `subscribeToUrl`), so links to
+ * `/products?category=…` land filtered both on a fresh load and as a client
+ * navigation while the grid is already mounted.
+ *
  * What is preserved exactly: the category filter, the sort, the URL sync, the
  * result counters, `aria-pressed` on both tab groups, the empty state, and the
  * card entrance (staggered, now transform-only per RULE ZERO — the first card
  * has been an LCP candidate on this route).
  */
+// Re-read the URL whenever it changes: our own tab writes (`ownWrites`),
+// back/forward (`popstate`), and Next's client navigations — e.g. the footer's
+// /products?category=… links while already on /products, which keep this
+// component mounted. Next updates the URL with history.pushState, which only
+// the Navigation API reports; browsers without it still get the first two.
+const ownWrites = new Set<() => void>();
+function subscribeToUrl(onChange: () => void) {
+  const nav = (window as Window & { navigation?: EventTarget }).navigation;
+  ownWrites.add(onChange);
+  window.addEventListener('popstate', onChange);
+  nav?.addEventListener('currententrychange', onChange);
+  return () => {
+    ownWrites.delete(onChange);
+    window.removeEventListener('popstate', onChange);
+    nav?.removeEventListener('currententrychange', onChange);
+  };
+}
+const readSearch = () => window.location.search;
+
+// Silently update the URL (no reload; Next syncs native history calls into its
+// router). Must keep the locale prefix — writing a bare `/products?…` from
+// `/ms/products` stripped the locale, so a shared link re-entered locale
+// detection and could land the recipient in a different language.
+function writeQuery(locale: string, category: Category | undefined, sort: SortKey) {
+  const params = new URLSearchParams();
+  if (category) params.set('category', category);
+  if (sort !== 'featured') params.set('sort', sort);
+  const q = params.toString();
+  const base = `/${locale}/products`;
+  window.history.replaceState({}, '', q ? `${base}?${q}` : base);
+  ownWrites.forEach((fn) => fn());
+}
+
 export function ProductsGrid({
   machines,
   categories,
   sortItems,
-  initialCategory,
-  initialSort = 'featured',
   locale,
   t,
 }: Props) {
-  const [category, setCategory] = useState<Category | undefined>(initialCategory);
-  const [sort, setSort] = useState<SortKey>(initialSort);
-
-  // Silently update URL when filters change (no full reload). Must keep the
-  // locale prefix — writing a bare `/products?…` from `/ms/products` stripped
-  // the locale, so a shared link re-entered locale detection and could land
-  // the recipient in a different language.
-  useEffect(() => {
-    const params = new URLSearchParams();
-    if (category) params.set('category', category);
-    if (sort !== 'featured') params.set('sort', sort);
-    const q = params.toString();
-    const base = `/${locale}/products`;
-    window.history.replaceState({}, '', q ? `${base}?${q}` : base);
-  }, [category, sort, locale]);
+  // The URL is the single source of truth for the filter. On the server and
+  // during hydration `search` is null, so the first client render matches the
+  // default server HTML; the client snapshot then applies ?category=/&sort=.
+  const search = useSyncExternalStore(subscribeToUrl, readSearch, () => null);
+  const params = new URLSearchParams(search ?? '');
+  const urlCategory = params.get('category');
+  const urlSort = params.get('sort');
+  const category = categories.some((x) => x.key && x.key === urlCategory)
+    ? (urlCategory as Category)
+    : undefined;
+  const sort: SortKey = sortItems.some((x) => x.key === urlSort) ? (urlSort as SortKey) : 'featured';
+  const setCategory = (next?: Category) => writeQuery(locale, next, sort);
+  const setSort = (next: SortKey) => writeQuery(locale, category, next);
 
   const filtered = category
     ? machines.filter((m) => m.category === category)
@@ -190,9 +226,9 @@ export function ProductsGrid({
                           src={p.image}
                           alt={p.name}
                           productId={p.id}
-                          /* Eager-load the first row so the LCP card image
-                             isn't lazy-loaded (Lighthouse flagged this). */
-                          priority={i < 3}
+                          /* Lazy, even for the first row: ProductsHero now owns
+                             the route's LCP image and the grid starts well below
+                             the fold, so preloading these competed with it. */
                         />
                       ) : (
                         <div className="absolute inset-0 flex items-center justify-center">

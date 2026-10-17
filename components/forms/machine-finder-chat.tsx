@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
+import { PlainLink as Link } from '@/lib/navigation';
 import { ArrowRight, Send } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import {

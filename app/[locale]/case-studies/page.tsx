@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Link from 'next/link';
+import { PlainLink as Link } from '@/lib/navigation';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
 import { Button } from '@/components/primitives/button';

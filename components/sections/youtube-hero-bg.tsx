@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { usePerfTier } from '@/lib/hooks';
 
 type Props = {
   /** YouTube video ID (the 11-char value from youtu.be/<ID> URLs). */
@@ -72,9 +73,58 @@ export function YoutubeHeroBg({
     'pending',
   );
 
+  // Low-power devices (≤4 cores / ≤4GB / Save-Data) and reduced-motion
+  // visitors keep the HeroTunnel canvas: the embed's GPU stall and ~1.4MB of
+  // player JS cost them more than the footage gives back.
+  const tier = usePerfTier();
+
   useEffect(() => {
+    if (tier !== 'full') return;
     let cancelled = false;
     let watchdog: ReturnType<typeof setTimeout> | null = null;
+
+    // ── Calm gate ──
+    // Bringing the embed up stalls the GPU process for ~400ms on integrated
+    // graphics (measured on Intel UHD 630: one command-buffer flush as the
+    // player's video surface initialises, ~1.8s after boot, autoplay or not).
+    // Whenever that landed mid-scroll it read as the page freezing. So the
+    // boot waits until the visitor is actually resting on the hero — near the
+    // top, no scroll/wheel for BOOT_CALM_MS — and every (re)start of playback
+    // waits for PLAY_CALM_MS of stillness.
+    const BOOT_CALM_MS = 1200;
+    const PLAY_CALM_MS = 400;
+    let lastScroll = 0;
+    const timers = new Set<ReturnType<typeof setTimeout>>();
+    const onScrollActivity = () => {
+      lastScroll = performance.now();
+      tryBoot();
+    };
+    window.addEventListener('scroll', onScrollActivity, { passive: true });
+    window.addEventListener('wheel', onScrollActivity, { passive: true });
+    const whenCalm = (ms: number, fn: () => void) => {
+      if (cancelled) return;
+      const wait = ms - (performance.now() - lastScroll);
+      if (wait <= 0) return fn();
+      const t = setTimeout(() => {
+        timers.delete(t);
+        whenCalm(ms, fn);
+      }, wait);
+      timers.add(t);
+    };
+    let pendingPlay = false;
+    const playWhenCalm = () => {
+      if (pendingPlay) return;
+      pendingPlay = true;
+      whenCalm(PLAY_CALM_MS, () => {
+        pendingPlay = false;
+        if (!inView) return;
+        try {
+          playerRef.current?.playVideo();
+        } catch {
+          /* not ready — onReady calls back in here */
+        }
+      });
+    };
 
     // ── Interaction-gated load ──
     // The embed costs two things that no amount of deferral can hide
@@ -111,7 +161,8 @@ export function YoutubeHeroBg({
           videoId: id,
           host: 'https://www.youtube-nocookie.com',
           playerVars: {
-            autoplay: 1,
+            // Started by hand once the page is calm — see the calm gate.
+            autoplay: 0,
             mute: 1,
             loop: 1,
             playlist: id,
@@ -128,7 +179,7 @@ export function YoutubeHeroBg({
             onReady: (e) => {
               try {
                 e.target.mute();
-                e.target.playVideo();
+                playWhenCalm();
               } catch {
                 /* swallow — onStateChange / watchdog will catch real failures */
               }
@@ -176,20 +227,31 @@ export function YoutubeHeroBg({
     let wantsBoot = false;
     let booted = false;
     let idleId = 0;
+    let pendingBoot = false;
+    // Interaction (even a pointer move) arms the boot; it fires only once the
+    // page has then been still for BOOT_CALM_MS with the hero up top. Every
+    // scroll re-arms it, so returning to the hero and pausing still boots.
     const tryBoot = () => {
-      if (!wantsBoot || booted || !inView || cancelled) return;
-      booted = true;
-      const ric = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 200));
-      idleId = ric(begin, { timeout: 1500 });
+      if (!wantsBoot || booted || !inView || cancelled || pendingBoot) return;
+      pendingBoot = true;
+      lastScroll = Math.max(lastScroll, performance.now());
+      whenCalm(BOOT_CALM_MS, () => {
+        pendingBoot = false;
+        if (booted || !inView || cancelled) return;
+        if (window.scrollY > window.innerHeight * 0.5) return;
+        booted = true;
+        const ric = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 200));
+        idleId = ric(begin, { timeout: 1500 });
+      });
     };
     const io = new IntersectionObserver(([e]) => {
       inView = e.isIntersecting;
       const player = playerRef.current;
       try {
-        if (player && inView) player.playVideo();
+        if (player && inView) playWhenCalm();
         else if (player) player.pauseVideo();
       } catch {
-        /* player not ready yet — it autoplays on ready */
+        /* player not ready yet — onReady starts it */
       }
       tryBoot();
     });
@@ -215,6 +277,9 @@ export function YoutubeHeroBg({
     return () => {
       cancelled = true;
       io.disconnect();
+      timers.forEach(clearTimeout);
+      window.removeEventListener('scroll', onScrollActivity);
+      window.removeEventListener('wheel', onScrollActivity);
       if (idleId) (window.cancelIdleCallback ?? window.clearTimeout)(idleId);
       if (watchdog) clearTimeout(watchdog);
       INTERACTION_EVENTS.forEach((ev) =>
@@ -226,7 +291,7 @@ export function YoutubeHeroBg({
         /* destroy can throw if iframe was already torn down */
       }
     };
-  }, [id, failTimeoutMs]);
+  }, [id, failTimeoutMs, tier]);
 
   // ── Portrait fit factor ──
   // A 16:9 frame forced to COVER a tall narrow screen has to be enormous:

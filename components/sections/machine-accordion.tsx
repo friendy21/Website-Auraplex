@@ -232,7 +232,6 @@ function Panel({
       }}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
-      aria-label={`${m.name} — ${m.label}`}
       className="group relative overflow-hidden cursor-pointer min-w-0 outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-signal)] focus-visible:ring-inset"
       style={{
         flex: active ? '3.4 1 0%' : '1 1 0%',
@@ -290,6 +289,7 @@ function Panel({
 
       {/* Index number */}
       <div
+        aria-hidden="true"
         className="absolute left-5 top-4 font-display font-light pointer-events-none transition-all duration-500"
         style={{
           fontSize: active ? 40 : 30,

@@ -106,7 +106,7 @@ export function SoundToggle() {
       onClick={toggle}
       aria-pressed={on}
       aria-label={on ? 'Mute ambient sound' : 'Enable ambient sound'}
-      className="group flex items-center gap-2 text-[color:var(--color-steel)] hover:text-[color:var(--color-signal)] transition-colors"
+      className="group flex min-h-6 min-w-6 items-center justify-center gap-2 text-[color:var(--color-steel)] hover:text-[color:var(--color-signal)] transition-colors"
       title={on ? 'Sound on' : 'Sound off'}
     >
       {/* Equaliser bars — animate only when on */}

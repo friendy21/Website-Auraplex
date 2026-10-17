@@ -34,13 +34,10 @@ type SortKey = 'featured' | 'photographed' | 'az';
 
 export default async function ProductsPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ category?: Category; sort?: SortKey }>;
 }) {
   const { locale } = await params;
-  const { category, sort = 'featured' } = await searchParams;
   setRequestLocale(locale);
   const t = await getTranslations('products');
 
@@ -176,8 +173,6 @@ export default async function ProductsPage({
         machines={localizedAll}
         categories={categories}
         sortItems={sortItems}
-        initialCategory={category}
-        initialSort={sort}
         locale={locale}
         t={tDict}
       />

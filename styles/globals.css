@@ -500,13 +500,16 @@ html.cursor-custom body { cursor: none; }
   letter-spacing: 0.3em;
 }
 
-/* Editorial body links — same expansion + cerulean accent on hover. */
-.prose-editorial a {
+/* Editorial body links — same expansion + cerulean accent on hover.
+   Bare <a> only: as `.prose-editorial a` this outranked utility classes and
+   repainted <Button asChild> links inside prose (e.g. /about "Book a tour")
+   as signal-bright text on a signal fill — 1.26:1 contrast. */
+.prose-editorial a:not([class]) {
   color: var(--color-signal-bright);
   border-bottom: 1px solid color-mix(in oklab, var(--color-signal) 40%, transparent);
   transition: border-color 300ms var(--ease-out), color 300ms var(--ease-out);
 }
-.prose-editorial a:hover {
+.prose-editorial a:not([class]):hover {
   color: var(--color-paper);
   border-bottom-color: var(--color-signal);
 }
@@ -1062,5 +1065,9 @@ html.lenis body {
   overscroll-behavior: contain;
 }
 .lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+/* Pause heavy hover effects while Lenis is moving fast — see smooth-scroll.tsx. */
+html[data-scrolling-fast] .mcard-parent {
   pointer-events: none;
 }

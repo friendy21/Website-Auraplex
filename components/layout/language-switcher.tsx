@@ -39,14 +39,16 @@ export function LanguageSwitcher() {
           key={l}
           onClick={() => switchTo(l)}
           lang={l}
-          aria-label={FULL_NAME[l]}
           aria-current={l === locale ? 'true' : undefined}
           className={cn(
             'px-2 py-1 uppercase tracking-wider transition-colors',
             l === locale ? 'text-[color:var(--color-signal)]' : 'text-[color:var(--color-steel)] hover:text-[color:var(--color-paper)]',
           )}
         >
+          {/* Visible code + spoken full name: an aria-label of just the full
+              name hid the visible "EN"/"BM" from voice-control users. */}
           {LABEL[l]}
+          <span className="sr-only"> {FULL_NAME[l]}</span>
         </button>
       ))}
     </div>

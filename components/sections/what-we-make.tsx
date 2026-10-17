@@ -76,7 +76,9 @@ export function WhatWeMake({ families, viewLabel, eyebrow, headingLine1, heading
                   <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--color-neutral-400)]">
                     <span
                       className="font-bold px-1.5 py-0.5 rounded"
-                      style={{ color: accent, background: 'color-mix(in oklab, var(--accent) 14%, transparent)' }}
+                      // Lifted toward white + a lighter tint: the raw accents on a 14% tint
+                      // measured 4.3–4.5:1 at 10px — under WCAG AA.
+                      style={{ color: 'color-mix(in oklab, var(--accent) 80%, white)', background: 'color-mix(in oklab, var(--accent) 10%, transparent)' }}
                     >
                       0{i + 1} · Family
                     </span>

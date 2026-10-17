@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { PlainLink as Link } from '@/lib/navigation';
 import { setRequestLocale } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';
 import { Button } from '@/components/primitives/button';

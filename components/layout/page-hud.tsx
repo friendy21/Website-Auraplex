@@ -61,11 +61,11 @@ export function PageHud({ sector }: { sector: string }) {
       aria-hidden="true"
     >
       <div className="absolute top-1/2 right-0 -translate-y-1/2 text-right leading-relaxed">
-        <div className="text-[color:var(--color-signal)]">SECTOR / {sector}</div>
+        <div className="text-[color:var(--color-signal-bright)]">SECTOR / {sector}</div>
         <div>
           DEPTH <span ref={depthRef} className="tabular-nums">0000</span>
         </div>
-        <div className="text-[color:var(--color-neutral-500)]">NODE ID-{nodeId}</div>
+        <div className="text-[color:var(--color-steel)]">NODE ID-{nodeId}</div>
       </div>
       <span className="absolute top-2 right-2 h-3 w-3 border-t border-r border-[color:var(--color-paper)]/20" />
       <span className="absolute bottom-2 right-2 h-3 w-3 border-b border-r border-[color:var(--color-paper)]/20" />

@@ -48,6 +48,8 @@ export function ParallaxMarqueeBand({ image, text }: Props) {
         src={image}
         alt=""
         aria-hidden="true"
+        loading="lazy"
+        decoding="async"
         className="pmq__img absolute inset-x-0 -top-[15%] h-[130%] w-full object-cover [filter:brightness(0.45)_grayscale(0.2)]"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--color-ink)] via-[color:var(--color-ink)]/40 to-[color:var(--color-ink)]/70" />

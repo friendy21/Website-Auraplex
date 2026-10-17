@@ -4,7 +4,7 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera, Html } from '@react-three/drei';
 import { EffectComposer, Bloom, ToneMapping } from '@react-three/postprocessing';
 import { Component, Suspense, useState, type ReactNode } from 'react';
-import Link from 'next/link';
+import { PlainLink as Link } from '@/lib/navigation';
 import { useTranslations } from 'next-intl';
 import { MachineModel } from './machine-model';
 import { FactoryEnvironment } from './factory-environment';

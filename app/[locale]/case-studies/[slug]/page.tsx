@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { PlainLink as Link } from '@/lib/navigation';
 import { redirect } from 'next/navigation';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/reveal';

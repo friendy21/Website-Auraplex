@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { PlainLink as Link } from '@/lib/navigation';
 import { useTranslations } from 'next-intl';
 
 type Props = { className?: string };

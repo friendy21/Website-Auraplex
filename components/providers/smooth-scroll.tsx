@@ -20,6 +20,14 @@ import { useEffect } from 'react';
  * ScrollTrigger is kept in sync, so any GSAP scroll animation added later
  * reads the same smoothed position.
  *
+ * Hover pause: while Lenis is moving faster than 1px/frame, <html> carries
+ * `data-scrolling-fast`. Lenis moves the page every frame, and Chrome re-hit-
+ * tests the pointer after each move, so cards sliding under a still cursor kept
+ * starting and cancelling their 3D hover tilt mid-scroll — on /products that
+ * was most of the dropped frames. globals.css switches pointer events off for
+ * those cards while the attribute is set; it clears as the scroll settles, so
+ * clicks after scrolling are unaffected.
+ *
  * Scroll locks: the mobile menu sets `body.style.overflow = 'hidden'` and Radix
  * dialogs set `body[data-scroll-locked]`; Lenis is stopped while either is on.
  * Scrollable panels opt out with `data-lenis-prevent`.
@@ -41,8 +49,28 @@ export function SmoothScroll() {
       if (cancelled) return;
 
       gsap.registerPlugin(ScrollTrigger);
-      const lenis = new Lenis({ autoRaf: false, lerp: 0.1, wheelMultiplier: 1 });
-      lenis.on('scroll', ScrollTrigger.update);
+      const lenis = new Lenis({
+        autoRaf: false,
+        lerp: 0.1,
+        wheelMultiplier: 1,
+        // In-page links (#quote on product pages) glide instead of jumping;
+        // Lenis honours the target's scroll-margin.
+        anchors: true,
+        // A link click mid-glide would otherwise carry the leftover momentum
+        // into the next route after Next resets the scroll position.
+        stopInertiaOnNavigate: true,
+      });
+      const root = document.documentElement;
+      let fast = false;
+      const setFast = (next: boolean) => {
+        if (next === fast) return;
+        fast = next;
+        root.toggleAttribute('data-scrolling-fast', next);
+      };
+      lenis.on('scroll', () => {
+        ScrollTrigger.update();
+        setFast(Math.abs(lenis.velocity) > 1);
+      });
 
       const tick = (time: number) => lenis.raf(time * 1000);
       gsap.ticker.add(tick);
@@ -51,8 +79,10 @@ export function SmoothScroll() {
       const body = document.body;
       const syncLock = () => {
         const locked = body.style.overflow === 'hidden' || body.hasAttribute('data-scroll-locked');
-        if (locked) lenis.stop();
-        else lenis.start();
+        if (locked) {
+          lenis.stop();
+          setFast(false);
+        } else lenis.start();
       };
       const lockObserver = new MutationObserver(syncLock);
       lockObserver.observe(body, { attributes: true, attributeFilter: ['style', 'data-scroll-locked'] });
@@ -62,6 +92,7 @@ export function SmoothScroll() {
         lockObserver.disconnect();
         gsap.ticker.remove(tick);
         lenis.destroy();
+        setFast(false);
       };
     };
 
