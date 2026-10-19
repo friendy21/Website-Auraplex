@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { usePerfTier } from '@/lib/hooks';
 
 type Props = {
   /** YouTube video ID (the 11-char value from youtu.be/<ID> URLs). */
@@ -73,13 +72,10 @@ export function YoutubeHeroBg({
     'pending',
   );
 
-  // Low-power devices (≤4 cores / ≤4GB / Save-Data) and reduced-motion
-  // visitors keep the HeroTunnel canvas: the embed's GPU stall and ~1.4MB of
-  // player JS cost them more than the footage gives back.
-  const tier = usePerfTier();
-
   useEffect(() => {
-    if (tier !== 'full') return;
+    // Every visitor gets the video — phones and reduced-motion systems
+    // included (a brief perf-tier gate hid it from both). Only the boot timing
+    // below is managed.
     let cancelled = false;
     let watchdog: ReturnType<typeof setTimeout> | null = null;
 
@@ -161,8 +157,11 @@ export function YoutubeHeroBg({
           videoId: id,
           host: 'https://www.youtube-nocookie.com',
           playerVars: {
-            // Started by hand once the page is calm — see the calm gate.
-            autoplay: 0,
+            // Muted autoplay: the boot itself is already calm-gated, and the
+            // GPU stall comes with the player surface, not with playback.
+            // Mobile browsers also allow muted autoplay more readily than a
+            // script-started playVideo().
+            autoplay: 1,
             mute: 1,
             loop: 1,
             playlist: id,
@@ -179,7 +178,7 @@ export function YoutubeHeroBg({
             onReady: (e) => {
               try {
                 e.target.mute();
-                playWhenCalm();
+                e.target.playVideo();
               } catch {
                 /* swallow — onStateChange / watchdog will catch real failures */
               }
@@ -291,7 +290,7 @@ export function YoutubeHeroBg({
         /* destroy can throw if iframe was already torn down */
       }
     };
-  }, [id, failTimeoutMs, tier]);
+  }, [id, failTimeoutMs]);
 
   // ── Portrait fit factor ──
   // A 16:9 frame forced to COVER a tall narrow screen has to be enormous:
