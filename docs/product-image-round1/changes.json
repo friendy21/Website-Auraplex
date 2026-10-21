@@ -1,0 +1,1775 @@
+{
+  "baseCommit": "730a875b207ed234f27eda7f6a535316082a131c",
+  "preparedAt": "2026-10-21",
+  "initialReview": "Max + Senior AURAPLEX Staff",
+  "managementApproval": "Pending Friendy PR review",
+  "expertVerification": "Pending Mr Kan where necessary",
+  "approvalExportFound": false,
+  "sources": [
+    {
+      "file": "auraplex-image-review-round1-max-2026-10-09-1801.json",
+      "sha256": "28ae659d48f2c5737d57ce76df64caef5ea175b3c326321e49a3687416cf8238"
+    },
+    {
+      "file": "round1-friendy-approval-v3.2.html",
+      "sha256": "b5bdb3bbbc51143277a4e0e75d3a20c5a2170cac2e9d6984d9236fba5a793d51"
+    },
+    {
+      "file": "round1-proposed-changes-v2.json",
+      "sha256": "120e2cad6dd36a63af4395f8ddc0abc6d80366a9865e911bfac68c2c081ea621"
+    },
+    {
+      "file": "round1-proposed-changes.json",
+      "sha256": "159e666daf06a0d5606062a9a739dd360c25070e51475c06f2d57e5ade356c04"
+    }
+  ],
+  "summary": {
+    "affectedProducts": 10,
+    "wrongImageRemovals": 35,
+    "byteDuplicateRemovals": 1,
+    "coverReplacements": 1,
+    "classificationChanges": 0,
+    "deferredReviewItems": 52
+  },
+  "operations": [
+    {
+      "productSlug": "two-side-labelling-machine-with-corner-press",
+      "productName": "Two Side Labelling Machine With Corner Press",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/two-side-labelling-machine-with-corner-press",
+      "operation": "remove",
+      "originalImage": "/products/Two_Side_Labelling_Machine_with_Corner_Press_3.webp",
+      "updatedImage": null,
+      "associationId": "two-side-labelling-machine-with-corner-press::b22281fc24603f4f",
+      "imageHash": "sha256:b22281fc24603f4ff2cea6870d4c4ab316df01ff2e7294284d294c8b98fe6c69",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "egg-tray-labelling-machine",
+        "notes": "",
+        "updatedAt": "2026-10-09T09:32:27.533Z"
+      },
+      "reviewItemNumber": 1,
+      "reviewItemId": "cover::two-side-labelling-machine-with-corner-press::b22281fc24603f4f",
+      "reason": "Replace the live cover Two_Side_Labelling_Machine_with_Corner_Press_3.webp with Two_Side_Labelling_Machine_with_Corner_Press_2.webp, and take Two_Side_Labelling_Machine_with_Corner_Press_3.webp off this page.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "semi-auto-wrap-around-labelling-machine",
+      "productName": "Semi Auto Wrap Around Labelling Machine",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/semi-auto-wrap-around-labelling-machine",
+      "operation": "remove",
+      "originalImage": "/products/Semi_Auto_Wrap_Around_Labelling_Machine_10.webp",
+      "updatedImage": null,
+      "associationId": "semi-auto-wrap-around-labelling-machine::677acd8d9fa0176d",
+      "imageHash": "sha256:677acd8d9fa0176d4bdb49eb074b849603ef2d3ff8a433308e5e81e5c5dd965f",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "one-side-wrap-around-side-labelling-machine",
+        "notes": "",
+        "updatedAt": "2026-10-09T09:12:13.126Z"
+      },
+      "reviewItemNumber": 54,
+      "reviewItemId": "remove::semi-auto-wrap-around-labelling-machine::677acd8d9fa0176d",
+      "reason": "Remove Semi_Auto_Wrap_Around_Labelling_Machine_10.webp from the Semi Auto Wrap Around Labelling Machine page. No replacement is needed; the page keeps 7 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "semi-auto-wrap-around-labelling-machine",
+      "productName": "Semi Auto Wrap Around Labelling Machine",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/semi-auto-wrap-around-labelling-machine",
+      "operation": "remove",
+      "originalImage": "/products/Semi_Auto_Wrap_Around_Labelling_Machine_11.webp",
+      "updatedImage": null,
+      "associationId": "semi-auto-wrap-around-labelling-machine::f09c6684c5dadb21",
+      "imageHash": "sha256:f09c6684c5dadb21770cd1b28a7346e1e27224eceffce07b8c6edfc3ab252918",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "one-side-wrap-around-side-labelling-machine",
+        "notes": "",
+        "updatedAt": "2026-10-09T09:12:33.973Z"
+      },
+      "reviewItemNumber": 55,
+      "reviewItemId": "remove::semi-auto-wrap-around-labelling-machine::f09c6684c5dadb21",
+      "reason": "Remove Semi_Auto_Wrap_Around_Labelling_Machine_11.webp from the Semi Auto Wrap Around Labelling Machine page. No replacement is needed; the page keeps 7 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "semi-auto-wrap-around-labelling-machine",
+      "productName": "Semi Auto Wrap Around Labelling Machine",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/semi-auto-wrap-around-labelling-machine",
+      "operation": "remove",
+      "originalImage": "/products/Semi_Auto_Wrap_Around_Labelling_Machine_13.webp",
+      "updatedImage": null,
+      "associationId": "semi-auto-wrap-around-labelling-machine::e179d4cf45ba2cc5",
+      "imageHash": "sha256:e179d4cf45ba2cc5b2ae0531df74374466edabf56a4bbc56f7cb3de129a27f75",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "one-side-wrap-around-side-labelling-machine",
+        "notes": "",
+        "updatedAt": "2026-10-09T09:13:34.598Z"
+      },
+      "reviewItemNumber": 56,
+      "reviewItemId": "remove::semi-auto-wrap-around-labelling-machine::e179d4cf45ba2cc5",
+      "reason": "Remove Semi_Auto_Wrap_Around_Labelling_Machine_13.webp from the Semi Auto Wrap Around Labelling Machine page. No replacement is needed; the page keeps 7 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "print-apply-top-labelling-machine",
+      "productName": "Print Apply Top Labelling Machine",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/print-apply-top-labelling-machine",
+      "operation": "remove",
+      "originalImage": "/products/Print_Apply_Top_Labelling_Machine_13.webp",
+      "updatedImage": null,
+      "associationId": "print-apply-top-labelling-machine::3c821040f7d5b21c",
+      "imageHash": "sha256:3c821040f7d5b21c617d02ad28fd02a60e869a6484e4ae54c9ea18b19d90af79",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "top-labelling-machine",
+        "notes": "",
+        "updatedAt": "2026-10-09T09:22:24.046Z"
+      },
+      "reviewItemNumber": 57,
+      "reviewItemId": "remove::print-apply-top-labelling-machine::3c821040f7d5b21c",
+      "reason": "Remove Print_Apply_Top_Labelling_Machine_13.webp from the Print Apply Top Labelling Machine page. No replacement is needed; the page keeps 9 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "print-apply-top-labelling-machine",
+      "productName": "Print Apply Top Labelling Machine",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/print-apply-top-labelling-machine",
+      "operation": "remove",
+      "originalImage": "/products/Print_Apply_Top_Labelling_Machine_14.webp",
+      "updatedImage": null,
+      "associationId": "print-apply-top-labelling-machine::bedcd2d3ba46dea6",
+      "imageHash": "sha256:bedcd2d3ba46dea6d2853fd4cada5a180bcc6381bb87b52fd5635a82e050d2e5",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "custom-top-labelling-machine-with-checking-system",
+        "notes": "",
+        "updatedAt": "2026-10-09T09:22:53.007Z"
+      },
+      "reviewItemNumber": 58,
+      "reviewItemId": "remove::print-apply-top-labelling-machine::bedcd2d3ba46dea6",
+      "reason": "Remove Print_Apply_Top_Labelling_Machine_14.webp from the Print Apply Top Labelling Machine page. No replacement is needed; the page keeps 9 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "one-side-wrap-around-side-labelling-machine",
+      "productName": "One Side Wrap Around Side Labelling Machine",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/one-side-wrap-around-side-labelling-machine",
+      "operation": "remove",
+      "originalImage": "/products/One_Side_Wrap_Around_Side_Labelling_Machine_4.webp",
+      "updatedImage": null,
+      "associationId": "one-side-wrap-around-side-labelling-machine::f9898e9826c34e91",
+      "imageHash": "sha256:f9898e9826c34e91254110b1bcb0b6553649c18dd3ce0ae2fc12949e3dc3e811",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "semi-auto-wrap-around-labelling-machine",
+        "notes": "",
+        "updatedAt": "2026-10-09T09:23:13.316Z"
+      },
+      "reviewItemNumber": 59,
+      "reviewItemId": "remove::one-side-wrap-around-side-labelling-machine::f9898e9826c34e91",
+      "reason": "Remove One_Side_Wrap_Around_Side_Labelling_Machine_4.webp from the One Side Wrap Around Side Labelling Machine page. No replacement is needed; the page keeps 3 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "one-side-wrap-around-side-labelling-machine",
+      "productName": "One Side Wrap Around Side Labelling Machine",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/one-side-wrap-around-side-labelling-machine",
+      "operation": "remove",
+      "originalImage": "/products/One_Side_Wrap_Around_Side_Labelling_Machine_7.webp",
+      "updatedImage": null,
+      "associationId": "one-side-wrap-around-side-labelling-machine::a9713789ba6c8b5c",
+      "imageHash": "sha256:a9713789ba6c8b5c2cd993be93eadb2234e6d0b72e0f8526120675bc7876fc83",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "semi-auto-wrap-around-labelling-machine",
+        "notes": "",
+        "updatedAt": "2026-10-09T09:23:28.279Z"
+      },
+      "reviewItemNumber": 60,
+      "reviewItemId": "remove::one-side-wrap-around-side-labelling-machine::a9713789ba6c8b5c",
+      "reason": "Remove One_Side_Wrap_Around_Side_Labelling_Machine_7.webp from the One Side Wrap Around Side Labelling Machine page. No replacement is needed; the page keeps 3 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "top-labelling-machine-with-thermal-transfer-printer-auto-feeder",
+      "productName": "Top Labelling Machine With Thermal Transfer Printer Auto Feeder",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/top-labelling-machine-with-thermal-transfer-printer-auto-feeder",
+      "operation": "remove",
+      "originalImage": "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_1.webp",
+      "updatedImage": null,
+      "associationId": "top-labelling-machine-with-thermal-transfer-printer-auto-feeder::bedcd2d3ba46dea6",
+      "imageHash": "sha256:bedcd2d3ba46dea6d2853fd4cada5a180bcc6381bb87b52fd5635a82e050d2e5",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "custom-top-labelling-machine-with-checking-system",
+        "notes": "",
+        "updatedAt": "2026-10-09T09:24:08.736Z"
+      },
+      "reviewItemNumber": 61,
+      "reviewItemId": "remove::top-labelling-machine-with-thermal-transfer-printer-auto-feeder::bedcd2d3ba46dea6",
+      "reason": "Remove Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_1.webp from the Top Labelling Machine With Thermal Transfer Printer Auto Feeder page. No replacement is needed; the page keeps 5 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "top-labelling-machine-with-thermal-transfer-printer-auto-feeder",
+      "productName": "Top Labelling Machine With Thermal Transfer Printer Auto Feeder",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/top-labelling-machine-with-thermal-transfer-printer-auto-feeder",
+      "operation": "remove",
+      "originalImage": "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_6.webp",
+      "updatedImage": null,
+      "associationId": "top-labelling-machine-with-thermal-transfer-printer-auto-feeder::3c821040f7d5b21c",
+      "imageHash": "sha256:3c821040f7d5b21c617d02ad28fd02a60e869a6484e4ae54c9ea18b19d90af79",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "top-labelling-machine",
+        "notes": "",
+        "updatedAt": "2026-10-09T09:24:38.562Z"
+      },
+      "reviewItemNumber": 62,
+      "reviewItemId": "remove::top-labelling-machine-with-thermal-transfer-printer-auto-feeder::3c821040f7d5b21c",
+      "reason": "Remove Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_6.webp from the Top Labelling Machine With Thermal Transfer Printer Auto Feeder page. No replacement is needed; the page keeps 5 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "top-labelling-machine-with-thermal-transfer-printer-auto-feeder-v2",
+      "productName": "Top Labelling Machine With Thermal Transfer Printer Auto Feeder V2",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/top-labelling-machine-with-thermal-transfer-printer-auto-feeder-v2",
+      "operation": "remove",
+      "originalImage": "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_0.webp",
+      "updatedImage": null,
+      "associationId": "top-labelling-machine-with-thermal-transfer-printer-auto-feeder-v2::bedcd2d3ba46dea6",
+      "imageHash": "sha256:bedcd2d3ba46dea6d2853fd4cada5a180bcc6381bb87b52fd5635a82e050d2e5",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "custom-top-labelling-machine-with-checking-system",
+        "notes": "",
+        "updatedAt": "2026-10-09T09:27:15.002Z"
+      },
+      "reviewItemNumber": 63,
+      "reviewItemId": "remove::top-labelling-machine-with-thermal-transfer-printer-auto-feeder-v2::bedcd2d3ba46dea6",
+      "reason": "Remove Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_0.webp from the Top Labelling Machine With Thermal Transfer Printer Auto Feeder V2 page. No replacement is needed; the page keeps 3 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "top-labelling-machine-with-thermal-transfer-printer-auto-feeder-v2",
+      "productName": "Top Labelling Machine With Thermal Transfer Printer Auto Feeder V2",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/top-labelling-machine-with-thermal-transfer-printer-auto-feeder-v2",
+      "operation": "remove",
+      "originalImage": "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_3.webp",
+      "updatedImage": null,
+      "associationId": "top-labelling-machine-with-thermal-transfer-printer-auto-feeder-v2::64ca78c7ac4b96ae",
+      "imageHash": "sha256:64ca78c7ac4b96ae68569ee3af750736c518c84ebfdd486fd27d2a82567e9e15",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "two-side-labelling-machine",
+        "notes": "",
+        "updatedAt": "2026-10-09T09:27:26.487Z"
+      },
+      "reviewItemNumber": 64,
+      "reviewItemId": "remove::top-labelling-machine-with-thermal-transfer-printer-auto-feeder-v2::64ca78c7ac4b96ae",
+      "reason": "Remove Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_3.webp from the Top Labelling Machine With Thermal Transfer Printer Auto Feeder V2 page. No replacement is needed; the page keeps 3 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "top-labelling-machine-with-thermal-transfer-printer-auto-feeder-v2",
+      "productName": "Top Labelling Machine With Thermal Transfer Printer Auto Feeder V2",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/top-labelling-machine-with-thermal-transfer-printer-auto-feeder-v2",
+      "operation": "remove",
+      "originalImage": "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_5.webp",
+      "updatedImage": null,
+      "associationId": "top-labelling-machine-with-thermal-transfer-printer-auto-feeder-v2::3c821040f7d5b21c",
+      "imageHash": "sha256:3c821040f7d5b21c617d02ad28fd02a60e869a6484e4ae54c9ea18b19d90af79",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "top-labelling-machine",
+        "notes": "",
+        "updatedAt": "2026-10-09T09:27:33.879Z"
+      },
+      "reviewItemNumber": 65,
+      "reviewItemId": "remove::top-labelling-machine-with-thermal-transfer-printer-auto-feeder-v2::3c821040f7d5b21c",
+      "reason": "Remove Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_5.webp from the Top Labelling Machine With Thermal Transfer Printer Auto Feeder V2 page. No replacement is needed; the page keeps 3 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "top-labelling-machine-with-thermal-transfer-printer-auto-feeder-v2",
+      "productName": "Top Labelling Machine With Thermal Transfer Printer Auto Feeder V2",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/top-labelling-machine-with-thermal-transfer-printer-auto-feeder-v2",
+      "operation": "remove",
+      "originalImage": "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_6.webp",
+      "updatedImage": null,
+      "associationId": "top-labelling-machine-with-thermal-transfer-printer-auto-feeder-v2::a9713789ba6c8b5c",
+      "imageHash": "sha256:a9713789ba6c8b5c2cd993be93eadb2234e6d0b72e0f8526120675bc7876fc83",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "semi-auto-wrap-around-labelling-machine",
+        "notes": "",
+        "updatedAt": "2026-10-09T09:27:38.860Z"
+      },
+      "reviewItemNumber": 66,
+      "reviewItemId": "remove::top-labelling-machine-with-thermal-transfer-printer-auto-feeder-v2::a9713789ba6c8b5c",
+      "reason": "Remove Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_6.webp from the Top Labelling Machine With Thermal Transfer Printer Auto Feeder V2 page. No replacement is needed; the page keeps 3 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "customized-bottom-labelling-machine",
+      "productName": "Customized Bottom Labelling Machine",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/customized-bottom-labelling-machine",
+      "operation": "remove",
+      "originalImage": "/products/Customized_Bottom_Labelling_Machine_2.webp",
+      "updatedImage": null,
+      "associationId": "customized-bottom-labelling-machine::094a91e5966b0f4a",
+      "imageHash": "sha256:094a91e5966b0f4a7416c663e583c32a379444b41e5688b191685c86076b2b7c",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "top-labelling-machine-with-thermal-transfer-printer-auto-feeder",
+        "notes": "",
+        "updatedAt": "2026-10-09T09:28:08.564Z"
+      },
+      "reviewItemNumber": 67,
+      "reviewItemId": "remove::customized-bottom-labelling-machine::094a91e5966b0f4a",
+      "reason": "Remove Customized_Bottom_Labelling_Machine_2.webp from the Customized Bottom Labelling Machine page. No replacement is needed; the page keeps 3 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "customized-bottom-labelling-machine",
+      "productName": "Customized Bottom Labelling Machine",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/customized-bottom-labelling-machine",
+      "operation": "remove",
+      "originalImage": "/products/Customized_Bottom_Labelling_Machine_3.webp",
+      "updatedImage": null,
+      "associationId": "customized-bottom-labelling-machine::64ca78c7ac4b96ae",
+      "imageHash": "sha256:64ca78c7ac4b96ae68569ee3af750736c518c84ebfdd486fd27d2a82567e9e15",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "two-side-labelling-machine",
+        "notes": "",
+        "updatedAt": "2026-10-09T09:28:17.705Z"
+      },
+      "reviewItemNumber": 68,
+      "reviewItemId": "remove::customized-bottom-labelling-machine::64ca78c7ac4b96ae",
+      "reason": "Remove Customized_Bottom_Labelling_Machine_3.webp from the Customized Bottom Labelling Machine page. No replacement is needed; the page keeps 3 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "customized-bottom-labelling-machine",
+      "productName": "Customized Bottom Labelling Machine",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/customized-bottom-labelling-machine",
+      "operation": "remove",
+      "originalImage": "/products/Customized_Bottom_Labelling_Machine_5.webp",
+      "updatedImage": null,
+      "associationId": "customized-bottom-labelling-machine::b5cc722158ae2348",
+      "imageHash": "sha256:b5cc722158ae2348bc321fcf0b39030068f8bd9f887c48aba9bf8400a4f36a4e",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "top-labelling-machine-v2",
+        "notes": "",
+        "updatedAt": "2026-10-09T09:28:33.781Z"
+      },
+      "reviewItemNumber": 69,
+      "reviewItemId": "remove::customized-bottom-labelling-machine::b5cc722158ae2348",
+      "reason": "Remove Customized_Bottom_Labelling_Machine_5.webp from the Customized Bottom Labelling Machine page. No replacement is needed; the page keeps 3 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "egg-tray-labelling-machine",
+      "productName": "Egg Tray Labelling Machine",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/egg-tray-labelling-machine",
+      "operation": "remove",
+      "originalImage": "/products/Egg_Tray_Labelling_Machine_0.webp",
+      "updatedImage": null,
+      "associationId": "egg-tray-labelling-machine::2c299d0dbadb9d95",
+      "imageHash": "sha256:2c299d0dbadb9d950cb9f453ecbb52a7997bf2d53ed2fbb4852e7c09347ca986",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "customized-bottom-labelling-machine",
+        "notes": "",
+        "updatedAt": "2026-10-09T09:29:01.609Z"
+      },
+      "reviewItemNumber": 70,
+      "reviewItemId": "remove::egg-tray-labelling-machine::2c299d0dbadb9d95",
+      "reason": "Remove Egg_Tray_Labelling_Machine_0.webp from the Egg Tray Labelling Machine page. No replacement is needed; the page keeps 2 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "egg-tray-labelling-machine",
+      "productName": "Egg Tray Labelling Machine",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/egg-tray-labelling-machine",
+      "operation": "remove",
+      "originalImage": "/products/Egg_Tray_Labelling_Machine_3.webp",
+      "updatedImage": null,
+      "associationId": "egg-tray-labelling-machine::094a91e5966b0f4a",
+      "imageHash": "sha256:094a91e5966b0f4a7416c663e583c32a379444b41e5688b191685c86076b2b7c",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "top-labelling-machine-with-thermal-transfer-printer-auto-feeder",
+        "notes": "",
+        "updatedAt": "2026-10-09T09:29:05.812Z"
+      },
+      "reviewItemNumber": 71,
+      "reviewItemId": "remove::egg-tray-labelling-machine::094a91e5966b0f4a",
+      "reason": "Remove Egg_Tray_Labelling_Machine_3.webp from the Egg Tray Labelling Machine page. No replacement is needed; the page keeps 2 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "egg-tray-labelling-machine",
+      "productName": "Egg Tray Labelling Machine",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/egg-tray-labelling-machine",
+      "operation": "remove",
+      "originalImage": "/products/Egg_Tray_Labelling_Machine_4.webp",
+      "updatedImage": null,
+      "associationId": "egg-tray-labelling-machine::05a8ba062386f191",
+      "imageHash": "sha256:05a8ba062386f191df0d98eef1fe62240a4586e943bd3a3e1cc38d33a2f02fa0",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "two-side-labelling-machine",
+        "notes": "",
+        "updatedAt": "2026-10-09T09:29:12.258Z"
+      },
+      "reviewItemNumber": 72,
+      "reviewItemId": "remove::egg-tray-labelling-machine::05a8ba062386f191",
+      "reason": "Remove Egg_Tray_Labelling_Machine_4.webp from the Egg Tray Labelling Machine page. No replacement is needed; the page keeps 2 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "egg-tray-labelling-machine",
+      "productName": "Egg Tray Labelling Machine",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/egg-tray-labelling-machine",
+      "operation": "remove",
+      "originalImage": "/products/Egg_Tray_Labelling_Machine_5.webp",
+      "updatedImage": null,
+      "associationId": "egg-tray-labelling-machine::4d1779119e001964",
+      "imageHash": "sha256:4d1779119e0019640d63b3eba36723de08c5b262ab724b254c2a2b71877dd9a3",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "flat-labelling-machine",
+        "notes": "",
+        "updatedAt": "2026-10-09T09:29:23.914Z"
+      },
+      "reviewItemNumber": 73,
+      "reviewItemId": "remove::egg-tray-labelling-machine::4d1779119e001964",
+      "reason": "Remove Egg_Tray_Labelling_Machine_5.webp from the Egg Tray Labelling Machine page. No replacement is needed; the page keeps 2 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "two-side-labelling-machine-with-corner-press",
+      "productName": "Two Side Labelling Machine With Corner Press",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/two-side-labelling-machine-with-corner-press",
+      "operation": "remove",
+      "originalImage": "/products/Two_Side_Labelling_Machine_with_Corner_Press_6.png",
+      "updatedImage": null,
+      "associationId": "two-side-labelling-machine-with-corner-press::1396503b955315c6",
+      "imageHash": "sha256:1396503b955315c6505e26b4f3ff4f797387a7002206ab11fd1ffa879bfcfdd8",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "other",
+        "notes": "conveyor",
+        "updatedAt": "2026-10-09T09:31:35.331Z"
+      },
+      "reviewItemNumber": 74,
+      "reviewItemId": "remove::two-side-labelling-machine-with-corner-press::1396503b955315c6",
+      "reason": "Remove Two_Side_Labelling_Machine_with_Corner_Press_6.png from the Two Side Labelling Machine With Corner Press page. No replacement is needed; the page keeps 3 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "two-side-labelling-machine-with-corner-press",
+      "productName": "Two Side Labelling Machine With Corner Press",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/two-side-labelling-machine-with-corner-press",
+      "operation": "remove",
+      "originalImage": "/products/Two_Side_Labelling_Machine_with_Corner_Press_7.png",
+      "updatedImage": null,
+      "associationId": "two-side-labelling-machine-with-corner-press::c6067b280e6d9534",
+      "imageHash": "sha256:c6067b280e6d9534dc9aa26e8378f12e09a3c76a762b5038de13d9eb5d5c508c",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": null,
+        "notes": "printer",
+        "updatedAt": "2026-10-09T09:31:44.821Z"
+      },
+      "reviewItemNumber": 75,
+      "reviewItemId": "remove::two-side-labelling-machine-with-corner-press::c6067b280e6d9534",
+      "reason": "Remove Two_Side_Labelling_Machine_with_Corner_Press_7.png from the Two Side Labelling Machine With Corner Press page. No replacement is needed; the page keeps 3 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "two-side-labelling-machine-with-corner-press",
+      "productName": "Two Side Labelling Machine With Corner Press",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/two-side-labelling-machine-with-corner-press",
+      "operation": "remove",
+      "originalImage": "/products/Two_Side_Labelling_Machine_with_Corner_Press_8.png",
+      "updatedImage": null,
+      "associationId": "two-side-labelling-machine-with-corner-press::143933306e0bcd76",
+      "imageHash": "sha256:143933306e0bcd7685628f3b4ff74a5a188497ba08f7d55330eb395870572b6b",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": null,
+        "notes": "sponge roll",
+        "updatedAt": "2026-10-09T09:32:05.501Z"
+      },
+      "reviewItemNumber": 76,
+      "reviewItemId": "remove::two-side-labelling-machine-with-corner-press::143933306e0bcd76",
+      "reason": "Remove Two_Side_Labelling_Machine_with_Corner_Press_8.png from the Two Side Labelling Machine With Corner Press page. No replacement is needed; the page keeps 3 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "two-side-labelling-machine-with-corner-press",
+      "productName": "Two Side Labelling Machine With Corner Press",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/two-side-labelling-machine-with-corner-press",
+      "operation": "remove",
+      "originalImage": "/products/Two_Side_Labelling_Machine_with_Corner_Press_9.png",
+      "updatedImage": null,
+      "associationId": "two-side-labelling-machine-with-corner-press::815ae2a31469a922",
+      "imageHash": "sha256:815ae2a31469a9224fbf64c64cf2fac4654aa8a91b2317ecc57cf8870f295b4c",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": null,
+        "notes": "",
+        "updatedAt": "2026-10-09T09:32:13.051Z"
+      },
+      "reviewItemNumber": 77,
+      "reviewItemId": "remove::two-side-labelling-machine-with-corner-press::815ae2a31469a922",
+      "reason": "Remove Two_Side_Labelling_Machine_with_Corner_Press_9.png from the Two Side Labelling Machine With Corner Press page. No replacement is needed; the page keeps 3 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "two-side-labelling-machine-with-corner-press",
+      "productName": "Two Side Labelling Machine With Corner Press",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/two-side-labelling-machine-with-corner-press",
+      "operation": "remove",
+      "originalImage": "/products/Two_Side_Labelling_Machine_with_Corner_Press_10.webp",
+      "updatedImage": null,
+      "associationId": "two-side-labelling-machine-with-corner-press::1dcadbca098b44fa",
+      "imageHash": "sha256:1dcadbca098b44fa248a5d9f61a820ba5e155cc5dbed7b7570c886e442a457ed",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "egg-tray-labelling-machine",
+        "notes": "",
+        "updatedAt": "2026-10-09T09:32:43.213Z"
+      },
+      "reviewItemNumber": 78,
+      "reviewItemId": "remove::two-side-labelling-machine-with-corner-press::1dcadbca098b44fa",
+      "reason": "Remove Two_Side_Labelling_Machine_with_Corner_Press_10.webp from the Two Side Labelling Machine With Corner Press page. No replacement is needed; the page keeps 3 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "two-side-labelling-machine-with-corner-press",
+      "productName": "Two Side Labelling Machine With Corner Press",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/two-side-labelling-machine-with-corner-press",
+      "operation": "remove",
+      "originalImage": "/products/Two_Side_Labelling_Machine_with_Corner_Press_12.webp",
+      "updatedImage": null,
+      "associationId": "two-side-labelling-machine-with-corner-press::4d1779119e001964",
+      "imageHash": "sha256:4d1779119e0019640d63b3eba36723de08c5b262ab724b254c2a2b71877dd9a3",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "top-labelling-machine-with-thermal-transfer-printer-auto-feeder-v2",
+        "notes": "",
+        "updatedAt": "2026-10-09T09:32:58.758Z"
+      },
+      "reviewItemNumber": 79,
+      "reviewItemId": "remove::two-side-labelling-machine-with-corner-press::4d1779119e001964",
+      "reason": "Remove Two_Side_Labelling_Machine_with_Corner_Press_12.webp from the Two Side Labelling Machine With Corner Press page. No replacement is needed; the page keeps 3 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "customized-top-labelling-machine",
+      "productName": "Customized Top Labelling Machine",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/customized-top-labelling-machine",
+      "operation": "remove",
+      "originalImage": "/products/Customized_Top_Labelling_Machine_7.jpg",
+      "updatedImage": null,
+      "associationId": "customized-top-labelling-machine::6b222661ac24875f",
+      "imageHash": "sha256:6b222661ac24875fce62ee6589aae0eb0e57c1db157c1eff375fd0c635022bce",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": null,
+        "notes": "",
+        "updatedAt": "2026-10-09T09:33:31.836Z"
+      },
+      "reviewItemNumber": 80,
+      "reviewItemId": "remove::customized-top-labelling-machine::6b222661ac24875f",
+      "reason": "Remove Customized_Top_Labelling_Machine_7.jpg from the Customized Top Labelling Machine page. No replacement is needed; the page keeps 5 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "customized-top-labelling-machine",
+      "productName": "Customized Top Labelling Machine",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/customized-top-labelling-machine",
+      "operation": "remove",
+      "originalImage": "/products/Customized_Top_Labelling_Machine_8.jpg",
+      "updatedImage": null,
+      "associationId": "customized-top-labelling-machine::4c6ec541eb4e8f1c",
+      "imageHash": "sha256:4c6ec541eb4e8f1c2b045b2c7ff5fc64b6b482ef5da0f4a07c1b0937c8c8ca7c",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": null,
+        "notes": "",
+        "updatedAt": "2026-10-09T09:33:34.054Z"
+      },
+      "reviewItemNumber": 81,
+      "reviewItemId": "remove::customized-top-labelling-machine::4c6ec541eb4e8f1c",
+      "reason": "Remove Customized_Top_Labelling_Machine_8.jpg from the Customized Top Labelling Machine page. No replacement is needed; the page keeps 5 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "customized-top-labelling-machine",
+      "productName": "Customized Top Labelling Machine",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/customized-top-labelling-machine",
+      "operation": "remove",
+      "originalImage": "/products/Customized_Top_Labelling_Machine_9.png",
+      "updatedImage": null,
+      "associationId": "customized-top-labelling-machine::f3ee62dbcb90bf19",
+      "imageHash": "sha256:f3ee62dbcb90bf19098bb263541da6c4c3cba1cce33d68c37f9abcee6ac586ae",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": null,
+        "notes": "",
+        "updatedAt": "2026-10-09T09:33:44.889Z"
+      },
+      "reviewItemNumber": 82,
+      "reviewItemId": "remove::customized-top-labelling-machine::f3ee62dbcb90bf19",
+      "reason": "Remove Customized_Top_Labelling_Machine_9.png from the Customized Top Labelling Machine page. No replacement is needed; the page keeps 5 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "customized-top-labelling-machine",
+      "productName": "Customized Top Labelling Machine",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/customized-top-labelling-machine",
+      "operation": "remove",
+      "originalImage": "/products/Customized_Top_Labelling_Machine_10.png",
+      "updatedImage": null,
+      "associationId": "customized-top-labelling-machine::2cacc8453b34df06",
+      "imageHash": "sha256:2cacc8453b34df0649a38067a802c47835faf59fc7719283414a9cc53c99f3f0",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": null,
+        "notes": "",
+        "updatedAt": "2026-10-09T09:33:52.199Z"
+      },
+      "reviewItemNumber": 83,
+      "reviewItemId": "remove::customized-top-labelling-machine::2cacc8453b34df06",
+      "reason": "Remove Customized_Top_Labelling_Machine_10.png from the Customized Top Labelling Machine page. No replacement is needed; the page keeps 5 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "customized-top-labelling-machine",
+      "productName": "Customized Top Labelling Machine",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/customized-top-labelling-machine",
+      "operation": "remove",
+      "originalImage": "/products/Customized_Top_Labelling_Machine_11.png",
+      "updatedImage": null,
+      "associationId": "customized-top-labelling-machine::2816202dd93a9baf",
+      "imageHash": "sha256:2816202dd93a9bafaf4e2b4b6b07ca7e9380fd918b6dd42f5ba2010b0e11a70d",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": null,
+        "notes": "",
+        "updatedAt": "2026-10-09T09:34:05.110Z"
+      },
+      "reviewItemNumber": 84,
+      "reviewItemId": "remove::customized-top-labelling-machine::2816202dd93a9baf",
+      "reason": "Remove Customized_Top_Labelling_Machine_11.png from the Customized Top Labelling Machine page. No replacement is needed; the page keeps 5 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "customized-top-labelling-machine",
+      "productName": "Customized Top Labelling Machine",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/customized-top-labelling-machine",
+      "operation": "remove",
+      "originalImage": "/products/Customized_Top_Labelling_Machine_12.png",
+      "updatedImage": null,
+      "associationId": "customized-top-labelling-machine::12b5b03aef626b10",
+      "imageHash": "sha256:12b5b03aef626b10dea4431ecde9de5cb477ed1d9cfc5369204f45a265edaa57",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": null,
+        "notes": "",
+        "updatedAt": "2026-10-09T09:34:11.938Z"
+      },
+      "reviewItemNumber": 85,
+      "reviewItemId": "remove::customized-top-labelling-machine::12b5b03aef626b10",
+      "reason": "Remove Customized_Top_Labelling_Machine_12.png from the Customized Top Labelling Machine page. No replacement is needed; the page keeps 5 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "customized-top-labelling-machine",
+      "productName": "Customized Top Labelling Machine",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/customized-top-labelling-machine",
+      "operation": "remove",
+      "originalImage": "/products/Customized_Top_Labelling_Machine_14.webp",
+      "updatedImage": null,
+      "associationId": "customized-top-labelling-machine::64ca78c7ac4b96ae",
+      "imageHash": "sha256:64ca78c7ac4b96ae68569ee3af750736c518c84ebfdd486fd27d2a82567e9e15",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "two-side-labelling-machine",
+        "notes": "",
+        "updatedAt": "2026-10-09T09:34:25.388Z"
+      },
+      "reviewItemNumber": 86,
+      "reviewItemId": "remove::customized-top-labelling-machine::64ca78c7ac4b96ae",
+      "reason": "Remove Customized_Top_Labelling_Machine_14.webp from the Customized Top Labelling Machine page. No replacement is needed; the page keeps 5 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "customized-top-labelling-machine",
+      "productName": "Customized Top Labelling Machine",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/customized-top-labelling-machine",
+      "operation": "remove",
+      "originalImage": "/products/Customized_Top_Labelling_Machine_15.webp",
+      "updatedImage": null,
+      "associationId": "customized-top-labelling-machine::2fc952eac7059e9d",
+      "imageHash": "sha256:2fc952eac7059e9d201532f7bc37a8a5dd67f5f856d62926907b46582b784282",
+      "round1": {
+        "identity": "wrong",
+        "cover": "unsuitable",
+        "suggestedProduct": "customized-bottom-labelling-machine",
+        "notes": "",
+        "updatedAt": "2026-10-09T09:34:30.577Z"
+      },
+      "reviewItemNumber": 87,
+      "reviewItemId": "remove::customized-top-labelling-machine::2fc952eac7059e9d",
+      "reason": "Remove Customized_Top_Labelling_Machine_15.webp from the Customized Top Labelling Machine page. No replacement is needed; the page keeps 5 other pictures.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "flat-labelling-machine",
+      "productName": "Flat Labelling Machine",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/flat-labelling-machine",
+      "operation": "remove-byte-duplicate",
+      "originalImage": "/products/Flat_Labelling_Machine_4.webp",
+      "updatedImage": "/products/Flat_Labelling_Machine_2.webp",
+      "imageHash": "sha256:3c821040f7d5b21c617d02ad28fd02a60e869a6484e4ae54c9ea18b19d90af79",
+      "reason": "Byte-identical to the retained earlier gallery image (SHA-256).",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    },
+    {
+      "productSlug": "two-side-labelling-machine-with-corner-press",
+      "productName": "Two Side Labelling Machine With Corner Press",
+      "category": "labelling",
+      "websiteUrl": "https://www.auraplex.info/en/products/two-side-labelling-machine-with-corner-press",
+      "operation": "cover",
+      "originalImage": "/products/Two_Side_Labelling_Machine_with_Corner_Press_3.webp",
+      "updatedImage": "/products/Two_Side_Labelling_Machine_with_Corner_Press_2.webp",
+      "associationId": "two-side-labelling-machine-with-corner-press::05a8ba062386f191",
+      "imageHash": "sha256:05a8ba062386f191df0d98eef1fe62240a4586e943bd3a3e1cc38d33a2f02fa0",
+      "round1": {
+        "identity": "correct",
+        "cover": "cover",
+        "suggestedProduct": null,
+        "notes": "",
+        "updatedAt": "2026-10-09T09:31:18.531Z"
+      },
+      "reviewItemNumber": 1,
+      "reviewItemId": "cover::two-side-labelling-machine-with-corner-press::b22281fc24603f4f",
+      "reason": "Replace the live cover Two_Side_Labelling_Machine_with_Corner_Press_3.webp with Two_Side_Labelling_Machine_with_Corner_Press_2.webp, and take Two_Side_Labelling_Machine_with_Corner_Press_3.webp off this page.",
+      "approvalStatus": "proposed; pending Friendy PR review"
+    }
+  ],
+  "products": [
+    {
+      "slug": "semi-auto-wrap-around-labelling-machine",
+      "name": "Semi Auto Wrap Around Labelling Machine",
+      "category": "labelling",
+      "before": {
+        "image": "/products/Semi_Auto_Wrap_Around_Labelling_Machine_9.png",
+        "gallery": [
+          "/products/Semi_Auto_Wrap_Around_Labelling_Machine_9.png",
+          "/products/Semi_Auto_Wrap_Around_Labelling_Machine_10.webp",
+          "/products/Semi_Auto_Wrap_Around_Labelling_Machine_11.webp",
+          "/products/Semi_Auto_Wrap_Around_Labelling_Machine_2.webp",
+          "/products/Semi_Auto_Wrap_Around_Labelling_Machine_4.webp",
+          "/products/Semi_Auto_Wrap_Around_Labelling_Machine_13.webp",
+          "/products/Semi_Auto_Wrap_Around_Labelling_Machine_3.webp",
+          "/products/Semi_Auto_Wrap_Around_Labelling_Machine_6.webp",
+          "/products/Semi_Auto_Wrap_Around_Labelling_Machine_5.webp",
+          "/products/Semi_Auto_Wrap_Around_Labelling_Machine_12.webp"
+        ]
+      },
+      "after": {
+        "image": "/products/Semi_Auto_Wrap_Around_Labelling_Machine_9.png",
+        "gallery": [
+          "/products/Semi_Auto_Wrap_Around_Labelling_Machine_9.png",
+          "/products/Semi_Auto_Wrap_Around_Labelling_Machine_2.webp",
+          "/products/Semi_Auto_Wrap_Around_Labelling_Machine_4.webp",
+          "/products/Semi_Auto_Wrap_Around_Labelling_Machine_3.webp",
+          "/products/Semi_Auto_Wrap_Around_Labelling_Machine_6.webp",
+          "/products/Semi_Auto_Wrap_Around_Labelling_Machine_5.webp",
+          "/products/Semi_Auto_Wrap_Around_Labelling_Machine_12.webp"
+        ]
+      }
+    },
+    {
+      "slug": "print-apply-top-labelling-machine",
+      "name": "Print Apply Top Labelling Machine",
+      "category": "labelling",
+      "before": {
+        "image": "/products/Print_Apply_Top_Labelling_Machine_10.png",
+        "gallery": [
+          "/products/Print_Apply_Top_Labelling_Machine_10.png",
+          "/products/Print_Apply_Top_Labelling_Machine_11.webp",
+          "/products/Print_Apply_Top_Labelling_Machine_4.webp",
+          "/products/Print_Apply_Top_Labelling_Machine_14.webp",
+          "/products/Print_Apply_Top_Labelling_Machine_5.webp",
+          "/products/Print_Apply_Top_Labelling_Machine_2.webp",
+          "/products/Print_Apply_Top_Labelling_Machine_12.webp",
+          "/products/Print_Apply_Top_Labelling_Machine_6.webp",
+          "/products/Print_Apply_Top_Labelling_Machine_3.webp",
+          "/products/Print_Apply_Top_Labelling_Machine_7.webp",
+          "/products/Print_Apply_Top_Labelling_Machine_13.webp"
+        ]
+      },
+      "after": {
+        "image": "/products/Print_Apply_Top_Labelling_Machine_10.png",
+        "gallery": [
+          "/products/Print_Apply_Top_Labelling_Machine_10.png",
+          "/products/Print_Apply_Top_Labelling_Machine_11.webp",
+          "/products/Print_Apply_Top_Labelling_Machine_4.webp",
+          "/products/Print_Apply_Top_Labelling_Machine_5.webp",
+          "/products/Print_Apply_Top_Labelling_Machine_2.webp",
+          "/products/Print_Apply_Top_Labelling_Machine_12.webp",
+          "/products/Print_Apply_Top_Labelling_Machine_6.webp",
+          "/products/Print_Apply_Top_Labelling_Machine_3.webp",
+          "/products/Print_Apply_Top_Labelling_Machine_7.webp"
+        ]
+      }
+    },
+    {
+      "slug": "one-side-wrap-around-side-labelling-machine",
+      "name": "One Side Wrap Around Side Labelling Machine",
+      "category": "labelling",
+      "before": {
+        "image": "/products/One_Side_Wrap_Around_Side_Labelling_Machine_0.webp",
+        "gallery": [
+          "/products/One_Side_Wrap_Around_Side_Labelling_Machine_0.webp",
+          "/products/One_Side_Wrap_Around_Side_Labelling_Machine_5.webp",
+          "/products/One_Side_Wrap_Around_Side_Labelling_Machine_6.webp",
+          "/products/One_Side_Wrap_Around_Side_Labelling_Machine_4.webp",
+          "/products/One_Side_Wrap_Around_Side_Labelling_Machine_7.webp"
+        ]
+      },
+      "after": {
+        "image": "/products/One_Side_Wrap_Around_Side_Labelling_Machine_0.webp",
+        "gallery": [
+          "/products/One_Side_Wrap_Around_Side_Labelling_Machine_0.webp",
+          "/products/One_Side_Wrap_Around_Side_Labelling_Machine_5.webp",
+          "/products/One_Side_Wrap_Around_Side_Labelling_Machine_6.webp"
+        ]
+      }
+    },
+    {
+      "slug": "top-labelling-machine-with-thermal-transfer-printer-auto-feeder",
+      "name": "Top Labelling Machine With Thermal Transfer Printer Auto Feeder",
+      "category": "labelling",
+      "before": {
+        "image": "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_2.webp",
+        "gallery": [
+          "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_2.webp",
+          "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_5.webp",
+          "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_4.webp",
+          "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_3.webp",
+          "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_1.webp",
+          "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_0.webp",
+          "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_6.webp"
+        ]
+      },
+      "after": {
+        "image": "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_2.webp",
+        "gallery": [
+          "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_2.webp",
+          "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_5.webp",
+          "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_4.webp",
+          "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_3.webp",
+          "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_0.webp"
+        ]
+      }
+    },
+    {
+      "slug": "flat-labelling-machine",
+      "name": "Flat Labelling Machine",
+      "category": "labelling",
+      "before": {
+        "image": "/products/Flat_Labelling_Machine_3.webp",
+        "gallery": [
+          "/products/Flat_Labelling_Machine_3.webp",
+          "/products/Flat_Labelling_Machine_1.webp",
+          "/products/Flat_Labelling_Machine_0.webp",
+          "/products/Flat_Labelling_Machine_2.webp",
+          "/products/Flat_Labelling_Machine_4.webp"
+        ]
+      },
+      "after": {
+        "image": "/products/Flat_Labelling_Machine_3.webp",
+        "gallery": [
+          "/products/Flat_Labelling_Machine_3.webp",
+          "/products/Flat_Labelling_Machine_1.webp",
+          "/products/Flat_Labelling_Machine_0.webp",
+          "/products/Flat_Labelling_Machine_2.webp"
+        ]
+      }
+    },
+    {
+      "slug": "top-labelling-machine-with-thermal-transfer-printer-auto-feeder-v2",
+      "name": "Top Labelling Machine With Thermal Transfer Printer Auto Feeder V2",
+      "category": "labelling",
+      "before": {
+        "image": "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_4.webp",
+        "gallery": [
+          "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_4.webp",
+          "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_2.webp",
+          "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_1.webp",
+          "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_3.webp",
+          "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_0.webp",
+          "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_6.webp",
+          "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_5.webp"
+        ]
+      },
+      "after": {
+        "image": "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_4.webp",
+        "gallery": [
+          "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_4.webp",
+          "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_2.webp",
+          "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_1.webp"
+        ]
+      }
+    },
+    {
+      "slug": "customized-bottom-labelling-machine",
+      "name": "Customized Bottom Labelling Machine",
+      "category": "labelling",
+      "before": {
+        "image": "/products/Customized_Bottom_Labelling_Machine_1.webp",
+        "gallery": [
+          "/products/Customized_Bottom_Labelling_Machine_1.webp",
+          "/products/Customized_Bottom_Labelling_Machine_0.webp",
+          "/products/Customized_Bottom_Labelling_Machine_3.webp",
+          "/products/Customized_Bottom_Labelling_Machine_5.webp",
+          "/products/Customized_Bottom_Labelling_Machine_2.webp",
+          "/products/Customized_Bottom_Labelling_Machine_4.webp"
+        ]
+      },
+      "after": {
+        "image": "/products/Customized_Bottom_Labelling_Machine_1.webp",
+        "gallery": [
+          "/products/Customized_Bottom_Labelling_Machine_1.webp",
+          "/products/Customized_Bottom_Labelling_Machine_0.webp",
+          "/products/Customized_Bottom_Labelling_Machine_4.webp"
+        ]
+      }
+    },
+    {
+      "slug": "egg-tray-labelling-machine",
+      "name": "Egg Tray Labelling Machine",
+      "category": "labelling",
+      "before": {
+        "image": "/products/Egg_Tray_Labelling_Machine_2.webp",
+        "gallery": [
+          "/products/Egg_Tray_Labelling_Machine_2.webp",
+          "/products/Egg_Tray_Labelling_Machine_5.webp",
+          "/products/Egg_Tray_Labelling_Machine_0.webp",
+          "/products/Egg_Tray_Labelling_Machine_4.webp",
+          "/products/Egg_Tray_Labelling_Machine_1.webp",
+          "/products/Egg_Tray_Labelling_Machine_3.webp"
+        ]
+      },
+      "after": {
+        "image": "/products/Egg_Tray_Labelling_Machine_2.webp",
+        "gallery": [
+          "/products/Egg_Tray_Labelling_Machine_2.webp",
+          "/products/Egg_Tray_Labelling_Machine_1.webp"
+        ]
+      }
+    },
+    {
+      "slug": "two-side-labelling-machine-with-corner-press",
+      "name": "Two Side Labelling Machine With Corner Press",
+      "category": "labelling",
+      "before": {
+        "image": "/products/Two_Side_Labelling_Machine_with_Corner_Press_3.webp",
+        "gallery": [
+          "/products/Two_Side_Labelling_Machine_with_Corner_Press_3.webp",
+          "/products/Two_Side_Labelling_Machine_with_Corner_Press_12.webp",
+          "/products/Two_Side_Labelling_Machine_with_Corner_Press_2.webp",
+          "/products/Two_Side_Labelling_Machine_with_Corner_Press_11.webp",
+          "/products/Two_Side_Labelling_Machine_with_Corner_Press_13.webp",
+          "/products/Two_Side_Labelling_Machine_with_Corner_Press_6.png",
+          "/products/Two_Side_Labelling_Machine_with_Corner_Press_10.webp",
+          "/products/Two_Side_Labelling_Machine_with_Corner_Press_9.png",
+          "/products/Two_Side_Labelling_Machine_with_Corner_Press_7.png",
+          "/products/Two_Side_Labelling_Machine_with_Corner_Press_8.png"
+        ]
+      },
+      "after": {
+        "image": "/products/Two_Side_Labelling_Machine_with_Corner_Press_2.webp",
+        "gallery": [
+          "/products/Two_Side_Labelling_Machine_with_Corner_Press_2.webp",
+          "/products/Two_Side_Labelling_Machine_with_Corner_Press_11.webp",
+          "/products/Two_Side_Labelling_Machine_with_Corner_Press_13.webp"
+        ]
+      }
+    },
+    {
+      "slug": "customized-top-labelling-machine",
+      "name": "Customized Top Labelling Machine",
+      "category": "labelling",
+      "before": {
+        "image": "/products/Customized_Top_Labelling_Machine_13.webp",
+        "gallery": [
+          "/products/Customized_Top_Labelling_Machine_13.webp",
+          "/products/Customized_Top_Labelling_Machine_14.webp",
+          "/products/Customized_Top_Labelling_Machine_16.webp",
+          "/products/Customized_Top_Labelling_Machine_9.png",
+          "/products/Customized_Top_Labelling_Machine_4.webp",
+          "/products/Customized_Top_Labelling_Machine_2.webp",
+          "/products/Customized_Top_Labelling_Machine_10.png",
+          "/products/Customized_Top_Labelling_Machine_3.webp",
+          "/products/Customized_Top_Labelling_Machine_12.png",
+          "/products/Customized_Top_Labelling_Machine_15.webp",
+          "/products/Customized_Top_Labelling_Machine_11.png",
+          "/products/Customized_Top_Labelling_Machine_8.jpg",
+          "/products/Customized_Top_Labelling_Machine_7.jpg"
+        ]
+      },
+      "after": {
+        "image": "/products/Customized_Top_Labelling_Machine_13.webp",
+        "gallery": [
+          "/products/Customized_Top_Labelling_Machine_13.webp",
+          "/products/Customized_Top_Labelling_Machine_16.webp",
+          "/products/Customized_Top_Labelling_Machine_4.webp",
+          "/products/Customized_Top_Labelling_Machine_2.webp",
+          "/products/Customized_Top_Labelling_Machine_3.webp"
+        ]
+      }
+    }
+  ],
+  "deferredReviewItems": [
+    {
+      "itemNumber": 2,
+      "itemId": "cover::customized-top-labelling-machine::4d1779119e001964",
+      "productSlug": "customized-top-labelling-machine",
+      "status": "Better alternative found",
+      "recommendation": "Use Customized_Top_Labelling_Machine_2.webp as the cover. Whether Customized_Top_Labelling_Machine_13.webp stays in the gallery is for Mr Kan, because Round 1 marked both Correct Machine.",
+      "reason": [
+        "Customized_Top_Labelling_Machine_13.webp is the live cover today. Round 1 marked it Correct Machine and Suitable as Cover.",
+        "Customized_Top_Labelling_Machine_2.webp was also marked Correct Machine and Suitable as Cover, and it is this page’s own primary picture in the repository. It is already on the live page as image 6.",
+        "Round 1 marked the same file Correct Machine under: Flat Labelling Machine, Top Labelling Machine With Thermal Transfer Printer Auto Feeder, Top Labelling Machine.",
+        "Where Round 1 marked it Wrong Machine on other pages, the reviewers named: Flat Labelling Machine, Top Labelling Machine With Thermal Transfer Printer Auto Feeder V2, Print Apply Top Labelling Machine.",
+        "A larger copy of the same view exists: Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_2.webp (1600×1000 webp, automatic comparison); Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_4.webp (1600×1000 webp, automatic comparison). This file is 1000×624 webp.",
+        "The identical file is on the live website now under: Flat Labelling Machine (image 1, cover), Egg Tray Labelling Machine (image 2), Print Apply Top Labelling Machine (image 2), Top Labelling Machine With Thermal Transfer Printer Auto Feeder (image 3), Two Side Labelling Machine With Corner Press (image 2)."
+      ]
+    },
+    {
+      "itemNumber": 3,
+      "itemId": "addition::two-side-labelling-machine::64ca78c7ac4b96ae",
+      "productSlug": "two-side-labelling-machine",
+      "status": "Better alternative found",
+      "recommendation": "Use pictures from the Two Side Labelling Machine folder itself instead: Two_Side_Labelling_Machine_2.webp, Two_Side_Labelling_Machine_8.png, Two_Side_Labelling_Machine_3.webp, Two_Side_Labelling_Machine_4.webp. Do not add Customized_Bottom_Labelling_Machine_3.webp.",
+      "reason": [
+        "Each suggested picture is filed under Two Side Labelling Machine, was marked Correct Machine in Round 1, and is larger than the version 1 suggestion (643×643 webp).",
+        "The version 1 suggestion shows the same view as Two_Side_Labelling_Machine_9.webp, which the Two Side Labelling Machine folder already holds at 643×643 webp.",
+        "Two_Side_Labelling_Machine_8.png has no watermark, so it does not wait on the watermark decision.",
+        "The other suggested pictures carry the auraplex.com.my watermark. Showing them beside the clean render still needs the watermark decision.",
+        "Round 1 marked the same file Correct Machine under: Two Side Labelling Machine With Corner Press.",
+        "Where Round 1 marked it Wrong Machine on other pages, the reviewers named: Two Side Labelling Machine.",
+        "The identical file is on the live website now under: Customized Bottom Labelling Machine (image 3), Customized Top Labelling Machine (image 2), Top Labelling Machine With Thermal Transfer Printer Auto Feeder V2 (image 4), Two Side Labelling Machine With Corner Press (image 4)."
+      ]
+    },
+    {
+      "itemNumber": 4,
+      "itemId": "addition::custom-top-labelling-machine-with-checking-system::bedcd2d3ba46dea6",
+      "productSlug": "custom-top-labelling-machine-with-checking-system",
+      "status": "Better alternative found",
+      "recommendation": "Use pictures from the Custom Top Labelling Machine With Checking System folder itself instead: Custom_Top_Labelling_Machine_with_Checking_System_2.webp, Custom_Top_Labelling_Machine_with_Checking_System_8.png, Custom_Top_Labelling_Machine_with_Checking_System_3.webp, Custom_Top_Labelling_Machine_with_Checking_System_4.webp. Do not add Print_Apply_Top_Labelling_Machine_14.webp.",
+      "reason": [
+        "Each suggested picture is filed under Custom Top Labelling Machine With Checking System, was marked Correct Machine in Round 1, and is larger than the version 1 suggestion (1000×625 webp).",
+        "The version 1 suggestion shows the same view as Custom_Top_Labelling_Machine_with_Checking_System_2.webp, which the Custom Top Labelling Machine With Checking System folder already holds at 1600×1000 webp.",
+        "Custom_Top_Labelling_Machine_with_Checking_System_8.png has no watermark, so it does not wait on the watermark decision.",
+        "The other suggested pictures carry the auraplex.com.my watermark. Showing them beside the clean render still needs the watermark decision.",
+        "Round 1 marked the same file Correct Machine under: Flat Labelling Machine, Top Labelling Machine.",
+        "Where Round 1 marked it Wrong Machine on other pages, the reviewers named: Custom Top Labelling Machine With Checking System.",
+        "A larger copy of the same view exists: Custom_Top_Labelling_Machine_with_Checking_System_2.webp (1600×1000 webp, automatic comparison; primary picture of the Custom Top Labelling Machine With Checking System page). This file is 1000×625 webp.",
+        "The identical file is on the live website now under: Flat Labelling Machine (image 2), Print Apply Top Labelling Machine (image 4), Top Labelling Machine With Thermal Transfer Printer Auto Feeder (image 5), Top Labelling Machine With Thermal Transfer Printer Auto Feeder V2 (image 5)."
+      ]
+    },
+    {
+      "itemNumber": 5,
+      "itemId": "addition::semi-auto-wrap-around-labelling-machine::a9f21b0a6ed17f32",
+      "productSlug": "semi-auto-wrap-around-labelling-machine",
+      "status": "Likely valid current image",
+      "recommendation": "Withdrawn. The Semi Auto Wrap Around Labelling Machine page already shows this view as Semi_Auto_Wrap_Around_Labelling_Machine_2.webp, in a larger file. Keep the current picture and add nothing.",
+      "reason": [
+        "Two_in_One_Wrap_Around_Side_Labelling_Machine_12.webp is 1000×898 webp; Semi_Auto_Wrap_Around_Labelling_Machine_2.webp is 1113×1000 webp and is already image 4 of 10 on the live page.",
+        "The two show the same view (automatic comparison). Adding the suggestion would have repeated a picture, which is what made the two look identical in version 1.",
+        "Where Round 1 marked it Wrong Machine on other pages, the reviewers named: Semi Auto Wrap Around Labelling Machine.",
+        "A larger copy of the same view exists: Semi_Auto_Wrap_Around_Labelling_Machine_2.webp (1113×1000 webp, automatic comparison; primary picture of the Semi Auto Wrap Around Labelling Machine page). This file is 1000×898 webp."
+      ]
+    },
+    {
+      "itemNumber": 6,
+      "itemId": "addition::one-side-wrap-around-side-labelling-machine::677acd8d9fa0176d",
+      "productSlug": "one-side-wrap-around-side-labelling-machine",
+      "status": "Likely valid current image",
+      "recommendation": "Withdrawn. The One Side Wrap Around Side Labelling Machine page already shows this view as One_Side_Wrap_Around_Side_Labelling_Machine_0.webp (its cover), in a larger file. Keep the current picture and add nothing.",
+      "reason": [
+        "Semi_Auto_Wrap_Around_Labelling_Machine_10.webp is 1000×562 webp; One_Side_Wrap_Around_Side_Labelling_Machine_0.webp is 1777×1000 webp and is already image 1 of 5 on the live page.",
+        "The two show the same view (automatic comparison). Adding the suggestion would have repeated a picture, which is what made the two look identical in version 1.",
+        "Round 1 marked the same file Correct Machine under: Two In One Wrap Around Side Labelling Machine.",
+        "Where Round 1 marked it Wrong Machine on other pages, the reviewers named: One Side Wrap Around Side Labelling Machine.",
+        "A larger copy of the same view exists: One_Side_Wrap_Around_Side_Labelling_Machine_0.webp (1777×1000 webp, automatic comparison). This file is 1000×562 webp.",
+        "The identical file is on the live website now under: Semi Auto Wrap Around Labelling Machine (image 2)."
+      ]
+    },
+    {
+      "itemNumber": 7,
+      "itemId": "addition::top-labelling-machine-with-thermal-transfer-printer-auto-feeder::0bcb2b00a21f01f0",
+      "productSlug": "top-labelling-machine-with-thermal-transfer-printer-auto-feeder",
+      "status": "Likely valid current image",
+      "recommendation": "Withdrawn. The Top Labelling Machine With Thermal Transfer Printer Auto Feeder page already shows this view as Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_4.webp, in a larger file. Keep the current picture and add nothing.",
+      "reason": [
+        "Custom_Top_Labelling_Machine_with_Checking_System_12.webp is 1000×625 webp; Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_4.webp is 1000×624 webp and is already image 3 of 7 on the live page.",
+        "The two show the same view (automatic comparison). Adding the suggestion would have repeated a picture, which is what made the two look identical in version 1.",
+        "Where Round 1 marked it Wrong Machine on other pages, the reviewers named: Top Labelling Machine With Thermal Transfer Printer Auto Feeder.",
+        "A larger copy of the same view exists: Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_2.webp (1600×1000 webp, automatic comparison); Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_4.webp (1600×1000 webp, automatic comparison). This file is 1000×625 webp.",
+        "The identical file is on the live website now under: Print Apply Top Labelling Machine (image 7)."
+      ]
+    },
+    {
+      "itemNumber": 8,
+      "itemId": "addition::top-labelling-machine-with-thermal-transfer-printer-auto-feeder-v2::4d1779119e001964",
+      "productSlug": "top-labelling-machine-with-thermal-transfer-printer-auto-feeder-v2",
+      "status": "Likely valid current image",
+      "recommendation": "Withdrawn. The Top Labelling Machine With Thermal Transfer Printer Auto Feeder V2 page already shows this view as Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_4.webp (its cover), in a larger file. Keep the current picture and add nothing.",
+      "reason": [
+        "Two_Side_Labelling_Machine_with_Corner_Press_12.webp is 1000×624 webp; Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_4.webp is 1600×1000 webp and is already image 1 of 7 on the live page.",
+        "The two show the same view (automatic comparison). Adding the suggestion would have repeated a picture, which is what made the two look identical in version 1.",
+        "Round 1 marked the same file Correct Machine under: Flat Labelling Machine, Customized Top Labelling Machine, Top Labelling Machine With Thermal Transfer Printer Auto Feeder, Top Labelling Machine.",
+        "Where Round 1 marked it Wrong Machine on other pages, the reviewers named: Flat Labelling Machine, Top Labelling Machine With Thermal Transfer Printer Auto Feeder V2, Print Apply Top Labelling Machine.",
+        "A larger copy of the same view exists: Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_2.webp (1600×1000 webp, automatic comparison); Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_4.webp (1600×1000 webp, automatic comparison). This file is 1000×624 webp.",
+        "The identical file is on the live website now under: Flat Labelling Machine (image 1, cover), Customized Top Labelling Machine (image 1, cover), Egg Tray Labelling Machine (image 2), Print Apply Top Labelling Machine (image 2), Top Labelling Machine With Thermal Transfer Printer Auto Feeder (image 3), Two Side Labelling Machine With Corner Press (image 2)."
+      ]
+    },
+    {
+      "itemNumber": 9,
+      "itemId": "addition::egg-tray-labelling-machine::b22281fc24603f4f",
+      "productSlug": "egg-tray-labelling-machine",
+      "status": "Likely valid current image",
+      "recommendation": "Withdrawn. The Egg Tray Labelling Machine page already shows this view as Egg_Tray_Labelling_Machine_2.webp (its cover), in a larger file. Keep the current picture and add nothing.",
+      "reason": [
+        "Two_Side_Labelling_Machine_with_Corner_Press_3.webp is 643×643 webp; Egg_Tray_Labelling_Machine_2.webp is 643×643 webp and is already image 1 of 6 on the live page.",
+        "The two show the same view (compared by eye for this report). Adding the suggestion would have repeated a picture, which is what made the two look identical in version 1.",
+        "Where Round 1 marked it Wrong Machine on other pages, the reviewers named: Egg Tray Labelling Machine.",
+        "The identical file is on the live website now under: Two Side Labelling Machine With Corner Press (image 1, cover)."
+      ]
+    },
+    {
+      "itemNumber": 10,
+      "itemId": "duplicate::continuous-band-sealing-machine::92db590ce4f0e50b",
+      "productSlug": "continuous-band-sealing-machine",
+      "status": "Likely valid current image",
+      "recommendation": "Nothing to restore: the picture never left the live page. It is the right machine. The page shows the same view twice, so keep one of the two (Continuous_Band_Sealing_Machine_6.png is the larger file) and drop the other.",
+      "reason": [
+        "It is on the live page now (image 2 of 3). Round 1 marked it Correct Machine.",
+        "It shows the same view as Continuous_Band_Sealing_Machine_6.png (image 1, the cover): 513×390 webp against 513×390 png (compared by eye for this report)."
+      ]
+    },
+    {
+      "itemNumber": 11,
+      "itemId": "duplicate::semi-auto-wrap-around-labelling-machine::25044ed1d30b770a",
+      "productSlug": "semi-auto-wrap-around-labelling-machine",
+      "status": "Likely valid current image",
+      "recommendation": "Nothing to restore: the picture never left the live page. It is the right machine. The page shows the same view twice, so keep one of the two (Semi_Auto_Wrap_Around_Labelling_Machine_9.png is the larger file) and drop the other.",
+      "reason": [
+        "It is on the live page now (image 7 of 10). Round 1 marked it Correct Machine.",
+        "It shows the same view as Semi_Auto_Wrap_Around_Labelling_Machine_9.png (image 1, the cover): 1335×1000 webp against 2400×1798 png (compared by eye for this report).",
+        "A larger copy of the same view exists: Semi_Auto_Wrap_Around_Labelling_Machine_9.png (2400×1798 png, compared by eye for this report). This file is 1335×1000 webp."
+      ]
+    },
+    {
+      "itemNumber": 12,
+      "itemId": "duplicate::print-apply-top-labelling-machine::4854624760adad70",
+      "productSlug": "print-apply-top-labelling-machine",
+      "status": "Likely valid current image",
+      "recommendation": "Nothing to restore: the picture never left the live page. It is the right machine. The page shows the same view twice, so keep one of the two (Print_Apply_Top_Labelling_Machine_10.png is the larger file) and drop the other.",
+      "reason": [
+        "It is on the live page now (image 5 of 11). Round 1 marked it Correct Machine.",
+        "It shows the same view as Print_Apply_Top_Labelling_Machine_10.png (image 1, the cover): 1333×1000 webp against 2400×1800 png (compared by eye for this report).",
+        "A larger copy of the same view exists: real/top-labelling-machine.webp (1600×1200 webp, automatic comparison); Print_Apply_Top_Labelling_Machine_10.png (2400×1800 png, compared by eye for this report). This file is 1333×1000 webp."
+      ]
+    },
+    {
+      "itemNumber": 13,
+      "itemId": "duplicate::top-labelling-machine-with-thermal-transfer-printer-auto-feeder::4d1779119e001964",
+      "productSlug": "top-labelling-machine-with-thermal-transfer-printer-auto-feeder",
+      "status": "Likely valid current image",
+      "recommendation": "Nothing to restore: the picture never left the live page. It is the right machine. The page shows the same view twice, so keep one of the two (Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_2.webp is the larger file) and drop the other.",
+      "reason": [
+        "It is on the live page now (image 3 of 7). Round 1 marked it Correct Machine.",
+        "It shows the same view as Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_2.webp (image 1, the cover): 1000×624 webp against 1600×1000 webp (automatic comparison).",
+        "Round 1 marked the same file Correct Machine under: Flat Labelling Machine, Customized Top Labelling Machine, Top Labelling Machine.",
+        "Where Round 1 marked it Wrong Machine on other pages, the reviewers named: Flat Labelling Machine, Top Labelling Machine With Thermal Transfer Printer Auto Feeder V2, Print Apply Top Labelling Machine.",
+        "A larger copy of the same view exists: Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_2.webp (1600×1000 webp, automatic comparison); Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_4.webp (1600×1000 webp, automatic comparison). This file is 1000×624 webp.",
+        "The identical file is on the live website now under: Flat Labelling Machine (image 1, cover), Customized Top Labelling Machine (image 1, cover), Egg Tray Labelling Machine (image 2), Print Apply Top Labelling Machine (image 2), Two Side Labelling Machine With Corner Press (image 2)."
+      ]
+    },
+    {
+      "itemNumber": 14,
+      "itemId": "duplicate::two-side-labelling-machine-with-corner-press::64ca78c7ac4b96ae",
+      "productSlug": "two-side-labelling-machine-with-corner-press",
+      "status": "Likely valid current image",
+      "recommendation": "Nothing to restore: the picture never left the live page. It is the right machine. The page shows the same view twice, so keep one of the two (Two_Side_Labelling_Machine_with_Corner_Press_2.webp is the larger file) and drop the other.",
+      "reason": [
+        "It is on the live page now (image 4 of 10). Round 1 marked it Correct Machine.",
+        "It shows the same view as Two_Side_Labelling_Machine_with_Corner_Press_2.webp (image 3): 643×643 webp against 643×643 webp (automatic comparison).",
+        "Where Round 1 marked it Wrong Machine on other pages, the reviewers named: Two Side Labelling Machine.",
+        "The identical file is on the live website now under: Customized Bottom Labelling Machine (image 3), Customized Top Labelling Machine (image 2), Top Labelling Machine With Thermal Transfer Printer Auto Feeder V2 (image 4)."
+      ]
+    },
+    {
+      "itemNumber": 15,
+      "itemId": "more-images::flexy-applicator",
+      "productSlug": "flexy-applicator",
+      "status": "Possible Alternative",
+      "recommendation": "8 distinct, confirmed pictures could join the gallery: Flexy_Applicator_11.png, Flexy_Applicator_2.webp, Flexy_Applicator_3.webp, Flexy_Applicator_4.webp, Flexy_Applicator_5.webp, Flexy_Applicator_6.webp, Flexy_Applicator_7.webp, Flexy_Applicator_8.webp. Flexy_Applicator_11.png has no watermark and could be added first.",
+      "reason": [
+        "The live page shows one picture. The Flexy Applicator folder holds 8 more pictures that Round 1 marked Correct Machine.",
+        "Pictures with the auraplex.com.my watermark wait on the watermark decision (Section 5)."
+      ]
+    },
+    {
+      "itemNumber": 16,
+      "itemId": "more-images::two-side-labelling-machine",
+      "productSlug": "two-side-labelling-machine",
+      "status": "Possible Alternative",
+      "recommendation": "4 distinct, confirmed pictures could join the gallery: Two_Side_Labelling_Machine_8.png, Two_Side_Labelling_Machine_3.webp, Two_Side_Labelling_Machine_4.webp, Two_Side_Labelling_Machine_2.webp. Two_Side_Labelling_Machine_8.png has no watermark and could be added first.",
+      "reason": [
+        "The live page shows one picture. The Two Side Labelling Machine folder holds 6 more pictures that Round 1 marked Correct Machine.",
+        "Set aside: Two_Side_Labelling_Machine_5.webp (same view as the current cover); Two_Side_Labelling_Machine_9.webp (also on the live Two Side Labelling Machine With Corner Press page; primary picture of Two Side Labelling Machine With Corner Press).",
+        "Pictures with the auraplex.com.my watermark wait on the watermark decision (Section 5)."
+      ]
+    },
+    {
+      "itemNumber": 17,
+      "itemId": "more-images::custom-top-labelling-machine-with-checking-system",
+      "productSlug": "custom-top-labelling-machine-with-checking-system",
+      "status": "Possible Alternative",
+      "recommendation": "5 distinct, confirmed pictures could join the gallery: Custom_Top_Labelling_Machine_with_Checking_System_8.png, Custom_Top_Labelling_Machine_with_Checking_System_2.webp, Custom_Top_Labelling_Machine_with_Checking_System_3.webp, Custom_Top_Labelling_Machine_with_Checking_System_4.webp, Custom_Top_Labelling_Machine_with_Checking_System_5.webp. Custom_Top_Labelling_Machine_with_Checking_System_8.png has no watermark and could be added first.",
+      "reason": [
+        "The live page shows one picture. The Custom Top Labelling Machine With Checking System folder holds 5 more pictures that Round 1 marked Correct Machine.",
+        "Pictures with the auraplex.com.my watermark wait on the watermark decision (Section 5)."
+      ]
+    },
+    {
+      "itemNumber": 18,
+      "itemId": "more-images::two-in-one-wrap-around-side-labelling-machine",
+      "productSlug": "two-in-one-wrap-around-side-labelling-machine",
+      "status": "Possible Alternative",
+      "recommendation": "5 distinct, confirmed pictures could join the gallery: Two_in_One_Wrap_Around_Side_Labelling_Machine_8.png, Two_in_One_Wrap_Around_Side_Labelling_Machine_2.webp, Two_in_One_Wrap_Around_Side_Labelling_Machine_3.webp, Two_in_One_Wrap_Around_Side_Labelling_Machine_4.webp, Two_in_One_Wrap_Around_Side_Labelling_Machine_5.webp. Two_in_One_Wrap_Around_Side_Labelling_Machine_8.png has no watermark and could be added first.",
+      "reason": [
+        "The live page shows one picture. The Two In One Wrap Around Side Labelling Machine folder holds 6 more pictures that Round 1 marked Correct Machine.",
+        "Set aside: Two_in_One_Wrap_Around_Side_Labelling_Machine_10.webp (on another page Round 1 said this file shows the One Side Wrap Around Side Labelling Machine).",
+        "Pictures with the auraplex.com.my watermark wait on the watermark decision (Section 5)."
+      ]
+    },
+    {
+      "itemNumber": 19,
+      "itemId": "more-images::semi-auto-round-bottle-labelling-machine",
+      "productSlug": "semi-auto-round-bottle-labelling-machine",
+      "status": "Possible Alternative",
+      "recommendation": "1 distinct, confirmed picture could join the gallery: Semi_Auto_Round_Bottle_Labelling_Machine_2.webp.",
+      "reason": [
+        "The live page shows one picture. The Semi Auto Round Bottle Labelling Machine folder holds 1 more picture that Round 1 marked Correct Machine.",
+        "Pictures with the auraplex.com.my watermark wait on the watermark decision (Section 5)."
+      ]
+    },
+    {
+      "itemNumber": 20,
+      "itemId": "more-images::standard-top-labelling-machine",
+      "productSlug": "standard-top-labelling-machine",
+      "status": "Possible Alternative",
+      "recommendation": "3 distinct, confirmed pictures could join the gallery: Standard_Top_Labelling_Machine_2.webp, Standard_Top_Labelling_Machine_3.webp, Standard_Top_Labelling_Machine_4.webp.",
+      "reason": [
+        "The live page shows one picture. The Standard Top Labelling Machine folder holds 3 more pictures that Round 1 marked Correct Machine.",
+        "Pictures with the auraplex.com.my watermark wait on the watermark decision (Section 5)."
+      ]
+    },
+    {
+      "itemNumber": 21,
+      "itemId": "more-images::ar600-3d-printer",
+      "productSlug": "ar600-3d-printer",
+      "status": "Possible Alternative",
+      "recommendation": "1 distinct, confirmed picture could join the gallery: AR600_3D_Printer_2.webp.",
+      "reason": [
+        "The live page shows one picture. The AR600 3D Printer folder holds 1 more picture that Round 1 marked Correct Machine.",
+        "Pictures with the auraplex.com.my watermark wait on the watermark decision (Section 5)."
+      ]
+    },
+    {
+      "itemNumber": 22,
+      "itemId": "more-images::ar320-3d-printer",
+      "productSlug": "ar320-3d-printer",
+      "status": "Possible Alternative",
+      "recommendation": "1 distinct, confirmed picture could join the gallery: AR320_3D_Printer_0.webp.",
+      "reason": [
+        "The live page shows one picture. The AR320 3D Printer folder holds 1 more picture that Round 1 marked Correct Machine.",
+        "Pictures with the auraplex.com.my watermark wait on the watermark decision (Section 5)."
+      ]
+    },
+    {
+      "itemNumber": 23,
+      "itemId": "more-images::ar220-3d-printer",
+      "productSlug": "ar220-3d-printer",
+      "status": "Possible Alternative",
+      "recommendation": "1 distinct, confirmed picture could join the gallery: AR220_3D_Printer_0.webp.",
+      "reason": [
+        "The live page shows one picture. The AR220 3D Printer folder holds 1 more picture that Round 1 marked Correct Machine.",
+        "Pictures with the auraplex.com.my watermark wait on the watermark decision (Section 5)."
+      ]
+    },
+    {
+      "itemNumber": 24,
+      "itemId": "cover::front-back-labelling-machine::fac0ed73fd1607b4",
+      "productSlug": "front-back-labelling-machine",
+      "status": "Needs Review",
+      "recommendation": "Keep the current cover until the machine is confirmed. No replacement is proposed.",
+      "reason": [
+        "Round 1 answered Not Sure for both the machine and the cover.",
+        "The repository holds no other picture filed under this product.",
+        "A scraped picture of what looks like the same machine exists (One_Side_Wrap_Around_Side_Labelling_Machine_6.webp and five byte-copies under other products). Round 1 called that picture “wrap around + capping machine” under the Two In One page and Not Sure elsewhere. If that note is right, the current cover may not be a front-and-back labeller at all. Mr Kan should name the machine."
+      ]
+    },
+    {
+      "itemNumber": 25,
+      "itemId": "addition::one-side-wrap-around-side-labelling-machine::e179d4cf45ba2cc5",
+      "productSlug": "one-side-wrap-around-side-labelling-machine",
+      "status": "Needs Review",
+      "recommendation": "Withdrawn as an addition: One_Side_Wrap_Around_Side_Labelling_Machine_5.webp is the same view in a larger file and is already on the live One Side Wrap Around Side Labelling Machine page. Whether that view belongs on this page at all is undecided.",
+      "reason": [
+        "Semi_Auto_Wrap_Around_Labelling_Machine_13.webp is 1000×690 webp; One_Side_Wrap_Around_Side_Labelling_Machine_5.webp is 1449×1000 webp and is image 2 of 5 on the live page.",
+        "Repository evidence: this is the primary picture of the Two In One Wrap Around Side Labelling Machine page. That folder holds 3 byte-identical copies of it, the pattern the scrape left only for a page's own main picture.",
+        "Round 1 marked the same file Correct Machine under: Two In One Wrap Around Side Labelling Machine.",
+        "Round 1 marked this view Correct Machine on both pages, so the machine needs to be named by Mr Kan."
+      ]
+    },
+    {
+      "itemNumber": 26,
+      "itemId": "addition::top-labelling-machine-with-thermal-transfer-printer-auto-feeder::094a91e5966b0f4a",
+      "productSlug": "top-labelling-machine-with-thermal-transfer-printer-auto-feeder",
+      "status": "Needs Review",
+      "recommendation": "On hold. Do not add it to Top Labelling Machine With Thermal Transfer Printer Auto Feeder. The repository says this is the Customized Top Labelling Machine’s own primary picture, and Round 1 marked it Correct Machine there.",
+      "reason": [
+        "Repository evidence: this is the primary picture of the Customized Top Labelling Machine page. That folder holds 3 byte-identical copies of it, the pattern the scrape left only for a page's own main picture.",
+        "Round 1 marked the same file Correct Machine under: Customized Top Labelling Machine.",
+        "Where Round 1 marked it Wrong Machine on other pages, the reviewers named: Top Labelling Machine With Thermal Transfer Printer Auto Feeder, Top Labelling Machine.",
+        "The identical file is on the live website now under: Customized Top Labelling Machine (image 6), Customized Bottom Labelling Machine (image 5), Egg Tray Labelling Machine (image 6).",
+        "Round 1 named Top Labelling Machine With Thermal Transfer Printer Auto Feeder for this picture from another page, and a different product from a third page. Both cannot be right unless these are one model, which is a question for Mr Kan and the shared product sheet."
+      ]
+    },
+    {
+      "itemNumber": 27,
+      "itemId": "addition::top-labelling-machine::094a91e5966b0f4a",
+      "productSlug": "top-labelling-machine",
+      "status": "Needs Review",
+      "recommendation": "On hold. Do not add it to Top Labelling Machine. The repository says this is the Customized Top Labelling Machine’s own primary picture, and Round 1 marked it Correct Machine there.",
+      "reason": [
+        "Repository evidence: this is the primary picture of the Customized Top Labelling Machine page. That folder holds 3 byte-identical copies of it, the pattern the scrape left only for a page's own main picture.",
+        "Round 1 marked the same file Correct Machine under: Customized Top Labelling Machine.",
+        "Where Round 1 marked it Wrong Machine on other pages, the reviewers named: Top Labelling Machine With Thermal Transfer Printer Auto Feeder, Top Labelling Machine.",
+        "The identical file is on the live website now under: Customized Top Labelling Machine (image 6), Customized Bottom Labelling Machine (image 5), Egg Tray Labelling Machine (image 6).",
+        "Round 1 named Top Labelling Machine for this picture from another page, and a different product from a third page. Both cannot be right unless these are one model, which is a question for Mr Kan and the shared product sheet."
+      ]
+    },
+    {
+      "itemNumber": 28,
+      "itemId": "addition::top-labelling-machine::b5cc722158ae2348",
+      "productSlug": "top-labelling-machine",
+      "status": "Needs Review",
+      "recommendation": "On hold. Do not add it to Top Labelling Machine. The repository says this is the Standard Top Labelling Machine’s own primary picture, and Round 1 marked it Correct Machine there.",
+      "reason": [
+        "Repository evidence: this is the primary picture of the Standard Top Labelling Machine page. That folder holds 4 byte-identical copies of it, the pattern the scrape left only for a page's own main picture.",
+        "Round 1 marked the same file Correct Machine under: Standard Top Labelling Machine.",
+        "Where Round 1 marked it Wrong Machine on other pages, the reviewers named: Top Labelling Machine V2, Top Labelling Machine.",
+        "The identical file is on the live website now under: Customized Bottom Labelling Machine (image 4).",
+        "Round 1 named Top Labelling Machine for this picture from another page, and a different product from a third page. Both cannot be right unless these are one model, which is a question for Mr Kan and the shared product sheet."
+      ]
+    },
+    {
+      "itemNumber": 29,
+      "itemId": "addition::top-labelling-machine-v2::b5cc722158ae2348",
+      "productSlug": "top-labelling-machine-v2",
+      "status": "Needs Review",
+      "recommendation": "On hold. Do not add it to Top Labelling Machine V2. The repository says this is the Standard Top Labelling Machine’s own primary picture, and Round 1 marked it Correct Machine there.",
+      "reason": [
+        "Repository evidence: this is the primary picture of the Standard Top Labelling Machine page. That folder holds 4 byte-identical copies of it, the pattern the scrape left only for a page's own main picture.",
+        "Round 1 marked the same file Correct Machine under: Standard Top Labelling Machine.",
+        "Where Round 1 marked it Wrong Machine on other pages, the reviewers named: Top Labelling Machine V2, Top Labelling Machine.",
+        "The identical file is on the live website now under: Customized Bottom Labelling Machine (image 4).",
+        "Round 1 named Top Labelling Machine V2 for this picture from another page, and a different product from a third page. Both cannot be right unless these are one model, which is a question for Mr Kan and the shared product sheet."
+      ]
+    },
+    {
+      "itemNumber": 30,
+      "itemId": "disputed::semi-auto-wrap-around-labelling-machine::a9713789ba6c8b5c",
+      "productSlug": "semi-auto-wrap-around-labelling-machine",
+      "status": "Needs Review",
+      "recommendation": "Nothing to restore: the picture never left the live page. Whether it should stay depends on which machine it shows, and the evidence disagrees. Leave it until Mr Kan decides.",
+      "reason": [
+        "It is on the live page now (image 10 of 10). Round 1 marked it Correct Machine, Gallery Only.",
+        "Repository evidence: this is the primary picture of the Semi Auto Round Bottle Labelling Machine page. That folder holds 3 byte-identical copies of it, the pattern the scrape left only for a page's own main picture.",
+        "Round 1 marked the same file Correct Machine under: Semi Auto Round Bottle Labelling Machine.",
+        "Where Round 1 marked it Wrong Machine on other pages, the reviewers named: Semi Auto Wrap Around Labelling Machine.",
+        "The identical file is on the live website now under: One Side Wrap Around Side Labelling Machine (image 5), Top Labelling Machine With Thermal Transfer Printer Auto Feeder V2 (image 6)."
+      ]
+    },
+    {
+      "itemNumber": 31,
+      "itemId": "disputed::one-side-wrap-around-side-labelling-machine::65e548570a350e56",
+      "productSlug": "one-side-wrap-around-side-labelling-machine",
+      "status": "Needs Review",
+      "recommendation": "Nothing to restore: the picture never left the live page. Whether it should stay depends on which machine it shows, and the evidence disagrees. Leave it until Mr Kan decides.",
+      "reason": [
+        "It is on the live page now (image 2 of 5). Round 1 marked it Correct Machine.",
+        "Repository evidence: this is the primary picture of the Two In One Wrap Around Side Labelling Machine page. That folder holds 3 byte-identical copies of it, the pattern the scrape left only for a page's own main picture.",
+        "Round 1 marked the same file Correct Machine under: Two In One Wrap Around Side Labelling Machine."
+      ]
+    },
+    {
+      "itemNumber": 32,
+      "itemId": "disputed::top-labelling-machine-with-thermal-transfer-printer-auto-feeder::f0d703f3dcd3d546",
+      "productSlug": "top-labelling-machine-with-thermal-transfer-printer-auto-feeder",
+      "status": "Needs Review",
+      "recommendation": "Nothing to restore: the picture never left the live page. Whether it should stay depends on which machine it shows, and the evidence disagrees. Leave it until Mr Kan decides.",
+      "reason": [
+        "It is on the live page now (image 6 of 7). Round 1 marked it Correct Machine.",
+        "Round 1 marked the same file Correct Machine under: Flat Labelling Machine, Top Labelling Machine.",
+        "Where Round 1 marked it Wrong Machine on other pages, the reviewers named: Top Labelling Machine With Thermal Transfer Printer Auto Feeder.",
+        "A larger copy of the same view exists: Print_Apply_Top_Labelling_Machine_2.webp (1333×1000 webp, automatic comparison; primary picture of the Print Apply Top Labelling Machine page). This file is 1000×750 webp.",
+        "The identical file is on the live website now under: Flat Labelling Machine (image 3)."
+      ]
+    },
+    {
+      "itemNumber": 33,
+      "itemId": "unsure::print-apply-top-labelling-machine::bd5e8a6bca9376d7",
+      "productSlug": "print-apply-top-labelling-machine",
+      "status": "Needs Review",
+      "recommendation": "Still undecided. Leave as it is until Mr Kan names the machine.",
+      "reason": [
+        "It is on the live page now (image 10 of 11). Round 1 answered Not Sure."
+      ]
+    },
+    {
+      "itemNumber": 34,
+      "itemId": "unsure::print-apply-top-labelling-machine::4d1779119e001964",
+      "productSlug": "print-apply-top-labelling-machine",
+      "status": "Needs Review",
+      "recommendation": "Still undecided. The repository evidence below leans towards taking it off the Print Apply Top Labelling Machine page, but Round 1 did not confirm that.",
+      "reason": [
+        "It is on the live page now (image 2 of 11). Round 1 answered Not Sure.",
+        "Round 1 marked the same file Correct Machine under: Flat Labelling Machine, Customized Top Labelling Machine, Top Labelling Machine With Thermal Transfer Printer Auto Feeder, Top Labelling Machine.",
+        "Where Round 1 marked it Wrong Machine on other pages, the reviewers named: Flat Labelling Machine, Top Labelling Machine With Thermal Transfer Printer Auto Feeder V2, Print Apply Top Labelling Machine.",
+        "A larger copy of the same view exists: Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_2.webp (1600×1000 webp, automatic comparison); Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_4.webp (1600×1000 webp, automatic comparison). This file is 1000×624 webp.",
+        "The identical file is on the live website now under: Flat Labelling Machine (image 1, cover), Customized Top Labelling Machine (image 1, cover), Egg Tray Labelling Machine (image 2), Top Labelling Machine With Thermal Transfer Printer Auto Feeder (image 3), Two Side Labelling Machine With Corner Press (image 2)."
+      ]
+    },
+    {
+      "itemNumber": 35,
+      "itemId": "unsure::print-apply-top-labelling-machine::0bcb2b00a21f01f0",
+      "productSlug": "print-apply-top-labelling-machine",
+      "status": "Needs Review",
+      "recommendation": "Still undecided. The repository evidence below leans towards taking it off the Print Apply Top Labelling Machine page, but Round 1 did not confirm that.",
+      "reason": [
+        "It is on the live page now (image 7 of 11). Round 1 answered Not Sure.",
+        "Where Round 1 marked it Wrong Machine on other pages, the reviewers named: Top Labelling Machine With Thermal Transfer Printer Auto Feeder.",
+        "A larger copy of the same view exists: Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_2.webp (1600×1000 webp, automatic comparison); Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_4.webp (1600×1000 webp, automatic comparison). This file is 1000×625 webp."
+      ]
+    },
+    {
+      "itemNumber": 36,
+      "itemId": "unsure::one-side-wrap-around-side-labelling-machine::f09c6684c5dadb21",
+      "productSlug": "one-side-wrap-around-side-labelling-machine",
+      "status": "Needs Review",
+      "recommendation": "Still undecided. Leave as it is until Mr Kan names the machine.",
+      "reason": [
+        "It is on the live page now (image 3 of 5). Round 1 answered Not Sure.",
+        "Where Round 1 marked it Wrong Machine on other pages, the reviewers named: One Side Wrap Around Side Labelling Machine.",
+        "The identical file is on the live website now under: Customized Top Labelling Machine (image 3), Semi Auto Wrap Around Labelling Machine (image 3), Two Side Labelling Machine With Corner Press (image 5).",
+        "By eye this is the same machine as the Front Back Labelling Machine cover render (two control panels, the gold-coloured column unit), drawn from a different angle. Not confirmed by anyone at AURAPLEX."
+      ]
+    },
+    {
+      "itemNumber": 37,
+      "itemId": "unsure::two-side-labelling-machine-with-corner-press::f09c6684c5dadb21",
+      "productSlug": "two-side-labelling-machine-with-corner-press",
+      "status": "Needs Review",
+      "recommendation": "Still undecided. Leave as it is until Mr Kan names the machine.",
+      "reason": [
+        "It is on the live page now (image 5 of 10). Round 1 answered Not Sure.",
+        "Where Round 1 marked it Wrong Machine on other pages, the reviewers named: One Side Wrap Around Side Labelling Machine.",
+        "The identical file is on the live website now under: Customized Top Labelling Machine (image 3), One Side Wrap Around Side Labelling Machine (image 3), Semi Auto Wrap Around Labelling Machine (image 3).",
+        "By eye this is the same machine as the Front Back Labelling Machine cover render (two control panels, the gold-coloured column unit), drawn from a different angle. Not confirmed by anyone at AURAPLEX."
+      ]
+    },
+    {
+      "itemNumber": 38,
+      "itemId": "unsure::customized-top-labelling-machine::f09c6684c5dadb21",
+      "productSlug": "customized-top-labelling-machine",
+      "status": "Needs Review",
+      "recommendation": "Still undecided. Leave as it is until Mr Kan names the machine.",
+      "reason": [
+        "It is on the live page now (image 3 of 13). Round 1 answered Not Sure.",
+        "Where Round 1 marked it Wrong Machine on other pages, the reviewers named: One Side Wrap Around Side Labelling Machine.",
+        "The identical file is on the live website now under: One Side Wrap Around Side Labelling Machine (image 3), Semi Auto Wrap Around Labelling Machine (image 3), Two Side Labelling Machine With Corner Press (image 5).",
+        "By eye this is the same machine as the Front Back Labelling Machine cover render (two control panels, the gold-coloured column unit), drawn from a different angle. Not confirmed by anyone at AURAPLEX."
+      ]
+    },
+    {
+      "itemNumber": 39,
+      "itemId": "stored::two-in-one-wrap-around-side-labelling-machine::f09c6684c5dadb21",
+      "productSlug": "two-in-one-wrap-around-side-labelling-machine",
+      "status": "Needs Review",
+      "recommendation": "Unchanged. The file is not on the website, so nothing needs doing until the machine is named.",
+      "reason": [
+        "Round 1: Wrong Machine (note: “wrab around + cabbing machine”). It is not shown on the Two In One Wrap Around Side Labelling Machine page.",
+        "Where Round 1 marked it Wrong Machine on other pages, the reviewers named: One Side Wrap Around Side Labelling Machine.",
+        "The identical file is on the live website now under: Customized Top Labelling Machine (image 3), One Side Wrap Around Side Labelling Machine (image 3), Semi Auto Wrap Around Labelling Machine (image 3), Two Side Labelling Machine With Corner Press (image 5).",
+        "By eye this is the same machine as the Front Back Labelling Machine cover render (two control panels, the gold-coloured column unit), drawn from a different angle. Not confirmed by anyone at AURAPLEX."
+      ]
+    },
+    {
+      "itemNumber": 40,
+      "itemId": "stored::semi-auto-round-bottle-labelling-machine::f09c6684c5dadb21",
+      "productSlug": "semi-auto-round-bottle-labelling-machine",
+      "status": "Needs Review",
+      "recommendation": "Unchanged. The file is not on the website, so nothing needs doing until the machine is named.",
+      "reason": [
+        "Round 1: Not Sure. It is not shown on the Semi Auto Round Bottle Labelling Machine page.",
+        "Where Round 1 marked it Wrong Machine on other pages, the reviewers named: One Side Wrap Around Side Labelling Machine.",
+        "The identical file is on the live website now under: Customized Top Labelling Machine (image 3), One Side Wrap Around Side Labelling Machine (image 3), Semi Auto Wrap Around Labelling Machine (image 3), Two Side Labelling Machine With Corner Press (image 5).",
+        "By eye this is the same machine as the Front Back Labelling Machine cover render (two control panels, the gold-coloured column unit), drawn from a different angle. Not confirmed by anyone at AURAPLEX."
+      ]
+    },
+    {
+      "itemNumber": 41,
+      "itemId": "stored::standard-top-labelling-machine::1396503b955315c6",
+      "productSlug": "standard-top-labelling-machine",
+      "status": "Needs Review",
+      "recommendation": "Unchanged. The file is not on the website, so nothing needs doing until the machine is named.",
+      "reason": [
+        "Round 1: Wrong Machine. It is not shown on the Standard Top Labelling Machine page.",
+        "It is a small picture of a component or option, not a machine.",
+        "The identical file is on the live website now under: Two Side Labelling Machine With Corner Press (image 6)."
+      ]
+    },
+    {
+      "itemNumber": 42,
+      "itemId": "stored::standard-top-labelling-machine::c6067b280e6d9534",
+      "productSlug": "standard-top-labelling-machine",
+      "status": "Needs Review",
+      "recommendation": "Unchanged. The file is not on the website, so nothing needs doing until the machine is named.",
+      "reason": [
+        "Round 1: Wrong Machine. It is not shown on the Standard Top Labelling Machine page.",
+        "It is a small picture of a component or option, not a machine.",
+        "The identical file is on the live website now under: Two Side Labelling Machine With Corner Press (image 9)."
+      ]
+    },
+    {
+      "itemNumber": 43,
+      "itemId": "stored::standard-top-labelling-machine::143933306e0bcd76",
+      "productSlug": "standard-top-labelling-machine",
+      "status": "Needs Review",
+      "recommendation": "Unchanged. The file is not on the website, so nothing needs doing until the machine is named.",
+      "reason": [
+        "Round 1: Wrong Machine. It is not shown on the Standard Top Labelling Machine page.",
+        "It is a small picture of a component or option, not a machine.",
+        "The identical file is on the live website now under: Two Side Labelling Machine With Corner Press (image 10)."
+      ]
+    },
+    {
+      "itemNumber": 44,
+      "itemId": "stored::standard-top-labelling-machine::815ae2a31469a922",
+      "productSlug": "standard-top-labelling-machine",
+      "status": "Needs Review",
+      "recommendation": "Unchanged. The file is not on the website, so nothing needs doing until the machine is named.",
+      "reason": [
+        "Round 1: Wrong Machine. It is not shown on the Standard Top Labelling Machine page.",
+        "It is a small picture of a component or option, not a machine.",
+        "The identical file is on the live website now under: Two Side Labelling Machine With Corner Press (image 8)."
+      ]
+    },
+    {
+      "itemNumber": 45,
+      "itemId": "stored::standard-top-labelling-machine::3c821040f7d5b21c",
+      "productSlug": "standard-top-labelling-machine",
+      "status": "Needs Review",
+      "recommendation": "Unchanged. The file is not on the website, so nothing needs doing until the machine is named.",
+      "reason": [
+        "Round 1: Not Sure. It is not shown on the Standard Top Labelling Machine page.",
+        "Round 1 marked the same file Correct Machine under: Flat Labelling Machine, Top Labelling Machine.",
+        "Where Round 1 marked it Wrong Machine on other pages, the reviewers named: Top Labelling Machine.",
+        "The identical file is on the live website now under: Flat Labelling Machine (image 4), Print Apply Top Labelling Machine (image 11), Top Labelling Machine With Thermal Transfer Printer Auto Feeder (image 7), Top Labelling Machine With Thermal Transfer Printer Auto Feeder V2 (image 7)."
+      ]
+    },
+    {
+      "itemNumber": 46,
+      "itemId": "cover::top-labelling-machine-v2::6f374c806b2f39e9",
+      "productSlug": "top-labelling-machine-v2",
+      "status": "Needs Google Sheet verification",
+      "recommendation": "Keep the current cover until the machine is confirmed. No replacement is proposed.",
+      "reason": [
+        "Round 1 answered Not Sure for both the machine and the cover.",
+        "This render (archive file “1TL Machine Render.152”) shows the same view as Print_Apply_Top_Labelling_Machine_6.webp, which Round 1 marked Correct Machine for the Print Apply Top Labelling Machine.",
+        "The Top Labelling Machine cover (“1TL Machine Render.151”) likewise matches the Print Apply Top Labelling Machine cover. Whether Top Labelling Machine, Top Labelling Machine V2 and Print Apply Top Labelling Machine are one model or three is a classification question for the shared product sheet."
+      ]
+    },
+    {
+      "itemNumber": 47,
+      "itemId": "more-images::bottom-labelling-machine",
+      "productSlug": "bottom-labelling-machine",
+      "status": "Needs Google Sheet verification",
+      "recommendation": "The stored pictures are all shared with another product page, so none is proposed until the classification is checked.",
+      "reason": [
+        "The live page shows one picture. The Bottom Labelling Machine folder holds 2 more pictures that Round 1 marked Correct Machine.",
+        "Set aside: Bottom_Labelling_Machine_1.webp (also on the live Customized Bottom Labelling Machine page; on another page Round 1 said this file shows the Customized Bottom Labelling Machine); Bottom_Labelling_Machine_0.webp (also on the live Customized Bottom Labelling Machine page; on another page Round 1 said this file shows the Customized Bottom Labelling Machine)."
+      ]
+    },
+    {
+      "itemNumber": 48,
+      "itemId": "more-images::top-labelling-machine",
+      "productSlug": "top-labelling-machine",
+      "status": "Needs Google Sheet verification",
+      "recommendation": "The stored pictures are all shared with another product page, so none is proposed until the classification is checked.",
+      "reason": [
+        "The live page shows one picture. The Top Labelling Machine folder holds 4 more pictures that Round 1 marked Correct Machine.",
+        "Set aside: Top_Labelling_Machine_2.webp (also on the live Flat Labelling Machine page); Top_Labelling_Machine_0.webp (also on the live Flat Labelling Machine, Top Labelling Machine With Thermal Transfer Printer Auto Feeder page; on another page Round 1 said this file shows the Top Labelling Machine With Thermal Transfer Printer Auto Feeder); Top_Labelling_Machine_1.webp (also on the live Flat Labelling Machine page; on another page Round 1 said this file shows the Custom Top Labelling Machine With Checking System); Top_Labelling_Machine_3.webp (also on the live Flat Labelling Machine, Customized Top Labelling Machine, Print Apply Top Labelling Machine, Top Labelling Machine With Thermal Transfer Printer Auto Feeder page; on another page Round 1 said this file shows the Flat Labelling Machine, Top Labelling Machine With Thermal Transfer Printer Auto Feeder V2, Print Apply Top Labelling Machine)."
+      ]
+    },
+    {
+      "itemNumber": 49,
+      "itemId": "classification::flat-labelling-machine",
+      "productSlug": "flat-labelling-machine",
+      "status": "Needs Google Sheet verification",
+      "recommendation": "Keep for now; Round 1 confirmed them. Check the shared product sheet for whether “Flat Labelling Machine” is one machine or a family name covering these configurations.",
+      "reason": [
+        "Flat_Labelling_Machine_3.webp (1000×624 webp): same view as Print_Apply_Top_Labelling_Machine_12.webp of Print Apply Top Labelling Machine and Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_2.webp of Top Labelling Machine With Thermal Transfer Printer Auto Feeder and Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_4.webp of Top Labelling Machine With Thermal Transfer Printer Auto Feeder V2; identical file also live on Customized Top Labelling Machine, Egg Tray Labelling Machine, Print Apply Top Labelling Machine, Top Labelling Machine With Thermal Transfer Printer Auto Feeder, Two Side Labelling Machine With Corner Press.",
+        "Flat_Labelling_Machine_1.webp (1000×625 webp): same view as Custom_Top_Labelling_Machine_with_Checking_System_2.webp of Custom Top Labelling Machine With Checking System; identical file also live on Print Apply Top Labelling Machine, Top Labelling Machine With Thermal Transfer Printer Auto Feeder, Top Labelling Machine With Thermal Transfer Printer Auto Feeder V2.",
+        "Flat_Labelling_Machine_0.webp (1000×750 webp): same view as Print_Apply_Top_Labelling_Machine_2.webp of Print Apply Top Labelling Machine; identical file also live on Top Labelling Machine With Thermal Transfer Printer Auto Feeder.",
+        "Flat_Labelling_Machine_2.webp (265×378 webp): no larger copy on file; identical file also live on Print Apply Top Labelling Machine, Top Labelling Machine With Thermal Transfer Printer Auto Feeder, Top Labelling Machine With Thermal Transfer Printer Auto Feeder V2."
+      ]
+    },
+    {
+      "itemNumber": 50,
+      "itemId": "classification::top-labelling-machine-with-thermal-transfer-printer-auto-feeder-v2",
+      "productSlug": "top-labelling-machine-with-thermal-transfer-printer-auto-feeder-v2",
+      "status": "Needs Google Sheet verification",
+      "recommendation": "Keep both. Confirm from the shared product sheet what distinguishes V2 from V1, because the two covers do not show it.",
+      "reason": [
+        "Round 1 marked each cover Correct Machine for its own page. The automatic comparison rates the two files as the same view (both 1600×1000).",
+        "They are different files with different names, so each belongs to its own page; only the visible difference between the models is in question."
+      ]
+    },
+    {
+      "itemNumber": 51,
+      "itemId": "classification::continuous-band-sealing-machine-v2",
+      "productSlug": "continuous-band-sealing-machine-v2",
+      "status": "Needs Google Sheet verification",
+      "recommendation": "No replacement on file. Confirm from the shared product sheet whether V2 is a different machine from V1. If it is, V2 needs its own picture.",
+      "reason": [
+        "Both pages show Continuous_Band_Sealing_Machine_6.png as their cover. lib/catalog.ts states that V2 reuses the V1 scraped photo.",
+        "Round 1 noted “vertical method” for this picture and “horizontal method” for Continuous_Band_Sealing_Machine_2.webp. The repository does not say which method V2 is."
+      ]
+    },
+    {
+      "itemNumber": 52,
+      "itemId": "cover::top-labelling-machine-with-corner-press-device::71e208541ffbefa6",
+      "productSlug": "top-labelling-machine-with-corner-press-device",
+      "status": "No clear replacement found",
+      "recommendation": "Keep the current cover until the machine is confirmed. No replacement is proposed.",
+      "reason": [
+        "Round 1 answered Not Sure for both the machine and the cover.",
+        "lib/catalog.ts records this render as a “representative closest-match”, not a confirmed picture of this machine.",
+        "By eye it shows the top labeller with the blue printer that also appears in Customized_Top_Labelling_Machine_2 and _4. No picture in the repository is filed under this product, so there is nothing to propose."
+      ]
+    },
+    {
+      "itemNumber": 53,
+      "itemId": "cover::vertical-wrap-around-labelling-machine::915f242bd076fbd7",
+      "productSlug": "vertical-wrap-around-labelling-machine",
+      "status": "No clear replacement found",
+      "recommendation": "Keep the current cover until the machine is confirmed. No replacement is proposed.",
+      "reason": [
+        "Round 1 answered Not Sure for both the machine and the cover.",
+        "The repository holds no other picture filed under this product and no scraped picture that resembles this render."
+      ]
+    }
+  ]
+}

@@ -186,12 +186,85 @@ const REAL_IMAGES: Record<string, string> = {
   'body-neck-labelling-machine': '/products/real/body-neck-labelling-machine.webp',
 };
 
+/**
+ * Round 1 human-review corrections proposed for Friendy's PR review.
+ * See docs/product-image-round1/changes.json for file hashes and review item IDs.
+ * Filter catalogue references only; original assets and generated data stay intact.
+ */
+const GALLERY_EXCLUDE: Record<string, readonly string[]> = {
+  "two-side-labelling-machine-with-corner-press": [
+    "/products/Two_Side_Labelling_Machine_with_Corner_Press_3.webp",
+    "/products/Two_Side_Labelling_Machine_with_Corner_Press_6.png",
+    "/products/Two_Side_Labelling_Machine_with_Corner_Press_7.png",
+    "/products/Two_Side_Labelling_Machine_with_Corner_Press_8.png",
+    "/products/Two_Side_Labelling_Machine_with_Corner_Press_9.png",
+    "/products/Two_Side_Labelling_Machine_with_Corner_Press_10.webp",
+    "/products/Two_Side_Labelling_Machine_with_Corner_Press_12.webp"
+  ],
+  "semi-auto-wrap-around-labelling-machine": [
+    "/products/Semi_Auto_Wrap_Around_Labelling_Machine_10.webp",
+    "/products/Semi_Auto_Wrap_Around_Labelling_Machine_11.webp",
+    "/products/Semi_Auto_Wrap_Around_Labelling_Machine_13.webp"
+  ],
+  "print-apply-top-labelling-machine": [
+    "/products/Print_Apply_Top_Labelling_Machine_13.webp",
+    "/products/Print_Apply_Top_Labelling_Machine_14.webp"
+  ],
+  "one-side-wrap-around-side-labelling-machine": [
+    "/products/One_Side_Wrap_Around_Side_Labelling_Machine_4.webp",
+    "/products/One_Side_Wrap_Around_Side_Labelling_Machine_7.webp"
+  ],
+  "top-labelling-machine-with-thermal-transfer-printer-auto-feeder": [
+    "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_1.webp",
+    "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_6.webp"
+  ],
+  "top-labelling-machine-with-thermal-transfer-printer-auto-feeder-v2": [
+    "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_0.webp",
+    "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_3.webp",
+    "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_5.webp",
+    "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_6.webp"
+  ],
+  "customized-bottom-labelling-machine": [
+    "/products/Customized_Bottom_Labelling_Machine_2.webp",
+    "/products/Customized_Bottom_Labelling_Machine_3.webp",
+    "/products/Customized_Bottom_Labelling_Machine_5.webp"
+  ],
+  "egg-tray-labelling-machine": [
+    "/products/Egg_Tray_Labelling_Machine_0.webp",
+    "/products/Egg_Tray_Labelling_Machine_3.webp",
+    "/products/Egg_Tray_Labelling_Machine_4.webp",
+    "/products/Egg_Tray_Labelling_Machine_5.webp"
+  ],
+  "customized-top-labelling-machine": [
+    "/products/Customized_Top_Labelling_Machine_7.jpg",
+    "/products/Customized_Top_Labelling_Machine_8.jpg",
+    "/products/Customized_Top_Labelling_Machine_9.png",
+    "/products/Customized_Top_Labelling_Machine_10.png",
+    "/products/Customized_Top_Labelling_Machine_11.png",
+    "/products/Customized_Top_Labelling_Machine_12.png",
+    "/products/Customized_Top_Labelling_Machine_14.webp",
+    "/products/Customized_Top_Labelling_Machine_15.webp"
+  ],
+  "flat-labelling-machine": [
+    "/products/Flat_Labelling_Machine_4.webp"
+  ]
+};
+
+// Round 1: Correct Machine + Suitable as Cover (V3.2 item 1).
+const COVER_FIX: Record<string, string> = {
+  'two-side-labelling-machine-with-corner-press': '/products/Two_Side_Labelling_Machine_with_Corner_Press_2.webp',
+};
+
 export const MACHINES: Machine[] = MACHINES_RAW.map((m) => {
   const real = REAL_IMAGES[m.slug];
+  const image = real ?? COVER_FIX[m.slug] ?? m.image;
+  const gallery = real
+    ? [real]
+    : m.gallery.filter((file) => !GALLERY_EXCLUDE[m.slug]?.includes(file));
   return {
     ...m,
-    image: real ?? m.image,
-    gallery: real ? [real] : m.gallery,
+    image,
+    gallery: image ? [image, ...gallery.filter((file) => file !== image)] : gallery,
     featured: FEATURED_SLUGS.has(m.slug),
     summary: MACHINE_DETAILS[m.slug]?.summary ?? CATEGORY_SUMMARY[m.category],
     speed: null,
