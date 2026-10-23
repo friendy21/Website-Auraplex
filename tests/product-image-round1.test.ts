@@ -24,15 +24,24 @@ runInNewContext(ts.transpileModule(source, { compilerOptions: { module: ts.Modul
 // Normalize the VM objects so comparisons do not depend on their realm.
 const before: Machine[] = JSON.parse(JSON.stringify(baselineModule.exports.MACHINES));
 
+// Preserve the historical Round 1 evidence; account only for the two approved follow-up removals.
+const followupRemovals: Record<string, string> = {
+  'continuous-band-sealing-machine': '/products/Continuous_Band_Sealing_Machine_3.webp',
+  'customized-top-labelling-machine': '/products/Customized_Top_Labelling_Machine_16.webp',
+};
+const afterFollowup = (slug: string, gallery: string[]) =>
+  gallery.filter((file) => file !== followupRemovals[slug]);
+
 test('only the documented products and image fields change; taxonomy and all other fields survive', () => {
   assert.equal(MACHINES.length, 30);
   assert.equal(evidence.products.length, 10);
   assert.equal(before.reduce((total, m) => total + m.gallery.length, 0), 102);
-  assert.equal(MACHINES.reduce((total, m) => total + m.gallery.length, 0), 66);
+  assert.equal(MACHINES.reduce((total, m) => total + m.gallery.length, 0), 64);
   for (const original of before) {
     const actual = MACHINES.find((m) => m.slug === original.slug)!;
     const change = evidence.products.find((m) => m.slug === original.slug);
-    assert.deepEqual(actual, { ...original, ...(change?.after ?? {}) }, original.slug);
+    const round1 = { ...original, ...(change?.after ?? {}) };
+    assert.deepEqual(actual, { ...round1, gallery: afterFollowup(original.slug, round1.gallery) }, original.slug);
     if (change) assert.deepEqual(change.before, { image: original.image, gallery: original.gallery });
   }
 });
@@ -52,7 +61,8 @@ test('all 35 wrong-image removals have human evidence and all unaffected gallery
     const retained = original.gallery.filter((file) => !excluded.includes(file));
     const cover = ops.find((op) => op.operation === 'cover')?.updatedImage;
     const expected = cover ? [cover, ...retained.filter((file) => file !== cover)] : retained;
-    assert.deepEqual(MACHINES.find((m) => m.slug === original.slug)!.gallery, expected, original.slug);
+    assert.deepEqual(MACHINES.find((m) => m.slug === original.slug)!.gallery,
+      afterFollowup(original.slug, expected), original.slug);
   }
 });
 
