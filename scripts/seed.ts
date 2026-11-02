@@ -107,7 +107,7 @@ const settings = {
   tickerLabelsToday: 8200000,
   tickerUptime: '99.4%',
   tickerFactories: 340,
-  whatsappNumber: '60123456789',
+  whatsappNumber: '60126675762',
 };
 
 async function seed() {

@@ -9,7 +9,7 @@ export const settings = defineType({
     defineField({ name: 'tickerLabelsToday', type: 'number', initialValue: 8200000 }),
     defineField({ name: 'tickerUptime', type: 'string', initialValue: '99.4%' }),
     defineField({ name: 'tickerFactories', type: 'number', initialValue: 340 }),
-    defineField({ name: 'whatsappNumber', type: 'string', initialValue: '60123456789' }),
+    defineField({ name: 'whatsappNumber', type: 'string', initialValue: '60126675762' }),
     defineField({ name: 'heroVideoUrl', type: 'url' }),
   ],
 });
