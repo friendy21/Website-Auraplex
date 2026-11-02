@@ -9,9 +9,10 @@ type Props = {
   title?: string;
   /**
    * Milliseconds to wait for the player to reach PLAYING state before we
-   * declare the embed unavailable and fade out. Defaults to 6000ms — long
-   * enough for slow networks, short enough that visitors never read the
-   * "Sign in to confirm you're not a bot" screen.
+   * declare the embed unavailable. Defaults to 20000ms — slow mobile
+   * connections need it. The player is invisible until PLAYING, so a slow
+   * start (or a "Sign in to confirm you're not a bot" wall) is never shown;
+   * if it does reach PLAYING after the watchdog fired, it still fades in.
    */
   failTimeoutMs?: number;
 };
@@ -64,7 +65,7 @@ function loadYouTubeApi(): Promise<typeof window.YT> {
 export function YoutubeHeroBg({
   id,
   title = 'Background video',
-  failTimeoutMs = 6000,
+  failTimeoutMs = 20000,
 }: Props) {
   const mountRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<YT.Player | null>(null);
@@ -88,6 +89,7 @@ export function YoutubeHeroBg({
     // top, no scroll/wheel for BOOT_CALM_MS — and every (re)start of playback
     // waits for PLAY_CALM_MS of stillness.
     const BOOT_CALM_MS = 1200;
+    const AUTO_BOOT_MS = 2500;
     const PLAY_CALM_MS = 400;
     let lastScroll = 0;
     const timers = new Set<ReturnType<typeof setTimeout>>();
@@ -273,9 +275,22 @@ export function YoutubeHeroBg({
       }),
     );
 
+    // This component is code-split and mounts only after hydration — on a
+    // slow connection that is many seconds after first paint, so a visitor
+    // who moved the mouse or touched the screen before then would otherwise
+    // never get the video. HeroCinematic's inline script records that
+    // interaction from the first HTML byte.
+    if ((window as { __axHeroInteracted?: boolean }).__axHeroInteracted) onFirstInteraction();
+
+    // And nobody should need to interact at all: after a short rest on the
+    // hero, boot anyway. The player stays invisible until it is actually
+    // PLAYING, so YouTube's boot UI and its layout shifts are never shown.
+    const autoBoot = setTimeout(onFirstInteraction, AUTO_BOOT_MS);
+
     return () => {
       cancelled = true;
       io.disconnect();
+      clearTimeout(autoBoot);
       timers.forEach(clearTimeout);
       window.removeEventListener('scroll', onScrollActivity);
       window.removeEventListener('wheel', onScrollActivity);
@@ -331,7 +346,7 @@ export function YoutubeHeroBg({
       className="absolute inset-0 overflow-hidden pointer-events-none transition-opacity duration-700"
       aria-hidden="true"
       data-yt-status={status}
-      style={{ opacity: status === 'failed' ? 0 : 1 }}
+      style={{ opacity: status === 'playing' ? 1 : 0 }}
       title={title}
     >
       {/* Sizing styles for the YT-injected iframe — global because we don't

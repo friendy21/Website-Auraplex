@@ -72,6 +72,15 @@ export function HeroCinematic() {
             describing whatever that ID actually is, it is the accessible name
             for the background video. */}
         <YoutubeHeroBgLazy id={HERO_VIDEO_ID} title="Auraplex company introduction" />
+        {/* Records the visitor's first interaction from the first HTML byte —
+            the video component only mounts after hydration, which on a slow
+            connection is long after people start moving the mouse. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){var w=window,e=['pointerdown','pointermove','touchstart','keydown','wheel','scroll'];function f(){w.__axHeroInteracted=true;e.forEach(function(n){w.removeEventListener(n,f)})}e.forEach(function(n){w.addEventListener(n,f,{passive:true})})})();",
+          }}
+        />
       </div>
 
       {/* Cursor spotlight halo */}
