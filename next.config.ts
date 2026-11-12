@@ -12,9 +12,6 @@ const config: NextConfig = {
   // Next 16.2.7: cacheComponents promoted out of experimental.
   // https://nextjs.org/docs/app/api-reference/config/next-config-js/cacheComponents
   cacheComponents: true,
-  experimental: {
-    viewTransition: true,
-  },
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
