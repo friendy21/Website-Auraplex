@@ -19,11 +19,9 @@ export const MACHINES_RAW: RawMachine[] = [
     "name": "Continuous Band Sealing Machine",
     "rawName": "Continuous_Band_Sealing_Machine",
     "category": "packaging",
-    "image": "/products/Continuous_Band_Sealing_Machine_6.png",
+    "image": "/products/Continuous_Band_Sealing_Machine_3.webp",
     "gallery": [
-      "/products/Continuous_Band_Sealing_Machine_6.png",
-      "/products/Continuous_Band_Sealing_Machine_3.webp",
-      "/products/Continuous_Band_Sealing_Machine_2.webp"
+      "/products/Continuous_Band_Sealing_Machine_3.webp"
     ]
   },
   {
@@ -53,7 +51,6 @@ export const MACHINES_RAW: RawMachine[] = [
     "category": "labelling",
     "image": "/products/Semi_Auto_Wrap_Around_Labelling_Machine_9.png",
     "gallery": [
-      "/products/Semi_Auto_Wrap_Around_Labelling_Machine_9.png",
       "/products/Semi_Auto_Wrap_Around_Labelling_Machine_10.webp",
       "/products/Semi_Auto_Wrap_Around_Labelling_Machine_11.webp",
       "/products/Semi_Auto_Wrap_Around_Labelling_Machine_2.webp",
@@ -61,8 +58,7 @@ export const MACHINES_RAW: RawMachine[] = [
       "/products/Semi_Auto_Wrap_Around_Labelling_Machine_13.webp",
       "/products/Semi_Auto_Wrap_Around_Labelling_Machine_3.webp",
       "/products/Semi_Auto_Wrap_Around_Labelling_Machine_6.webp",
-      "/products/Semi_Auto_Wrap_Around_Labelling_Machine_5.webp",
-      "/products/Semi_Auto_Wrap_Around_Labelling_Machine_12.webp"
+      "/products/Semi_Auto_Wrap_Around_Labelling_Machine_5.webp"
     ]
   },
   {
@@ -71,14 +67,11 @@ export const MACHINES_RAW: RawMachine[] = [
     "name": "Two Side Labelling Machine",
     "rawName": "Two_Side_Labelling_Machine",
     "category": "labelling",
-    "image": "/products/Two_Side_Labelling_Machine_8.png",
+    "image": "/products/Two_Side_Labelling_Machine_2.webp",
     "gallery": [
       "/products/Two_Side_Labelling_Machine_8.png",
-      "/products/Two_Side_Labelling_Machine_2.webp",
-      "/products/Two_Side_Labelling_Machine_3.webp",
-      "/products/Two_Side_Labelling_Machine_9.webp",
-      "/products/Two_Side_Labelling_Machine_4.webp",
-      "/products/Two_Side_Labelling_Machine_5.webp"
+      "/products/Top_Labelling_Machine_with_Thermal_Transfer_Printer_Auto_Feeder_v2_3.webp",
+      "/products/Two_Side_Labelling_Machine_2.webp"
     ]
   },
   {
@@ -205,9 +198,7 @@ export const MACHINES_RAW: RawMachine[] = [
     "image": "/products/Flat_Labelling_Machine_3.webp",
     "gallery": [
       "/products/Flat_Labelling_Machine_3.webp",
-      "/products/Flat_Labelling_Machine_1.webp",
       "/products/Flat_Labelling_Machine_0.webp",
-      "/products/Flat_Labelling_Machine_2.webp",
       "/products/Flat_Labelling_Machine_4.webp"
     ]
   },
@@ -255,8 +246,7 @@ export const MACHINES_RAW: RawMachine[] = [
       "/products/Customized_Bottom_Labelling_Machine_0.webp",
       "/products/Customized_Bottom_Labelling_Machine_3.webp",
       "/products/Customized_Bottom_Labelling_Machine_5.webp",
-      "/products/Customized_Bottom_Labelling_Machine_2.webp",
-      "/products/Customized_Bottom_Labelling_Machine_4.webp"
+      "/products/Customized_Bottom_Labelling_Machine_2.webp"
     ]
   },
   {
@@ -289,15 +279,6 @@ export const MACHINES_RAW: RawMachine[] = [
     "slug": "body-neck-labelling-machine",
     "name": "Body Neck Labelling Machine",
     "rawName": "Body_Neck_Labelling_Machine",
-    "category": "labelling",
-    "image": null,
-    "gallery": []
-  },
-  {
-    "id": "6461962",
-    "slug": "top-labelling-machine-v2",
-    "name": "Top Labelling Machine V2",
-    "rawName": "Top_Labelling_Machine_v2",
     "category": "labelling",
     "image": null,
     "gallery": []
@@ -339,14 +320,6 @@ export const MACHINES_RAW: RawMachine[] = [
     "gallery": [
       "/products/Two_Side_Labelling_Machine_with_Corner_Press_3.webp",
       "/products/Two_Side_Labelling_Machine_with_Corner_Press_12.webp",
-      "/products/Two_Side_Labelling_Machine_with_Corner_Press_2.webp",
-      "/products/Two_Side_Labelling_Machine_with_Corner_Press_11.webp",
-      "/products/Two_Side_Labelling_Machine_with_Corner_Press_13.webp",
-      "/products/Two_Side_Labelling_Machine_with_Corner_Press_6.png",
-      "/products/Two_Side_Labelling_Machine_with_Corner_Press_10.webp",
-      "/products/Two_Side_Labelling_Machine_with_Corner_Press_9.png",
-      "/products/Two_Side_Labelling_Machine_with_Corner_Press_7.png",
-      "/products/Two_Side_Labelling_Machine_with_Corner_Press_8.png"
     ]
   },
   {
@@ -444,14 +417,5 @@ export const MACHINES_RAW: RawMachine[] = [
     "gallery": [
       "/products/AR220_3D_Printer_0.webp"
     ]
-  },
-  {
-    "id": "4788387",
-    "slug": "continuous-band-sealing-machine-v2",
-    "name": "Continuous Band Sealing Machine V2",
-    "rawName": "Continuous_Band_Sealing_Machine_v2",
-    "category": "packaging",
-    "image": null,
-    "gallery": []
   }
 ];
