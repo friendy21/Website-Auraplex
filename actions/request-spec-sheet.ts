@@ -9,7 +9,7 @@ import { sendMail, LEADS_INBOX } from '@/lib/mail';
 import SpecSheet from '@/emails/spec-sheet';
 import NewLeadInternal from '@/emails/new-lead-internal';
 
-export const SpecSheetSchema = z.object({
+const SpecSheetSchema = z.object({
   name: z.string().min(2).max(120),
   company: z.string().min(2).max(200),
   email: z.string().email(),

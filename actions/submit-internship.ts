@@ -19,7 +19,7 @@ const FIELDS = [
   'other',
 ] as const;
 
-export const InternshipSchema = z.object({
+const InternshipSchema = z.object({
   name: z.string().min(2).max(120),
   email: z.string().email(),
   phone: z.string().min(7).max(30).optional(),

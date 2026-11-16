@@ -19,7 +19,7 @@ const INTENT_VALUES = [
   'other',
 ] as const;
 
-export const ContactSchema = z.object({
+const ContactSchema = z.object({
   name: z.string().min(2).max(120),
   company: z.string().max(200).optional(),
   email: z.string().email(),
