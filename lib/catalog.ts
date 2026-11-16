@@ -187,11 +187,15 @@ const REAL_IMAGES: Record<string, string> = {
 };
 
 /**
- * Round 1 human-review corrections proposed for Friendy's PR review.
- * See docs/product-image-round1/changes.json for file hashes and review item IDs.
+ * Human-reviewed image corrections (Round 1 plus approved Round 2 follow-ups).
+ * See docs/product-image-round1/changes.json for Round 1 hashes and review item IDs.
  * Filter catalogue references only; original assets and generated data stay intact.
  */
 const GALLERY_EXCLUDE: Record<string, readonly string[]> = {
+  // Round 2: keep _6.png as the cover; remove the near-identical gallery view.
+  "continuous-band-sealing-machine": [
+    "/products/Continuous_Band_Sealing_Machine_3.webp"
+  ],
   "two-side-labelling-machine-with-corner-press": [
     "/products/Two_Side_Labelling_Machine_with_Corner_Press_3.webp",
     "/products/Two_Side_Labelling_Machine_with_Corner_Press_6.png",
@@ -243,7 +247,9 @@ const GALLERY_EXCLUDE: Record<string, readonly string[]> = {
     "/products/Customized_Top_Labelling_Machine_11.png",
     "/products/Customized_Top_Labelling_Machine_12.png",
     "/products/Customized_Top_Labelling_Machine_14.webp",
-    "/products/Customized_Top_Labelling_Machine_15.webp"
+    "/products/Customized_Top_Labelling_Machine_15.webp",
+    // Round 2: this image belongs to One Side, where _6.webp already retains it.
+    "/products/Customized_Top_Labelling_Machine_16.webp"
   ],
   "flat-labelling-machine": [
     "/products/Flat_Labelling_Machine_4.webp"
