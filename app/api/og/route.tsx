@@ -40,7 +40,7 @@ export async function GET(req: Request) {
             AURAPLEX
           </div>
         </div>
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div style={{ fontSize: 84, lineHeight: 1.05, letterSpacing: -2, maxWidth: 1000 }}>{title}</div>
           <div style={{ fontSize: 28, color: PALETTE.neutral300, marginTop: 24, maxWidth: 900 }}>{subtitle}</div>
         </div>
