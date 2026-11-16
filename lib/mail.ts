@@ -9,7 +9,7 @@ export const LEADS_INBOX = 'sales.auraplex@gmail.com';
  * every send is rejected — update this when the sending domain moves to
  * auraplex.info.
  */
-export const MAIL_FROM = 'Auraplex <hello@auraplex.com.my>';
+export const MAIL_FROM = 'Auraplex <hello@auraplex.info>';
 
 // Constructed lazily: `new Resend()` throws when RESEND_API_KEY is unset, and
 // doing that at module scope would crash the whole server action instead of
